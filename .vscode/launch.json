@@ -1,0 +1,113 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    // For these launch configurations to work, you need to setup a GODOT
+    // environment variable. On mac or linux, this can be done by adding
+    // the following to your .zshrc, .bashrc, or .bash_profile file:
+    // export GODOT="/Applications/Godot.app/Contents/MacOS/Godot"
+    {
+      "name": "C# Main",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "C:/Local Documents/Development/Godot/Other Godot Versions/Godot_4.3_NETCsharp/Godot_v4.3-stable_mono_win64.exe",
+      "args": [
+        // "--debug-collisions",
+        // "--debug-paths",
+        // "--debug-navigation"
+      ],
+      "cwd": "${workspaceFolder}",
+      "stopAtEntry": false,
+      "console": "integratedTerminal"
+    },
+    // Debug the scene that matches the name of the currently open *.cs file
+    // (if there's a scene with the same name in the same directory).
+    {
+      "name": "C# Scene",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "C:/Local Documents/Development/Godot/Other Godot Versions/Godot_4.3_NETCsharp/Godot_v4.3-stable_mono_win64.exe",
+      "args": [
+        "${fileDirname}/${fileBasenameNoExtension}.tscn"
+      ],
+      "cwd": "${workspaceFolder}",
+      "stopAtEntry": false,
+      "console": "integratedTerminal"
+    },
+    
+    {
+      "name": "C# GodotRemote",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "C:/Local Documents/Development/Godot/Other Godot Versions/Godot_4.3_NETCsharp/Godot_v4.3-stable_mono_win64.exe",
+      "debugServer": 6006,
+      "args": [
+        "--remote-debug",
+        "tcp://127.0.0.1:6007"
+
+      ],
+      "cwd": "${workspaceFolder}",
+      "stopAtEntry": false,
+      "console": "integratedTerminal",
+
+    },
+
+    {
+      "name": "GD Main",
+      "type": "godot",
+      "request": "launch",
+      "project": "${workspaceFolder}",
+      "debug_collisions": false,
+      "debug_paths": false,
+      "debug_navigation": false,
+      "scene": "main",
+      "additional_options": ""
+    },
+
+    {
+      "name": "GD Scene",
+      "type": "godot",
+      "request": "launch",
+      "project": "${workspaceFolder}",
+      "debug_collisions": true,
+      "debug_paths": false,
+      "debug_navigation": false,
+      "scene": "current",
+      "additional_options": ""
+    },
+
+
+    // {
+    //   "name": "🧪 DebugTests",
+    //   "type": "coreclr",
+    //   "request": "launch",
+    //   "preLaunchTask": "build",
+    //   "program": "C:/Local Documents/Development/Godot/Other Godot Versions/Godot_4.3_NETCsharp/Godot_v4.3-stable_mono_win64.exe",
+    //   "args": [
+    //     // These command line flags are used by GoDotTest to run tests.
+    //     "--run-tests",
+    //     "--quit-on-finish"
+    //   ],
+    //   "cwd": "${workspaceFolder}",
+    //   "stopAtEntry": false,
+    //   "console": "integratedTerminal"
+    // },
+    // {
+    //   "name": "🔬 DebugCurrentTest",
+    //   "type": "coreclr",
+    //   "request": "launch",
+    //   "preLaunchTask": "build",
+    //   "program": "C:/Local Documents/Development/Godot/Other Godot Versions/Godot_4.3_NETCsharp/Godot_v4.3-stable_mono_win64.exe",
+    //   "args": [
+    //     // These command line flags are used by GoDotTest to run tests.
+    //     "--run-tests=${fileBasenameNoExtension}",
+    //     "--quit-on-finish"
+    //   ],
+    //   "cwd": "${workspaceFolder}",
+    //   "stopAtEntry": false,
+    //   "console": "integratedTerminal"
+    // },
+  ]
+}

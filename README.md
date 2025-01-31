@@ -1,0 +1,2 @@
+# Godot Sprite Generator
+ 
