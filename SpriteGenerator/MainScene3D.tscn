@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://SpriteGenerator/Model3D.cs" id="1_4ce3b"]
 [ext_resource type="Script" path="res://SpriteGenerator/MainScene3d.cs" id="1_cpwm4"]
-[ext_resource type="PackedScene" uid="uid://b7fd66trqga5m" path="res://Models/RiggedModelTest/RiggedCharacter.tscn" id="3_r36g8"]
+[ext_resource type="PackedScene" uid="uid://b0va4lvlqmyh7" path="res://Models/GirlRigged/GirlRiggued.tscn" id="3_8w6ic"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_wy6cq"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -20,7 +20,7 @@ glow_enabled = true
 [node name="MainScene3D" type="Node3D" node_paths=PackedStringArray("MainModelNode", "MainCharacterObj", "MainCamera")]
 script = ExtResource("1_cpwm4")
 MainModelNode = NodePath("Model3D")
-MainCharacterObj = NodePath("Model3D/RiggedCharacter")
+MainCharacterObj = NodePath("Model3D/GirlRigged")
 MainCamera = NodePath("MainCamera")
 
 [node name="MainCamera" type="Camera3D" parent="."]
@@ -33,8 +33,8 @@ unique_name_in_owner = true
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
 script = ExtResource("1_4ce3b")
 
-[node name="RiggedCharacter" parent="Model3D" instance=ExtResource("3_r36g8")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.4, 0)
+[node name="GirlRigged" parent="Model3D" instance=ExtResource("3_8w6ic")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.2, 0)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866025, -0.433013, 0.25, 0.473725, -0.870539, 0.133215, 0.159951, 0.233799, 0.959038, 0.537403, 0.32873, 2.69497)

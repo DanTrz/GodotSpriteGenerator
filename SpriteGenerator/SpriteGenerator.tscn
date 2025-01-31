@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://SpriteGenerator/SpriteGenerator.cs" id="1_ws6fq"]
 [ext_resource type="PackedScene" uid="uid://iuwovcd804os" path="res://SpriteGenerator/MainScene3D.tscn" id="2_jyiui"]
 [ext_resource type="Shader" path="res://SpriteGenerator/Mesh3dPixelEffect.gdshader" id="2_l6h36"]
-[ext_resource type="Shader" path="res://SpriteGenerator/TextRecPixelEffect.gdshader" id="3_j4ub1"]
+[ext_resource type="Shader" path="res://SpriteGenerator/3DPixelEffectOutline.gdshader" id="2_makck"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ivn07"]
 bg_color = Color(0.165657, 0.165656, 0.165656, 1)
@@ -17,30 +17,39 @@ corner_radius_top_right = 2
 corner_radius_bottom_right = 2
 corner_radius_bottom_left = 2
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ilxpc"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1b8l8"]
 render_priority = 0
-shader = ExtResource("2_l6h36")
-shader_parameter/pixel_size = 32.0
+shader = ExtResource("2_makck")
+shader_parameter/disable_shader = false
+shader_parameter/MAX_DEPTH = 1000.0
+shader_parameter/shadows_enabled = true
+shader_parameter/highlights_enabled = true
+shader_parameter/shadow_strength = 1.0
+shader_parameter/highlight_strength = 0.2
+shader_parameter/highlight_color = Color(0.871539, 0.606419, 0.688504, 1)
+shader_parameter/shadow_color = Color(0, 0, 0, 1)
+shader_parameter/pixelSize = 1
 
-[sub_resource type="QuadMesh" id="QuadMesh_7fo1u"]
+[sub_resource type="QuadMesh" id="QuadMesh_shg2l"]
+flip_faces = true
 size = Vector2(4, 4)
 center_offset = Vector3(0, 0, 0.5)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_j5dgh"]
-shader = ExtResource("3_j4ub1")
-shader_parameter/pixel_size = 128.0
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ilxpc"]
+render_priority = 0
+shader = ExtResource("2_l6h36")
+shader_parameter/pixel_size = 512.0
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_kas26"]
-viewport_path = NodePath("VBoxContainer/HSplitContainer/PanelContainer/ModelPanelContainer/RawViewportContainer/RawSubViewport")
+[sub_resource type="QuadMesh" id="QuadMesh_7fo1u"]
+size = Vector2(4, 4)
+center_offset = Vector3(0, 0, 0.45)
 
-[node name="SpriteGenerator" type="CanvasLayer" node_paths=PackedStringArray("_startGenerationBtn", "_MainScene3D", "_rawViewport", "_rawViewportContainer", "_pixelViewport", "_pixelViewportContainer")]
+[node name="SpriteGenerator" type="CanvasLayer" node_paths=PackedStringArray("_startGenerationBtn", "_MainScene3D", "_rawViewport", "_rawViewportContainer")]
 script = ExtResource("1_ws6fq")
 _startGenerationBtn = NodePath("VBoxContainer/HSplitContainer/OptionsPanelContainer/VBoxContainer/StartGenerationBtn")
 _MainScene3D = NodePath("VBoxContainer/HSplitContainer/PanelContainer/ModelPanelContainer/RawViewportContainer/RawSubViewport/MainScene3D")
 _rawViewport = NodePath("VBoxContainer/HSplitContainer/PanelContainer/ModelPanelContainer/RawViewportContainer/RawSubViewport")
 _rawViewportContainer = NodePath("VBoxContainer/HSplitContainer/PanelContainer/ModelPanelContainer/RawViewportContainer")
-_pixelViewport = NodePath("VBoxContainer/HSplitContainer/PanelContainer/ModelPanelContainer/PixelViewportContainer/PixelSubViewport")
-_pixelViewportContainer = NodePath("VBoxContainer/HSplitContainer/PanelContainer/ModelPanelContainer/PixelViewportContainer")
 _spriteResolution = 64
 frameSkipStep = 3
 
@@ -85,6 +94,13 @@ canvas_item_default_texture_filter = 0
 physics_object_picking = true
 render_target_update_mode = 4
 
+[node name="PixelOutline" type="MeshInstance3D" parent="VBoxContainer/HSplitContainer/PanelContainer/ModelPanelContainer/RawViewportContainer/RawSubViewport"]
+unique_name_in_owner = true
+visible = false
+material_override = SubResource("ShaderMaterial_1b8l8")
+cast_shadow = 0
+mesh = SubResource("QuadMesh_shg2l")
+
 [node name="PixelShaderMesh" type="MeshInstance3D" parent="VBoxContainer/HSplitContainer/PanelContainer/ModelPanelContainer/RawViewportContainer/RawSubViewport"]
 unique_name_in_owner = true
 material_override = SubResource("ShaderMaterial_ilxpc")
@@ -92,31 +108,6 @@ cast_shadow = 0
 mesh = SubResource("QuadMesh_7fo1u")
 
 [node name="MainScene3D" parent="VBoxContainer/HSplitContainer/PanelContainer/ModelPanelContainer/RawViewportContainer/RawSubViewport" instance=ExtResource("2_jyiui")]
-
-[node name="PixelViewportContainer" type="SubViewportContainer" parent="VBoxContainer/HSplitContainer/PanelContainer/ModelPanelContainer"]
-unique_name_in_owner = true
-visible = false
-clip_contents = true
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-
-[node name="PixelSubViewport" type="SubViewport" parent="VBoxContainer/HSplitContainer/PanelContainer/ModelPanelContainer/PixelViewportContainer"]
-transparent_bg = true
-handle_input_locally = false
-canvas_item_default_texture_filter = 0
-physics_object_picking = true
-size = Vector2i(2, 2)
-render_target_update_mode = 0
-
-[node name="TextureRectPixelShader" type="TextureRect" parent="VBoxContainer/HSplitContainer/PanelContainer/ModelPanelContainer/PixelViewportContainer/PixelSubViewport"]
-unique_name_in_owner = true
-material = SubResource("ShaderMaterial_j5dgh")
-custom_minimum_size = Vector2(512, 512)
-offset_left = 520.0
-offset_right = 1280.0
-offset_bottom = 516.0
-texture = SubResource("ViewportTexture_kas26")
 
 [node name="OptionsPanelContainer" type="PanelContainer" parent="VBoxContainer/HSplitContainer"]
 layout_mode = 2
@@ -208,7 +199,7 @@ custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
-item_count = 5
+item_count = 6
 popup/item_0/text = "1 - Very High"
 popup/item_1/text = "2 - High"
 popup/item_1/id = 1
@@ -218,6 +209,8 @@ popup/item_3/text = "4 - Low"
 popup/item_3/id = 3
 popup/item_4/text = "5 - Very Low"
 popup/item_4/id = 4
+popup/item_5/text = "6 - Minimal"
+popup/item_5/id = 5
 
 [node name="PanelContainer" type="PanelContainer" parent="VBoxContainer"]
 custom_minimum_size = Vector2(800, 0)

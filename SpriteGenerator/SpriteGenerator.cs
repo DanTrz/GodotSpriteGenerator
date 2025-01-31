@@ -284,6 +284,9 @@ public partial class SpriteGenerator : Node
             case 4:
                 shaderResolution = 128;
                 break;
+            case 5:
+                shaderResolution = 192;
+                break;
         }
 
         ((ShaderMaterial)_pixelShaderMesh.MaterialOverride).SetShaderParameter("pixel_size", shaderResolution);
