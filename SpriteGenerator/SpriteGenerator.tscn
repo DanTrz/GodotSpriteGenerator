@@ -21,8 +21,7 @@ _startGenerationBtn = NodePath("VBoxContainer/HSplitContainer/OptionsPanelContai
 _MainScene3D = NodePath("VBoxContainer/HSplitContainer/PanelContainer/ModelPanelContainer/ViewportContainer/SubViewport/MainScene3D")
 _viewport = NodePath("VBoxContainer/HSplitContainer/PanelContainer/ModelPanelContainer/ViewportContainer/SubViewport")
 _viewportContainer = NodePath("VBoxContainer/HSplitContainer/PanelContainer/ModelPanelContainer/ViewportContainer")
-_spriteResolution = 512
-frameSkipStep = 1
+frameSkipStep = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 anchors_preset = 15

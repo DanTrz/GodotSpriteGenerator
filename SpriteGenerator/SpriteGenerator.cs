@@ -99,6 +99,8 @@ public partial class SpriteGenerator : Node
 
     private async void GenerateSprites()
     {
+        _animationPlayer.SpeedScale = 2.5f; //This seems the value closer to the blender rendering speed (Gives me the closer match of sprite generation per Frame Skip Step)
+
         foreach (var anim in _animationPlayer.GetAnimationList())
         {
             if (anim == "RESET" || anim == "TPose") continue;
