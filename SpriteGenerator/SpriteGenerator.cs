@@ -1,24 +1,34 @@
 using Godot;
 using System;
 using System.IO;
+using System.Net.Sockets;
 
 public partial class SpriteGenerator : Node
 {
     [Export] private Button _startGenerationBtn;
 
     [Export] private MainScene3d _MainScene3D;
-    [Export] private SubViewport _viewport;
-    [Export] private SubViewportContainer _viewportContainer;
+    [Export] private SubViewport _rawViewport;
+    [Export] private SubViewportContainer _rawViewportContainer;
+    [Export] private SubViewport _pixelViewport;
+    [Export] private SubViewportContainer _pixelViewportContainer;
     [Export] private string _outputFolder = "res://SpriteSheets";
     [Export] private int _spriteResolution = 256;
     [Export] private int frameSkipStep = 4; // Control how frequently frames are captured
 
-    private OptionButton _resolutionOptionBtn;
+    [Export] private bool _clearFolderBeforeGeneration = true;
+    [Export] private bool _usePixelEffect = true;
 
+    private OptionButton _resolutionOptionBtn;
+    private OptionButton _pixelShaderOptionBtn;
     private Node3D _model;
     private Node3D _characterModelObject;
     private Camera3D _camera;
     private AnimationPlayer _animationPlayer;
+    private LineEdit _frameStepTextEdit;
+    private CheckButton _clearFolderCheckBtn;
+    private CheckButton _pixelEffectCheckBtn;
+    private MeshInstance3D _pixelShaderMesh;
 
     private readonly int[] angles = { 0 };
     //private readonly int[] angles = { 0, 45, 90, 135, 180, 225, 270, 315 };
@@ -28,11 +38,36 @@ public partial class SpriteGenerator : Node
     private int spriteCount = 1;
     private string saveFolder = "Model";
 
+
     public override void _Ready()
     {
-        _startGenerationBtn.Pressed += OnStartGeneration;
+        //Load Nodes
         _resolutionOptionBtn = GetNode<OptionButton>("%ResOptionButton");
+        _pixelShaderOptionBtn = GetNode<OptionButton>("%PixelShaderOptionBtn");
+        _frameStepTextEdit = GetNode<LineEdit>("%FrameStepTextEdit");
+        _clearFolderCheckBtn = GetNode<CheckButton>("%ClearFolderCheckBtn");
+        _pixelEffectCheckBtn = GetNode<CheckButton>("%PixelEffectCheckBtn");
+        _pixelShaderMesh = GetNode<MeshInstance3D>("%PixelShaderMesh");
+
+        //Set Default UI Control Values
+        _clearFolderCheckBtn.ButtonPressed = _clearFolderBeforeGeneration;
+        _pixelEffectCheckBtn.ButtonPressed = _usePixelEffect;
+        _pixelShaderMesh.Visible = _usePixelEffect;
+        _frameStepTextEdit.Text = frameSkipStep.ToString();
+
+        //Set Default Resolution and Shader Strenght
+        _resolutionOptionBtn.Selected = _resolutionOptionBtn.ItemCount - 1;
+        OnRenderResolutionChanged(_resolutionOptionBtn.ItemCount - 1);
+        _pixelShaderOptionBtn.Selected = _pixelShaderOptionBtn.ItemCount - 1;
+        OnPixelShaderResolutionChanged(_pixelShaderOptionBtn.ItemCount - 1);
+
+        //Connect Signals
+        _startGenerationBtn.Pressed += OnStartGeneration;
         _resolutionOptionBtn.ItemSelected += OnRenderResolutionChanged;
+        _pixelShaderOptionBtn.ItemSelected += OnPixelShaderResolutionChanged;
+        _frameStepTextEdit.TextChanged += OnFrameStepChanged;
+        _clearFolderCheckBtn.Pressed += OnClearFolderPressed;
+        _pixelEffectCheckBtn.Pressed += OnPixelEffectPressed;
 
         //Pass the objects from MainScene3D to the SpriteGenerator
         if (_MainScene3D != null)
@@ -41,6 +76,7 @@ public partial class SpriteGenerator : Node
             _camera = _MainScene3D.MainCamera;
             _animationPlayer = _MainScene3D.MainAnimationPlayer;
             _characterModelObject = _MainScene3D.MainCharacterObj;
+
         }
         else
         {
@@ -52,49 +88,31 @@ public partial class SpriteGenerator : Node
 
     }
 
-    private void OnRenderResolutionChanged(long itemSelectedIndex)
-    {
-        switch (itemSelectedIndex)
-        {
-            case 0:
-                _spriteResolution = 64;
-                break;
-            case 1:
-                _spriteResolution = 128;
-                break;
-            case 2:
-                _spriteResolution = 256;
-                break;
-            case 3:
-                _spriteResolution = 512;
-                break;
-        }
-        GD.PrintT("Selected resolution: " + _spriteResolution);
 
-        UpdateViewPort();
-    }
-
-    private void UpdateViewPort()
-    {
-        Vector2I viewPortSize = new Vector2I(_spriteResolution, _spriteResolution);
-        _viewport.CallDeferred("set_size", viewPortSize);
-        _viewportContainer.CallDeferred("set_size", viewPortSize);
-
-        //_viewport.Size = viewPortSize;
-        //_viewportContainer.Size = viewPortSize;
-
-    }
 
     private void OnStartGeneration()
     {
+        spriteCount = 1;
         saveFolder = ProjectSettings.GlobalizePath(_outputFolder + "/" + _characterModelObject.Name);
 
         if (!Directory.Exists(ProjectSettings.GlobalizePath(saveFolder)))
             Directory.CreateDirectory(ProjectSettings.GlobalizePath(saveFolder));
 
-        GD.PrintT("Start Generation");
+        // GD.PrintT("Start Generation");
+
+        if (_clearFolderBeforeGeneration)
+            ClearFolder(saveFolder);
 
         GenerateSprites();
+    }
+
+    private void ClearFolder(string folder)
+    {
+        string[] files = Directory.GetFiles(folder);
+        foreach (string file in files)
+        {
+            File.Delete(file);
+        }
     }
 
     private async void GenerateSprites()
@@ -122,7 +140,17 @@ public partial class SpriteGenerator : Node
                     if (frameIndex % frameSkipStep == 0)
                     {
                         await ToSignal(GetTree(), "process_frame");
-                        SaveFrame(angle);
+                        SaveFrameRaw(angle);
+
+                        // if (_usePixelEffect)
+                        // {
+                        //     SaveFramePixelShader(angle);
+                        // }
+                        // else
+                        // {
+                        //     SaveFrameRaw(angle);
+                        // }
+
                     }
                     frameIndex++;
                 }
@@ -133,9 +161,10 @@ public partial class SpriteGenerator : Node
         GenerateSpriteSheet(saveFolder, currentAnimationName + "_spriteSheet", 4);
     }
 
-    private void SaveFrame(int angle)
+    private void SaveFrameRaw(int angle)
     {
-        var img = _viewport.GetTexture().GetImage();
+        GD.PrintT("Saving Sprite Raw : ", spriteCount);
+        var img = _rawViewport.GetTexture().GetImage();
 
         //img.FlipY();4
         string path = $"{saveFolder}/{currentAnimationName}_{"angle_" + angle}_{spriteCount}.png";
@@ -144,6 +173,19 @@ public partial class SpriteGenerator : Node
         img.SavePng(ProjectSettings.GlobalizePath(path));
         frameIndex++;
     }
+
+    // private void SaveFramePixelShader(int angle)
+    // {
+    //     GD.PrintT("Saving Sprite with Pixel Shader : ", spriteCount);
+    //     var img = _textureRectPixelShader.Texture.GetImage();
+
+    //     string path = $"{saveFolder}/{currentAnimationName}_{"angle_" + angle}_{spriteCount}.png";
+    //     spriteCount++;
+
+    //     img.SavePng(ProjectSettings.GlobalizePath(path));
+    //     frameIndex++;
+
+    // }
 
     private void GenerateSpriteSheet(string folderPath, string outputFileName, int columns)
     {
@@ -197,6 +239,106 @@ public partial class SpriteGenerator : Node
 
         GD.Print("Sprite sheet saved: " + outputPath);
     }
+
+    private void OnRenderResolutionChanged(long itemSelectedIndex)
+    {
+        switch (itemSelectedIndex)
+        {
+            case 0:
+                _spriteResolution = 64;
+                break;
+            case 1:
+                _spriteResolution = 128;
+                break;
+            case 2:
+                _spriteResolution = 256;
+                break;
+            case 3:
+                _spriteResolution = 512;
+                break;
+        }
+        GD.PrintT("Selected resolution: " + _spriteResolution);
+
+        UpdateViewPort();
+    }
+
+
+    private void OnPixelShaderResolutionChanged(long itemSelectedIndex)
+    {
+        int shaderResolution = 0;
+
+        switch (itemSelectedIndex)
+        {
+            case 0:
+                shaderResolution = 32;
+                break;
+            case 1:
+                shaderResolution = 48;
+                break;
+            case 2:
+                shaderResolution = 64;
+                break;
+            case 3:
+                shaderResolution = 96;
+                break;
+            case 4:
+                shaderResolution = 128;
+                break;
+        }
+
+        ((ShaderMaterial)_pixelShaderMesh.MaterialOverride).SetShaderParameter("pixel_size", shaderResolution);
+        GD.PrintT("Shader resolution: " + shaderResolution);
+
+        UpdateViewPort();
+    }
+
+    private void UpdateViewPort()
+    {
+        Vector2I viewPortSize = new Vector2I(_spriteResolution, _spriteResolution);
+        _rawViewport.CallDeferred("set_size", viewPortSize);
+        _rawViewportContainer.CallDeferred("set_size", viewPortSize);
+        //_viewport.Size = viewPortSize;
+        //_viewportContainer.Size = viewPortSize;
+
+    }
+    private void OnClearFolderPressed()
+    {
+        _clearFolderBeforeGeneration = _clearFolderCheckBtn.ButtonPressed;
+        GD.PrintT("Clear Folder: " + _clearFolderBeforeGeneration);
+    }
+
+
+    private void OnFrameStepChanged(string newText)
+    {
+        if (string.IsNullOrEmpty(newText)) return;
+
+        frameSkipStep = Convert.ToInt32(newText);
+        GD.PrintT("Frame Step: " + frameSkipStep);
+
+    }
+
+
+    private void OnPixelEffectPressed()
+    {
+        _usePixelEffect = _pixelEffectCheckBtn.ButtonPressed;
+        _pixelShaderMesh.Visible = _usePixelEffect;
+
+        GD.PrintT("Use PixelEffect: " + _usePixelEffect);
+
+
+
+        // if (_usePixelEffect)
+        // {
+        //     _viewport.CallDeferred("set_use_pixel_effect", true);
+        // }
+        // else
+        // {
+        //     _viewport.CallDeferred("set_use_pixel_effect", false);
+    }
+
+
+
+
 
 
 
