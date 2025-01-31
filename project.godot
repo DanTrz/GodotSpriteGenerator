@@ -13,6 +13,7 @@ config_version=5
 config/name="SpriteGenerator"
 run/main_scene="res://SpriteGenerator/SpriteGenerator.tscn"
 config/features=PackedStringArray("4.3", "C#", "Forward Plus")
+run/max_fps=30
 config/icon="res://icon.svg"
 
 [display]

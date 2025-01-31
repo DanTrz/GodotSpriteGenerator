@@ -16,12 +16,14 @@ public partial class SpriteGenerator : Node
     private OptionButton _resolutionOptionBtn;
 
     private Node3D _model;
+    private Node3D _characterModelObject;
     private Camera3D _camera;
     private AnimationPlayer _animationPlayer;
 
     private readonly int[] angles = { 0 };
     //private readonly int[] angles = { 0, 45, 90, 135, 180, 225, 270, 315 };
     private string currentAnimation;
+    private string currentAnimationName;
     private int frameIndex;
     private int spriteCount = 1;
     private string saveFolder = "Model";
@@ -35,9 +37,10 @@ public partial class SpriteGenerator : Node
         //Pass the objects from MainScene3D to the SpriteGenerator
         if (_MainScene3D != null)
         {
-            _model = _MainScene3D.MainModel;
+            _model = _MainScene3D.MainModelNode;
             _camera = _MainScene3D.MainCamera;
             _animationPlayer = _MainScene3D.MainAnimationPlayer;
+            _characterModelObject = _MainScene3D.MainCharacterObj;
         }
         else
         {
@@ -84,7 +87,7 @@ public partial class SpriteGenerator : Node
 
     private void OnStartGeneration()
     {
-        saveFolder = ProjectSettings.GlobalizePath(_outputFolder + "/" + _model.Name);
+        saveFolder = ProjectSettings.GlobalizePath(_outputFolder + "/" + _characterModelObject.Name);
 
         if (!Directory.Exists(ProjectSettings.GlobalizePath(saveFolder)))
             Directory.CreateDirectory(ProjectSettings.GlobalizePath(saveFolder));
@@ -98,9 +101,12 @@ public partial class SpriteGenerator : Node
     {
         foreach (var anim in _animationPlayer.GetAnimationList())
         {
-            if (anim == "RESET") continue;
+            if (anim == "RESET" || anim == "TPose") continue;
 
             currentAnimation = anim;
+            currentAnimationName = anim.Replace("/", "_");
+            // currentAnimation = anim;
+            // currentAnimation = anim.GetBaseName();
             _animationPlayer.Play(anim);
             frameIndex = 0;
 
@@ -122,7 +128,7 @@ public partial class SpriteGenerator : Node
             }
         }
 
-        GenerateSpriteSheet(saveFolder, currentAnimation + "_spriteSheet", 4);
+        GenerateSpriteSheet(saveFolder, currentAnimationName + "_spriteSheet", 4);
     }
 
     private void SaveFrame(int angle)
@@ -130,7 +136,7 @@ public partial class SpriteGenerator : Node
         var img = _viewport.GetTexture().GetImage();
 
         //img.FlipY();4
-        string path = $"{saveFolder}/{currentAnimation}_{"angle_" + angle}_{spriteCount}.png";
+        string path = $"{saveFolder}/{currentAnimationName}_{"angle_" + angle}_{spriteCount}.png";
         spriteCount++;
 
         img.SavePng(ProjectSettings.GlobalizePath(path));

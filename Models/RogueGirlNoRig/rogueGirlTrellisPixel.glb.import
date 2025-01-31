@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://gp1arwtctnmm"
-path="res://.godot/imported/rogueGirlTrellisPixel.glb-feec9f4676d85d370300e50687673c8a.scn"
+path="res://.godot/imported/rogueGirlTrellisPixel.glb-5b10bca2231c58bed228abebb1780251.scn"
 
 [deps]
 
-source_file="res://Models/rogueGirlTrellisPixel.glb"
-dest_files=["res://.godot/imported/rogueGirlTrellisPixel.glb-feec9f4676d85d370300e50687673c8a.scn"]
+source_file="res://Models/RogueGirlNoRig/rogueGirlTrellisPixel.glb"
+dest_files=["res://.godot/imported/rogueGirlTrellisPixel.glb-5b10bca2231c58bed228abebb1780251.scn"]
 
 [params]
 

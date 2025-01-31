@@ -2,20 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ds5gumgtpl5ab"
-path.s3tc="res://.godot/imported/rogueGirlTrellisPixel_0.png-b5c27a8af930efe04df2158bbcc24e3a.s3tc.ctex"
+uid="uid://jvxsak4yk46o"
+path.s3tc="res://.godot/imported/roguePixelDallE_TPose_0.png-1ca563d5808dec97324acd2ac865f022.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "44f79f50459820bf868502e0d7d0a2c5"
+"md5": "fe57cdaf7e0cd5a35811ca070bade40b"
 }
 
 [deps]
 
-source_file="res://Models/rogueGirlTrellisPixel_0.png"
-dest_files=["res://.godot/imported/rogueGirlTrellisPixel_0.png-b5c27a8af930efe04df2158bbcc24e3a.s3tc.ctex"]
+source_file="res://Models/RiggedModelTest/roguePixelDallE_TPose_0.png"
+dest_files=["res://.godot/imported/roguePixelDallE_TPose_0.png-1ca563d5808dec97324acd2ac865f022.s3tc.ctex"]
 
 [params]
 
