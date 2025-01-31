@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=4 uid="uid://iuwovcd804os"]
+[gd_scene load_steps=12 format=4 uid="uid://iuwovcd804os"]
 
 [ext_resource type="Script" path="res://SpriteGenerator/Model3D.cs" id="1_4ce3b"]
 [ext_resource type="Script" path="res://SpriteGenerator/MainScene3d.cs" id="1_cpwm4"]
@@ -36,10 +36,50 @@ sky = SubResource("Sky_ote1o")
 tonemap_mode = 2
 glow_enabled = true
 
-[node name="MainScene3D" type="Node3D" node_paths=PackedStringArray("MainModel", "MainCamera")]
+[sub_resource type="Animation" id="Animation_oas5n"]
+length = 0.001
+step = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Model3D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_24rwi"]
+resource_name = "TestIdleAnim"
+length = 4.00005
+step = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Model3D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0.5, 0), Vector3(0.2, 0.5, 0), Vector3(-0.2, 0.5, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_lnjru"]
+_data = {
+"RESET": SubResource("Animation_oas5n"),
+"TestIdleAnim": SubResource("Animation_24rwi")
+}
+
+[node name="MainScene3D" type="Node3D" node_paths=PackedStringArray("MainModel", "MainCamera", "MainAnimationPlayer")]
 script = ExtResource("1_cpwm4")
 MainModel = NodePath("Model3D")
 MainCamera = NodePath("MainCamera")
+MainAnimationPlayer = NodePath("AnimationPlayer")
 
 [node name="MainCamera" type="Camera3D" parent="."]
 unique_name_in_owner = true
@@ -62,3 +102,8 @@ shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_e1sc8")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_lnjru")
+}

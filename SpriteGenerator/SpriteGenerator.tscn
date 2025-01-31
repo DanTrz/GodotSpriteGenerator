@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dghyusd0bdjxt"]
+[gd_scene load_steps=4 format=3 uid="uid://dghyusd0bdjxt"]
 
 [ext_resource type="Script" path="res://SpriteGenerator/SpriteGenerator.cs" id="1_ws6fq"]
 [ext_resource type="PackedScene" uid="uid://iuwovcd804os" path="res://SpriteGenerator/MainScene3D.tscn" id="2_jyiui"]
@@ -15,51 +15,14 @@ corner_radius_top_right = 2
 corner_radius_bottom_right = 2
 corner_radius_bottom_left = 2
 
-[sub_resource type="Animation" id="Animation_w8jf6"]
-resource_name = "IdleTest"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("VBoxContainer/HSplitContainer/PanelContainer/ModelPanelContainer/ViewportContainer/SubViewport/MainScene3D/Model3D:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0.1, 0.3, 0.5, 0.7, 0.833333, 0.9),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0, 0.01, 0), Vector3(0, 0.02, 0), Vector3(0, 0.03, 0), Vector3(0, 0, 0), Vector3(0, 0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_hjhc2"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("VBoxContainer/HSplitContainer/PanelContainer/ModelPanelContainer/ViewportContainer/SubViewport/MainScene3D/Model3D:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0, 0, 0)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_wmk33"]
-_data = {
-"IdleTest": SubResource("Animation_w8jf6"),
-"RESET": SubResource("Animation_hjhc2")
-}
-
-[node name="SpriteGenerator" type="CanvasLayer" node_paths=PackedStringArray("_startGenerationBtn", "_MainScene3D", "_animationPlayer", "_viewport", "_viewportContainer")]
+[node name="SpriteGenerator" type="CanvasLayer" node_paths=PackedStringArray("_startGenerationBtn", "_MainScene3D", "_viewport", "_viewportContainer")]
 script = ExtResource("1_ws6fq")
 _startGenerationBtn = NodePath("VBoxContainer/HSplitContainer/OptionsPanelContainer/VBoxContainer/StartGenerationBtn")
 _MainScene3D = NodePath("VBoxContainer/HSplitContainer/PanelContainer/ModelPanelContainer/ViewportContainer/SubViewport/MainScene3D")
-_animationPlayer = NodePath("AnimationPlayer")
 _viewport = NodePath("VBoxContainer/HSplitContainer/PanelContainer/ModelPanelContainer/ViewportContainer/SubViewport")
 _viewportContainer = NodePath("VBoxContainer/HSplitContainer/PanelContainer/ModelPanelContainer/ViewportContainer")
 _spriteResolution = 512
-frameStep = 8
+frameSkipStep = 16
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 anchors_preset = 15
@@ -174,11 +137,6 @@ custom_minimum_size = Vector2(800, 0)
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 4.0
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_wmk33")
-}
 
 [node name="Camera2D" type="Camera2D" parent="."]
 anchor_mode = 0

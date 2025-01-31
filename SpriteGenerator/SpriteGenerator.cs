@@ -7,22 +7,24 @@ public partial class SpriteGenerator : Node
     [Export] private Button _startGenerationBtn;
 
     [Export] private MainScene3d _MainScene3D;
-    [Export] private AnimationPlayer _animationPlayer;
     [Export] private SubViewport _viewport;
     [Export] private SubViewportContainer _viewportContainer;
     [Export] private string _outputFolder = "res://SpriteSheets";
     [Export] private int _spriteResolution = 256;
-    [Export] private int frameStep = 4; // Control how frequently frames are captured
+    [Export] private int frameSkipStep = 4; // Control how frequently frames are captured
 
     private OptionButton _resolutionOptionBtn;
 
     private Node3D _model;
     private Camera3D _camera;
+    private AnimationPlayer _animationPlayer;
+
     private readonly int[] angles = { 0 };
     //private readonly int[] angles = { 0, 45, 90, 135, 180, 225, 270, 315 };
     private string currentAnimation;
     private int frameIndex;
     private int spriteCount = 1;
+    private string saveFolder = "Model";
 
     public override void _Ready()
     {
@@ -30,10 +32,12 @@ public partial class SpriteGenerator : Node
         _resolutionOptionBtn = GetNode<OptionButton>("%ResOptionButton");
         _resolutionOptionBtn.ItemSelected += OnRenderResolutionChanged;
 
+        //Pass the objects from MainScene3D to the SpriteGenerator
         if (_MainScene3D != null)
         {
             _model = _MainScene3D.MainModel;
             _camera = _MainScene3D.MainCamera;
+            _animationPlayer = _MainScene3D.MainAnimationPlayer;
         }
         else
         {
@@ -80,15 +84,17 @@ public partial class SpriteGenerator : Node
 
     private void OnStartGeneration()
     {
-        if (!Directory.Exists(ProjectSettings.GlobalizePath(_outputFolder)))
-            Directory.CreateDirectory(ProjectSettings.GlobalizePath(_outputFolder));
+        saveFolder = ProjectSettings.GlobalizePath(_outputFolder + "/" + _model.Name);
+
+        if (!Directory.Exists(ProjectSettings.GlobalizePath(saveFolder)))
+            Directory.CreateDirectory(ProjectSettings.GlobalizePath(saveFolder));
 
         GD.PrintT("Start Generation");
 
-        GenerateSpriteSheets();
+        GenerateSprites();
     }
 
-    private async void GenerateSpriteSheets()
+    private async void GenerateSprites()
     {
         foreach (var anim in _animationPlayer.GetAnimationList())
         {
@@ -105,7 +111,7 @@ public partial class SpriteGenerator : Node
                     _model.RotationDegrees = new Vector3(0, angle, 0);
 
                     //Only capture frames where frameIndex is a multiple of frameStep
-                    if (frameIndex % frameStep == 0)
+                    if (frameIndex % frameSkipStep == 0)
                     {
                         await ToSignal(GetTree(), "process_frame");
                         SaveFrame(angle);
@@ -116,7 +122,7 @@ public partial class SpriteGenerator : Node
             }
         }
 
-        //GenerateSpriteSheet(_outputFolder, currentAnimation + "_spriteSheet", 4);
+        GenerateSpriteSheet(saveFolder, currentAnimation + "_spriteSheet", 4);
     }
 
     private void SaveFrame(int angle)
@@ -124,7 +130,7 @@ public partial class SpriteGenerator : Node
         var img = _viewport.GetTexture().GetImage();
 
         //img.FlipY();4
-        string path = $"{_outputFolder}/{currentAnimation}_{"angle_" + angle}_{spriteCount}.png";
+        string path = $"{saveFolder}/{currentAnimation}_{"angle_" + angle}_{spriteCount}.png";
         spriteCount++;
 
         img.SavePng(ProjectSettings.GlobalizePath(path));
