@@ -72,6 +72,7 @@ public partial class SpriteGenerator : Node
         Vector2I viewPortSize = new Vector2I(_spriteResolution, _spriteResolution);
         _viewport.CallDeferred("set_size", viewPortSize);
         _viewportContainer.CallDeferred("set_size", viewPortSize);
+
         //_viewport.Size = viewPortSize;
         //_viewportContainer.Size = viewPortSize;
 
