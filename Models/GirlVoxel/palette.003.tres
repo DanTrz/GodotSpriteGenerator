@@ -1,0 +1,12 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://jyjalin77vit"]
+
+[ext_resource type="Texture2D" uid="uid://crtiitfnbx1y" path="res://Models/GirlVoxel/VoxelArtTest_FBX_TPose2_ArmUp_3.png" id="1_ofsvq"]
+
+[resource]
+resource_name = "palette.003"
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("1_ofsvq")

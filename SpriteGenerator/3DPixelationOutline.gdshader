@@ -19,8 +19,8 @@ varying mat4 model_view_matrix;
 float getDepth(vec2 screen_uv, sampler2D depth_texture, mat4 inv_projection_matrix) {
     float raw_depth = texture(depth_texture, screen_uv)[0];
     vec3 normalized_device_coordinates = vec3(screen_uv * 2.0 - 1.0, raw_depth);
-    vec4 view_space = inv_projection_matrix * vec4(normalized_device_coordinates, 1.0);	
-    view_space.xyz /= view_space.w;	
+    vec4 view_space = inv_projection_matrix * vec4(normalized_device_coordinates, 1.0);
+    view_space.xyz /= view_space.w;
     return -view_space.z;
 }
 
@@ -38,7 +38,7 @@ void vertex() {
 void fragment() {
     vec2 e = vec2(outline_thickness / VIEWPORT_SIZE.x, outline_thickness / VIEWPORT_SIZE.y); // Adjust thickness
     vec2 buffer = vec2(outline_offset / VIEWPORT_SIZE.x, outline_offset / VIEWPORT_SIZE.y); // Buffer around the outline
-    
+
     // Shadows
     float depth_diff = 0.0;
     float neg_depth_diff = .5;
@@ -96,15 +96,10 @@ void fragment() {
     if (shadows_enabled) {
         final = mix(final, final_shadow_color, depth_diff);
     }
-    
+
     ALBEDO = final;
 
     // Alpha blending for outline
     float alpha_mask = depth_diff * float(shadows_enabled) + normal_diff * float(highlights_enabled);
     ALPHA = clamp(alpha_mask * 5., 0., 1.);
 }
-
-
-
-
-

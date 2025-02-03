@@ -1,9 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://dghyusd0bdjxt"]
+[gd_scene load_steps=7 format=3 uid="uid://dghyusd0bdjxt"]
 
 [ext_resource type="Script" path="res://SpriteGenerator/SpriteGenerator.cs" id="1_ws6fq"]
 [ext_resource type="PackedScene" uid="uid://iuwovcd804os" path="res://SpriteGenerator/MainScene3D.tscn" id="2_jyiui"]
 [ext_resource type="Shader" path="res://SpriteGenerator/Mesh3dPixelEffect.gdshader" id="2_l6h36"]
-[ext_resource type="Shader" path="res://SpriteGenerator/3DPixelEffectOutline.gdshader" id="2_makck"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ivn07"]
 bg_color = Color(0.165657, 0.165656, 0.165656, 1)
@@ -16,24 +15,6 @@ corner_radius_top_left = 2
 corner_radius_top_right = 2
 corner_radius_bottom_right = 2
 corner_radius_bottom_left = 2
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_1b8l8"]
-render_priority = 0
-shader = ExtResource("2_makck")
-shader_parameter/disable_shader = false
-shader_parameter/MAX_DEPTH = 1000.0
-shader_parameter/shadows_enabled = true
-shader_parameter/highlights_enabled = true
-shader_parameter/shadow_strength = 1.0
-shader_parameter/highlight_strength = 0.2
-shader_parameter/highlight_color = Color(0.871539, 0.606419, 0.688504, 1)
-shader_parameter/shadow_color = Color(0, 0, 0, 1)
-shader_parameter/pixelSize = 1
-
-[sub_resource type="QuadMesh" id="QuadMesh_shg2l"]
-flip_faces = true
-size = Vector2(4, 4)
-center_offset = Vector3(0, 0, 0.5)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ilxpc"]
 render_priority = 0
@@ -93,13 +74,6 @@ handle_input_locally = false
 canvas_item_default_texture_filter = 0
 physics_object_picking = true
 render_target_update_mode = 4
-
-[node name="PixelOutline" type="MeshInstance3D" parent="VBoxContainer/HSplitContainer/PanelContainer/ModelPanelContainer/RawViewportContainer/RawSubViewport"]
-unique_name_in_owner = true
-visible = false
-material_override = SubResource("ShaderMaterial_1b8l8")
-cast_shadow = 0
-mesh = SubResource("QuadMesh_shg2l")
 
 [node name="PixelShaderMesh" type="MeshInstance3D" parent="VBoxContainer/HSplitContainer/PanelContainer/ModelPanelContainer/RawViewportContainer/RawSubViewport"]
 unique_name_in_owner = true

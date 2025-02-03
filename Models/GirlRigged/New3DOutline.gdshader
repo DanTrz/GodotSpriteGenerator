@@ -35,4 +35,3 @@ void fragment() {
 	ALBEDO = outline_color.rgb;
 	ALPHA = outline_color.a * fade; // Multiply alpha by fade factor
 }
-

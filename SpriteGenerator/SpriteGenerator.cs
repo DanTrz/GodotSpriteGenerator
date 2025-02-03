@@ -273,16 +273,16 @@ public partial class SpriteGenerator : Node
                 shaderResolution = 32;
                 break;
             case 1:
-                shaderResolution = 48;
-                break;
-            case 2:
                 shaderResolution = 64;
                 break;
-            case 3:
+            case 2:
                 shaderResolution = 96;
                 break;
+            case 3:
+                shaderResolution = 108;
+                break;
             case 4:
-                shaderResolution = 128;
+                shaderResolution = 148;
                 break;
             case 5:
                 shaderResolution = 192;

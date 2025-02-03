@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://dy3v3fwrhplex"]
+
+[ext_resource type="PackedScene" uid="uid://dddhx0t0via8k" path="res://Models/Temp/VoxelArtTest_MagicalVoxelModel_V8.glb" id="1_sqxo5"]
+
+[node name="GirlVoxelArtTest" instance=ExtResource("1_sqxo5")]
+
+[node name="GirlVoxelOBJ" parent="." index="0"]
+transform = Transform3D(0.015, 0, 0, 0, -6.55671e-10, -0.015, 0, 0.015, -6.55671e-10, 0, 0, 0)
+cast_shadow = 0
