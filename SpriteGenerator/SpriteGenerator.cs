@@ -7,11 +7,9 @@ public partial class SpriteGenerator : Node
 {
     [Export] private Button _startGenerationBtn;
 
-    [Export] private MainScene3d _MainScene3D;
+    [Export] public MainScene3d MainScene3D;
     [Export] private SubViewport _rawViewport;
     [Export] private SubViewportContainer _rawViewportContainer;
-    [Export] private SubViewport _pixelViewport;
-    [Export] private SubViewportContainer _pixelViewportContainer;
     [Export] private string _outputFolder = "res://SpriteSheets";
     [Export] private int _spriteResolution = 256;
     [Export] private int frameSkipStep = 4; // Control how frequently frames are captured
@@ -24,11 +22,7 @@ public partial class SpriteGenerator : Node
     [OnReady("%ClearFolderCheckBtn")] private CheckButton _clearFolderCheckBtn;
     [OnReady("%PixelEffectCheckBtn")] private CheckButton _pixelEffectCheckBtn;
     [OnReady("%PixelShaderMesh")] private MeshInstance3D _pixelShaderMesh;
-
-    [OnReady("%MoveLeftBtn")] private Button _moveLeftBtn;
-    [OnReady("%MoveRightBtn")] private Button _moveRightBtn;
-    [OnReady("%MoveUpBtn")] private Button _moveUpBtn;
-    [OnReady("%MoveDownBtn")] private Button _moveDownBtn;
+    [OnReady("%ModelPositionManager")] private ModelPositionManager _modelPositionManager;
 
     private Node3D _model;
     private Node3D _characterModelObject;
@@ -52,6 +46,7 @@ public partial class SpriteGenerator : Node
         _pixelShaderMesh.Visible = _usePixelEffect;
         _frameStepTextEdit.Text = frameSkipStep.ToString();
 
+
         //Set Default Resolution and Shader Strenght
         _resolutionOptionBtn.Selected = _resolutionOptionBtn.ItemCount - 1;
         OnRenderResolutionChanged(_resolutionOptionBtn.ItemCount - 1);
@@ -67,12 +62,18 @@ public partial class SpriteGenerator : Node
         _pixelEffectCheckBtn.Pressed += OnPixelEffectPressed;
 
         //Pass the objects from MainScene3D to the SpriteGenerator
-        if (_MainScene3D != null)
+        if (MainScene3D != null)
         {
-            _model = _MainScene3D.MainModelNode;
-            _camera = _MainScene3D.MainCamera;
-            _animationPlayer = _MainScene3D.MainAnimationPlayer;
-            _characterModelObject = _MainScene3D.MainCharacterObj;
+            _model = MainScene3D.MainModelNode;
+            _camera = MainScene3D.MainCamera;
+            _animationPlayer = MainScene3D.MainAnimationPlayer;
+            _characterModelObject = MainScene3D.MainCharacterObj;
+
+            //Pass the Model to te PositionManager 
+            _modelPositionManager.ModelNode = _model;
+            _modelPositionManager.CameraNode = _camera;
+
+
 
         }
         else

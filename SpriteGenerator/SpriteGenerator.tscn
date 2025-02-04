@@ -1,8 +1,11 @@
-[gd_scene load_steps=13 format=3 uid="uid://dghyusd0bdjxt"]
+[gd_scene load_steps=18 format=3 uid="uid://dghyusd0bdjxt"]
 
 [ext_resource type="Script" uid="uid://dj2tgr0hxsbd3" path="res://SpriteGenerator/SpriteGenerator.cs" id="1_ws6fq"]
 [ext_resource type="PackedScene" uid="uid://iuwovcd804os" path="res://SpriteGenerator/MainScene3D.tscn" id="2_jyiui"]
 [ext_resource type="Shader" uid="uid://c7dbfu5bd0ns3" path="res://Assets/Shaders/Mesh3dPixelEffect.gdshader" id="2_l6h36"]
+[ext_resource type="Script" uid="uid://b78ehve5xa1ia" path="res://SpriteGenerator/ModelPositionManager.cs" id="4_fx5pg"]
+[ext_resource type="Texture2D" uid="uid://cr55nbf56ybvc" path="res://Assets/UI/Basic UI spritesheet.png" id="5_mumiu"]
+[ext_resource type="Texture2D" uid="uid://k5o1cpbx7oa4" path="res://Assets/UI/ModelTransformReferenceImg.png" id="6_4hdfw"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ivn07"]
 bg_color = Color(0.165657, 0.165656, 0.165656, 1)
@@ -47,10 +50,18 @@ region = Rect2(243, 36, 10, 9)
 atlas = SubResource("CompressedTexture2D_mumiu")
 region = Rect2(243, 52, 10, 9)
 
-[node name="SpriteGenerator" type="CanvasLayer" node_paths=PackedStringArray("_startGenerationBtn", "_MainScene3D", "_rawViewport", "_rawViewportContainer")]
+[sub_resource type="AtlasTexture" id="AtlasTexture_j32we"]
+atlas = ExtResource("5_mumiu")
+region = Rect2(610, 226, 12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pyu7k"]
+atlas = ExtResource("5_mumiu")
+region = Rect2(626, 230, 12, 4)
+
+[node name="SpriteGenerator" type="CanvasLayer" node_paths=PackedStringArray("_startGenerationBtn", "MainScene3D", "_rawViewport", "_rawViewportContainer")]
 script = ExtResource("1_ws6fq")
 _startGenerationBtn = NodePath("VBoxContainer/HSplitContainer/OptionsPanelContainer/VBoxContainer/StartGenerationBtn")
-_MainScene3D = NodePath("VBoxContainer/HSplitContainer/RenderImageVBoxContainer/MainRenderPanel/ModelPanelContainer/RawViewportContainer/RawSubViewport/MainScene3D")
+MainScene3D = NodePath("VBoxContainer/HSplitContainer/RenderImageVBoxContainer/MainRenderPanel/ModelPanelContainer/RawViewportContainer/RawSubViewport/MainScene3D")
 _rawViewport = NodePath("VBoxContainer/HSplitContainer/RenderImageVBoxContainer/MainRenderPanel/ModelPanelContainer/RawViewportContainer/RawSubViewport")
 _rawViewportContainer = NodePath("VBoxContainer/HSplitContainer/RenderImageVBoxContainer/MainRenderPanel/ModelPanelContainer/RawViewportContainer")
 _spriteResolution = 64
@@ -110,7 +121,7 @@ mesh = SubResource("QuadMesh_7fo1u")
 
 [node name="ImageOptionsPanel" type="PanelContainer" parent="VBoxContainer/HSplitContainer/RenderImageVBoxContainer"]
 clip_contents = true
-custom_minimum_size = Vector2(512, 100)
+custom_minimum_size = Vector2(512, 200)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -118,37 +129,83 @@ size_flags_vertical = 4
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/HSplitContainer/RenderImageVBoxContainer/ImageOptionsPanel"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/HSplitContainer/RenderImageVBoxContainer/ImageOptionsPanel/HBoxContainer"]
+[node name="ModelPositionManager" type="Control" parent="VBoxContainer/HSplitContainer/RenderImageVBoxContainer/ImageOptionsPanel/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
-theme_override_constants/separation = 15
+script = ExtResource("4_fx5pg")
 
-[node name="MoveLeftBtn" type="Button" parent="VBoxContainer/HSplitContainer/RenderImageVBoxContainer/ImageOptionsPanel/HBoxContainer/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HSplitContainer/RenderImageVBoxContainer/ImageOptionsPanel/HBoxContainer/ModelPositionManager"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ModelPositionButtons" type="HBoxContainer" parent="VBoxContainer/HSplitContainer/RenderImageVBoxContainer/ImageOptionsPanel/HBoxContainer/ModelPositionManager/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="MoveLeftBtn" type="Button" parent="VBoxContainer/HSplitContainer/RenderImageVBoxContainer/ImageOptionsPanel/HBoxContainer/ModelPositionManager/VBoxContainer/ModelPositionButtons"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(60, 40)
 layout_mode = 2
 text = "Left"
 icon = SubResource("AtlasTexture_fx5pg")
 
-[node name="MoveRightBtn" type="Button" parent="VBoxContainer/HSplitContainer/RenderImageVBoxContainer/ImageOptionsPanel/HBoxContainer/HBoxContainer"]
+[node name="MoveRightBtn" type="Button" parent="VBoxContainer/HSplitContainer/RenderImageVBoxContainer/ImageOptionsPanel/HBoxContainer/ModelPositionManager/VBoxContainer/ModelPositionButtons"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(60, 40)
 layout_mode = 2
 text = "Right"
 icon = SubResource("AtlasTexture_4hdfw")
 
-[node name="MoveUpBtn" type="Button" parent="VBoxContainer/HSplitContainer/RenderImageVBoxContainer/ImageOptionsPanel/HBoxContainer/HBoxContainer"]
+[node name="MoveUpBtn" type="Button" parent="VBoxContainer/HSplitContainer/RenderImageVBoxContainer/ImageOptionsPanel/HBoxContainer/ModelPositionManager/VBoxContainer/ModelPositionButtons"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(60, 40)
 layout_mode = 2
 text = "Up"
 icon = SubResource("AtlasTexture_o31co")
 
-[node name="MoveDownBtn" type="Button" parent="VBoxContainer/HSplitContainer/RenderImageVBoxContainer/ImageOptionsPanel/HBoxContainer/HBoxContainer"]
+[node name="MoveDownBtn" type="Button" parent="VBoxContainer/HSplitContainer/RenderImageVBoxContainer/ImageOptionsPanel/HBoxContainer/ModelPositionManager/VBoxContainer/ModelPositionButtons"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(60, 40)
 layout_mode = 2
 text = "Down"
 icon = SubResource("AtlasTexture_mumiu")
+
+[node name="RotateXAxisBtn" type="Button" parent="VBoxContainer/HSplitContainer/RenderImageVBoxContainer/ImageOptionsPanel/HBoxContainer/ModelPositionManager/VBoxContainer/ModelPositionButtons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 40)
+layout_mode = 2
+text = "R.x
+"
+icon = SubResource("AtlasTexture_j32we")
+
+[node name="RotateYAxisBtn" type="Button" parent="VBoxContainer/HSplitContainer/RenderImageVBoxContainer/ImageOptionsPanel/HBoxContainer/ModelPositionManager/VBoxContainer/ModelPositionButtons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 40)
+layout_mode = 2
+text = "R.y"
+icon = SubResource("AtlasTexture_pyu7k")
+
+[node name="ZoomInBtn" type="Button" parent="VBoxContainer/HSplitContainer/RenderImageVBoxContainer/ImageOptionsPanel/HBoxContainer/ModelPositionManager/VBoxContainer/ModelPositionButtons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 40)
+layout_mode = 2
+text = "(+)
+"
+icon = SubResource("AtlasTexture_j32we")
+
+[node name="ZoomOutBtn" type="Button" parent="VBoxContainer/HSplitContainer/RenderImageVBoxContainer/ImageOptionsPanel/HBoxContainer/ModelPositionManager/VBoxContainer/ModelPositionButtons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 40)
+layout_mode = 2
+text = "(-)"
+icon = SubResource("AtlasTexture_pyu7k")
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/HSplitContainer/RenderImageVBoxContainer/ImageOptionsPanel/HBoxContainer/ModelPositionManager/VBoxContainer"]
+custom_minimum_size = Vector2(20, 150)
+layout_mode = 2
+texture = ExtResource("6_4hdfw")
+expand_mode = 2
 
 [node name="OptionsPanelContainer" type="PanelContainer" parent="VBoxContainer/HSplitContainer"]
 layout_mode = 2
