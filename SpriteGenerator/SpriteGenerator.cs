@@ -15,20 +15,25 @@ public partial class SpriteGenerator : Node
     [Export] private string _outputFolder = "res://SpriteSheets";
     [Export] private int _spriteResolution = 256;
     [Export] private int frameSkipStep = 4; // Control how frequently frames are captured
-
     [Export] private bool _clearFolderBeforeGeneration = true;
     [Export] private bool _usePixelEffect = true;
 
-    private OptionButton _resolutionOptionBtn;
-    private OptionButton _pixelShaderOptionBtn;
+    [OnReady("%ResOptionButton")] private OptionButton _resolutionOptionBtn;
+    [OnReady("%PixelShaderOptionBtn")] private OptionButton _pixelShaderOptionBtn;
+    [OnReady("%FrameStepTextEdit")] private LineEdit _frameStepTextEdit;
+    [OnReady("%ClearFolderCheckBtn")] private CheckButton _clearFolderCheckBtn;
+    [OnReady("%PixelEffectCheckBtn")] private CheckButton _pixelEffectCheckBtn;
+    [OnReady("%PixelShaderMesh")] private MeshInstance3D _pixelShaderMesh;
+
+    [OnReady("%MoveLeftBtn")] private Button _moveLeftBtn;
+    [OnReady("%MoveRightBtn")] private Button _moveRightBtn;
+    [OnReady("%MoveUpBtn")] private Button _moveUpBtn;
+    [OnReady("%MoveDownBtn")] private Button _moveDownBtn;
+
     private Node3D _model;
     private Node3D _characterModelObject;
     private Camera3D _camera;
     private AnimationPlayer _animationPlayer;
-    private LineEdit _frameStepTextEdit;
-    private CheckButton _clearFolderCheckBtn;
-    private CheckButton _pixelEffectCheckBtn;
-    private MeshInstance3D _pixelShaderMesh;
 
     private readonly int[] angles = { 0 };
     //private readonly int[] angles = { 0, 45, 90, 135, 180, 225, 270, 315 };
@@ -41,14 +46,6 @@ public partial class SpriteGenerator : Node
 
     public override void _Ready()
     {
-        //Load Nodes
-        _resolutionOptionBtn = GetNode<OptionButton>("%ResOptionButton");
-        _pixelShaderOptionBtn = GetNode<OptionButton>("%PixelShaderOptionBtn");
-        _frameStepTextEdit = GetNode<LineEdit>("%FrameStepTextEdit");
-        _clearFolderCheckBtn = GetNode<CheckButton>("%ClearFolderCheckBtn");
-        _pixelEffectCheckBtn = GetNode<CheckButton>("%PixelEffectCheckBtn");
-        _pixelShaderMesh = GetNode<MeshInstance3D>("%PixelShaderMesh");
-
         //Set Default UI Control Values
         _clearFolderCheckBtn.ButtonPressed = _clearFolderBeforeGeneration;
         _pixelEffectCheckBtn.ButtonPressed = _usePixelEffect;

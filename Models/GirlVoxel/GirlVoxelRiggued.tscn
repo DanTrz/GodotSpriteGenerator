@@ -876,9 +876,9 @@ _data = {
 transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 0, 0, 0)
 
 [node name="GeneralSkeleton" parent="." index="0"]
-bones/0/position = Vector3(-0.000187397, 2.92125, 0.0279644)
-bones/0/rotation = Quaternion(-6.59213e-07, -6.73533e-06, 9.63269e-05, 1)
-bones/1/rotation = Quaternion(6.71713e-07, 6.73533e-06, -9.65769e-05, 1)
+bones/0/position = Vector3(-0.000187397, 2.92125, 0.0279643)
+bones/0/rotation = Quaternion(-6.59213e-07, -6.73532e-06, 9.63269e-05, 1)
+bones/1/rotation = Quaternion(6.71713e-07, 6.73532e-06, -9.65769e-05, 1)
 bones/2/rotation = Quaternion(0.0108006, 0.0121801, 0.0204163, 0.999659)
 bones/3/rotation = Quaternion(0.00193028, 0.0113166, 0.0091808, 0.999892)
 bones/4/rotation = Quaternion(-0.017262, 0.0853776, -0.0149815, 0.996086)
@@ -895,13 +895,12 @@ bones/15/rotation = Quaternion(-0.0107384, 0.0868757, 0.988376, 0.124299)
 bones/16/rotation = Quaternion(-0.000795275, 0.999636, -0.026667, 0.00407641)
 bones/17/rotation = Quaternion(0.0943311, 0.742798, -0.657962, -0.0802405)
 bones/18/rotation = Quaternion(0.0320903, 0.99862, 0.0253344, -0.0329491)
-bones/20/rotation = Quaternion(0.0104648, 0.0846759, 0.988672, -0.123487)
+bones/20/rotation = Quaternion(0.0104648, 0.084676, 0.988672, -0.123487)
 bones/21/rotation = Quaternion(0.000503913, 0.99971, -0.0238243, -0.00353925)
 bones/22/rotation = Quaternion(-0.0940085, 0.74328, -0.657483, 0.0800793)
 bones/23/rotation = Quaternion(-0.00531429, 0.999876, 0.0120005, 0.00866073)
 
 [node name="AnimationPlayer" parent="." index="1"]
-unique_name_in_owner = true
 libraries = {
 &"": SubResource("AnimationLibrary_tg1er"),
 &"Anim": SubResource("AnimationLibrary_fhuxi")

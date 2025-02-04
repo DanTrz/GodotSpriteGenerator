@@ -15,12 +15,31 @@ public partial class MainScene3d : Node3D
 			GD.PrintErr("Null values in MainScene3d - Check MainModel and MainCamera Exported properties");
 		}
 
-		MainAnimationPlayer = MainCharacterObj.GetNode<AnimationPlayer>("%AnimationPlayer");
+		MainAnimationPlayer = MainCharacterObj.GetNodeOrNull<AnimationPlayer>("%AnimationPlayer");
 
 		if (MainAnimationPlayer == null)
 		{
-			GD.PrintErr("AnimationPlayer missing in selected Main character in MainScene3d");
+			string animationPlayerPath = ResolveAnimationPlayerPath(MainCharacterObj);
+			MainAnimationPlayer = MainCharacterObj.GetNodeOrNull<AnimationPlayer>(animationPlayerPath);
+
+			if (MainAnimationPlayer == null)
+			{
+				GD.PrintErr("AnimationPlayer missing in selected Main character in MainScene3d");
+			}
 		}
+	}
+
+	public string ResolveAnimationPlayerPath(Node _owner)
+	{
+		foreach (var node in _owner.GetChildren())
+		{
+			if (node is AnimationPlayer animPlayer)
+			{
+				return animPlayer.GetPath().ToString();
+			}
+		}
+
+		return "";
 	}
 
 

@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://5ps0rlhwhjoe"]
+
+[ext_resource type="Script" uid="uid://0vqdh281fv23" path="res://Globals/OnReady/RootScene.cs" id="1_j66hm"]
+
+[node name="RootScene" type="Node"]
+script = ExtResource("1_j66hm")
+MainScene = "uid://dghyusd0bdjxt"

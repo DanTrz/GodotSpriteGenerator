@@ -11,10 +11,14 @@ config_version=5
 [application]
 
 config/name="SpriteGenerator"
-run/main_scene="res://SpriteGenerator/SpriteGenerator.tscn"
+run/main_scene="uid://5ps0rlhwhjoe"
 config/features=PackedStringArray("4.4", "C#", "Forward Plus")
 run/max_fps=30
 config/icon="res://icon.svg"
+
+[autoload]
+
+GlobalOnReadyResolver="*res://Globals/OnReady/GlobalOnReadyResolver.cs"
 
 [display]
 

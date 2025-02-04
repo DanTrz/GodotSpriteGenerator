@@ -8,13 +8,9 @@ public partial class Model3D : Node3D
 	[Export] public float VerticalAngleLimit = 180.0f;  // Limit vertical angle to prevent flipping.
 	[Export] public float scrollSpeed = 1f;
 
-
-
 	private float _horizontalAngle = 0.0f;
 	private float _verticalAngle = 0.0f;
 	private const float Rad2Deg = 180f / Mathf.Pi;  // Define Rad2Deg manually.
-
-
 
 	public override void _Input(InputEvent @event)
 	{
