@@ -113,7 +113,7 @@ tracks/14/keys = PackedFloat32Array(0, 1, -0.0104741, 0.703992, 0.0669252, 0.706
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_tg1er"]
 _data = {
-"TPose": SubResource("Animation_yduxi")
+&"TPose": SubResource("Animation_yduxi")
 }
 
 [sub_resource type="Animation" id="Animation_xx84b"]
@@ -868,8 +868,8 @@ tracks/52/keys = PackedFloat32Array(0, 1, -0.00532042, 0.999875, 0.012042, 0.008
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fhuxi"]
 _data = {
-"Running": SubResource("Animation_xx84b"),
-"SwordAndShieldSlash": SubResource("Animation_52iqd")
+&"Running": SubResource("Animation_xx84b"),
+&"SwordAndShieldSlash": SubResource("Animation_52iqd")
 }
 
 [node name="GirlVoxelRiggued" instance=ExtResource("1_xnnjm")]
@@ -903,6 +903,6 @@ bones/23/rotation = Quaternion(-0.00531429, 0.999876, 0.0120005, 0.00866073)
 [node name="AnimationPlayer" parent="." index="1"]
 unique_name_in_owner = true
 libraries = {
-"": SubResource("AnimationLibrary_tg1er"),
-"Anim": SubResource("AnimationLibrary_fhuxi")
+&"": SubResource("AnimationLibrary_tg1er"),
+&"Anim": SubResource("AnimationLibrary_fhuxi")
 }

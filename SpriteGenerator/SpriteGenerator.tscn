@@ -1,8 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://dghyusd0bdjxt"]
+[gd_scene load_steps=13 format=3 uid="uid://dghyusd0bdjxt"]
 
-[ext_resource type="Script" path="res://SpriteGenerator/SpriteGenerator.cs" id="1_ws6fq"]
+[ext_resource type="Script" uid="uid://dj2tgr0hxsbd3" path="res://SpriteGenerator/SpriteGenerator.cs" id="1_ws6fq"]
 [ext_resource type="PackedScene" uid="uid://iuwovcd804os" path="res://SpriteGenerator/MainScene3D.tscn" id="2_jyiui"]
-[ext_resource type="Shader" path="res://SpriteGenerator/Mesh3dPixelEffect.gdshader" id="2_l6h36"]
+[ext_resource type="Shader" uid="uid://c7dbfu5bd0ns3" path="res://Assets/Shaders/Mesh3dPixelEffect.gdshader" id="2_l6h36"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ivn07"]
 bg_color = Color(0.165657, 0.165656, 0.165656, 1)
@@ -25,12 +25,34 @@ shader_parameter/pixel_size = 512.0
 size = Vector2(4, 4)
 center_offset = Vector3(0, 0, 0.45)
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_o31co"]
+load_path = "res://.godot/imported/Basic UI spritesheet.png-87ee5eabcb55cdff2aca9bd2f618217d.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fx5pg"]
+atlas = SubResource("CompressedTexture2D_o31co")
+region = Rect2(244, 18, 7, 12)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_mumiu"]
+load_path = "res://.godot/imported/Basic UI spritesheet.png-87ee5eabcb55cdff2aca9bd2f618217d.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4hdfw"]
+atlas = SubResource("CompressedTexture2D_mumiu")
+region = Rect2(245, 2, 7, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o31co"]
+atlas = SubResource("CompressedTexture2D_o31co")
+region = Rect2(243, 36, 10, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mumiu"]
+atlas = SubResource("CompressedTexture2D_mumiu")
+region = Rect2(243, 52, 10, 9)
+
 [node name="SpriteGenerator" type="CanvasLayer" node_paths=PackedStringArray("_startGenerationBtn", "_MainScene3D", "_rawViewport", "_rawViewportContainer")]
 script = ExtResource("1_ws6fq")
 _startGenerationBtn = NodePath("VBoxContainer/HSplitContainer/OptionsPanelContainer/VBoxContainer/StartGenerationBtn")
-_MainScene3D = NodePath("VBoxContainer/HSplitContainer/PanelContainer/ModelPanelContainer/RawViewportContainer/RawSubViewport/MainScene3D")
-_rawViewport = NodePath("VBoxContainer/HSplitContainer/PanelContainer/ModelPanelContainer/RawViewportContainer/RawSubViewport")
-_rawViewportContainer = NodePath("VBoxContainer/HSplitContainer/PanelContainer/ModelPanelContainer/RawViewportContainer")
+_MainScene3D = NodePath("VBoxContainer/HSplitContainer/RenderImageVBoxContainer/MainRenderPanel/ModelPanelContainer/RawViewportContainer/RawSubViewport/MainScene3D")
+_rawViewport = NodePath("VBoxContainer/HSplitContainer/RenderImageVBoxContainer/MainRenderPanel/ModelPanelContainer/RawViewportContainer/RawSubViewport")
+_rawViewportContainer = NodePath("VBoxContainer/HSplitContainer/RenderImageVBoxContainer/MainRenderPanel/ModelPanelContainer/RawViewportContainer")
 _spriteResolution = 64
 frameSkipStep = 3
 
@@ -46,27 +68,30 @@ layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 4.0
 
-[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/HSplitContainer"]
+[node name="RenderImageVBoxContainer" type="VBoxContainer" parent="VBoxContainer/HSplitContainer"]
+layout_mode = 2
+
+[node name="MainRenderPanel" type="PanelContainer" parent="VBoxContainer/HSplitContainer/RenderImageVBoxContainer"]
 clip_contents = true
 custom_minimum_size = Vector2(512, 512)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="ModelPanelContainer" type="PanelContainer" parent="VBoxContainer/HSplitContainer/PanelContainer"]
+[node name="ModelPanelContainer" type="PanelContainer" parent="VBoxContainer/HSplitContainer/RenderImageVBoxContainer/MainRenderPanel"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_styles/panel = SubResource("StyleBoxFlat_ivn07")
 
-[node name="RawViewportContainer" type="SubViewportContainer" parent="VBoxContainer/HSplitContainer/PanelContainer/ModelPanelContainer"]
+[node name="RawViewportContainer" type="SubViewportContainer" parent="VBoxContainer/HSplitContainer/RenderImageVBoxContainer/MainRenderPanel/ModelPanelContainer"]
 unique_name_in_owner = true
 clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="RawSubViewport" type="SubViewport" parent="VBoxContainer/HSplitContainer/PanelContainer/ModelPanelContainer/RawViewportContainer"]
+[node name="RawSubViewport" type="SubViewport" parent="VBoxContainer/HSplitContainer/RenderImageVBoxContainer/MainRenderPanel/ModelPanelContainer/RawViewportContainer"]
 unique_name_in_owner = true
 own_world_3d = true
 transparent_bg = true
@@ -75,13 +100,55 @@ canvas_item_default_texture_filter = 0
 physics_object_picking = true
 render_target_update_mode = 4
 
-[node name="PixelShaderMesh" type="MeshInstance3D" parent="VBoxContainer/HSplitContainer/PanelContainer/ModelPanelContainer/RawViewportContainer/RawSubViewport"]
+[node name="PixelShaderMesh" type="MeshInstance3D" parent="VBoxContainer/HSplitContainer/RenderImageVBoxContainer/MainRenderPanel/ModelPanelContainer/RawViewportContainer/RawSubViewport"]
 unique_name_in_owner = true
 material_override = SubResource("ShaderMaterial_ilxpc")
 cast_shadow = 0
 mesh = SubResource("QuadMesh_7fo1u")
 
-[node name="MainScene3D" parent="VBoxContainer/HSplitContainer/PanelContainer/ModelPanelContainer/RawViewportContainer/RawSubViewport" instance=ExtResource("2_jyiui")]
+[node name="MainScene3D" parent="VBoxContainer/HSplitContainer/RenderImageVBoxContainer/MainRenderPanel/ModelPanelContainer/RawViewportContainer/RawSubViewport" instance=ExtResource("2_jyiui")]
+
+[node name="ImageOptionsPanel" type="PanelContainer" parent="VBoxContainer/HSplitContainer/RenderImageVBoxContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(512, 100)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/HSplitContainer/RenderImageVBoxContainer/ImageOptionsPanel"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/HSplitContainer/RenderImageVBoxContainer/ImageOptionsPanel/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="MoveLeftBtn" type="Button" parent="VBoxContainer/HSplitContainer/RenderImageVBoxContainer/ImageOptionsPanel/HBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 40)
+layout_mode = 2
+text = "Left"
+icon = SubResource("AtlasTexture_fx5pg")
+
+[node name="MoveRightBtn" type="Button" parent="VBoxContainer/HSplitContainer/RenderImageVBoxContainer/ImageOptionsPanel/HBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 40)
+layout_mode = 2
+text = "Right"
+icon = SubResource("AtlasTexture_4hdfw")
+
+[node name="MoveUpBtn" type="Button" parent="VBoxContainer/HSplitContainer/RenderImageVBoxContainer/ImageOptionsPanel/HBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 40)
+layout_mode = 2
+text = "Up"
+icon = SubResource("AtlasTexture_o31co")
+
+[node name="MoveDownBtn" type="Button" parent="VBoxContainer/HSplitContainer/RenderImageVBoxContainer/ImageOptionsPanel/HBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 40)
+layout_mode = 2
+text = "Down"
+icon = SubResource("AtlasTexture_mumiu")
 
 [node name="OptionsPanelContainer" type="PanelContainer" parent="VBoxContainer/HSplitContainer"]
 layout_mode = 2
@@ -120,6 +187,7 @@ size_flags_horizontal = 0
 size_flags_vertical = 4
 item_count = 4
 popup/item_0/text = "64px"
+popup/item_0/id = 0
 popup/item_1/text = "128px"
 popup/item_1/id = 1
 popup/item_2/text = "256px"
@@ -175,6 +243,7 @@ size_flags_horizontal = 0
 size_flags_vertical = 4
 item_count = 6
 popup/item_0/text = "1 - Very High"
+popup/item_0/id = 0
 popup/item_1/text = "2 - High"
 popup/item_1/id = 1
 popup/item_2/text = "3 - Medium"
@@ -185,12 +254,6 @@ popup/item_4/text = "5 - Very Low"
 popup/item_4/id = 4
 popup/item_5/text = "6 - Minimal"
 popup/item_5/id = 5
-
-[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer"]
-custom_minimum_size = Vector2(800, 0)
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 4.0
 
 [node name="Camera2D" type="Camera2D" parent="."]
 anchor_mode = 0
