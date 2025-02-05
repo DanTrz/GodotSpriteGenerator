@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://dghyusd0bdjxt"]
+[gd_scene load_steps=21 format=3 uid="uid://dghyusd0bdjxt"]
 
 [ext_resource type="Script" uid="uid://dj2tgr0hxsbd3" path="res://SpriteGenerator/SpriteGenerator.cs" id="1_ws6fq"]
 [ext_resource type="PackedScene" uid="uid://iuwovcd804os" path="res://SpriteGenerator/MainScene3D.tscn" id="2_jyiui"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://b78ehve5xa1ia" path="res://SpriteGenerator/ModelPositionManager.cs" id="4_fx5pg"]
 [ext_resource type="Texture2D" uid="uid://cr55nbf56ybvc" path="res://Assets/UI/Basic UI spritesheet.png" id="5_mumiu"]
 [ext_resource type="Texture2D" uid="uid://k5o1cpbx7oa4" path="res://Assets/UI/ModelTransformReferenceImg.png" id="6_4hdfw"]
+[ext_resource type="PackedScene" uid="uid://de676sb25ueye" path="res://UIComponents/ItemListCheckBox.tscn" id="7_j32we"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ivn07"]
 bg_color = Color(0.165657, 0.165656, 0.165656, 1)
@@ -24,8 +25,11 @@ render_priority = 0
 shader = ExtResource("2_l6h36")
 shader_parameter/pixel_size = 512.0
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_j32we"]
+
 [sub_resource type="QuadMesh" id="QuadMesh_7fo1u"]
-size = Vector2(4, 4)
+material = SubResource("ShaderMaterial_j32we")
+size = Vector2(50, 50)
 center_offset = Vector3(0, 0, 0.45)
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_o31co"]
@@ -58,51 +62,67 @@ region = Rect2(610, 226, 12, 12)
 atlas = ExtResource("5_mumiu")
 region = Rect2(626, 230, 12, 4)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4hdfw"]
+
 [node name="SpriteGenerator" type="CanvasLayer" node_paths=PackedStringArray("_startGenerationBtn", "MainScene3D", "_rawViewport", "_rawViewportContainer")]
 script = ExtResource("1_ws6fq")
-_startGenerationBtn = NodePath("VBoxContainer/HSplitContainer/OptionsPanelContainer/VBoxContainer/StartGenerationBtn")
-MainScene3D = NodePath("VBoxContainer/HSplitContainer/RenderImageVBoxContainer/MainRenderPanel/ModelPanelContainer/RawViewportContainer/RawSubViewport/MainScene3D")
-_rawViewport = NodePath("VBoxContainer/HSplitContainer/RenderImageVBoxContainer/MainRenderPanel/ModelPanelContainer/RawViewportContainer/RawSubViewport")
-_rawViewportContainer = NodePath("VBoxContainer/HSplitContainer/RenderImageVBoxContainer/MainRenderPanel/ModelPanelContainer/RawViewportContainer")
+_startGenerationBtn = NodePath("MainUI/VBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/HBoxContainer/OptionsGroup1VBoxCont/StartGenerationBtn")
+MainScene3D = NodePath("MainUI/VBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/ModelPanelContainer/RawViewportContainer/RawSubViewport/MainScene3D")
+_rawViewport = NodePath("MainUI/VBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/ModelPanelContainer/RawViewportContainer/RawSubViewport")
+_rawViewportContainer = NodePath("MainUI/VBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/ModelPanelContainer/RawViewportContainer")
 _spriteResolution = 64
 frameSkipStep = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="3DModelPositionManager" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("4_fx5pg")
+
+[node name="MainUI" type="Control" parent="."]
+clip_contents = true
+layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="HSplitContainer" type="HBoxContainer" parent="VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MainUI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HSplitContainer" type="HBoxContainer" parent="MainUI/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 4.0
 
-[node name="RenderImageVBoxContainer" type="VBoxContainer" parent="VBoxContainer/HSplitContainer"]
+[node name="RenderImageVBoxCont" type="VBoxContainer" parent="MainUI/VBoxContainer/HSplitContainer"]
 layout_mode = 2
 
-[node name="MainRenderPanel" type="PanelContainer" parent="VBoxContainer/HSplitContainer/RenderImageVBoxContainer"]
+[node name="MainRenderPanel" type="PanelContainer" parent="MainUI/VBoxContainer/HSplitContainer/RenderImageVBoxCont"]
 clip_contents = true
 custom_minimum_size = Vector2(512, 512)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="ModelPanelContainer" type="PanelContainer" parent="VBoxContainer/HSplitContainer/RenderImageVBoxContainer/MainRenderPanel"]
+[node name="ModelPanelContainer" type="PanelContainer" parent="MainUI/VBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_styles/panel = SubResource("StyleBoxFlat_ivn07")
 
-[node name="RawViewportContainer" type="SubViewportContainer" parent="VBoxContainer/HSplitContainer/RenderImageVBoxContainer/MainRenderPanel/ModelPanelContainer"]
+[node name="RawViewportContainer" type="SubViewportContainer" parent="MainUI/VBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/ModelPanelContainer"]
 unique_name_in_owner = true
 clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="RawSubViewport" type="SubViewport" parent="VBoxContainer/HSplitContainer/RenderImageVBoxContainer/MainRenderPanel/ModelPanelContainer/RawViewportContainer"]
+[node name="RawSubViewport" type="SubViewport" parent="MainUI/VBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/ModelPanelContainer/RawViewportContainer"]
 unique_name_in_owner = true
 own_world_3d = true
 transparent_bg = true
@@ -111,67 +131,60 @@ canvas_item_default_texture_filter = 0
 physics_object_picking = true
 render_target_update_mode = 4
 
-[node name="PixelShaderMesh" type="MeshInstance3D" parent="VBoxContainer/HSplitContainer/RenderImageVBoxContainer/MainRenderPanel/ModelPanelContainer/RawViewportContainer/RawSubViewport"]
+[node name="PixelShaderMesh" type="MeshInstance3D" parent="MainUI/VBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/ModelPanelContainer/RawViewportContainer/RawSubViewport"]
 unique_name_in_owner = true
 material_override = SubResource("ShaderMaterial_ilxpc")
 cast_shadow = 0
 mesh = SubResource("QuadMesh_7fo1u")
 
-[node name="MainScene3D" parent="VBoxContainer/HSplitContainer/RenderImageVBoxContainer/MainRenderPanel/ModelPanelContainer/RawViewportContainer/RawSubViewport" instance=ExtResource("2_jyiui")]
+[node name="MainScene3D" parent="MainUI/VBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/ModelPanelContainer/RawViewportContainer/RawSubViewport" instance=ExtResource("2_jyiui")]
 
-[node name="ImageOptionsPanel" type="PanelContainer" parent="VBoxContainer/HSplitContainer/RenderImageVBoxContainer"]
+[node name="ImageOptionsPanel" type="PanelContainer" parent="MainUI/VBoxContainer/HSplitContainer/RenderImageVBoxCont"]
 clip_contents = true
 custom_minimum_size = Vector2(512, 200)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/HSplitContainer/RenderImageVBoxContainer/ImageOptionsPanel"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MainUI/VBoxContainer/HSplitContainer/RenderImageVBoxCont/ImageOptionsPanel"]
 layout_mode = 2
 
-[node name="ModelPositionManager" type="Control" parent="VBoxContainer/HSplitContainer/RenderImageVBoxContainer/ImageOptionsPanel/HBoxContainer"]
-unique_name_in_owner = true
+[node name="VBoxContainer" type="VBoxContainer" parent="MainUI/VBoxContainer/HSplitContainer/RenderImageVBoxCont/ImageOptionsPanel/HBoxContainer"]
 layout_mode = 2
-script = ExtResource("4_fx5pg")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HSplitContainer/RenderImageVBoxContainer/ImageOptionsPanel/HBoxContainer/ModelPositionManager"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="ModelPositionButtons" type="HBoxContainer" parent="VBoxContainer/HSplitContainer/RenderImageVBoxContainer/ImageOptionsPanel/HBoxContainer/ModelPositionManager/VBoxContainer"]
+[node name="ModelPositionButtons" type="HBoxContainer" parent="MainUI/VBoxContainer/HSplitContainer/RenderImageVBoxCont/ImageOptionsPanel/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 2
 
-[node name="MoveLeftBtn" type="Button" parent="VBoxContainer/HSplitContainer/RenderImageVBoxContainer/ImageOptionsPanel/HBoxContainer/ModelPositionManager/VBoxContainer/ModelPositionButtons"]
+[node name="MoveLeftBtn" type="Button" parent="MainUI/VBoxContainer/HSplitContainer/RenderImageVBoxCont/ImageOptionsPanel/HBoxContainer/VBoxContainer/ModelPositionButtons"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(60, 40)
 layout_mode = 2
 text = "Left"
 icon = SubResource("AtlasTexture_fx5pg")
 
-[node name="MoveRightBtn" type="Button" parent="VBoxContainer/HSplitContainer/RenderImageVBoxContainer/ImageOptionsPanel/HBoxContainer/ModelPositionManager/VBoxContainer/ModelPositionButtons"]
+[node name="MoveRightBtn" type="Button" parent="MainUI/VBoxContainer/HSplitContainer/RenderImageVBoxCont/ImageOptionsPanel/HBoxContainer/VBoxContainer/ModelPositionButtons"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(60, 40)
 layout_mode = 2
 text = "Right"
 icon = SubResource("AtlasTexture_4hdfw")
 
-[node name="MoveUpBtn" type="Button" parent="VBoxContainer/HSplitContainer/RenderImageVBoxContainer/ImageOptionsPanel/HBoxContainer/ModelPositionManager/VBoxContainer/ModelPositionButtons"]
+[node name="MoveUpBtn" type="Button" parent="MainUI/VBoxContainer/HSplitContainer/RenderImageVBoxCont/ImageOptionsPanel/HBoxContainer/VBoxContainer/ModelPositionButtons"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(60, 40)
 layout_mode = 2
 text = "Up"
 icon = SubResource("AtlasTexture_o31co")
 
-[node name="MoveDownBtn" type="Button" parent="VBoxContainer/HSplitContainer/RenderImageVBoxContainer/ImageOptionsPanel/HBoxContainer/ModelPositionManager/VBoxContainer/ModelPositionButtons"]
+[node name="MoveDownBtn" type="Button" parent="MainUI/VBoxContainer/HSplitContainer/RenderImageVBoxCont/ImageOptionsPanel/HBoxContainer/VBoxContainer/ModelPositionButtons"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(60, 40)
 layout_mode = 2
 text = "Down"
 icon = SubResource("AtlasTexture_mumiu")
 
-[node name="RotateXAxisBtn" type="Button" parent="VBoxContainer/HSplitContainer/RenderImageVBoxContainer/ImageOptionsPanel/HBoxContainer/ModelPositionManager/VBoxContainer/ModelPositionButtons"]
+[node name="RotateXAxisBtn" type="Button" parent="MainUI/VBoxContainer/HSplitContainer/RenderImageVBoxCont/ImageOptionsPanel/HBoxContainer/VBoxContainer/ModelPositionButtons"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(60, 40)
 layout_mode = 2
@@ -179,14 +192,14 @@ text = "R.x
 "
 icon = SubResource("AtlasTexture_j32we")
 
-[node name="RotateYAxisBtn" type="Button" parent="VBoxContainer/HSplitContainer/RenderImageVBoxContainer/ImageOptionsPanel/HBoxContainer/ModelPositionManager/VBoxContainer/ModelPositionButtons"]
+[node name="RotateYAxisBtn" type="Button" parent="MainUI/VBoxContainer/HSplitContainer/RenderImageVBoxCont/ImageOptionsPanel/HBoxContainer/VBoxContainer/ModelPositionButtons"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(60, 40)
 layout_mode = 2
 text = "R.y"
 icon = SubResource("AtlasTexture_pyu7k")
 
-[node name="ZoomInBtn" type="Button" parent="VBoxContainer/HSplitContainer/RenderImageVBoxContainer/ImageOptionsPanel/HBoxContainer/ModelPositionManager/VBoxContainer/ModelPositionButtons"]
+[node name="ZoomInBtn" type="Button" parent="MainUI/VBoxContainer/HSplitContainer/RenderImageVBoxCont/ImageOptionsPanel/HBoxContainer/VBoxContainer/ModelPositionButtons"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(60, 40)
 layout_mode = 2
@@ -194,33 +207,40 @@ text = "(+)
 "
 icon = SubResource("AtlasTexture_j32we")
 
-[node name="ZoomOutBtn" type="Button" parent="VBoxContainer/HSplitContainer/RenderImageVBoxContainer/ImageOptionsPanel/HBoxContainer/ModelPositionManager/VBoxContainer/ModelPositionButtons"]
+[node name="ZoomOutBtn" type="Button" parent="MainUI/VBoxContainer/HSplitContainer/RenderImageVBoxCont/ImageOptionsPanel/HBoxContainer/VBoxContainer/ModelPositionButtons"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(60, 40)
 layout_mode = 2
 text = "(-)"
 icon = SubResource("AtlasTexture_pyu7k")
 
-[node name="TextureRect" type="TextureRect" parent="VBoxContainer/HSplitContainer/RenderImageVBoxContainer/ImageOptionsPanel/HBoxContainer/ModelPositionManager/VBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="MainUI/VBoxContainer/HSplitContainer/RenderImageVBoxCont/ImageOptionsPanel/HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(20, 150)
 layout_mode = 2
 texture = ExtResource("6_4hdfw")
 expand_mode = 2
 
-[node name="OptionsPanelContainer" type="PanelContainer" parent="VBoxContainer/HSplitContainer"]
+[node name="OptionsPanelCont" type="PanelContainer" parent="MainUI/VBoxContainer/HSplitContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HSplitContainer/OptionsPanelContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MainUI/VBoxContainer/HSplitContainer/OptionsPanelCont"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainUI/VBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 25
+
+[node name="OptionsGroup1VBoxCont" type="VBoxContainer" parent="MainUI/VBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="Label" type="Label" parent="VBoxContainer/HSplitContainer/OptionsPanelContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="MainUI/VBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/HBoxContainer/OptionsGroup1VBoxCont"]
 layout_mode = 2
-text = "Options Panel - Key settings"
+text = "Options Panel - Group 1"
 
-[node name="StartGenerationBtn" type="Button" parent="VBoxContainer/HSplitContainer/OptionsPanelContainer/VBoxContainer"]
+[node name="StartGenerationBtn" type="Button" parent="MainUI/VBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/HBoxContainer/OptionsGroup1VBoxCont"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
@@ -229,14 +249,14 @@ size_flags_vertical = 4
 text = "Start Generation
 "
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/HSplitContainer/OptionsPanelContainer/VBoxContainer"]
+[node name="SpriteResHBoxCont" type="HBoxContainer" parent="MainUI/VBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/HBoxContainer/OptionsGroup1VBoxCont"]
 layout_mode = 2
 
-[node name="ResolutionLabel" type="Label" parent="VBoxContainer/HSplitContainer/OptionsPanelContainer/VBoxContainer/HBoxContainer"]
+[node name="ResolutionLabel" type="Label" parent="MainUI/VBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/HBoxContainer/OptionsGroup1VBoxCont/SpriteResHBoxCont"]
 layout_mode = 2
 text = "Sprite Size/Resolution: "
 
-[node name="ResOptionButton" type="OptionButton" parent="VBoxContainer/HSplitContainer/OptionsPanelContainer/VBoxContainer/HBoxContainer"]
+[node name="ResOptionButton" type="OptionButton" parent="MainUI/VBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/HBoxContainer/OptionsGroup1VBoxCont/SpriteResHBoxCont"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
@@ -252,47 +272,48 @@ popup/item_2/id = 2
 popup/item_3/text = "512px"
 popup/item_3/id = 3
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer/HSplitContainer/OptionsPanelContainer/VBoxContainer"]
+[node name="FrameSkipHBoxCont" type="HBoxContainer" parent="MainUI/VBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/HBoxContainer/OptionsGroup1VBoxCont"]
 layout_mode = 2
 
-[node name="FrameStepLabel" type="Label" parent="VBoxContainer/HSplitContainer/OptionsPanelContainer/VBoxContainer/HBoxContainer2"]
+[node name="FrameStepLabel" type="Label" parent="MainUI/VBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/HBoxContainer/OptionsGroup1VBoxCont/FrameSkipHBoxCont"]
 layout_mode = 2
 text = "Frames Skip: "
 
-[node name="FrameStepTextEdit" type="LineEdit" parent="VBoxContainer/HSplitContainer/OptionsPanelContainer/VBoxContainer/HBoxContainer2"]
+[node name="FrameStepTextEdit" type="LineEdit" parent="MainUI/VBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/HBoxContainer/OptionsGroup1VBoxCont/FrameSkipHBoxCont"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="VBoxContainer/HSplitContainer/OptionsPanelContainer/VBoxContainer"]
+[node name="ClearFolderHBoxCont" type="HBoxContainer" parent="MainUI/VBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/HBoxContainer/OptionsGroup1VBoxCont"]
+visible = false
 layout_mode = 2
 
-[node name="ClearFolderLabel" type="Label" parent="VBoxContainer/HSplitContainer/OptionsPanelContainer/VBoxContainer/HBoxContainer3"]
+[node name="ClearFolderLabel" type="Label" parent="MainUI/VBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/HBoxContainer/OptionsGroup1VBoxCont/ClearFolderHBoxCont"]
 layout_mode = 2
 text = "Clear Folder: "
 
-[node name="ClearFolderCheckBtn" type="CheckButton" parent="VBoxContainer/HSplitContainer/OptionsPanelContainer/VBoxContainer/HBoxContainer3"]
+[node name="ClearFolderCheckBtn" type="CheckButton" parent="MainUI/VBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/HBoxContainer/OptionsGroup1VBoxCont/ClearFolderHBoxCont"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="HBoxContainer4" type="HBoxContainer" parent="VBoxContainer/HSplitContainer/OptionsPanelContainer/VBoxContainer"]
+[node name="PixelEffectHBoxCont" type="HBoxContainer" parent="MainUI/VBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/HBoxContainer/OptionsGroup1VBoxCont"]
 layout_mode = 2
 
-[node name="PixelEffectLabel" type="Label" parent="VBoxContainer/HSplitContainer/OptionsPanelContainer/VBoxContainer/HBoxContainer4"]
+[node name="PixelEffectLabel" type="Label" parent="MainUI/VBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/HBoxContainer/OptionsGroup1VBoxCont/PixelEffectHBoxCont"]
 layout_mode = 2
 text = "Use PixelEffect: "
 
-[node name="PixelEffectCheckBtn" type="CheckButton" parent="VBoxContainer/HSplitContainer/OptionsPanelContainer/VBoxContainer/HBoxContainer4"]
+[node name="PixelEffectCheckBtn" type="CheckButton" parent="MainUI/VBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/HBoxContainer/OptionsGroup1VBoxCont/PixelEffectHBoxCont"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="HBoxContainer5" type="HBoxContainer" parent="VBoxContainer/HSplitContainer/OptionsPanelContainer/VBoxContainer"]
+[node name="PixelShaderLvlHBoxCont" type="HBoxContainer" parent="MainUI/VBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/HBoxContainer/OptionsGroup1VBoxCont"]
 layout_mode = 2
 
-[node name="PixelShaderLabel" type="Label" parent="VBoxContainer/HSplitContainer/OptionsPanelContainer/VBoxContainer/HBoxContainer5"]
+[node name="PixelShaderLabel" type="Label" parent="MainUI/VBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/HBoxContainer/OptionsGroup1VBoxCont/PixelShaderLvlHBoxCont"]
 layout_mode = 2
 text = "Pixe shader level: "
 
-[node name="PixelShaderOptionBtn" type="OptionButton" parent="VBoxContainer/HSplitContainer/OptionsPanelContainer/VBoxContainer/HBoxContainer5"]
+[node name="PixelShaderOptionBtn" type="OptionButton" parent="MainUI/VBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/HBoxContainer/OptionsGroup1VBoxCont/PixelShaderLvlHBoxCont"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
@@ -311,6 +332,62 @@ popup/item_4/text = "5 - Very Low"
 popup/item_4/id = 4
 popup/item_5/text = "6 - Minimal"
 popup/item_5/id = 5
+
+[node name="OptionsGroup1VBoxCont2" type="VBoxContainer" parent="MainUI/VBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="MainUI/VBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/HBoxContainer/OptionsGroup1VBoxCont2"]
+layout_mode = 2
+text = "Options Panel - Group 2"
+
+[node name="AngleSelectionHBoxCont" type="HBoxContainer" parent="MainUI/VBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/HBoxContainer/OptionsGroup1VBoxCont2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MainUI/VBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/HBoxContainer/OptionsGroup1VBoxCont2/AngleSelectionHBoxCont"]
+layout_mode = 2
+text = "Angles:"
+
+[node name="angleSelectionItemList" parent="MainUI/VBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/HBoxContainer/OptionsGroup1VBoxCont2/AngleSelectionHBoxCont" instance=ExtResource("7_j32we")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(180, 150)
+layout_mode = 2
+size_flags_horizontal = 3
+max_columns = 2
+same_column_width = true
+fixed_column_width = 80
+
+[node name="AnimSelectPanelCont" type="PanelContainer" parent="MainUI/VBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_4hdfw")
+
+[node name="MarginContainer" type="MarginContainer" parent="MainUI/VBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/AnimSelectPanelCont"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainUI/VBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/AnimSelectPanelCont/MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainUI/VBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/AnimSelectPanelCont/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="LoadAllAnimationsBtn" type="Button" parent="MainUI/VBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/AnimSelectPanelCont/MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Load Animations"
+
+[node name="SelectAllAnimCheckBox" type="CheckBox" parent="MainUI/VBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/AnimSelectPanelCont/MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "SelectAll"
+
+[node name="animSelectionItemList" parent="MainUI/VBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/AnimSelectPanelCont/MarginContainer/VBoxContainer" instance=ExtResource("7_j32we")]
+unique_name_in_owner = true
+layout_mode = 2
 
 [node name="Camera2D" type="Camera2D" parent="."]
 anchor_mode = 0

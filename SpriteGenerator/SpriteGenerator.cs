@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.IO;
 using System.Net.Sockets;
+using System.Linq;
 
 public partial class SpriteGenerator : Node
 {
@@ -22,15 +23,17 @@ public partial class SpriteGenerator : Node
     [OnReady("%ClearFolderCheckBtn")] private CheckButton _clearFolderCheckBtn;
     [OnReady("%PixelEffectCheckBtn")] private CheckButton _pixelEffectCheckBtn;
     [OnReady("%PixelShaderMesh")] private MeshInstance3D _pixelShaderMesh;
-    [OnReady("%ModelPositionManager")] private ModelPositionManager _modelPositionManager;
+    [OnReady("%3DModelPositionManager")] private ModelPositionManager _modelPositionManager;
+    [OnReady("%LoadAllAnimationsBtn")] private Button _loadAllAnimationsBtn;
+    [OnReady("%animSelectionItemList")] private ItemListCheckBox _animSelectionItemList;
+    [OnReady("%angleSelectionItemList")] private ItemListCheckBox _angleSelectionItemList;
 
     private Node3D _model;
     private Node3D _characterModelObject;
     private Camera3D _camera;
     private AnimationPlayer _animationPlayer;
 
-    private readonly int[] angles = { 0 };
-    //private readonly int[] angles = { 0, 45, 90, 135, 180, 225, 270, 315 };
+    private readonly int[] allAngles = { 0, 45, 90, 135, 180, 225, 270, 315 };
     private string currentAnimation;
     private string currentAnimationName;
     private int frameIndex;
@@ -45,6 +48,7 @@ public partial class SpriteGenerator : Node
         _pixelEffectCheckBtn.ButtonPressed = _usePixelEffect;
         _pixelShaderMesh.Visible = _usePixelEffect;
         _frameStepTextEdit.Text = frameSkipStep.ToString();
+        _angleSelectionItemList.CreateItemsFromList(allAngles.Select(x => x.ToString()).ToArray());
 
 
         //Set Default Resolution and Shader Strenght
@@ -60,6 +64,7 @@ public partial class SpriteGenerator : Node
         _frameStepTextEdit.TextChanged += OnFrameStepChanged;
         _clearFolderCheckBtn.Pressed += OnClearFolderPressed;
         _pixelEffectCheckBtn.Pressed += OnPixelEffectPressed;
+        _loadAllAnimationsBtn.Pressed += OnLoadAllAnimationsPressed;
 
         //Pass the objects from MainScene3D to the SpriteGenerator
         if (MainScene3D != null)
@@ -85,7 +90,6 @@ public partial class SpriteGenerator : Node
 
 
     }
-
 
 
     private void OnStartGeneration()
@@ -115,10 +119,29 @@ public partial class SpriteGenerator : Node
 
     private async void GenerateSprites()
     {
+        int[] selectedAngles = _angleSelectionItemList.GetSelectedItems().Select(x => Convert.ToInt32(_angleSelectionItemList.
+        GetItemText(x))).ToArray();
+        int[] selectedAnimations = _animSelectionItemList.GetSelectedItems();
+
+        if (selectedAngles.Length == 0)
+        {
+            GD.PrintErr("No Angles Selected");
+            return;
+        }
+
+        if (selectedAnimations.Length == 0)
+        {
+            GD.PrintErr("No Aniimations Selected");
+            return;
+        }
+
         _animationPlayer.SpeedScale = 2.5f; //This seems the value closer to the blender rendering speed (Gives me the closer match of sprite generation per Frame Skip Step)
 
-        foreach (var anim in _animationPlayer.GetAnimationList())
+        // foreach (var anim in _animationPlayer.GetAnimationList())
+        foreach (var selectedAnimItem in _animSelectionItemList.GetSelectedItems())
         {
+            string anim = _animSelectionItemList.GetItemText(selectedAnimItem);
+
             if (anim == "RESET" || anim == "TPose") continue;
 
             currentAnimation = anim;
@@ -130,9 +153,12 @@ public partial class SpriteGenerator : Node
 
             while (_animationPlayer.IsPlaying())
             {
-                foreach (var angle in angles)
+                foreach (var angle in selectedAngles)
                 {
                     _model.RotationDegrees = new Vector3(0, angle, 0);
+
+                    await ToSignal(GetTree().CreateTimer(1.0), Timer.SignalName.Timeout);
+                    GD.Print("Pause finshed - Continue Process Sprite generation");
 
                     //Only capture frames where frameIndex is a multiple of frameStep
                     if (frameIndex % frameSkipStep == 0)
@@ -336,6 +362,20 @@ public partial class SpriteGenerator : Node
         // {
         //     _viewport.CallDeferred("set_use_pixel_effect", false);
     }
+
+    private void OnLoadAllAnimationsPressed()
+    {
+        //_itemListWithCheckBox
+
+        foreach (var animationItem in _animationPlayer.GetAnimationList())
+        {
+            if (animationItem == "RESET" || animationItem == "TPose") continue;
+            _animSelectionItemList.AddItem(animationItem, _animSelectionItemList.ICON_UNSELECTED, true);
+
+        }
+    }
+
+
 
 
 

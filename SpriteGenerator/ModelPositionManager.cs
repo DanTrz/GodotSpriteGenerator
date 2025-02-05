@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.Threading.Tasks;
 
-public partial class ModelPositionManager : Control
+public partial class ModelPositionManager : Node
 {
 
     [Export] public float MoveSpeed = 0.1f;
