@@ -409,7 +409,7 @@ mesh = ExtResource("1_5bsys")
 skin = SubResource("Skin_o623c")
 
 [node name="Jigglebone2" type="Node3D" parent="GeneralSkeleton"]
-transform = Transform3D(-0.0403058, 0.0710325, 0.0879195, -0.10961, -0.0473478, -0.0119958, 0.0275892, -0.084336, 0.0807854, 0.411009, -0.354308, 0.0406888)
+transform = Transform3D(-0.0403022, 0.0710584, 0.0879001, -0.109617, -0.0473314, -0.0119966, 0.0275664, -0.0843234, 0.0808063, 0.410981, -0.354319, 0.040879)
 top_level = true
 script = ExtResource("5_fnq30")
 bone_name = "LeftShoulder"
@@ -420,7 +420,7 @@ forward_axis = 2
 metadata/_custom_type_script = ExtResource("5_fnq30")
 
 [node name="Jigglebone5" type="Node3D" parent="GeneralSkeleton"]
-transform = Transform3D(-0.0299333, -0.0475097, -0.106051, 0.102076, 0.0415895, -0.0474429, 0.0555384, -0.102045, 0.030039, -0.398776, -0.340443, -0.0159324)
+transform = Transform3D(-0.0299551, -0.0475144, -0.106043, 0.102062, 0.0415943, -0.0474678, 0.0555515, -0.102041, 0.0300289, -0.398461, -0.340587, -0.0158879)
 top_level = true
 script = ExtResource("5_fnq30")
 bone_name = "LeftUpperArm"
@@ -431,7 +431,7 @@ forward_axis = 2
 metadata/_custom_type_script = ExtResource("5_fnq30")
 
 [node name="Jigglebone3" type="Node3D" parent="GeneralSkeleton"]
-transform = Transform3D(-0.119296, 0.00865577, -0.00967497, 0.00123291, -0.081474, -0.0880935, -0.0129231, -0.0876759, 0.080907, -0.460418, -0.295931, -0.122262)
+transform = Transform3D(-0.119299, 0.00866922, -0.00961889, 0.00118322, -0.081468, -0.0880997, -0.0128949, -0.0876802, 0.0809068, -0.459751, -0.296253, -0.121986)
 top_level = true
 script = ExtResource("5_fnq30")
 bone_name = "LeftLowerArm"
@@ -442,7 +442,7 @@ forward_axis = 2
 metadata/_custom_type_script = ExtResource("5_fnq30")
 
 [node name="Jigglebone4" type="Node3D" parent="GeneralSkeleton"]
-transform = Transform3D(-0.00357755, 0.0600454, -0.103835, 0.0449473, -0.095641, -0.0568555, -0.111207, -0.0405876, -0.0196393, -0.45278, -0.38812, -0.210632)
+transform = Transform3D(-0.00369869, 0.0601439, -0.103774, 0.0449128, -0.0955753, -0.056993, -0.111217, -0.0405965, -0.0195644, -0.450868, -0.389064, -0.209644)
 top_level = true
 script = ExtResource("5_fnq30")
 bone_name = "LeftHand"
