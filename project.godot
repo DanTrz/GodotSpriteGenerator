@@ -32,6 +32,10 @@ window/stretch/mode="viewport"
 
 project/assembly_name="SpriteGenerator"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/jigglebones/plugin.cfg")
+
 [input]
 
 MouseRightClick={

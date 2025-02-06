@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dasxiorjhfw8t" path="res://SpriteGenerator/Model3D.cs" id="1_4ce3b"]
 [ext_resource type="Script" uid="uid://bag8ey2g7kie5" path="res://SpriteGenerator/MainScene3d.cs" id="1_cpwm4"]
-[ext_resource type="PackedScene" uid="uid://1vk14fdixb2m" path="res://Models/GirlVoxel/GirlVoxelRiggued.tscn" id="3_1we7n"]
+[ext_resource type="PackedScene" uid="uid://bwfpoeg8tf1hw" path="res://Models/GirlVoxel/GirlVoxelJIGGLED.tscn" id="3_xukee"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_wy6cq"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -20,7 +20,7 @@ glow_enabled = true
 [node name="MainScene3D" type="Node3D" node_paths=PackedStringArray("MainModelNode", "MainCharacterObj", "MainCamera")]
 script = ExtResource("1_cpwm4")
 MainModelNode = NodePath("Model3D")
-MainCharacterObj = NodePath("Model3D/GirlVoxelRiggued")
+MainCharacterObj = NodePath("Model3D/GirlVoxelJIGGLED")
 MainCamera = NodePath("MainCamera")
 
 [node name="MainCamera" type="Camera3D" parent="."]
@@ -32,10 +32,10 @@ current = true
 unique_name_in_owner = true
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
 script = ExtResource("1_4ce3b")
-MainMesh = NodePath("GirlVoxelRiggued")
+MainMesh = NodePath("GirlVoxelJIGGLED")
 
-[node name="GirlVoxelRiggued" parent="Model3D" instance=ExtResource("3_1we7n")]
-transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 0, -0.5, 0)
+[node name="GirlVoxelJIGGLED" parent="Model3D" instance=ExtResource("3_xukee")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.436238, 0)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866025, -0.433013, 0.25, 0.473725, -0.870539, 0.133215, 0.159951, 0.233799, 0.959038, 0.537403, 0.32873, 2.69497)

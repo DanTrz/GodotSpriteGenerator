@@ -70,12 +70,16 @@ _startGenerationBtn = NodePath("MainUI/VBoxContainer/HSplitContainer/OptionsPane
 MainScene3D = NodePath("MainUI/VBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/ModelPanelContainer/RawViewportContainer/RawSubViewport/MainScene3D")
 _rawViewport = NodePath("MainUI/VBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/ModelPanelContainer/RawViewportContainer/RawSubViewport")
 _rawViewportContainer = NodePath("MainUI/VBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/ModelPanelContainer/RawViewportContainer")
-_spriteResolution = 64
-frameSkipStep = 3
+_spriteResolution = 512
+frameSkipStep = 1
+_isTimeBaseExport = false
 
 [node name="3DModelPositionManager" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("4_fx5pg")
+
+[node name="SaveIntervalTimer" type="Timer" parent="."]
+unique_name_in_owner = true
 
 [node name="MainUI" type="Control" parent="."]
 clip_contents = true
@@ -356,6 +360,17 @@ size_flags_horizontal = 3
 max_columns = 2
 same_column_width = true
 fixed_column_width = 80
+
+[node name="PlaybackSpeedHBoxCont" type="HBoxContainer" parent="MainUI/VBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/HBoxContainer/OptionsGroup1VBoxCont2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MainUI/VBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/HBoxContainer/OptionsGroup1VBoxCont2/PlaybackSpeedHBoxCont"]
+layout_mode = 2
+text = "Play Speed"
+
+[node name="PlayBackSpeedLineEdit" type="LineEdit" parent="MainUI/VBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/HBoxContainer/OptionsGroup1VBoxCont2/PlaybackSpeedHBoxCont"]
+unique_name_in_owner = true
+layout_mode = 2
 
 [node name="AnimSelectPanelCont" type="PanelContainer" parent="MainUI/VBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer"]
 layout_mode = 2

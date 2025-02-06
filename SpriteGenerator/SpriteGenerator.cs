@@ -1,8 +1,9 @@
-using Godot;
 using System;
+using System.Collections.Generic;
 using System.IO;
-using System.Net.Sockets;
 using System.Linq;
+using System.Net.Sockets;
+using Godot;
 
 public partial class SpriteGenerator : Node
 {
@@ -16,10 +17,14 @@ public partial class SpriteGenerator : Node
     [Export] private int frameSkipStep = 4; // Control how frequently frames are captured
     [Export] private bool _clearFolderBeforeGeneration = true;
     [Export] private bool _usePixelEffect = true;
+    [Export] private bool _isTimeBaseExport = true;
+    [Export(PropertyHint.Range, "1,4,1")] private float _animationPlaybackSpeed = 1.0f;
 
+    [OnReady("%SaveIntervalTimer")] private Timer _saveIntervalTimer;
     [OnReady("%ResOptionButton")] private OptionButton _resolutionOptionBtn;
     [OnReady("%PixelShaderOptionBtn")] private OptionButton _pixelShaderOptionBtn;
     [OnReady("%FrameStepTextEdit")] private LineEdit _frameStepTextEdit;
+    [OnReady("%PlayBackSpeedLineEdit")] private LineEdit _playBackSpeedLineEdit;
     [OnReady("%ClearFolderCheckBtn")] private CheckButton _clearFolderCheckBtn;
     [OnReady("%PixelEffectCheckBtn")] private CheckButton _pixelEffectCheckBtn;
     [OnReady("%PixelShaderMesh")] private MeshInstance3D _pixelShaderMesh;
@@ -34,6 +39,7 @@ public partial class SpriteGenerator : Node
     private AnimationPlayer _animationPlayer;
 
     private readonly int[] allAngles = { 0, 45, 90, 135, 180, 225, 270, 315 };
+    private int renderAngle = 0;
     private string currentAnimation;
     private string currentAnimationName;
     private int frameIndex;
@@ -43,11 +49,15 @@ public partial class SpriteGenerator : Node
 
     public override void _Ready()
     {
+
+
+
         //Set Default UI Control Values
         _clearFolderCheckBtn.ButtonPressed = _clearFolderBeforeGeneration;
         _pixelEffectCheckBtn.ButtonPressed = _usePixelEffect;
         _pixelShaderMesh.Visible = _usePixelEffect;
         _frameStepTextEdit.Text = frameSkipStep.ToString();
+        _playBackSpeedLineEdit.Text = _animationPlaybackSpeed.ToString();
         _angleSelectionItemList.CreateItemsFromList(allAngles.Select(x => x.ToString()).ToArray());
 
 
@@ -62,9 +72,12 @@ public partial class SpriteGenerator : Node
         _resolutionOptionBtn.ItemSelected += OnRenderResolutionChanged;
         _pixelShaderOptionBtn.ItemSelected += OnPixelShaderResolutionChanged;
         _frameStepTextEdit.TextChanged += OnFrameStepChanged;
+        _playBackSpeedLineEdit.TextChanged += OnPlayBackSpeedChanged;
         _clearFolderCheckBtn.Pressed += OnClearFolderPressed;
         _pixelEffectCheckBtn.Pressed += OnPixelEffectPressed;
         _loadAllAnimationsBtn.Pressed += OnLoadAllAnimationsPressed;
+        _saveIntervalTimer.Timeout += OnSaveIntervalTimerTimeout;
+
 
         //Pass the objects from MainScene3D to the SpriteGenerator
         if (MainScene3D != null)
@@ -77,14 +90,13 @@ public partial class SpriteGenerator : Node
             //Pass the Model to te PositionManager 
             _modelPositionManager.ModelNode = _model;
             _modelPositionManager.CameraNode = _camera;
-
-
-
         }
         else
         {
             GD.PrintErr("MainScene3D is null");
         }
+
+        _animationPlayer.AnimationFinished += OnAnimationFinished;
 
         UpdateViewPort();
 
@@ -92,9 +104,11 @@ public partial class SpriteGenerator : Node
     }
 
 
+
+
     private void OnStartGeneration()
     {
-        spriteCount = 1;
+        spriteCount = 0;
         saveFolder = ProjectSettings.GlobalizePath(_outputFolder + "/" + _characterModelObject.Name);
 
         if (!Directory.Exists(ProjectSettings.GlobalizePath(saveFolder)))
@@ -105,7 +119,15 @@ public partial class SpriteGenerator : Node
         if (_clearFolderBeforeGeneration)
             ClearFolder(saveFolder);
 
-        GenerateSprites();
+        if (_isTimeBaseExport)
+        {
+            GenerateSpritesTimeBased();
+        }
+        else
+        {
+            GenerateSpritesFrameBased2();
+        }
+
     }
 
     private void ClearFolder(string folder)
@@ -117,7 +139,7 @@ public partial class SpriteGenerator : Node
         }
     }
 
-    private async void GenerateSprites()
+    private async void GenerateSpritesFrameBased()
     {
         int[] selectedAngles = _angleSelectionItemList.GetSelectedItems().Select(x => Convert.ToInt32(_angleSelectionItemList.
         GetItemText(x))).ToArray();
@@ -135,7 +157,10 @@ public partial class SpriteGenerator : Node
             return;
         }
 
-        _animationPlayer.SpeedScale = 2.5f; //This seems the value closer to the blender rendering speed (Gives me the closer match of sprite generation per Frame Skip Step)
+        _animationPlayer.Stop();
+        _animationPlayer.SpeedScale = _animationPlaybackSpeed;
+
+        _model.RotationDegrees = new Vector3(0, 0, 0);
 
         // foreach (var anim in _animationPlayer.GetAnimationList())
         foreach (var selectedAnimItem in _animSelectionItemList.GetSelectedItems())
@@ -148,46 +173,226 @@ public partial class SpriteGenerator : Node
             currentAnimationName = anim.Replace("/", "_");
             // currentAnimation = anim;
             // currentAnimation = anim.GetBaseName();
-            _animationPlayer.Play(anim);
-            frameIndex = 0;
 
-            while (_animationPlayer.IsPlaying())
+            foreach (var angle in selectedAngles)
             {
-                foreach (var angle in selectedAngles)
-                {
-                    _model.RotationDegrees = new Vector3(0, angle, 0);
+                _model.RotationDegrees = new Vector3(0, angle, 0);
 
-                    await ToSignal(GetTree().CreateTimer(1.0), Timer.SignalName.Timeout);
-                    GD.Print("Pause finshed - Continue Process Sprite generation");
+                await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame); //Give time to the model to rotate.
+
+                frameIndex = 0;
+
+                _animationPlayer.Play(anim);
+                GD.PrintT("FRAME BASED = save every: " + frameSkipStep + " frames");
+
+                while (_animationPlayer.IsPlaying())
+                {
+                    await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame); //Skip one frame.
 
                     //Only capture frames where frameIndex is a multiple of frameStep
                     if (frameIndex % frameSkipStep == 0)
                     {
-                        await ToSignal(GetTree(), "process_frame");
                         SaveFrameRaw(angle);
-
-                        // if (_usePixelEffect)
-                        // {
-                        //     SaveFramePixelShader(angle);
-                        // }
-                        // else
-                        // {
-                        //     SaveFrameRaw(angle);
-                        // }
-
                     }
                     frameIndex++;
                 }
-                await ToSignal(GetTree(), "process_frame");
             }
+
+            _model.RotationDegrees = new Vector3(0, 0, 0);
         }
 
+        await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
         GenerateSpriteSheet(saveFolder, currentAnimationName + "_spriteSheet", 4);
+    }
+
+    private async void GenerateSpritesTimeBased()
+    {
+        int[] selectedAngles = _angleSelectionItemList.GetSelectedItems().Select(x => Convert.ToInt32(_angleSelectionItemList.
+        GetItemText(x))).ToArray();
+        int[] selectedAnimations = _animSelectionItemList.GetSelectedItems();
+
+        if (selectedAngles.Length == 0)
+        {
+            GD.PrintErr("No Angles Selected");
+            return;
+        }
+
+        if (selectedAnimations.Length == 0)
+        {
+            GD.PrintErr("No Aniimations Selected");
+            return;
+        }
+
+        _animationPlayer.Stop();
+        _animationPlayer.SpeedScale = _animationPlaybackSpeed;
+
+        _model.RotationDegrees = new Vector3(0, 0, 0);
+
+        // foreach (var anim in _animationPlayer.GetAnimationList())
+        foreach (var selectedAnimItem in _animSelectionItemList.GetSelectedItems())
+        {
+            string anim = _animSelectionItemList.GetItemText(selectedAnimItem);
+
+            if (anim == "RESET" || anim == "TPose") continue;
+
+            currentAnimation = anim;
+            currentAnimationName = anim.Replace("/", "_");
+
+            foreach (var angle in selectedAngles)
+            {
+                spriteCount = 0;
+
+                _model.RotationDegrees = new Vector3(0, angle, 0);
+
+                await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame); //Give time to the model to rotate.
+
+                float saveFileSecondsInterval = Const.ImgRenderTimeInterval.GetValueOrDefault((int)_animationPlaybackSpeed);
+                //float saveFileSecondsInterval = Const.ImgRenderTimeInterval.GetValueOrDefault(4);
+
+
+                // TODO / #BUG Improve this part - I have not fond a way to consistely reposition the animation on the screen without stopping and playing it again. It's working for nowbut needs a better solution.
+                _animationPlayer.Play(anim);
+                await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame); //Gives time to position the AnimPlayer.
+                _animationPlayer.Stop(); //Stops the animation and reset to make sure the first image will show the first frame. 
+
+                //TODO NEW PIECE OF CODE.....
+                float awaitTime = (_animationPlayer.GetAnimation(anim).Step) / _animationPlaybackSpeed;
+                awaitTime = 0.001f;
+
+                _saveIntervalTimer.WaitTime = awaitTime;
+
+                renderAngle = angle;
+
+                //Starts playing the animation for capture pngs.  
+                _animationPlayer.Play(anim);
+
+                await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame); //Give time for AnimPlayer to push to first frame. 
+
+                _saveIntervalTimer.Start();
+
+                GD.PrintT("TIME BASED = save every sec: " + awaitTime);
+
+                await ToSignal(_animationPlayer, AnimationPlayer.SignalName.AnimationFinished);
+
+            }
+        }
+    }
+
+    private async void OnSaveIntervalTimerTimeout()
+    {
+        SaveFrameRaw(renderAngle);
+    }
+
+    private async void OnAnimationFinished(StringName animName)
+    {
+        if (!_isTimeBaseExport) return;
+
+        _saveIntervalTimer.Stop();
+        _model.RotationDegrees = new Vector3(0, 0, 0);
+
+        await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+        GenerateSpriteSheet(saveFolder, currentAnimationName + "_spriteSheet", 4);
+    }
+
+    private async void GenerateSpritesFrameBased2()
+    {
+
+        int[] selectedAngles = _angleSelectionItemList.GetSelectedItems().Select(x => Convert.ToInt32(_angleSelectionItemList.
+        GetItemText(x))).ToArray();
+        int[] selectedAnimations = _animSelectionItemList.GetSelectedItems();
+
+        if (selectedAngles.Length == 0)
+        {
+            GD.PrintErr("No Angles Selected");
+            return;
+        }
+
+        if (selectedAnimations.Length == 0)
+        {
+            GD.PrintErr("No Aniimations Selected");
+            return;
+        }
+
+        _animationPlayer.Stop();
+        _animationPlayer.SpeedScale = _animationPlaybackSpeed;
+        //Engine.TimeScale = _animationPlaybackSpeed;
+
+        _model.RotationDegrees = new Vector3(0, 0, 0);
+
+        foreach (var selectedAnimItem in _animSelectionItemList.GetSelectedItems())
+        {
+            string anim = _animSelectionItemList.GetItemText(selectedAnimItem);
+
+            if (anim == "RESET" || anim == "TPose") continue;
+
+            currentAnimation = anim;
+            currentAnimationName = anim.Replace("/", "_");
+
+            foreach (var angle in selectedAngles)
+            {
+                _model.RotationDegrees = new Vector3(0, angle, 0);
+
+                await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+
+                _animationPlayer.Play(anim);
+                Animation animationResource = _animationPlayer.GetAnimation(anim);
+
+                float frameCount = (int)Math.Round((animationResource.Length / animationResource.Step), MidpointRounding.AwayFromZero); // Number of frames in the animation
+                int framesToRender = (int)Math.Round((frameCount / frameSkipStep), MidpointRounding.AwayFromZero);
+
+                //(int)Math.Round(value, MidpointRounding.AwayFromZero);
+
+                GD.PrintT($"FrameBASEDv2 FLOAT = animFrames: {(animationResource.Length / animationResource.Step):0.00}, will render: {(frameCount / frameSkipStep):0.00} frames");
+
+                GD.PrintT($"FrameBASEDv2 INT = animFrames: {frameCount:0.00}, will render: {framesToRender:0.00} frames");
+
+                //(int)Math.Ceiling(value);
+
+                //float frameInterval = animationResource.Step * _animationPlaybackSpeed;
+                float frameInterval = animationResource.Step;
+
+                GD.PrintT($"FrameBASEDv2 = frameInterval {frameInterval:0.000}");
+                float currentTime = 0f;
+                int currentFrame = 0;
+
+                // while (currentTime < animationResource.Length)
+                while (_animationPlayer.IsPlaying())
+                {
+
+                    await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+                    //await ToSignal(GetTree().CreateTimer(0.0001f), Timer.SignalName.Timeout);
+
+                    _animationPlayer.Seek(currentTime, true); // Seek to the exact time
+
+                    //GD.PrintT("AnimSeek to: " + currentTime);
+
+                    //Only capture frames where frameIndex is a multiple of frameStep
+                    if (currentFrame % frameSkipStep == 0)
+                    {
+                        SaveFrameRaw(angle);
+                    }
+
+                    currentTime += frameInterval;
+
+                    currentFrame++;
+                }
+            }
+
+            _model.RotationDegrees = new Vector3(0, 0, 0);
+        }
+
+        await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+        GenerateSpriteSheet(saveFolder, currentAnimationName + "_spriteSheet", 4);
+
     }
 
     private void SaveFrameRaw(int angle)
     {
-        GD.PrintT("Saving Sprite Raw : ", spriteCount);
+        string currentAnimPosInSec = ((float)_animationPlayer.CurrentAnimationPosition).ToString("0.000");
+
+        GD.PrintT("SavingFile : ", spriteCount + " / AnimSecond: " + currentAnimPosInSec);
+
+        //GD.PrintT("Frame: " + frameIndex, " AnimPosition: " + (float)_animationPlayer.CurrentAnimationPosition);
         var img = _rawViewport.GetTexture().GetImage();
 
         //img.FlipY();4
@@ -319,11 +524,21 @@ public partial class SpriteGenerator : Node
         UpdateViewPort();
     }
 
+    private void OnPlayBackSpeedChanged(string newText)
+    {
+        if (string.IsNullOrEmpty(newText)) return;
+
+        _animationPlaybackSpeed = Convert.ToInt32(newText);
+        GD.PrintT("PlaybackSpeed: " + _animationPlaybackSpeed);
+
+    }
+
     private void UpdateViewPort()
     {
         Vector2I viewPortSize = new Vector2I(_spriteResolution, _spriteResolution);
         _rawViewport.CallDeferred("set_size", viewPortSize);
         _rawViewportContainer.CallDeferred("set_size", viewPortSize);
+
         //_viewport.Size = viewPortSize;
         //_viewportContainer.Size = viewPortSize;
 
