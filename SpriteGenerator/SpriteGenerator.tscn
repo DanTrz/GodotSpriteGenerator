@@ -70,13 +70,20 @@ _startGenerationBtn = NodePath("MainUI/VBoxContainer/HSplitContainer/OptionsPane
 MainScene3D = NodePath("MainUI/VBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/ModelPanelContainer/RawViewportContainer/RawSubViewport/MainScene3D")
 _rawViewport = NodePath("MainUI/VBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/ModelPanelContainer/RawViewportContainer/RawSubViewport")
 _rawViewportContainer = NodePath("MainUI/VBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/ModelPanelContainer/RawViewportContainer")
+_outputFolder = null
 _spriteResolution = 512
 frameSkipStep = 1
+_clearFolderBeforeGeneration = null
+_usePixelEffect = null
 _isTimeBaseExport = false
+_animationPlaybackSpeed = null
 
 [node name="3DModelPositionManager" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("4_fx5pg")
+MoveSpeed = null
+RotateSpeed = null
+ZoomSpeed = null
 
 [node name="SaveIntervalTimer" type="Timer" parent="."]
 unique_name_in_owner = true

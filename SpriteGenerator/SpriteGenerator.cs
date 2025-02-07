@@ -49,9 +49,6 @@ public partial class SpriteGenerator : Node
 
     public override void _Ready()
     {
-
-
-
         //Set Default UI Control Values
         _clearFolderCheckBtn.ButtonPressed = _clearFolderBeforeGeneration;
         _pixelEffectCheckBtn.ButtonPressed = _usePixelEffect;
@@ -104,7 +101,11 @@ public partial class SpriteGenerator : Node
     }
 
 
-
+    public override void _Process(double delta)
+    {
+        GD.Print("Print Test 4");
+        GD.PrintT("PrintT Test");
+    }
 
     private void OnStartGeneration()
     {
