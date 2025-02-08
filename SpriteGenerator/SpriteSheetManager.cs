@@ -70,20 +70,20 @@ public partial class SpriteSheetManager : PanelContainer
 
     private void QueueApplyEffects()
         {
-        if (_isProcessing) return;
-        _isProcessing = true;
+            if (_isProcessing) return;
+            _isProcessing = true;
 
-        // Capture UI state for image processing effects (excluding shader controls)
-        bool doColorReduction = _colorReductionCheckbox?.ButtonPressed ?? false;
-        int colorCount = doColorReduction ? (int)(_colorCountSpinBox?.Value ?? 0) : 0;
-        bool doOutline = _outlineCheckbox?.ButtonPressed ?? false;
-        int outlineThickness = doOutline ? (int)(_outlineThicknessSlider?.Value ?? 0) : 0;
-        Color outlineColor = doOutline ? (_outlineColorPicker?.Color ?? Colors.Black) : Colors.Black;
-        bool doDithering = _ditheringCheckbox?.ButtonPressed ?? false;
-        float ditheringStrength = doDithering ? (float)(_ditheringSlider?.Value ?? 0.0f) : 0.0f;
+            // Capture UI state for image processing effects (excluding shader controls)
+            bool doColorReduction = _colorReductionCheckbox?.ButtonPressed ?? false;
+            int colorCount = doColorReduction ? (int)(_colorCountSpinBox?.Value ?? 0) : 0;
+            bool doOutline = _outlineCheckbox?.ButtonPressed ?? false;
+            int outlineThickness = doOutline ? (int)(_outlineThicknessSlider?.Value ?? 0) : 0;
+            Color outlineColor = doOutline ? (_outlineColorPicker?.Color ?? Colors.Black) : Colors.Black;
+            bool doDithering = _ditheringCheckbox?.ButtonPressed ?? false;
+            float ditheringStrength = doDithering ? (float)(_ditheringSlider?.Value ?? 0.0f) : 0.0f;
 
-        Task.Run(() => ApplyEffectsAsync(doColorReduction, colorCount, doOutline, outlineThickness,
-            outlineColor, doDithering, ditheringStrength));
+            Task.Run(() => ApplyEffectsAsync(doColorReduction, colorCount, doOutline, outlineThickness,
+                outlineColor, doDithering, ditheringStrength));
         }
 
     private async Task ApplyEffectsAsync(bool doColorReduction, int colorCount, bool doOutline,
@@ -214,7 +214,7 @@ public partial class SpriteSheetManager : PanelContainer
         Array.Copy(originalData, ditheredData, originalData.Length);
 
         // Floyd-Steinberg dithering
-        Parallel.For(0, height, y =>
+        for (int y = 0; y < height; y++)
         {
             // Create a local error buffer for this row. CRITICAL for thread safety.
             Color[] errorBuffer = new Color[width];
@@ -261,7 +261,7 @@ public partial class SpriteSheetManager : PanelContainer
                     SetColorToBytes(ditheredData, nextRowIndexCenter, ClampColor(currentColorCenter + error * (5.0f / 16.0f) * strength));
                     }
                 }
-        });
+        };
 
         return Image.CreateFromData(width, height, false, Image.Format.Rgba8, ditheredData);
         }
