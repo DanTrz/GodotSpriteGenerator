@@ -104,6 +104,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
 [node name="TabContainer" type="TabContainer" parent="MainUI"]
 layout_mode = 1
@@ -112,11 +114,11 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-current_tab = 1
-metadata/_edit_use_anchors_ = true
+current_tab = 0
+all_tabs_in_front = true
 
 [node name="Sprite" type="PanelContainer" parent="MainUI/TabContainer"]
-visible = false
+clip_contents = true
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -126,14 +128,14 @@ layout_mode = 2
 [node name="HSplitContainer" type="HBoxContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-size_flags_stretch_ratio = 4.0
 
 [node name="RenderImageVBoxCont" type="VBoxContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="MainRenderPanel" type="PanelContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont"]
 clip_contents = true
-custom_minimum_size = Vector2(512, 512)
+custom_minimum_size = Vector2(350, 350)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -158,7 +160,7 @@ transparent_bg = true
 handle_input_locally = false
 canvas_item_default_texture_filter = 0
 physics_object_picking = true
-render_target_update_mode = 0
+render_target_update_mode = 4
 
 [node name="PixelShaderMesh" type="MeshInstance3D" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/ModelPanelContainer/RawViewportContainer/RawSubViewport"]
 unique_name_in_owner = true
@@ -170,7 +172,7 @@ mesh = SubResource("QuadMesh_7fo1u")
 
 [node name="ImageOptionsPanel" type="PanelContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont"]
 clip_contents = true
-custom_minimum_size = Vector2(512, 200)
+custom_minimum_size = Vector2(100, 50)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -244,7 +246,7 @@ text = "(-)"
 icon = SubResource("AtlasTexture_pyu7k")
 
 [node name="TextureRect" type="TextureRect" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/ImageOptionsPanel/HBoxContainer/VBoxContainer"]
-custom_minimum_size = Vector2(20, 150)
+custom_minimum_size = Vector2(10, 100)
 layout_mode = 2
 texture = ExtResource("6_4hdfw")
 expand_mode = 2
@@ -429,24 +431,26 @@ text = "SelectAll"
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="SpriteSheetManager" type="PanelContainer" parent="MainUI/TabContainer" node_paths=PackedStringArray("_textureRect", "_saturationSlider", "_brightnessSlider", "_outlineCheckbox", "_outlineThicknessSlider", "_outlineColorPicker", "_ditheringCheckbox", "_ditheringSlider", "_colorReductionCheckbox", "_colorCountSpinBox", "_saveButton", "_statusLabel", "_enableSaturationCheckbox", "_enableBrightnessCheckbox")]
+[node name="SpriteSheetManager" type="PanelContainer" parent="MainUI/TabContainer" node_paths=PackedStringArray("_textureRect", "_saturationSlider", "_saturationLabel", "_brightnessSlider", "_outlineCheckbox", "_outlineThicknessSlider", "_outlineColorPicker", "_ditheringCheckbox", "_ditheringSlider", "_colorReductionCheckbox", "_colorCountSpinBox", "_saveButton", "_statusLabel", "_enableSaturationCheckbox", "_enableBrightnessCheckbox")]
+visible = false
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_pyu7k")
 script = ExtResource("8_seol6")
-_textureRect = NodePath("HBoxContainer/SpriteSheetContainer/MarginContainer/TextureRect")
-_saturationSlider = NodePath("HBoxContainer/OptionsContainer/VBoxContainer/Saturation/HSlider")
-_brightnessSlider = NodePath("HBoxContainer/OptionsContainer/VBoxContainer/Brightess/HSlider")
-_outlineCheckbox = NodePath("HBoxContainer/OptionsContainer/VBoxContainer/Outline/CheckBox")
-_outlineThicknessSlider = NodePath("HBoxContainer/OptionsContainer/VBoxContainer/Outline/HSlider")
-_outlineColorPicker = NodePath("HBoxContainer/OptionsContainer/VBoxContainer/Outline/ColorPickerButton")
-_ditheringCheckbox = NodePath("HBoxContainer/OptionsContainer/VBoxContainer/Dithering/CheckBox")
-_ditheringSlider = NodePath("HBoxContainer/OptionsContainer/VBoxContainer/Dithering/HSlider")
-_colorReductionCheckbox = NodePath("HBoxContainer/OptionsContainer/VBoxContainer/ColorReduction/CheckBox")
-_colorCountSpinBox = NodePath("HBoxContainer/OptionsContainer/VBoxContainer/ColorReduction/ColorReducSpinBox")
-_saveButton = NodePath("HBoxContainer/OptionsContainer/VBoxContainer/Saving/SaveSpriteSheetBtn")
+_textureRect = NodePath("HBoxContainer/SpriteSheetContainer/MarginContainer/SpriteSheetTextureRect")
+_saturationSlider = NodePath("HBoxContainer/OptionsContainer/VBoxContainer/SaturationHBox/SaturationHSlider")
+_saturationLabel = NodePath("HBoxContainer/OptionsContainer/VBoxContainer/SaturationHBox/SaturationLabel")
+_brightnessSlider = NodePath("HBoxContainer/OptionsContainer/VBoxContainer/BrightnessHBox/BrightnessHSlider")
+_outlineCheckbox = NodePath("HBoxContainer/OptionsContainer/VBoxContainer/OutlineHBox/OutlineCheckBox")
+_outlineThicknessSlider = NodePath("HBoxContainer/OptionsContainer/VBoxContainer/OutlineHBox/OutlineHSlider")
+_outlineColorPicker = NodePath("HBoxContainer/OptionsContainer/VBoxContainer/OutlineHBox/OutlineColorPickerBtn")
+_ditheringCheckbox = NodePath("HBoxContainer/OptionsContainer/VBoxContainer/DitheringHBox/DitheringCheckBox")
+_ditheringSlider = NodePath("HBoxContainer/OptionsContainer/VBoxContainer/DitheringHBox/DitheringHSlider")
+_colorReductionCheckbox = NodePath("HBoxContainer/OptionsContainer/VBoxContainer/ColorReductionHBox/ColorReductionCheckBox")
+_colorCountSpinBox = NodePath("HBoxContainer/OptionsContainer/VBoxContainer/ColorReductionHBox/ColorReducSpinBox")
+_saveButton = NodePath("HBoxContainer/OptionsContainer/VBoxContainer/SavingHBox/SaveSpriteSheetBtn")
 _statusLabel = NodePath("HBoxContainer/OptionsContainer/VBoxContainer/EffectStatusLabel")
-_enableSaturationCheckbox = NodePath("HBoxContainer/OptionsContainer/VBoxContainer/Saturation/CheckBox")
-_enableBrightnessCheckbox = NodePath("HBoxContainer/OptionsContainer/VBoxContainer/Brightess/CheckBox")
+_enableSaturationCheckbox = NodePath("HBoxContainer/OptionsContainer/VBoxContainer/SaturationHBox/SaturationCheckBox")
+_enableBrightnessCheckbox = NodePath("HBoxContainer/OptionsContainer/VBoxContainer/BrightnessHBox/BrightnessCheckBox")
 metadata/_tab_index = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MainUI/TabContainer/SpriteSheetManager"]
@@ -464,7 +468,8 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="TextureRect" type="TextureRect" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/SpriteSheetContainer/MarginContainer"]
+[node name="SpriteSheetTextureRect" type="TextureRect" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/SpriteSheetContainer/MarginContainer"]
+unique_name_in_owner = true
 material = SubResource("ShaderMaterial_seol6")
 layout_mode = 2
 texture = ExtResource("8_pyu7k")
@@ -478,90 +483,114 @@ size_flags_horizontal = 3
 layout_mode = 2
 
 [node name="EffectStatusLabel" type="Label" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "EffectStatusLabel progress...."
 
-[node name="Saturation" type="HBoxContainer" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer"]
+[node name="SaturationHBox" type="HBoxContainer" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="CheckBox" type="CheckBox" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer/Saturation"]
+[node name="SaturationCheckBox" type="CheckBox" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer/SaturationHBox"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(10, 10)
 layout_mode = 2
 text = "Saturation"
 
-[node name="HSlider" type="HSlider" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer/Saturation"]
+[node name="SaturationHSlider" type="HSlider" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer/SaturationHBox"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 25)
 layout_mode = 2
 max_value = 2.0
 step = 0.1
+tick_count = 5
+ticks_on_borders = true
 
-[node name="Brightess" type="HBoxContainer" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer"]
+[node name="SaturationLabel" type="Label" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer/SaturationHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "00"
+
+[node name="BrightnessHBox" type="HBoxContainer" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="CheckBox" type="CheckBox" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer/Brightess"]
+[node name="BrightnessCheckBox" type="CheckBox" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer/BrightnessHBox"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(10, 10)
 layout_mode = 2
 text = "Brightness"
 
-[node name="HSlider" type="HSlider" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer/Brightess"]
+[node name="BrightnessHSlider" type="HSlider" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer/BrightnessHBox"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 25)
 layout_mode = 2
 max_value = 2.0
 step = 0.1
+tick_count = 5
+ticks_on_borders = true
 
-[node name="Outline" type="HBoxContainer" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer"]
+[node name="BrightnessLabel" type="Label" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer/BrightnessHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "00"
+
+[node name="OutlineHBox" type="HBoxContainer" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="CheckBox" type="CheckBox" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer/Outline"]
+[node name="OutlineCheckBox" type="CheckBox" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer/OutlineHBox"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(10, 10)
 layout_mode = 2
 text = "Outline
 "
 
-[node name="HSlider" type="HSlider" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer/Outline"]
+[node name="OutlineHSlider" type="HSlider" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer/OutlineHBox"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 25)
 layout_mode = 2
 max_value = 10.0
 step = 0.5
 
-[node name="ColorPickerButton" type="ColorPickerButton" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer/Outline"]
+[node name="OutlineColorPickerBtn" type="ColorPickerButton" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer/OutlineHBox"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 25)
 layout_mode = 2
 
-[node name="Dithering" type="HBoxContainer" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer"]
+[node name="DitheringHBox" type="HBoxContainer" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="CheckBox" type="CheckBox" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer/Dithering"]
+[node name="DitheringCheckBox" type="CheckBox" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer/DitheringHBox"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(10, 10)
 layout_mode = 2
 text = "Dithering
 "
 
-[node name="HSlider" type="HSlider" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer/Dithering"]
+[node name="DitheringHSlider" type="HSlider" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer/DitheringHBox"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 25)
 layout_mode = 2
 
-[node name="ColorPickerButton" type="ColorPickerButton" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer/Dithering"]
-custom_minimum_size = Vector2(100, 25)
+[node name="ColorReductionHBox" type="HBoxContainer" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="ColorReduction" type="HBoxContainer" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="CheckBox" type="CheckBox" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer/ColorReduction"]
+[node name="ColorReductionCheckBox" type="CheckBox" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer/ColorReductionHBox"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Color Reduction
 "
 
-[node name="ColorReducSpinBox" type="SpinBox" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer/ColorReduction"]
+[node name="ColorReducSpinBox" type="SpinBox" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer/ColorReductionHBox"]
+unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Saving" type="HBoxContainer" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer"]
+[node name="SavingHBox" type="HBoxContainer" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="SaveSpriteSheetBtn" type="Button" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer/Saving"]
+[node name="SaveSpriteSheetBtn" type="Button" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer/SavingHBox"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Save Image"
 
 [node name="Camera2D" type="Camera2D" parent="."]
+visible = false
 anchor_mode = 0

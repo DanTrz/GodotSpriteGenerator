@@ -1,9 +1,8 @@
+using Godot;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net.Sockets;
-using Godot;
 
 public partial class SpriteGenerator : Node
 {
@@ -272,7 +271,7 @@ public partial class SpriteGenerator : Node
         }
     }
 
-    private async void OnSaveIntervalTimerTimeout()
+    private void OnSaveIntervalTimerTimeout()
     {
         SaveFrameRaw(renderAngle);
     }
@@ -395,6 +394,7 @@ public partial class SpriteGenerator : Node
 
         img.SavePng(ProjectSettings.GlobalizePath(path));
         frameIndex++;
+
     }
 
     // private void SaveFramePixelShader(int angle)
