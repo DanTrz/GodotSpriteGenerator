@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://dghyusd0bdjxt"]
+[gd_scene load_steps=27 format=3 uid="uid://dghyusd0bdjxt"]
 
 [ext_resource type="Script" uid="uid://dj2tgr0hxsbd3" path="res://SpriteGenerator/SpriteGenerator.cs" id="1_ws6fq"]
 [ext_resource type="PackedScene" uid="uid://iuwovcd804os" path="res://SpriteGenerator/MainScene3D.tscn" id="2_jyiui"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://de676sb25ueye" path="res://UIComponents/ItemListCheckBox.tscn" id="7_j32we"]
 [ext_resource type="Texture2D" uid="uid://cae2jelncoq3w" path="res://Anim_Running_spriteSheet.png" id="8_pyu7k"]
 [ext_resource type="Script" uid="uid://cacdskl17dkmj" path="res://SpriteGenerator/SpriteSheetManager.cs" id="8_seol6"]
+[ext_resource type="Shader" uid="uid://c58xcvgi0wwu8" path="res://Assets/Shaders/brightness_saturation.gdshader" id="9_ud05t"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ivn07"]
 bg_color = Color(0.165657, 0.165656, 0.165656, 1)
@@ -69,6 +70,14 @@ region = Rect2(626, 230, 12, 4)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pyu7k"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j32we"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_seol6"]
+shader = ExtResource("9_ud05t")
+shader_parameter/enable_saturation = false
+shader_parameter/saturation = 0.993
+shader_parameter/enable_brightness = true
+shader_parameter/brightness = 1.036
 
 [node name="SpriteGenerator" type="CanvasLayer" node_paths=PackedStringArray("_startGenerationBtn", "MainScene3D", "_rawViewport", "_rawViewportContainer")]
 script = ExtResource("1_ws6fq")
@@ -420,7 +429,7 @@ text = "SelectAll"
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="SpriteSheetManager" type="PanelContainer" parent="MainUI/TabContainer" node_paths=PackedStringArray("_textureRect", "_saturationSlider", "_brightnessSlider", "_outlineCheckbox", "_outlineThicknessSlider", "_outlineColorPicker", "_ditheringCheckbox", "_ditheringSlider", "_colorReductionCheckbox", "_colorCountSpinBox", "_saveButton")]
+[node name="SpriteSheetManager" type="PanelContainer" parent="MainUI/TabContainer" node_paths=PackedStringArray("_textureRect", "_saturationSlider", "_brightnessSlider", "_outlineCheckbox", "_outlineThicknessSlider", "_outlineColorPicker", "_ditheringCheckbox", "_ditheringSlider", "_colorReductionCheckbox", "_colorCountSpinBox", "_saveButton", "_statusLabel", "_enableSaturationCheckbox", "_enableBrightnessCheckbox")]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_pyu7k")
 script = ExtResource("8_seol6")
@@ -435,6 +444,9 @@ _ditheringSlider = NodePath("HBoxContainer/OptionsContainer/VBoxContainer/Dither
 _colorReductionCheckbox = NodePath("HBoxContainer/OptionsContainer/VBoxContainer/ColorReduction/CheckBox")
 _colorCountSpinBox = NodePath("HBoxContainer/OptionsContainer/VBoxContainer/ColorReduction/ColorReducSpinBox")
 _saveButton = NodePath("HBoxContainer/OptionsContainer/VBoxContainer/Saving/SaveSpriteSheetBtn")
+_statusLabel = NodePath("HBoxContainer/OptionsContainer/VBoxContainer/EffectStatusLabel")
+_enableSaturationCheckbox = NodePath("HBoxContainer/OptionsContainer/VBoxContainer/Saturation/CheckBox")
+_enableBrightnessCheckbox = NodePath("HBoxContainer/OptionsContainer/VBoxContainer/Brightess/CheckBox")
 metadata/_tab_index = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MainUI/TabContainer/SpriteSheetManager"]
@@ -453,6 +465,7 @@ theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
 [node name="TextureRect" type="TextureRect" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/SpriteSheetContainer/MarginContainer"]
+material = SubResource("ShaderMaterial_seol6")
 layout_mode = 2
 texture = ExtResource("8_pyu7k")
 expand_mode = 3
@@ -463,6 +476,10 @@ size_flags_horizontal = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer"]
 layout_mode = 2
+
+[node name="EffectStatusLabel" type="Label" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer"]
+layout_mode = 2
+text = "EffectStatusLabel progress...."
 
 [node name="Saturation" type="HBoxContainer" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer"]
 layout_mode = 2
@@ -475,6 +492,8 @@ text = "Saturation"
 [node name="HSlider" type="HSlider" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer/Saturation"]
 custom_minimum_size = Vector2(200, 25)
 layout_mode = 2
+max_value = 2.0
+step = 0.1
 
 [node name="Brightess" type="HBoxContainer" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer"]
 layout_mode = 2
@@ -487,6 +506,8 @@ text = "Brightness"
 [node name="HSlider" type="HSlider" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer/Brightess"]
 custom_minimum_size = Vector2(200, 25)
 layout_mode = 2
+max_value = 2.0
+step = 0.1
 
 [node name="Outline" type="HBoxContainer" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer"]
 layout_mode = 2
@@ -500,6 +521,8 @@ text = "Outline
 [node name="HSlider" type="HSlider" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer/Outline"]
 custom_minimum_size = Vector2(200, 25)
 layout_mode = 2
+max_value = 10.0
+step = 0.5
 
 [node name="ColorPickerButton" type="ColorPickerButton" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer/Outline"]
 custom_minimum_size = Vector2(100, 25)
@@ -527,6 +550,8 @@ layout_mode = 2
 
 [node name="CheckBox" type="CheckBox" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer/ColorReduction"]
 layout_mode = 2
+text = "Color Reduction
+"
 
 [node name="ColorReducSpinBox" type="SpinBox" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer/ColorReduction"]
 layout_mode = 2
