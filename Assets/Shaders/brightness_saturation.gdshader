@@ -63,7 +63,7 @@ vec3 hsl_to_rgb(vec3 hsl) {
 
 void fragment() {
     vec4 color = texture(TEXTURE, UV);
-    
+
     if (enable_saturation || enable_brightness) {
         vec3 hsl = rgb_to_hsl(color.rgb);
 
@@ -80,5 +80,3 @@ void fragment() {
 
     COLOR = color;
 }
-
-
