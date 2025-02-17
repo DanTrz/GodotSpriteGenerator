@@ -22,6 +22,8 @@ public partial class GlobalOnReadyResolver : Node
 
         //var name = node.Name.ToString();
         OnReadyResolver.Resolve(node);
+
+        //GD.PrintT("Node Resolved" + node.Name);
     }
 
 }

@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://dvw6dkd1k6hvr"]
+
+[resource]
+resource_name = "GirlNoHair_Material.001"
+cull_mode = 2
+shading_mode = 0
+albedo_color = Color(1, 1, 0, 1)
+texture_filter = 2

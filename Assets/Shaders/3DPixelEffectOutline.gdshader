@@ -54,8 +54,8 @@ void fragment() {
 	vec2 e = cellSize;
 	vec2 uv = cellSize * round(SCREEN_UV / cellSize);
 	vec2 orig_uv = SCREEN_UV;
-	
-	
+
+
 //	Shadows
 	float depth_diff = 0.0;
 	float neg_depth_diff = 0.0;
@@ -79,10 +79,10 @@ void fragment() {
 		neg_depth_diff = clamp(neg_depth_diff, 0.0, 1.0);
 		neg_depth_diff = clamp(smoothstep(0.5, 0.5, neg_depth_diff)*10.0, 0.0, 1.0);
 		depth_diff = smoothstep(0.2, 0.3, depth_diff);
-		
+
 		//ALBEDO = vec3(depth_diff);
 	}
-	
+
 //	Highlights
 	float normal_diff = 0.;
 	if (highlights_enabled) {
@@ -124,5 +124,3 @@ void fragment() {
 	ALPHA = clamp((alpha_mask) * 5.0, 0.0, 1.0);
 	//ALPHA = 1.0;
 }
-
-
