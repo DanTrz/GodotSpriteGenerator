@@ -34,6 +34,7 @@ public partial class SpriteGenerator : Node
 
     //MeshReplacer Nodes and Variables
     [OnReady("%HeadMeshOptBtn")] private OptionButton _headMeshOptBtn;
+    [OnReady("%HairMeshOptBtn")] private OptionButton _hairMeshOptBtn;
 
     private Node3D _model;
     private Node3D _characterModelObject;
@@ -59,6 +60,7 @@ public partial class SpriteGenerator : Node
         _playBackSpeedLineEdit.Text = _animationPlaybackSpeed.ToString();
         _angleSelectionItemList.CreateItemsFromList(allAngles.Select(x => x.ToString()).ToArray());
         MeshReplacer.UpdateUIOptionMesheList(_headMeshOptBtn, "Head");
+        //MeshReplacer.UpdateUIOptionMesheList(_hairMeshOptBtn, "Hair");
 
 
         //Set Default Resolution and Shader Strenght
@@ -79,6 +81,7 @@ public partial class SpriteGenerator : Node
         _loadAllAnimationsBtn.Pressed += OnLoadAllAnimationsPressed;
         _saveIntervalTimer.Timeout += OnSaveIntervalTimerTimeout;
         _headMeshOptBtn.ItemSelected += OnHeadMeshOptBtnItemSelected;
+        _hairMeshOptBtn.ItemSelected += OnHairMeshOptBtnItemSelected;
 
 
 
@@ -599,6 +602,17 @@ public partial class SpriteGenerator : Node
         string itemSelected = _headMeshOptBtn.GetItemText((int)index);
 
         MeshReplacer.UpdateMesh(_headMeshObject, Const.HEAD_MESHES_FOLDER_PATH + itemSelected + ".res");
+
+    }
+
+    private void OnHairMeshOptBtnItemSelected(long index)
+    {
+
+
+        //MeshInstance3D _hairMeshObject = _characterModelObject.GetNode<MeshInstance3D>("%Hair");
+        //string itemSelected = _headMeshOptBtn.GetItemText((int)index);
+
+        //MeshReplacer.UpdateMesh(_hairMeshObject, Const.HEAD_MESHES_FOLDER_PATH + itemSelected + ".res");
 
     }
 

@@ -21,6 +21,7 @@ public static class Const
 
     public const string HEAD_MESHES_FOLDER_PATH = "res://Models/MeshRepository/Head/";
     public const string TORSO_MESHES_FOLDER_PATH = "res://Models/MeshRepository/TorsoBody/";
+    public const string HAIR_MESHES_FOLDER_PATH = "res://Models/MeshRepository/Hair/";
 
 
     // 0.031f 

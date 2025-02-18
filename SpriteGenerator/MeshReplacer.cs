@@ -18,6 +18,8 @@ public partial class MeshReplacer : Node
                 return ResourceLoader.ListDirectory(Const.HEAD_MESHES_FOLDER_PATH);
             case "Torso":
                 return ResourceLoader.ListDirectory(Const.TORSO_MESHES_FOLDER_PATH);
+            case "Hair":
+                return ResourceLoader.ListDirectory(Const.HAIR_MESHES_FOLDER_PATH);
             default:
                 return null;
         }

@@ -444,6 +444,22 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 20)
 layout_mode = 2
 
+[node name="HairMeshHBoxCont" type="HBoxContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1"]
+layout_mode = 2
+
+[node name="HairMeshLabel" type="Label" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/HairMeshHBoxCont"]
+layout_mode = 2
+text = "HairMesh"
+
+[node name="HairMeshOptBtn" type="OptionButton" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/HairMeshHBoxCont"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 20)
+layout_mode = 2
+
+[node name="HairColorBtn" type="ColorPickerButton" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/HairMeshHBoxCont"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+
 [node name="TorsoMeshHBoxCont" type="HBoxContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1"]
 layout_mode = 2
 
