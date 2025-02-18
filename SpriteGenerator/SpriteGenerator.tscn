@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://dghyusd0bdjxt"]
+[gd_scene load_steps=28 format=3 uid="uid://dghyusd0bdjxt"]
 
 [ext_resource type="Script" uid="uid://dj2tgr0hxsbd3" path="res://SpriteGenerator/SpriteGenerator.cs" id="1_ws6fq"]
 [ext_resource type="PackedScene" uid="uid://iuwovcd804os" path="res://SpriteGenerator/MainScene3D.tscn" id="2_jyiui"]
@@ -64,6 +64,9 @@ region = Rect2(610, 226, 12, 12)
 [sub_resource type="AtlasTexture" id="AtlasTexture_pyu7k"]
 atlas = ExtResource("5_mumiu")
 region = Rect2(626, 230, 12, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ud05t"]
+bg_color = Color(3.48948e-07, 0.202314, 0.27622, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4hdfw"]
 
@@ -381,7 +384,7 @@ text = "Angles:"
 
 [node name="angleSelectionItemList" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/HBoxContainer/OptionsGroup1VBoxCont2/AngleSelectionHBoxCont" instance=ExtResource("7_j32we")]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(180, 150)
+custom_minimum_size = Vector2(180, 100)
 layout_mode = 2
 size_flags_horizontal = 3
 max_columns = 2
@@ -398,6 +401,66 @@ text = "Play Speed"
 [node name="PlayBackSpeedLineEdit" type="LineEdit" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/HBoxContainer/OptionsGroup1VBoxCont2/PlaybackSpeedHBoxCont"]
 unique_name_in_owner = true
 layout_mode = 2
+
+[node name="MeshReplacerPanelCont" type="PanelContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer"]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ud05t")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshReplacerPanelCont"]
+layout_mode = 2
+
+[node name="MeshReplacerVboxOpt1" type="VBoxContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshReplacerPanelCont/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BodyTypeHBoxCont" type="HBoxContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1"]
+layout_mode = 2
+
+[node name="BodyTypeLabel" type="Label" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/BodyTypeHBoxCont"]
+layout_mode = 2
+text = "BodyMesh"
+
+[node name="BodyTypeHSlider" type="HSlider" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/BodyTypeHBoxCont"]
+custom_minimum_size = Vector2(200, 25)
+layout_mode = 2
+min_value = 1.0
+max_value = 3.0
+value = 1.0
+
+[node name="BodyTypeColorBtn" type="ColorPickerButton" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/BodyTypeHBoxCont"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+
+[node name="HeadMeshHBoxCont" type="HBoxContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1"]
+layout_mode = 2
+
+[node name="HeadMeshLabel" type="Label" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/HeadMeshHBoxCont"]
+layout_mode = 2
+text = "HeadMesh"
+
+[node name="HeadMeshOptBtn" type="OptionButton" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/HeadMeshHBoxCont"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 20)
+layout_mode = 2
+
+[node name="TorsoMeshHBoxCont" type="HBoxContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1"]
+layout_mode = 2
+
+[node name="TorsoMeshLabel" type="Label" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/TorsoMeshHBoxCont"]
+layout_mode = 2
+text = "TorsoMesh"
+
+[node name="TorsoHSlider" type="HSlider" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/TorsoMeshHBoxCont"]
+custom_minimum_size = Vector2(200, 25)
+layout_mode = 2
+min_value = 1.0
+max_value = 3.0
+value = 1.0
+
+[node name="MeshReplacerVboxOpt2" type="VBoxContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshReplacerPanelCont/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="AnimSelectPanelCont" type="PanelContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer"]
 layout_mode = 2

@@ -32,6 +32,9 @@ public partial class SpriteGenerator : Node
     [OnReady("%animSelectionItemList")] private ItemListCheckBox _animSelectionItemList;
     [OnReady("%angleSelectionItemList")] private ItemListCheckBox _angleSelectionItemList;
 
+    //MeshReplacer Nodes and Variables
+    [OnReady("%HeadMeshOptBtn")] private OptionButton _headMeshOptBtn;
+
     private Node3D _model;
     private Node3D _characterModelObject;
     private Camera3D _camera;
@@ -55,6 +58,7 @@ public partial class SpriteGenerator : Node
         _frameStepTextEdit.Text = frameSkipStep.ToString();
         _playBackSpeedLineEdit.Text = _animationPlaybackSpeed.ToString();
         _angleSelectionItemList.CreateItemsFromList(allAngles.Select(x => x.ToString()).ToArray());
+        MeshReplacer.UpdateUIOptionMesheList(_headMeshOptBtn, "Head");
 
 
         //Set Default Resolution and Shader Strenght
@@ -62,6 +66,7 @@ public partial class SpriteGenerator : Node
         OnRenderResolutionChanged(_resolutionOptionBtn.ItemCount - 1);
         _pixelShaderOptionBtn.Selected = _pixelShaderOptionBtn.ItemCount - 1;
         OnPixelShaderResolutionChanged(_pixelShaderOptionBtn.ItemCount - 1);
+
 
         //Connect Signals
         _startGenerationBtn.Pressed += OnStartGeneration;
@@ -73,6 +78,8 @@ public partial class SpriteGenerator : Node
         _pixelEffectCheckBtn.Pressed += OnPixelEffectPressed;
         _loadAllAnimationsBtn.Pressed += OnLoadAllAnimationsPressed;
         _saveIntervalTimer.Timeout += OnSaveIntervalTimerTimeout;
+        _headMeshOptBtn.ItemSelected += OnHeadMeshOptBtnItemSelected;
+
 
 
         //Pass the objects from MainScene3D to the SpriteGenerator
@@ -98,6 +105,8 @@ public partial class SpriteGenerator : Node
 
 
     }
+
+
 
     private void OnStartGeneration()
     {
@@ -185,7 +194,7 @@ public partial class SpriteGenerator : Node
                     //Only capture frames where frameIndex is a multiple of frameStep
                     if (frameIndex % frameSkipStep == 0)
                     {
-                        SaveFrameRaw(angle);
+                        SaveFrameAsImgPNG(angle);
                     }
                     frameIndex++;
                 }
@@ -273,7 +282,7 @@ public partial class SpriteGenerator : Node
 
     private void OnSaveIntervalTimerTimeout()
     {
-        SaveFrameRaw(renderAngle);
+        SaveFrameAsImgPNG(renderAngle);
     }
 
     private async void OnAnimationFinished(StringName animName)
@@ -362,7 +371,7 @@ public partial class SpriteGenerator : Node
                     //Only capture frames where frameIndex is a multiple of frameStep
                     if (currentFrame % frameSkipStep == 0)
                     {
-                        SaveFrameRaw(angle);
+                        SaveFrameAsImgPNG(angle);
                     }
 
                     currentTime += frameInterval;
@@ -379,7 +388,7 @@ public partial class SpriteGenerator : Node
 
     }
 
-    private void SaveFrameRaw(int angle)
+    private void SaveFrameAsImgPNG(int angle)
     {
         string currentAnimPosInSec = ((float)_animationPlayer.CurrentAnimationPosition).ToString("0.000");
 
@@ -582,6 +591,15 @@ public partial class SpriteGenerator : Node
             _animSelectionItemList.AddItem(animationItem, _animSelectionItemList.ICON_UNSELECTED, true);
 
         }
+    }
+
+    private void OnHeadMeshOptBtnItemSelected(long index)
+    {
+        MeshInstance3D _headMeshObject = _characterModelObject.GetNode<MeshInstance3D>("%Head");
+        string itemSelected = _headMeshOptBtn.GetItemText((int)index);
+
+        MeshReplacer.UpdateMesh(_headMeshObject, Const.HEAD_MESHES_FOLDER_PATH + itemSelected + ".res");
+
     }
 
 

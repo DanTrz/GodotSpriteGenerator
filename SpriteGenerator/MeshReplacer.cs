@@ -1,0 +1,143 @@
+using Godot;
+public partial class MeshReplacer : Node
+{
+
+    private static int _iconSize = 32;
+
+    public static void UpdateMesh(MeshInstance3D meshToReplace, string newMeshPath)
+    {
+
+        meshToReplace.Mesh = GD.Load<Mesh>(newMeshPath);
+    }
+
+    public static string[] GetAllMesheNamesByBodyPart(string bodyPart)
+    {
+        switch (bodyPart)
+        {
+            case "Head":
+                return ResourceLoader.ListDirectory(Const.HEAD_MESHES_FOLDER_PATH);
+            case "Torso":
+                return ResourceLoader.ListDirectory(Const.TORSO_MESHES_FOLDER_PATH);
+            default:
+                return null;
+        }
+    }
+
+    public static void UpdateUIOptionMesheList(OptionButton buttonToUpdate, string bodyPart)
+    {
+        string[] itemList = GetAllMesheNamesByBodyPart(bodyPart);
+        int itemId = 1;
+        foreach (string item in itemList)
+        {
+            if (item.EndsWith(".res"))
+            {
+                int stringIndex = item.IndexOf(".res");
+                string itemName = item.Substring(0, stringIndex);
+                buttonToUpdate.AddItem(itemName, itemId);
+                int itemIndex = buttonToUpdate.GetItemIndex(itemId);
+
+                Texture2D icon = GD.Load<Texture2D>(Const.HEAD_MESHES_FOLDER_PATH + itemName + "_Icon.png");
+
+                if (icon != null)
+                {
+                    // Resize the icon to a smaller size
+                    Image iconImage = icon.GetImage();
+                    iconImage.Resize(_iconSize, _iconSize); // Set the desired size here
+                    Texture2D resizedIcon = ImageTexture.CreateFromImage(iconImage);
+
+                    buttonToUpdate.SetItemIcon(itemIndex, resizedIcon);
+                }
+                itemId++;
+
+            }
+
+        }
+    }
+
+    private Texture2D GenerateMeshPreview(Mesh mesh)
+    {
+        return null;
+        //var viewport = new SubViewport
+        //{
+        //    Size = new Vector2I(128, 128), // Thumbnail size
+        //    TransparentBg = true
+        //};
+
+        //GetTree().Root.AddChild(viewport);
+
+        //var camera = new Camera3D
+        //{
+        //    Position = new Vector3(0, 0, 3), // Position camera away from the mesh
+        //    LookAt = Vector3.Zero
+        //};
+        //viewport.AddChild(camera);
+
+        //var meshInstance = new MeshInstance3D
+        //{
+        //    Mesh = mesh
+        //};
+        //viewport.AddChild(meshInstance);
+
+        //// Force a redraw
+        //viewport.RenderTargetUpdateMode = SubViewport.UpdateMode.Once;
+
+        //// Get the rendered texture
+        //ViewportTexture viewportTexture = viewport.GetTexture();
+
+        //// Convert to Image
+        //Image image = viewportTexture.GetImage();
+        //Texture2D texture = ImageTexture.CreateFromImage(image);
+
+        //// Cleanup viewport
+        //viewport.QueueFree();
+
+        //return texture;
+
+
+    }
+
+    private void PositionCameraToMesh(Camera3D camera, MeshInstance3D meshInstance)
+    {
+        //if (meshInstance.Mesh == null) return;
+
+        //Aabb meshBounds = meshInstance.Mesh.GetAabb();
+        //Vector3 center = meshBounds.GetCenter();
+        //Vector3 size = meshBounds.Size;
+        //float maxSize = Mathf.Max(size.X, size.Y, size.Z);
+
+        //// Position the camera at a distance relative to the mesh size
+        //Vector3 cameraPosition = center + new Vector3(0, 0, maxSize * 2f);
+        //camera.Position = cameraPosition;
+
+        //// Make the camera look at the mesh center
+        //camera.LookAt(center, Vector3.Up);
+    }
+
+    //Methods
+    // ChangeColor??? For BodyTypes???
+    // How we will access the MeshInstance3D Nodes??? Were will them be made "Ready"???
+
+
+
+    //[OnReady("%Head")] public MeshInstance3D HeadMesh;
+    //[OnReady("GirlNoHairArmature/GeneralSkeleton/TorsoBody")] public MeshInstance3D TorsoMesh;
+
+    //const string HeadOriginnalMeshPath = "res://Models/GirlManualRig/MeshOriginal/NoHairGirlSeparateParts01_HeadMesh.res";
+    //const string HeadYellowMeshPath = "res://Models/GirlManualRig/MeshYellow/YellowNoHairGirlSeparateParts01_HeadMesh.res";
+
+    //const string TorsoOriginnalMeshPath = "res://Models/GirlManualRig/MeshOriginal/NoHairGirlSeparateParts01_TorsoBodyMesh.res";
+    //const string TorsoYellowMeshPath = "res://Models/GirlManualRig/MeshYellow/YellowNoHairGirlSeparateParts01_TorsoBodyMesh.res";
+
+
+    //public override void _Ready()
+    //{
+    //    if (HeadMesh == null || TorsoMesh == null)
+    //    {
+    //        HeadMesh = GetNodeOrNull<MeshInstance3D>("%Head");
+    //        TorsoMesh = GetNodeOrNull<MeshInstance3D>("GirlNoHairArmature/GeneralSkeleton/TorsoBody");
+    //    }
+
+    //    HeadMesh.Mesh = GD.Load<Mesh>(HeadYellowMeshPath);
+    //    TorsoMesh.Mesh = GD.Load<Mesh>(TorsoYellowMeshPath);
+    //}
+}

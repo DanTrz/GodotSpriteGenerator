@@ -1,0 +1,13 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://b6y65xs0slvly"]
+
+[ext_resource type="Texture2D" uid="uid://dtej7bx2ymynu" path="res://Models/FullModels/Temp/FBX/VoxelArtTest_MagicalVoxelModel_V7_2.png" id="1_dayv7"]
+
+[resource]
+resource_name = "palette.002"
+diffuse_mode = 3
+specular_mode = 1
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("1_dayv7")
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 0.0
+disable_receive_shadows = true

@@ -1,0 +1,155 @@
+[gd_scene load_steps=5 format=3 uid="uid://b0va4lvlqmyh7"]
+
+[ext_resource type="PackedScene" uid="uid://b5rtp531lcg5v" path="res://Models/FullModels/GirlRigged/rogueGirlTrellisPixel_Rigged.fbx" id="1_8g1nn"]
+[ext_resource type="AnimationLibrary" uid="uid://bcv2d4kf15dyh" path="res://AnimWalk.res" id="2_56p5f"]
+
+[sub_resource type="Animation" id="Animation_ff6mt"]
+resource_name = "mixamo_com"
+length = 0.0333333
+tracks/0/type = "position_3d"
+tracks/0/imported = true
+tracks/0/enabled = true
+tracks/0/path = NodePath("%GeneralSkeleton:Hips")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0.8, 0)
+tracks/1/type = "rotation_3d"
+tracks/1/imported = true
+tracks/1/enabled = true
+tracks/1/path = NodePath("%GeneralSkeleton:Hips")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, -1.69981e-07, 3.01003e-06, -6.51776e-05, 1)
+tracks/2/type = "rotation_3d"
+tracks/2/imported = true
+tracks/2/enabled = true
+tracks/2/path = NodePath("%GeneralSkeleton:Spine")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = PackedFloat32Array(0, 1, 1.97564e-07, -3.01003e-06, 6.52828e-05, 1)
+tracks/3/type = "rotation_3d"
+tracks/3/imported = true
+tracks/3/enabled = true
+tracks/3/path = NodePath("%GeneralSkeleton:LeftUpperLeg")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = PackedFloat32Array(0, 1, -0.00829914, 0.0761587, 0.991154, 0.108369)
+tracks/4/type = "rotation_3d"
+tracks/4/imported = true
+tracks/4/enabled = true
+tracks/4/path = NodePath("%GeneralSkeleton:RightUpperLeg")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = PackedFloat32Array(0, 1, 0.00858811, 0.0789233, 0.990932, -0.1084)
+tracks/5/type = "rotation_3d"
+tracks/5/imported = true
+tracks/5/enabled = true
+tracks/5/path = NodePath("%GeneralSkeleton:LeftLowerLeg")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = PackedFloat32Array(0, 1, 0.000290286, 0.999765, -0.0215426, 0.00257799)
+tracks/6/type = "rotation_3d"
+tracks/6/imported = true
+tracks/6/enabled = true
+tracks/6/path = NodePath("%GeneralSkeleton:RightLowerLeg")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = PackedFloat32Array(0, 1, -0.000376485, 0.999673, -0.0253193, -0.0034663)
+tracks/7/type = "rotation_3d"
+tracks/7/imported = true
+tracks/7/enabled = true
+tracks/7/path = NodePath("%GeneralSkeleton:LeftFoot")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = PackedFloat32Array(0, 1, -0.0825943, -0.740378, 0.663292, 0.0711503)
+tracks/8/type = "rotation_3d"
+tracks/8/imported = true
+tracks/8/enabled = true
+tracks/8/path = NodePath("%GeneralSkeleton:RightFoot")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = PackedFloat32Array(0, 1, -0.0824916, 0.739656, -0.664097, 0.071275)
+tracks/9/type = "rotation_3d"
+tracks/9/imported = true
+tracks/9/enabled = true
+tracks/9/path = NodePath("%GeneralSkeleton:LeftShoulder")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = PackedFloat32Array(0, 1, 0.488308, 0.511425, 0.488308, -0.511425)
+tracks/10/type = "rotation_3d"
+tracks/10/imported = true
+tracks/10/enabled = true
+tracks/10/path = NodePath("%GeneralSkeleton:RightShoulder")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = PackedFloat32Array(0, 1, 0.488309, -0.511424, -0.488309, -0.511424)
+tracks/11/type = "rotation_3d"
+tracks/11/imported = true
+tracks/11/enabled = true
+tracks/11/path = NodePath("%GeneralSkeleton:LeftUpperArm")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = PackedFloat32Array(0, 1, 0.032051, 0.993143, 0.112405, -0.00210223)
+tracks/12/type = "rotation_3d"
+tracks/12/imported = true
+tracks/12/enabled = true
+tracks/12/path = NodePath("%GeneralSkeleton:RightUpperArm")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = PackedFloat32Array(0, 1, -0.0371743, 0.992967, 0.112378, 0.00243822)
+tracks/13/type = "rotation_3d"
+tracks/13/imported = true
+tracks/13/enabled = true
+tracks/13/path = NodePath("%GeneralSkeleton:LeftLowerArm")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = PackedFloat32Array(0, 1, -0.0251336, -0.702773, -0.0809726, 0.706344)
+tracks/14/type = "rotation_3d"
+tracks/14/imported = true
+tracks/14/enabled = true
+tracks/14/path = NodePath("%GeneralSkeleton:RightLowerArm")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = PackedFloat32Array(0, 1, -0.0311687, 0.702176, 0.0869717, 0.705984)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2lalo"]
+_data = {
+"TPose": SubResource("Animation_ff6mt")
+}
+
+[node name="GirlRigged" instance=ExtResource("1_8g1nn")]
+
+[node name="GeneralSkeleton" parent="." index="0"]
+bones/0/position = Vector3(0, 0.0942248, 0)
+bones/0/rotation = Quaternion(-1.69981e-07, 3.01003e-06, -6.51776e-05, 1)
+bones/1/rotation = Quaternion(1.97564e-07, -3.01003e-06, 6.52828e-05, 1)
+bones/2/rotation = Quaternion(0.0862443, 0.0230505, 0.0170664, 0.995861)
+bones/3/rotation = Quaternion(0.0862446, 0.0230504, 0.0170668, 0.995861)
+bones/4/rotation = Quaternion(-0.0652446, -0.0276307, -0.00199065, 0.997485)
+bones/5/rotation = Quaternion(-0.119447, -0.0692485, -0.0375218, 0.989712)
+bones/7/rotation = Quaternion(0.488308, 0.511425, 0.488308, -0.511425)
+bones/8/rotation = Quaternion(0.032051, 0.993143, 0.112405, -0.00210223)
+bones/9/rotation = Quaternion(-0.0251336, -0.702773, -0.0809726, 0.706344)
+bones/10/rotation = Quaternion(0.120967, 0.761098, 0.129711, 0.623916)
+bones/11/rotation = Quaternion(0.488309, -0.511424, -0.488309, -0.511424)
+bones/12/rotation = Quaternion(-0.0371743, 0.992967, 0.112378, 0.00243822)
+bones/13/rotation = Quaternion(-0.0311687, 0.702176, 0.0869717, 0.705984)
+bones/14/rotation = Quaternion(0.0506415, -0.703463, -0.0209559, 0.708616)
+bones/15/rotation = Quaternion(-0.00829914, 0.0761587, 0.991154, 0.108369)
+bones/16/rotation = Quaternion(0.000290286, 0.999765, -0.0215426, 0.00257799)
+bones/17/rotation = Quaternion(0.0825943, 0.740378, -0.663292, -0.0711503)
+bones/18/rotation = Quaternion(0.0256091, 0.997992, 0.00636876, 0.0575865)
+bones/20/rotation = Quaternion(0.00858811, 0.0789233, 0.990932, -0.1084)
+bones/21/rotation = Quaternion(-0.000376485, 0.999673, -0.0253193, -0.0034663)
+bones/22/rotation = Quaternion(-0.0824916, 0.739656, -0.664097, 0.071275)
+bones/23/rotation = Quaternion(-0.111515, 0.989272, 0.0917935, 0.0219141)
+
+[node name="geometry_0" parent="GeneralSkeleton" index="0"]
+cast_shadow = 0
+
+[node name="AnimationPlayer" parent="." index="1"]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_2lalo"),
+"Anim": ExtResource("2_56p5f")
+}
