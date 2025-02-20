@@ -5,7 +5,7 @@ public partial class ModelPositionManager : Node
 
     [Export] public float MoveSpeed = 0.1f;
     [Export] public float RotateSpeed = 1.0f;
-    [Export] public float ZoomSpeed = 0.1f;
+    [Export] public float ZoomScale = 0.1f;
 
     [OnReady("%MoveLeftBtn")] private Button _moveLeftBtn;
     [OnReady("%MoveRightBtn")] private Button _moveRightBtn;
@@ -45,13 +45,13 @@ public partial class ModelPositionManager : Node
 
     private void ZoomModelOut()
     {
-        CameraNode.Position += new Vector3(0, 0, ZoomSpeed);
+        CameraNode.Size += ZoomScale;
     }
 
 
     private void ZoomModelIn()
     {
-        CameraNode.Position += new Vector3(0, 0, -ZoomSpeed);
+        CameraNode.Size -= ZoomScale;
     }
 
 

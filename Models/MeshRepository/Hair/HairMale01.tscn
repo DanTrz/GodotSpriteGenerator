@@ -43,7 +43,8 @@ bones/2/position = Vector3(0, 0, 0)
 bones/2/rotation = Quaternion(-0.707107, 0, 0, 0.707107)
 bones/2/scale = Vector3(1, 1, 1)
 
-[node name="Hair_AniimeStyle" type="MeshInstance3D" parent="HairNode/Skeleton3D"]
+[node name="HairMesh" type="MeshInstance3D" parent="HairNode/Skeleton3D"]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 cast_shadow = 0
 mesh = ExtResource("1_8volb")

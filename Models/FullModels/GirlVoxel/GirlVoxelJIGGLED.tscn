@@ -1,78 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://bwfpoeg8tf1hw"]
+[gd_scene load_steps=12 format=3 uid="uid://bwfpoeg8tf1hw"]
 
 [ext_resource type="ArrayMesh" uid="uid://dkaloxpe2h2pm" path="res://Models/FullModels/GirlVoxel/GirlVoxelOBJ.res" id="1_5bsys"]
+[ext_resource type="PackedScene" uid="uid://dpa7h0crxxisw" path="res://Models/MeshRepository/Hair/HairMale01.tscn" id="3_wkw4n"]
+[ext_resource type="ArrayMesh" uid="uid://nsojkdt21yac" path="res://Models/MeshRepository/Head/HeadMesh_Original.res" id="4_hmjjc"]
 [ext_resource type="Script" uid="uid://b1ehblsx7n5cr" path="res://addons/jigglebones/jigglebone.gd" id="5_fnq30"]
 [ext_resource type="AnimationLibrary" uid="uid://bcv2d4kf15dyh" path="res://AnimWalk.res" id="6_8b1n2"]
-
-[sub_resource type="Skin" id="Skin_o623c"]
-resource_name = "Skin"
-bind_count = 22
-bind/0/name = &"RightFoot"
-bind/0/bone = -1
-bind/0/pose = Transform3D(-9.53674e-06, -1.90735e-06, 100, 100, 1.14441e-05, 9.53674e-06, -7.62939e-06, 100, 1.33514e-05, -1.27876, 2.29575, -0.661749)
-bind/1/name = &"RightToes"
-bind/1/bone = -1
-bind/1/pose = Transform3D(4.41074e-06, -1.90735e-06, -100, 100, 8.58307e-06, 6.10948e-06, 1.43051e-06, -100, -1.04904e-05, 1.64219, 1.63466, 0.108413)
-bind/2/name = &"RightLowerLeg"
-bind/2/bone = -1
-bind/2/pose = Transform3D(5.72205e-06, 1.09673e-05, -100, 0, -100, -3.57628e-07, -100, -3.8147e-06, -7.39098e-06, 1.04669, 1.45536, -1.93278)
-bind/3/name = &"RightUpperLeg"
-bind/3/bone = -1
-bind/3/pose = Transform3D(-1.49012e-08, -9.53674e-06, 100, -1.19209e-07, -100, -5.72205e-06, 100, -5.96046e-08, 1.49012e-08, -0.792813, 2.58631, 1.926)
-bind/4/name = &"Hips"
-bind/4/bone = -1
-bind/4/pose = Transform3D(0, 7.54979e-06, -100, 0, 100, 7.54979e-06, 100, 0, 0, 0.18, -2.83784, 1.88188)
-bind/5/name = &"RightUpperArm"
-bind/5/bone = -1
-bind/5/pose = Transform3D(100, 1.90735e-06, 4.17233e-07, -1.54972e-06, 0, 100, -9.53674e-07, -100, -8.10623e-06, 2.16986, -0.949095, 4.8401)
-bind/6/name = &"UpperChest"
-bind/6/bone = -1
-bind/6/pose = Transform3D(5.29396e-23, 7.54979e-06, -100, -9.53674e-07, 100, 7.54979e-06, 100, 9.53674e-07, 1.12914e-13, 0.18, -4.41854, 2.09264)
-bind/7/name = &"Spine"
-bind/7/bone = -1
-bind/7/pose = Transform3D(-5.29396e-23, 7.54979e-06, -100, -9.53674e-07, 100, 7.54979e-06, 100, 9.53674e-07, -8.83328e-16, 0.18, -3.28947, 1.9421)
-bind/8/name = &"Chest"
-bind/8/bone = -1
-bind/8/pose = Transform3D(5.29396e-23, 7.54979e-06, -100, -9.53674e-07, 100, 7.54979e-06, 100, 9.53674e-07, 1.12914e-13, 0.18, -3.81637, 2.01235)
-bind/9/name = &"LeftUpperLeg"
-bind/9/bone = -1
-bind/9/pose = Transform3D(-4.97613e-16, -5.72205e-06, 100, -5.96046e-08, -100, -9.53674e-06, 100, 0, 1.49012e-08, 0.432814, 2.58631, 1.91764)
-bind/10/name = &"LeftLowerLeg"
-bind/10/bone = -1
-bind/10/pose = Transform3D(1.43051e-06, 2.38419e-06, -100, 0, -100, -1.07288e-05, -100, 0, -3.33786e-06, -0.686688, 1.45536, -1.9258)
-bind/11/name = &"LeftUpperArm"
-bind/11/bone = -1
-bind/11/pose = Transform3D(-100, -1.90735e-06, -1.19209e-07, 8.34465e-07, 4.76837e-07, -100, 0, -100, -4.76837e-06, -2.19607, -0.589096, 4.8401)
-bind/12/name = &"LeftFoot"
-bind/12/bone = -1
-bind/12/pose = Transform3D(9.53674e-07, -4.76837e-06, 100, 100, 0, 3.8147e-06, -3.8147e-06, 100, 1.33514e-05, 0.920841, 2.29982, -0.6624)
-bind/13/name = &"LeftToes"
-bind/13/bone = -1
-bind/13/pose = Transform3D(1.81794e-06, 4.76837e-06, -100, 100, -3.8147e-06, 1.96695e-06, -3.8147e-06, -100, -1.14441e-05, -1.28535, 1.64286, 0.10996)
-bind/14/name = &"LeftShoulder"
-bind/14/bone = -1
-bind/14/pose = Transform3D(100, 0, 4.76837e-07, 4.76837e-07, 1.90735e-06, -100, -9.53674e-07, 100, 3.8147e-06, 2.18734, -0.0769862, -5.00522)
-bind/15/name = &"RightHand"
-bind/15/bone = -1
-bind/15/pose = Transform3D(100, 2.86102e-06, -8.41916e-07, -2.08616e-07, -1.37091e-06, 100, -9.53674e-07, -100, -8.01682e-06, 2.16799, -3.09538, 4.75887)
-bind/16/name = &"RightLowerArm"
-bind/16/bone = -1
-bind/16/pose = Transform3D(9.53674e-07, 100, 8.01682e-06, -2.08616e-07, -1.37091e-06, 100, 100, 2.86102e-06, -8.41916e-07, -4.75615, -2.03121, 2.22787)
-bind/17/name = &"Head"
-bind/17/bone = -1
-bind/17/pose = Transform3D(-2.96527e-31, 7.54979e-06, -100, -8.32667e-15, 100, 7.54979e-06, 100, 8.32667e-15, 5.45928e-22, 0.18, -5.39345, 2.15567)
-bind/18/name = &"RightShoulder"
-bind/18/bone = -1
-bind/18/pose = Transform3D(-100, -2.86102e-06, 0, -9.53674e-07, 1.90735e-06, 100, 0, 100, 9.53674e-06, -2.1786, -0.436986, -5.00522)
-bind/19/name = &"Neck"
-bind/19/bone = -1
-bind/19/pose = Transform3D(-2.96527e-31, 7.54979e-06, -100, -8.32667e-15, 100, 7.54979e-06, 100, 8.32667e-15, 5.45928e-22, 0.18, -5.09598, 2.18297)
-bind/20/name = &"LeftLowerArm"
-bind/20/bone = -1
-bind/20/pose = Transform3D(1.90735e-06, -100, -4.47035e-06, 1.46031e-06, 3.57628e-07, -100, 100, 9.53674e-07, -3.72529e-08, 4.75615, -1.67121, 2.22848)
-bind/21/name = &"LeftHand"
-bind/21/bone = -1
-bind/21/pose = Transform3D(-100, -9.53674e-07, 3.72529e-08, 1.46031e-06, 3.57628e-07, -100, 1.90735e-06, -100, -4.47035e-06, -2.15911, -2.73538, 4.75887)
 
 [sub_resource type="Animation" id="Animation_8b1n2"]
 resource_name = "Test"
@@ -80,7 +12,7 @@ length = 1.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("GeneralSkeleton:position")
+tracks/0/path = NodePath("Node3DPivot/GeneralSkeleton:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -95,7 +27,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("GeneralSkeleton:position")
+tracks/0/path = NodePath("Node3DPivot/GeneralSkeleton:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -221,9 +153,165 @@ _data = {
 &"TPose": SubResource("Animation_yduxi")
 }
 
+[sub_resource type="Skin" id="Skin_o623c"]
+resource_name = "Skin"
+bind_count = 22
+bind/0/name = &"RightFoot"
+bind/0/bone = -1
+bind/0/pose = Transform3D(-9.53674e-06, -1.90735e-06, 100, 100, 1.14441e-05, 9.53674e-06, -7.62939e-06, 100, 1.33514e-05, -1.27876, 2.29575, -0.661749)
+bind/1/name = &"RightToes"
+bind/1/bone = -1
+bind/1/pose = Transform3D(4.41074e-06, -1.90735e-06, -100, 100, 8.58307e-06, 6.10948e-06, 1.43051e-06, -100, -1.04904e-05, 1.64219, 1.63466, 0.108413)
+bind/2/name = &"RightLowerLeg"
+bind/2/bone = -1
+bind/2/pose = Transform3D(5.72205e-06, 1.09673e-05, -100, 0, -100, -3.57628e-07, -100, -3.8147e-06, -7.39098e-06, 1.04669, 1.45536, -1.93278)
+bind/3/name = &"RightUpperLeg"
+bind/3/bone = -1
+bind/3/pose = Transform3D(-1.49012e-08, -9.53674e-06, 100, -1.19209e-07, -100, -5.72205e-06, 100, -5.96046e-08, 1.49012e-08, -0.792813, 2.58631, 1.926)
+bind/4/name = &"Hips"
+bind/4/bone = -1
+bind/4/pose = Transform3D(0, 7.54979e-06, -100, 0, 100, 7.54979e-06, 100, 0, 0, 0.18, -2.83784, 1.88188)
+bind/5/name = &"RightUpperArm"
+bind/5/bone = -1
+bind/5/pose = Transform3D(100, 1.90735e-06, 4.17233e-07, -1.54972e-06, 0, 100, -9.53674e-07, -100, -8.10623e-06, 2.16986, -0.949095, 4.8401)
+bind/6/name = &"UpperChest"
+bind/6/bone = -1
+bind/6/pose = Transform3D(5.29396e-23, 7.54979e-06, -100, -9.53674e-07, 100, 7.54979e-06, 100, 9.53674e-07, 1.12914e-13, 0.18, -4.41854, 2.09264)
+bind/7/name = &"Spine"
+bind/7/bone = -1
+bind/7/pose = Transform3D(-5.29396e-23, 7.54979e-06, -100, -9.53674e-07, 100, 7.54979e-06, 100, 9.53674e-07, -8.83328e-16, 0.18, -3.28947, 1.9421)
+bind/8/name = &"Chest"
+bind/8/bone = -1
+bind/8/pose = Transform3D(5.29396e-23, 7.54979e-06, -100, -9.53674e-07, 100, 7.54979e-06, 100, 9.53674e-07, 1.12914e-13, 0.18, -3.81637, 2.01235)
+bind/9/name = &"LeftUpperLeg"
+bind/9/bone = -1
+bind/9/pose = Transform3D(-4.97613e-16, -5.72205e-06, 100, -5.96046e-08, -100, -9.53674e-06, 100, 0, 1.49012e-08, 0.432814, 2.58631, 1.91764)
+bind/10/name = &"LeftLowerLeg"
+bind/10/bone = -1
+bind/10/pose = Transform3D(1.43051e-06, 2.38419e-06, -100, 0, -100, -1.07288e-05, -100, 0, -3.33786e-06, -0.686688, 1.45536, -1.9258)
+bind/11/name = &"LeftUpperArm"
+bind/11/bone = -1
+bind/11/pose = Transform3D(-100, -1.90735e-06, -1.19209e-07, 8.34465e-07, 4.76837e-07, -100, 0, -100, -4.76837e-06, -2.19607, -0.589096, 4.8401)
+bind/12/name = &"LeftFoot"
+bind/12/bone = -1
+bind/12/pose = Transform3D(9.53674e-07, -4.76837e-06, 100, 100, 0, 3.8147e-06, -3.8147e-06, 100, 1.33514e-05, 0.920841, 2.29982, -0.6624)
+bind/13/name = &"LeftToes"
+bind/13/bone = -1
+bind/13/pose = Transform3D(1.81794e-06, 4.76837e-06, -100, 100, -3.8147e-06, 1.96695e-06, -3.8147e-06, -100, -1.14441e-05, -1.28535, 1.64286, 0.10996)
+bind/14/name = &"LeftShoulder"
+bind/14/bone = -1
+bind/14/pose = Transform3D(100, 0, 4.76837e-07, 4.76837e-07, 1.90735e-06, -100, -9.53674e-07, 100, 3.8147e-06, 2.18734, -0.0769862, -5.00522)
+bind/15/name = &"RightHand"
+bind/15/bone = -1
+bind/15/pose = Transform3D(100, 2.86102e-06, -8.41916e-07, -2.08616e-07, -1.37091e-06, 100, -9.53674e-07, -100, -8.01682e-06, 2.16799, -3.09538, 4.75887)
+bind/16/name = &"RightLowerArm"
+bind/16/bone = -1
+bind/16/pose = Transform3D(9.53674e-07, 100, 8.01682e-06, -2.08616e-07, -1.37091e-06, 100, 100, 2.86102e-06, -8.41916e-07, -4.75615, -2.03121, 2.22787)
+bind/17/name = &"Head"
+bind/17/bone = -1
+bind/17/pose = Transform3D(-2.96527e-31, 7.54979e-06, -100, -8.32667e-15, 100, 7.54979e-06, 100, 8.32667e-15, 5.45928e-22, 0.18, -5.39345, 2.15567)
+bind/18/name = &"RightShoulder"
+bind/18/bone = -1
+bind/18/pose = Transform3D(-100, -2.86102e-06, 0, -9.53674e-07, 1.90735e-06, 100, 0, 100, 9.53674e-06, -2.1786, -0.436986, -5.00522)
+bind/19/name = &"Neck"
+bind/19/bone = -1
+bind/19/pose = Transform3D(-2.96527e-31, 7.54979e-06, -100, -8.32667e-15, 100, 7.54979e-06, 100, 8.32667e-15, 5.45928e-22, 0.18, -5.09598, 2.18297)
+bind/20/name = &"LeftLowerArm"
+bind/20/bone = -1
+bind/20/pose = Transform3D(1.90735e-06, -100, -4.47035e-06, 1.46031e-06, 3.57628e-07, -100, 100, 9.53674e-07, -3.72529e-08, 4.75615, -1.67121, 2.22848)
+bind/21/name = &"LeftHand"
+bind/21/bone = -1
+bind/21/pose = Transform3D(-100, -9.53674e-07, 3.72529e-08, 1.46031e-06, 3.57628e-07, -100, 1.90735e-06, -100, -4.47035e-06, -2.15911, -2.73538, 4.75887)
+
+[sub_resource type="Skin" id="Skin_he7jk"]
+resource_name = "Skin"
+bind_count = 24
+bind/0/name = &"Hips"
+bind/0/bone = -1
+bind/0/pose = Transform3D(1, -1.42109e-14, -1.42109e-14, -3.37508e-14, 1, 9.68575e-08, 1.42109e-14, 1.04308e-07, 1, -0.165218, -10.9984, 1.00134)
+bind/1/name = &"Spine"
+bind/1/bone = -1
+bind/1/pose = Transform3D(1, -1.77636e-14, 3.89377e-12, -3.55297e-14, 1, -6.5564e-07, 4.00746e-12, -6.48201e-07, 1, -0.165218, -11.1843, 1.00135)
+bind/2/name = &"Chest"
+bind/2/bone = -1
+bind/2/pose = Transform3D(1, -1.77636e-14, 3.89377e-12, -3.55297e-14, 1, -6.5564e-07, 4.00746e-12, -6.48201e-07, 1, -0.165218, -13.3058, 1.00135)
+bind/3/name = &"UpperChest"
+bind/3/bone = -1
+bind/3/pose = Transform3D(1, -1.77636e-14, 3.89377e-12, -3.55297e-14, 1, -6.5564e-07, 4.00746e-12, -6.48201e-07, 1, -0.165218, -14.6311, 1.00135)
+bind/4/name = &"Neck"
+bind/4/bone = -1
+bind/4/pose = Transform3D(1, -9.31347e-10, 3.89377e-12, 9.3149e-10, 1, -6.5564e-07, 4.03588e-12, -6.482e-07, 1, -0.165218, -15.5982, 1.00135)
+bind/5/name = &"Head"
+bind/5/bone = -1
+bind/5/pose = Transform3D(1, -1.91221e-09, 1.45519e-11, 3.70073e-09, 1, -6.51926e-07, -6.54836e-11, -6.51926e-07, 1, -0.147309, -16.9636, 1.00135)
+bind/6/name = &"TopHead"
+bind/6/bone = -1
+bind/6/pose = Transform3D(0.999946, 0.0103694, -0.000167292, -0.00956895, 0.916301, -0.400371, -0.00399837, 0.400356, 0.916335, -0.357675, -19.1967, -7.53641)
+bind/7/name = &"LeftShoulder"
+bind/7/bone = -1
+bind/7/pose = Transform3D(4.00746e-12, -6.48201e-07, 1, 1, 2.23517e-07, 3.78009e-12, -1.34111e-07, 1, -6.5564e-07, 1.00135, -0.165221, -15.5982)
+bind/8/name = &"LeftUpperArm"
+bind/8/bone = -1
+bind/8/pose = Transform3D(-2.23517e-08, 6.57514e-07, -1, 1, 2.27825e-07, 0, 1.19326e-07, -1, 6.51926e-07, -1.00135, -2.03192, 16.0094)
+bind/9/name = &"LeftLowerArm"
+bind/9/bone = -1
+bind/9/pose = Transform3D(1.28231e-07, -1, 6.4983e-07, 1, 2.15543e-07, -7.45058e-09, 0, -6.55418e-07, 1, 15.5588, -5.59553, 1.36088)
+bind/10/name = &"LeftHand"
+bind/10/bone = -1
+bind/10/pose = Transform3D(3.96977e-09, 6.55853e-07, -1, 1, 1.93715e-07, -7.4503e-09, 1.1921e-07, -1, 6.48656e-07, -1.00135, -9.81029, 15.4164)
+bind/11/name = &"RightShoulder"
+bind/11/bone = -1
+bind/11/pose = Transform3D(-4.03588e-12, 6.482e-07, -1, -1, 8.94064e-08, -3.9222e-12, 8.94074e-08, 1, -6.5564e-07, -1.00135, 0.165217, -15.5982)
+bind/12/name = &"RightUpperArm"
+bind/12/bone = -1
+bind/12/pose = Transform3D(1.49012e-08, -6.55651e-07, 1, -1, 1.3574e-07, 1.49012e-08, -9.0804e-08, -1, 6.63102e-07, 1.00135, -1.70148, 16.0094)
+bind/13/name = &"RightLowerArm"
+bind/13/bone = -1
+bind/13/pose = Transform3D(8.6322e-08, 1, -6.62636e-07, -1, 1.08208e-07, 1.49012e-08, 0, -6.56117e-07, 1, -15.5588, -5.34953, 1.55568)
+bind/14/name = &"RightHand"
+bind/14/bone = -1
+bind/14/pose = Transform3D(2.6261e-08, -6.57496e-07, 1, -1, 8.94065e-08, 2.98019e-08, -6.70555e-08, -1, 6.61694e-07, 1.00135, -9.47985, 15.4164)
+bind/15/name = &"LeftUpperLeg"
+bind/15/bone = -1
+bind/15/pose = Transform3D(-1, 4.28408e-08, 0, -3.44589e-08, -1, -8.19564e-08, -1.49012e-08, 9.68575e-08, 1, 0.165217, 8.71288, 0.794067)
+bind/16/name = &"LeftLowerLeg"
+bind/16/bone = -1
+bind/16/pose = Transform3D(1, 6.75209e-08, 1.67638e-08, -2.8871e-08, -1, -7.45058e-08, 1.86265e-09, -4.47035e-08, -1, -2.3837, 7.33684, -0.394104)
+bind/17/name = &"LeftFoot"
+bind/17/bone = -1
+bind/17/pose = Transform3D(-1, -6.14673e-08, -1.49012e-08, 1.11759e-08, 1.49012e-08, 1, 3.1665e-08, 1, 5.96046e-08, 2.94571, 1.00134, -4.23227)
+bind/18/name = &"LeftToes"
+bind/18/bone = -1
+bind/18/pose = Transform3D(1, 1.16415e-07, 4.61005e-08, 3.72529e-09, 1.49012e-07, 1, -4.09782e-08, -1, -2.08616e-07, -3.81108, 1.84277, 1.19937)
+bind/19/name = &"RightUpperLeg"
+bind/19/bone = -1
+bind/19/pose = Transform3D(-1, -9.22009e-08, -1.49012e-08, 1.8999e-07, -1, -1.00583e-07, 1.49012e-08, 1.08033e-07, 1, 0.165219, 8.71288, 0.794067)
+bind/20/name = &"RightLowerLeg"
+bind/20/bone = -1
+bind/20/pose = Transform3D(1, 1.34576e-07, 9.31323e-09, 1.59722e-07, -1, -5.96046e-08, -7.45058e-09, -1.63913e-07, -1, 2.19521, 7.14819, -0.474879)
+bind/21/name = &"RightFoot"
+bind/21/bone = -1
+bind/21/pose = Transform3D(-1, -1.60187e-07, 3.72529e-09, -3.72529e-09, 1.04308e-07, 1, -1.47149e-07, 1, 2.98023e-08, -2.61527, 1.00134, -4.23227)
+bind/22/name = &"RightToes"
+bind/22/bone = -1
+bind/22/pose = Transform3D(1, 1.83471e-07, -4.70318e-08, -2.02563e-08, 1.49012e-07, 1, 7.54371e-08, -1, -5.96046e-08, 3.48065, 1.84277, 1.19937)
+bind/23/name = &"neutral_bone"
+bind/23/bone = -1
+bind/23/pose = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0, 0)
+
 [node name="GirlVoxelJIGGLED" type="Node3D"]
 
-[node name="GeneralSkeleton" type="Skeleton3D" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+&"": SubResource("AnimationLibrary_tg1er"),
+&"AnimWalk": ExtResource("6_8b1n2")
+}
+
+[node name="Node3DPivot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.265509, 0)
+
+[node name="GeneralSkeleton" type="Skeleton3D" parent="Node3DPivot"]
 unique_name_in_owner = true
 transform = Transform3D(0.12, 0, 0, 0, 0.12, 0, 0, 0, 0.12, 0, 0, 0)
 motion_scale = 2.83784
@@ -403,13 +491,13 @@ bones/24/position = Vector3(-0.173491, 0.380467, 0.00195869)
 bones/24/rotation = Quaternion(-0.211891, 0.975954, 0.0131304, 0.0494247)
 bones/24/scale = Vector3(1, 1, 1)
 
-[node name="GirlVoxelOBJ" type="MeshInstance3D" parent="GeneralSkeleton"]
+[node name="GirlVoxelOBJ" type="MeshInstance3D" parent="Node3DPivot/GeneralSkeleton"]
 transform = Transform3D(0.988772, 0, -0.149432, 0, 1, 0, 0.149432, 0, 0.988772, 0, 0, 0)
 mesh = ExtResource("1_5bsys")
 skin = SubResource("Skin_o623c")
 
-[node name="Jigglebone2" type="Node3D" parent="GeneralSkeleton"]
-transform = Transform3D(-0.0403022, 0.0710585, 0.0879001, -0.109617, -0.0473313, -0.0119967, 0.0275663, -0.0843234, 0.0808063, 0.41098, -0.354319, 0.0408788)
+[node name="Jigglebone2" type="Node3D" parent="Node3DPivot/GeneralSkeleton"]
+transform = Transform3D(-0.0403022, 0.0710585, 0.0879001, -0.109617, -0.0473313, -0.0119966, 0.0275664, -0.0843234, 0.0808063, 0.410981, -0.619828, 0.040879)
 top_level = true
 script = ExtResource("5_fnq30")
 bone_name = "LeftShoulder"
@@ -419,8 +507,8 @@ gravity = Vector3(4, -9.81, 0)
 forward_axis = 2
 metadata/_custom_type_script = "uid://b1ehblsx7n5cr"
 
-[node name="Jigglebone5" type="Node3D" parent="GeneralSkeleton"]
-transform = Transform3D(-0.0299551, -0.0475144, -0.106043, 0.102062, 0.0415944, -0.0474678, 0.0555516, -0.102041, 0.0300289, -0.39846, -0.340587, -0.0158878)
+[node name="Jigglebone5" type="Node3D" parent="Node3DPivot/GeneralSkeleton"]
+transform = Transform3D(-0.0299551, -0.0475144, -0.106043, 0.102062, 0.0415943, -0.0474678, 0.0555515, -0.102041, 0.0300289, -0.398461, -0.606096, -0.0158878)
 top_level = true
 script = ExtResource("5_fnq30")
 bone_name = "LeftUpperArm"
@@ -430,8 +518,8 @@ gravity = Vector3(-5, -9.81, 0)
 forward_axis = 2
 metadata/_custom_type_script = "uid://b1ehblsx7n5cr"
 
-[node name="Jigglebone3" type="Node3D" parent="GeneralSkeleton"]
-transform = Transform3D(-0.119299, 0.00866921, -0.00961878, 0.00118316, -0.0814679, -0.0880998, -0.0128948, -0.0876802, 0.0809067, -0.459749, -0.296254, -0.121986)
+[node name="Jigglebone3" type="Node3D" parent="Node3DPivot/GeneralSkeleton"]
+transform = Transform3D(-0.119299, 0.00866925, -0.00961893, 0.00118323, -0.081468, -0.0880997, -0.0128949, -0.0876801, 0.0809068, -0.459751, -0.561763, -0.121986)
 top_level = true
 script = ExtResource("5_fnq30")
 bone_name = "LeftLowerArm"
@@ -441,8 +529,8 @@ gravity = Vector3(-5, -9.81, 0)
 forward_axis = 2
 metadata/_custom_type_script = "uid://b1ehblsx7n5cr"
 
-[node name="Jigglebone4" type="Node3D" parent="GeneralSkeleton"]
-transform = Transform3D(-0.00369877, 0.0601439, -0.103774, 0.0449128, -0.0955752, -0.056993, -0.111217, -0.0405965, -0.0195643, -0.450868, -0.389064, -0.209644)
+[node name="Jigglebone4" type="Node3D" parent="Node3DPivot/GeneralSkeleton"]
+transform = Transform3D(-0.00369867, 0.060144, -0.103774, 0.0449127, -0.0955753, -0.0569931, -0.111217, -0.0405964, -0.0195644, -0.450867, -0.654575, -0.209644)
 top_level = true
 script = ExtResource("5_fnq30")
 bone_name = "LeftHand"
@@ -452,9 +540,17 @@ gravity = Vector3(-5, -9.81, 0)
 forward_axis = 2
 metadata/_custom_type_script = "uid://b1ehblsx7n5cr"
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="HairBoneAttach" type="BoneAttachment3D" parent="Node3DPivot/GeneralSkeleton"]
 unique_name_in_owner = true
-libraries = {
-&"": SubResource("AnimationLibrary_tg1er"),
-&"AnimWalk": ExtResource("6_8b1n2")
-}
+transform = Transform3D(0.99489, -0.00946623, 0.10052, 0.0479053, 0.920651, -0.387437, -0.0888766, 0.390273, 0.9164, 0.0255879, 4.82039, 0.4253)
+bone_name = "Neck"
+bone_idx = 4
+
+[node name="HairMale01" parent="Node3DPivot/GeneralSkeleton/HairBoneAttach" instance=ExtResource("3_wkw4n")]
+visible = false
+
+[node name="Head" type="MeshInstance3D" parent="Node3DPivot/GeneralSkeleton"]
+unique_name_in_owner = true
+visible = false
+mesh = ExtResource("4_hmjjc")
+skin = SubResource("Skin_he7jk")

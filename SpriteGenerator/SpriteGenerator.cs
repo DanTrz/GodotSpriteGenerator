@@ -37,6 +37,7 @@ public partial class SpriteGenerator : Node
     //MeshReplacer Nodes and Variables
     [OnReady("%HeadMeshOptBtn")] private OptionButton _headMeshOptBtn;
     [OnReady("%HairMeshOptBtn")] private OptionButton _hairMeshOptBtn;
+    [OnReady("%HairColorBtn")] private ColorPickerButton _hairColorBtn;
 
     private Node3D _modelPivotNode;
     private Node3D _characterModelObject;
@@ -62,6 +63,7 @@ public partial class SpriteGenerator : Node
         _angleSelectionItemList.CreateItemsFromList(allAngles.Select(x => x.ToString()).ToArray());
         MeshReplacer.UpdateUIOptionMesheList(_headMeshOptBtn, "Head");
         MeshReplacer.UpdateUIOprtionHairList(_hairMeshOptBtn);
+        _hairMeshOptBtn.Selected = 1;
 
 
         //Set Default Resolution and Shader Strenght
@@ -87,7 +89,7 @@ public partial class SpriteGenerator : Node
         //_showGridCheckButton.Pressed += () => ShowGrid = _showGridCheckButton.ButtonPressed;
         _showGridCheckButton.Pressed += () => _pixelGridTextRect.Visible = _showGridCheckButton.ButtonPressed;
         _showGridCheckButton.ButtonPressed = true;
-        //ShowGrid = true;
+        _hairColorBtn.ColorChanged += OnHairColorChanged;
 
 
 
@@ -611,6 +613,21 @@ public partial class SpriteGenerator : Node
         }
     }
 
+    private void OnHairColorChanged(Color newColor)
+    {
+        MeshInstance3D _hairMeshObject = _characterModelObject.GetNode<BoneAttachment3D>("%HairBoneAttach").GetChild(0).GetNode<MeshInstance3D>("%HairMesh");
+
+
+        if (_hairMeshObject != null && _hairMeshObject.GetActiveMaterial(0) is StandardMaterial3D material)
+        {
+            material.AlbedoColor = newColor;
+        }
+
+
+
+    }
+
+
     private void OnHeadMeshOptBtnItemSelected(long index)
     {
         MeshInstance3D _headMeshObject = _characterModelObject.GetNode<MeshInstance3D>("%Head");
@@ -620,9 +637,9 @@ public partial class SpriteGenerator : Node
 
     private void OnHairMeshOptBtnItemSelected(long index)
     {
-        BoneAttachment3D _hairMeshObject = _characterModelObject.GetNode<BoneAttachment3D>("%HairBoneAttach");
+        BoneAttachment3D _hairBoneAttachNode = _characterModelObject.GetNode<BoneAttachment3D>("%HairBoneAttach");
         string itemSelected = _hairMeshOptBtn.GetItemText((int)index);
-        MeshReplacer.UpdateHairScene(_hairMeshObject, Const.HAIR_MESHES_FOLDER_PATH + itemSelected + ".tscn");
+        MeshReplacer.UpdateHairScene(_hairBoneAttachNode, Const.HAIR_MESHES_FOLDER_PATH + itemSelected + ".tscn");
     }
 
 
