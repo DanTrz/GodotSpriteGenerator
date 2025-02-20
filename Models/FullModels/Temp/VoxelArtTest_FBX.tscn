@@ -1,8 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://krg3v2dbr4ix"]
-
-[ext_resource type="PackedScene" uid="uid://5khoutewyx8" path="res://Models/FullModels/Temp/FBX/VoxelArtTest_MagicalVoxelModel_V7.fbx" id="1_vyo0a"]
-
-[node name="VoxelArtTest_FBX" instance=ExtResource("1_vyo0a")]
-
-[node name="GirlVoxelOBJ" parent="." index="0"]
-cast_shadow = 0

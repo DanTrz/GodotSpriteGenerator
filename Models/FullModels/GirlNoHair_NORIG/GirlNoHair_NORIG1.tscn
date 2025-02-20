@@ -1,5 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://byy36smuux7k8"]
-
-[ext_resource type="PackedScene" uid="uid://0lfedw6cud1c" path="res://Models/FullModels/GirlNoHair_NORIG/NoHairTestblend1.glb" id="1_v5to7"]
-
-[node name="GirlNoHair_NORIG" instance=ExtResource("1_v5to7")]

@@ -1,19 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://iuwovcd804os"]
+[gd_scene load_steps=6 format=3 uid="uid://iuwovcd804os"]
 
 [ext_resource type="Script" uid="uid://dasxiorjhfw8t" path="res://SpriteGenerator/Model3DMainPivotControl.cs" id="1_4ce3b"]
-[ext_resource type="Shader" uid="uid://c7dbfu5bd0ns3" path="res://Assets/Shaders/Mesh3dPixelEffect.gdshader" id="1_xukee"]
-[ext_resource type="PackedScene" uid="uid://bwfpoeg8tf1hw" path="res://Models/FullModels/GirlVoxel/GirlVoxelJIGGLED.tscn" id="3_xukee"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_rqfbc"]
-render_priority = 0
-shader = ExtResource("1_xukee")
-shader_parameter/pixel_size = 32.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ulv1c"]
-
-[sub_resource type="QuadMesh" id="QuadMesh_cm1n1"]
-material = SubResource("ShaderMaterial_ulv1c")
-size = Vector2(10, 10)
+[ext_resource type="PackedScene" uid="uid://3qpo6cm2kvrx" path="res://Models/FullModels/GirlManualRig/MeshOriginal/GirlPartsModel.tscn" id="2_qo4h8"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_wy6cq"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -32,28 +20,19 @@ glow_enabled = true
 
 [node name="MainCamera" type="Camera3D" parent="."]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 0.879425, 3)
+transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 1.44162, 3)
 projection = 1
 current = true
 size = 1.5
-
-[node name="PixelShaderMesh" type="MeshInstance3D" parent="MainCamera"]
-unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.966167, -2.60578)
-visible = false
-material_override = SubResource("ShaderMaterial_rqfbc")
-cast_shadow = 0
-mesh = SubResource("QuadMesh_cm1n1")
-skeleton = NodePath("../..")
 
 [node name="Model3DMainPivotControl" type="Node3D" parent="."]
 unique_name_in_owner = true
 script = ExtResource("1_4ce3b")
 
-[node name="GirlVoxelJIGGLED" parent="Model3DMainPivotControl" instance=ExtResource("3_xukee")]
+[node name="GirlPartsModel" parent="Model3DMainPivotControl" instance=ExtResource("2_qo4h8")]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.866025, -0.433013, 0.25, 0.473725, -0.870539, 0.133215, 0.159951, 0.233799, 0.959038, 0.537403, 0.32873, 2.69497)
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0.473725, -0.870539, 0.133215, 0.159951, 0.233799, 0.959038, 0.537403, 1.13269, 2.69497)
 shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]

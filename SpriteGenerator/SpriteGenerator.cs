@@ -26,7 +26,7 @@ public partial class SpriteGenerator : Node
     [OnReady("%PlayBackSpeedLineEdit")] private LineEdit _playBackSpeedLineEdit;
     [OnReady("%ClearFolderCheckBtn")] private CheckButton _clearFolderCheckBtn;
     [OnReady("%PixelEffectCheckBtn")] private CheckButton _pixelEffectCheckBtn;
-    [OnReady("%PixelShaderMesh")] private MeshInstance3D _pixelShaderMesh;
+    [OnReady("%PixelShaderTextRect")] private TextureRect _pixelShaderTextRect;
     [OnReady("%3DModelPositionManager")] private ModelPositionManager _modelPositionManager;
     [OnReady("%LoadAllAnimationsBtn")] private Button _loadAllAnimationsBtn;
     [OnReady("%animSelectionItemList")] private ItemListCheckBox _animSelectionItemList;
@@ -38,6 +38,7 @@ public partial class SpriteGenerator : Node
     [OnReady("%HeadMeshOptBtn")] private OptionButton _headMeshOptBtn;
     [OnReady("%HairMeshOptBtn")] private OptionButton _hairMeshOptBtn;
     [OnReady("%HairColorBtn")] private ColorPickerButton _hairColorBtn;
+
 
     private Node3D _modelPivotNode;
     private Node3D _characterModelObject;
@@ -57,13 +58,14 @@ public partial class SpriteGenerator : Node
         //Set Default UI Control Values
         _clearFolderCheckBtn.ButtonPressed = _clearFolderBeforeGeneration;
         _pixelEffectCheckBtn.ButtonPressed = _usePixelEffect;
-        _pixelShaderMesh.Visible = _usePixelEffect;
+        _pixelShaderTextRect.Visible = _usePixelEffect;
         _frameStepTextEdit.Text = frameSkipStep.ToString();
         _playBackSpeedLineEdit.Text = _animationPlaybackSpeed.ToString();
         _angleSelectionItemList.CreateItemsFromList(allAngles.Select(x => x.ToString()).ToArray());
         MeshReplacer.UpdateUIOptionMesheList(_headMeshOptBtn, "Head");
         MeshReplacer.UpdateUIOprtionHairList(_hairMeshOptBtn);
         _hairMeshOptBtn.Selected = 1;
+        _hairColorBtn.Color = Colors.White;
 
 
         //Set Default Resolution and Shader Strenght
@@ -541,8 +543,21 @@ public partial class SpriteGenerator : Node
                 break;
         }
 
-        ((ShaderMaterial)_pixelShaderMesh.MaterialOverride).SetShaderParameter("pixel_size", shaderResolution);
-        GD.PrintT("Shader resolution: " + shaderResolution);
+        //((ShaderMaterial)_pixelShaderTextRect.MaterialOverride).SetShaderParameter("pixel_size", shaderResolution);
+        //GD.PrintT("Shader resolution: " + shaderResolution);
+
+        //_pixelShaderTextRect.Material.
+
+
+        if (_pixelShaderTextRect.Material is ShaderMaterial shaderMaterial)
+        {
+            shaderMaterial.SetShaderParameter("pixel_size", shaderResolution);
+        }
+
+
+
+
+
 
         UpdateViewPort();
     }
@@ -586,7 +601,7 @@ public partial class SpriteGenerator : Node
     private void OnPixelEffectPressed()
     {
         _usePixelEffect = _pixelEffectCheckBtn.ButtonPressed;
-        _pixelShaderMesh.Visible = _usePixelEffect;
+        _pixelShaderTextRect.Visible = _usePixelEffect;
 
         GD.PrintT("Use PixelEffect: " + _usePixelEffect);
 
