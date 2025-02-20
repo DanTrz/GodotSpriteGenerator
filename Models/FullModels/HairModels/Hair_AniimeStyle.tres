@@ -1,0 +1,19 @@
+[gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://cny0u2g3aue86"]
+
+[sub_resource type="Gradient" id="Gradient_t3wnf"]
+offsets = PackedFloat32Array(0, 0.0274914, 1)
+colors = PackedColorArray(0.353438, 0.353438, 0.353438, 1, 0.479381, 0.479381, 0.479381, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_dyh6l"]
+gradient = SubResource("Gradient_t3wnf")
+
+[resource]
+resource_name = "Hair_AniimeStyle"
+cull_mode = 2
+shading_mode = 0
+albedo_color = Color(0.6, 0.164706, 0.101961, 1)
+albedo_texture = SubResource("GradientTexture2D_dyh6l")
+uv1_scale = Vector3(2, 2, 2)
+uv2_scale = Vector3(2, 2, 2)
+texture_filter = 2
+disable_receive_shadows = true

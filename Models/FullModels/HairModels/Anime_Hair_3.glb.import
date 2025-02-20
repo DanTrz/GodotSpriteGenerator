@@ -1,0 +1,54 @@
+[remap]
+
+importer="scene"
+importer_version=1
+type="PackedScene"
+uid="uid://bj223qioqk7mj"
+path="res://.godot/imported/Anime_Hair_3.glb-2154c289c7ab5b30e77991d48f513a87.scn"
+
+[deps]
+
+source_file="res://Models/FullModels/HairModels/Anime_Hair_3.glb"
+dest_files=["res://.godot/imported/Anime_Hair_3.glb-2154c289c7ab5b30e77991d48f513a87.scn"]
+
+[params]
+
+nodes/root_type=""
+nodes/root_name=""
+nodes/apply_root_scale=true
+nodes/root_scale=1.0
+nodes/import_as_skeleton_bones=false
+nodes/use_node_type_suffixes=true
+meshes/ensure_tangents=true
+meshes/generate_lods=true
+meshes/create_shadow_meshes=true
+meshes/light_baking=1
+meshes/lightmap_texel_size=0.2
+meshes/force_disable_compression=false
+skins/use_named_skins=true
+animation/import=true
+animation/fps=30
+animation/trimming=false
+animation/remove_immutable_tracks=true
+animation/import_rest_as_RESET=false
+import_script/path=""
+_subresources={
+"materials": {
+"Hair_AniimeStyle": {
+"use_external/enabled": true,
+"use_external/path": "res://Models/FullModels/HairWeighted/Hair_AniimeStyle.tres"
+}
+},
+"meshes": {
+"Anime_Hair_3_HairMesh": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"save_to_file/enabled": true,
+"save_to_file/path": "res://Models/MeshRepository/Hair/Anime_Hair_3_HairMesh.res"
+}
+}
+}
+gltf/naming_version=1
+gltf/embedded_image_handling=1

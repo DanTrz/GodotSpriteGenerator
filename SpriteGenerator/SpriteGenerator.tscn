@@ -1,10 +1,11 @@
-[gd_scene load_steps=28 format=3 uid="uid://dghyusd0bdjxt"]
+[gd_scene load_steps=29 format=3 uid="uid://dghyusd0bdjxt"]
 
 [ext_resource type="Script" uid="uid://dj2tgr0hxsbd3" path="res://SpriteGenerator/SpriteGenerator.cs" id="1_ws6fq"]
 [ext_resource type="PackedScene" uid="uid://iuwovcd804os" path="res://SpriteGenerator/MainScene3D.tscn" id="2_jyiui"]
 [ext_resource type="Shader" uid="uid://c7dbfu5bd0ns3" path="res://Assets/Shaders/Mesh3dPixelEffect.gdshader" id="2_l6h36"]
 [ext_resource type="Script" uid="uid://b78ehve5xa1ia" path="res://SpriteGenerator/ModelPositionManager.cs" id="4_fx5pg"]
 [ext_resource type="Texture2D" uid="uid://cr55nbf56ybvc" path="res://Assets/UI/Basic UI spritesheet.png" id="5_mumiu"]
+[ext_resource type="Texture2D" uid="uid://b8fnciwttkrvi" path="res://Assets/UI/32PixelGrid_16C_16_R_Total512Pixel.png" id="5_ulv1c"]
 [ext_resource type="Texture2D" uid="uid://k5o1cpbx7oa4" path="res://Assets/UI/ModelTransformReferenceImg.png" id="6_4hdfw"]
 [ext_resource type="PackedScene" uid="uid://de676sb25ueye" path="res://UIComponents/ItemListCheckBox.tscn" id="7_j32we"]
 [ext_resource type="Texture2D" uid="uid://cae2jelncoq3w" path="res://Anim_Running_spriteSheet.png" id="8_pyu7k"]
@@ -164,6 +165,18 @@ handle_input_locally = false
 canvas_item_default_texture_filter = 0
 physics_object_picking = true
 render_target_update_mode = 4
+
+[node name="Pixel32GridTextRect" type="TextureRect" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/ModelPanelContainer/RawViewportContainer/RawSubViewport"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0.298039)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -0.5
+offset_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_ulv1c")
 
 [node name="PixelShaderMesh" type="MeshInstance3D" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/ModelPanelContainer/RawViewportContainer/RawSubViewport"]
 unique_name_in_owner = true
@@ -399,6 +412,18 @@ layout_mode = 2
 text = "Play Speed"
 
 [node name="PlayBackSpeedLineEdit" type="LineEdit" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/HBoxContainer/OptionsGroup1VBoxCont2/PlaybackSpeedHBoxCont"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="ShowGridHBoxCont" type="HBoxContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/HBoxContainer/OptionsGroup1VBoxCont2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/HBoxContainer/OptionsGroup1VBoxCont2/ShowGridHBoxCont"]
+layout_mode = 2
+text = "ShowGrid
+"
+
+[node name="ShowGridCheckButton" type="CheckButton" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/HBoxContainer/OptionsGroup1VBoxCont2/ShowGridHBoxCont"]
 unique_name_in_owner = true
 layout_mode = 2
 

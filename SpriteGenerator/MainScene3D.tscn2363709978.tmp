@@ -1,0 +1,39 @@
+[gd_scene load_steps=6 format=3 uid="uid://iuwovcd804os"]
+
+[ext_resource type="Script" uid="uid://dasxiorjhfw8t" path="res://SpriteGenerator/Model3DMainPivotControl.cs" id="1_4ce3b"]
+[ext_resource type="PackedScene" uid="uid://3qpo6cm2kvrx" path="res://Models/FullModels/GirlManualRig/MeshOriginal/GirlPartsModel.tscn" id="3_xukee"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_wy6cq"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_ote1o"]
+sky_material = SubResource("ProceduralSkyMaterial_wy6cq")
+
+[sub_resource type="Environment" id="Environment_e1sc8"]
+background_mode = 2
+sky = SubResource("Sky_ote1o")
+tonemap_mode = 2
+glow_enabled = true
+
+[node name="MainScene3D" type="Node3D"]
+
+[node name="MainCamera" type="Camera3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 0.939693, 0.34202, 0, -0.34202, 0.939693, 0, 0.5, 1)
+current = true
+
+[node name="Model3DMainPivotControl" type="Node3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+script = ExtResource("1_4ce3b")
+
+[node name="GirlPartsModel" parent="Model3DMainPivotControl" instance=ExtResource("3_xukee")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0.473725, -0.870539, 0.133215, 0.159951, 0.233799, 0.959038, 0.537403, 0.32873, 2.69497)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_e1sc8")

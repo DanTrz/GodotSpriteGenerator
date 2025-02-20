@@ -8,7 +8,7 @@ public partial class SpriteGenerator : Node
 {
     [Export] private Button _startGenerationBtn;
 
-    [Export] public MainScene3d MainScene3D;
+    [Export] public Node3D MainScene3D;
     [Export] private SubViewport _rawViewport;
     [Export] private SubViewportContainer _rawViewportContainer;
     [Export] private string _outputFolder = "res://SpriteSheets";
@@ -31,12 +31,14 @@ public partial class SpriteGenerator : Node
     [OnReady("%LoadAllAnimationsBtn")] private Button _loadAllAnimationsBtn;
     [OnReady("%animSelectionItemList")] private ItemListCheckBox _animSelectionItemList;
     [OnReady("%angleSelectionItemList")] private ItemListCheckBox _angleSelectionItemList;
+    [OnReady("%Pixel32GridTextRect")] private TextureRect _pixelGridTextRect;
+    [OnReady("%ShowGridCheckButton")] private CheckButton _showGridCheckButton;
 
     //MeshReplacer Nodes and Variables
     [OnReady("%HeadMeshOptBtn")] private OptionButton _headMeshOptBtn;
     [OnReady("%HairMeshOptBtn")] private OptionButton _hairMeshOptBtn;
 
-    private Node3D _model;
+    private Node3D _modelPivotNode;
     private Node3D _characterModelObject;
     private Camera3D _camera;
     private AnimationPlayer _animationPlayer;
@@ -49,7 +51,6 @@ public partial class SpriteGenerator : Node
     private int spriteCount = 1;
     private string saveFolder = "Model";
 
-
     public override void _Ready()
     {
         //Set Default UI Control Values
@@ -60,7 +61,7 @@ public partial class SpriteGenerator : Node
         _playBackSpeedLineEdit.Text = _animationPlaybackSpeed.ToString();
         _angleSelectionItemList.CreateItemsFromList(allAngles.Select(x => x.ToString()).ToArray());
         MeshReplacer.UpdateUIOptionMesheList(_headMeshOptBtn, "Head");
-        //MeshReplacer.UpdateUIOptionMesheList(_hairMeshOptBtn, "Hair");
+        MeshReplacer.UpdateUIOprtionHairList(_hairMeshOptBtn);
 
 
         //Set Default Resolution and Shader Strenght
@@ -82,19 +83,30 @@ public partial class SpriteGenerator : Node
         _saveIntervalTimer.Timeout += OnSaveIntervalTimerTimeout;
         _headMeshOptBtn.ItemSelected += OnHeadMeshOptBtnItemSelected;
         _hairMeshOptBtn.ItemSelected += OnHairMeshOptBtnItemSelected;
+        // _showGridCheckButton.Toggled += (value) => ShowGrid = value;
+        //_showGridCheckButton.Pressed += () => ShowGrid = _showGridCheckButton.ButtonPressed;
+        _showGridCheckButton.Pressed += () => _pixelGridTextRect.Visible = _showGridCheckButton.ButtonPressed;
+        _showGridCheckButton.ButtonPressed = true;
+        //ShowGrid = true;
 
 
 
         //Pass the objects from MainScene3D to the SpriteGenerator
         if (MainScene3D != null)
         {
-            _model = MainScene3D.MainModelNode;
-            _camera = MainScene3D.MainCamera;
-            _animationPlayer = MainScene3D.MainAnimationPlayer;
-            _characterModelObject = MainScene3D.MainCharacterObj;
+            //_modelPivotNode = MainScene3D.MainModelNode;
+            //_camera = MainScene3D.MainCamera;
+            //_animationPlayer = MainScene3D.MainAnimationPlayer;
+            //_characterModelObject = MainScene3D.MainCharacterObj;
+
+            //Get Reference to Our Object3D within MainScene
+            _modelPivotNode = MainScene3D.GetNode<Node3D>("%Model3DMainPivotControl");
+            _camera = MainScene3D.GetNode<Camera3D>("%MainCamera");
+            _characterModelObject = _modelPivotNode.GetChild<Node3D>(0);
+            _animationPlayer = _characterModelObject.GetNode<AnimationPlayer>("AnimationPlayer");
 
             //Pass the Model to te PositionManager 
-            _modelPositionManager.ModelNode = _model;
+            _modelPositionManager.ModelNode = _modelPivotNode;
             _modelPositionManager.CameraNode = _camera;
         }
         else
@@ -115,6 +127,7 @@ public partial class SpriteGenerator : Node
     {
         spriteCount = 0;
         saveFolder = ProjectSettings.GlobalizePath(_outputFolder + "/" + _characterModelObject.Name);
+        _pixelGridTextRect.Visible = false;
 
         if (!Directory.Exists(ProjectSettings.GlobalizePath(saveFolder)))
             Directory.CreateDirectory(ProjectSettings.GlobalizePath(saveFolder));
@@ -165,7 +178,7 @@ public partial class SpriteGenerator : Node
         _animationPlayer.Stop();
         _animationPlayer.SpeedScale = _animationPlaybackSpeed;
 
-        _model.RotationDegrees = new Vector3(0, 0, 0);
+        _modelPivotNode.RotationDegrees = new Vector3(0, 0, 0);
 
         // foreach (var anim in _animationPlayer.GetAnimationList())
         foreach (var selectedAnimItem in _animSelectionItemList.GetSelectedItems())
@@ -181,7 +194,7 @@ public partial class SpriteGenerator : Node
 
             foreach (var angle in selectedAngles)
             {
-                _model.RotationDegrees = new Vector3(0, angle, 0);
+                _modelPivotNode.RotationDegrees = new Vector3(0, angle, 0);
 
                 await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame); //Give time to the model to rotate.
 
@@ -203,7 +216,7 @@ public partial class SpriteGenerator : Node
                 }
             }
 
-            _model.RotationDegrees = new Vector3(0, 0, 0);
+            _modelPivotNode.RotationDegrees = new Vector3(0, 0, 0);
         }
 
         await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
@@ -231,7 +244,7 @@ public partial class SpriteGenerator : Node
         _animationPlayer.Stop();
         _animationPlayer.SpeedScale = _animationPlaybackSpeed;
 
-        _model.RotationDegrees = new Vector3(0, 0, 0);
+        _modelPivotNode.RotationDegrees = new Vector3(0, 0, 0);
 
         // foreach (var anim in _animationPlayer.GetAnimationList())
         foreach (var selectedAnimItem in _animSelectionItemList.GetSelectedItems())
@@ -247,7 +260,7 @@ public partial class SpriteGenerator : Node
             {
                 spriteCount = 0;
 
-                _model.RotationDegrees = new Vector3(0, angle, 0);
+                _modelPivotNode.RotationDegrees = new Vector3(0, angle, 0);
 
                 await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame); //Give time to the model to rotate.
 
@@ -293,7 +306,7 @@ public partial class SpriteGenerator : Node
         if (!_isTimeBaseExport) return;
 
         _saveIntervalTimer.Stop();
-        _model.RotationDegrees = new Vector3(0, 0, 0);
+        _modelPivotNode.RotationDegrees = new Vector3(0, 0, 0);
 
         await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
         GenerateSpriteSheet(saveFolder, currentAnimationName + "_spriteSheet", 4);
@@ -322,7 +335,7 @@ public partial class SpriteGenerator : Node
         _animationPlayer.SpeedScale = _animationPlaybackSpeed;
         //Engine.TimeScale = _animationPlaybackSpeed;
 
-        _model.RotationDegrees = new Vector3(0, 0, 0);
+        _modelPivotNode.RotationDegrees = new Vector3(0, 0, 0);
 
         foreach (var selectedAnimItem in _animSelectionItemList.GetSelectedItems())
         {
@@ -335,7 +348,7 @@ public partial class SpriteGenerator : Node
 
             foreach (var angle in selectedAngles)
             {
-                _model.RotationDegrees = new Vector3(0, angle, 0);
+                _modelPivotNode.RotationDegrees = new Vector3(0, angle, 0);
 
                 await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
 
@@ -383,7 +396,7 @@ public partial class SpriteGenerator : Node
                 }
             }
 
-            _model.RotationDegrees = new Vector3(0, 0, 0);
+            _modelPivotNode.RotationDegrees = new Vector3(0, 0, 0);
         }
 
         await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
@@ -473,6 +486,8 @@ public partial class SpriteGenerator : Node
         spriteSheet.SavePng(outputPath);
 
         GD.Print("Sprite sheet saved: " + outputPath);
+
+        _pixelGridTextRect.Visible = true;
     }
 
     private void OnRenderResolutionChanged(long itemSelectedIndex)
@@ -600,20 +615,14 @@ public partial class SpriteGenerator : Node
     {
         MeshInstance3D _headMeshObject = _characterModelObject.GetNode<MeshInstance3D>("%Head");
         string itemSelected = _headMeshOptBtn.GetItemText((int)index);
-
         MeshReplacer.UpdateMesh(_headMeshObject, Const.HEAD_MESHES_FOLDER_PATH + itemSelected + ".res");
-
     }
 
     private void OnHairMeshOptBtnItemSelected(long index)
     {
-
-
-        //MeshInstance3D _hairMeshObject = _characterModelObject.GetNode<MeshInstance3D>("%Hair");
-        //string itemSelected = _headMeshOptBtn.GetItemText((int)index);
-
-        //MeshReplacer.UpdateMesh(_hairMeshObject, Const.HEAD_MESHES_FOLDER_PATH + itemSelected + ".res");
-
+        BoneAttachment3D _hairMeshObject = _characterModelObject.GetNode<BoneAttachment3D>("%HairBoneAttach");
+        string itemSelected = _hairMeshOptBtn.GetItemText((int)index);
+        MeshReplacer.UpdateHairScene(_hairMeshObject, Const.HAIR_MESHES_FOLDER_PATH + itemSelected + ".tscn");
     }
 
 

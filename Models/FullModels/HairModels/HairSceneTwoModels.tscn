@@ -1,0 +1,36 @@
+[gd_scene load_steps=4 format=3 uid="uid://bapiq07jexhvp"]
+
+[ext_resource type="ArrayMesh" uid="uid://c6nit7piimrlc" path="res://Models/FullModels/HairModels/Sketchfab_Scene_Object_0.res" id="1_c1qli"]
+[ext_resource type="ArrayMesh" uid="uid://b8tgln3pdehw1" path="res://Models/FullModels/HairModels/Sketchfab_Scene_Object_1.res" id="2_yygwn"]
+[ext_resource type="ArrayMesh" uid="uid://5ub3ttf2jp23" path="res://Models/FullModels/HairModels/Sketchfab_Scene_Object_3.res" id="4_6v6mr"]
+
+[node name="HairSceneTwoModesl" type="Node3D"]
+
+[node name="Sketchfab_model" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 2.22045e-16, 1, 0, -1, 2.22045e-16, 0, 0, 0)
+
+[node name="root" type="Node3D" parent="Sketchfab_model"]
+
+[node name="GLTF_SceneRootNode" type="Node3D" parent="Sketchfab_model/root"]
+transform = Transform3D(1, 0, 0, 0, 2.22045e-16, -1, 0, 1, 2.22045e-16, 0, 0, 0)
+
+[node name="fastener_1" type="Node3D" parent="Sketchfab_model/root/GLTF_SceneRootNode"]
+transform = Transform3D(0.0714079, 0.0723238, 0.0100456, -0.147711, 0.0347952, 0.00916318, 0.00388977, -0.00639185, 0.163548, 3.67056, 3.2961, -0.451659)
+
+[node name="Object_4" type="MeshInstance3D" parent="Sketchfab_model/root/GLTF_SceneRootNode/fastener_1"]
+mesh = ExtResource("1_c1qli")
+skeleton = NodePath("")
+
+[node name="Hair-female_2" type="Node3D" parent="Sketchfab_model/root/GLTF_SceneRootNode"]
+transform = Transform3D(0.442233, 0.664323, -0.0341405, -0.148848, -0.00014901, -0.36781, 0.71755, -0.409459, -0.0552571, 2.15277, 3.50148, 0.517874)
+
+[node name="Object_6" type="MeshInstance3D" parent="Sketchfab_model/root/GLTF_SceneRootNode/Hair-female_2"]
+mesh = ExtResource("2_yygwn")
+skeleton = NodePath("")
+
+[node name="haiir-male_4" type="Node3D" parent="Sketchfab_model/root/GLTF_SceneRootNode"]
+transform = Transform3D(0.315104, 0.72367, 0.0250852, 0.260512, -0.0405357, -0.355251, 0.751961, -0.289206, 0.112563, -2.31832, 3.57951, -0.253592)
+
+[node name="Object_10" type="MeshInstance3D" parent="Sketchfab_model/root/GLTF_SceneRootNode/haiir-male_4"]
+mesh = ExtResource("4_6v6mr")
+skeleton = NodePath("")

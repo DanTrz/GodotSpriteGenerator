@@ -10,6 +10,21 @@ public partial class MeshReplacer : Node
         meshToReplace.Mesh = GD.Load<Mesh>(newMeshPath);
     }
 
+    public static void UpdateHairScene(BoneAttachment3D hairParentNode, string hairScenePath)
+    {
+
+        foreach (Node child in hairParentNode.GetChildren())
+        {
+            hairParentNode.RemoveChild(child);
+        }
+
+        Node hairScene = GD.Load<PackedScene>(hairScenePath).Instantiate();
+        hairParentNode.AddChild(hairScene);
+
+
+
+    }
+
     public static string[] GetAllMesheNamesByBodyPart(string bodyPart)
     {
         switch (bodyPart)
@@ -55,6 +70,41 @@ public partial class MeshReplacer : Node
 
         }
     }
+
+
+    public static void UpdateUIOprtionHairList(OptionButton buttonToUpdate)
+    {
+        string[] itemList = GetAllMesheNamesByBodyPart("Hair");
+        int itemId = 1;
+        foreach (string item in itemList)
+        {
+            if (item.EndsWith(".tscn"))
+            {
+                int stringIndex = item.IndexOf(".tscn");
+                string itemName = item.Substring(0, stringIndex);
+                buttonToUpdate.AddItem(itemName, itemId);
+                int itemIndex = buttonToUpdate.GetItemIndex(itemId);
+                string iconPath = Const.HAIR_MESHES_FOLDER_PATH + itemName + "_Icon.png";
+                Texture2D icon = GD.Load<Texture2D>(iconPath);
+
+                if (icon != null)
+                {
+                    // Resize the icon to a smaller size
+                    Image iconImage = icon.GetImage();
+                    iconImage.Resize(_iconSize, _iconSize); // Set the desired size here
+                    Texture2D resizedIcon = ImageTexture.CreateFromImage(iconImage);
+
+                    buttonToUpdate.SetItemIcon(itemIndex, resizedIcon);
+                }
+                itemId++;
+
+            }
+
+        }
+
+
+    }
+
 
     private Texture2D GenerateMeshPreview(Mesh mesh)
     {

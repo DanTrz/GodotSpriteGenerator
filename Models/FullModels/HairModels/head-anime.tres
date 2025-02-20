@@ -1,0 +1,6 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://do2018tc5xvkn"]
+
+[resource]
+resource_name = "head-anime"
+cull_mode = 2
+albedo_color = Color(0.611714, 0.328986, 0.208426, 1)

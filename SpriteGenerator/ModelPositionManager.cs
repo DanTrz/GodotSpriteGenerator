@@ -1,13 +1,11 @@
 using Godot;
-using System;
-using System.Threading.Tasks;
 
 public partial class ModelPositionManager : Node
 {
 
     [Export] public float MoveSpeed = 0.1f;
-    [Export] public float RotateSpeed = 1.5f;
-    [Export] public float ZoomSpeed = 0.3f;
+    [Export] public float RotateSpeed = 1.0f;
+    [Export] public float ZoomSpeed = 0.1f;
 
     [OnReady("%MoveLeftBtn")] private Button _moveLeftBtn;
     [OnReady("%MoveRightBtn")] private Button _moveRightBtn;
