@@ -83,7 +83,6 @@ public partial class SpriteSheetManager : PanelContainer
         _outlineColorPicker.Color = Colors.Black;
         _ditheringCheckbox.ButtonPressed = false;
         _ditheringSlider.Value = 0.0f;
-        _saveButton.Disabled = true;
         _colorReductionCheckbox.ButtonPressed = false;
         _colorCountSpinBox.Value = GetTotalColorCount(_originalImage);
         _colorCountSpinBox.MaxValue = GetTotalColorCount(_originalImage);
