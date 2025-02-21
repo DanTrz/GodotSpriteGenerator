@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://dghyusd0bdjxt"]
+[gd_scene load_steps=29 format=3 uid="uid://dghyusd0bdjxt"]
 
 [ext_resource type="Script" uid="uid://dj2tgr0hxsbd3" path="res://SpriteGenerator/SpriteGenerator.cs" id="1_ws6fq"]
 [ext_resource type="PackedScene" uid="uid://iuwovcd804os" path="res://SpriteGenerator/MainScene3D.tscn" id="2_jyiui"]
@@ -62,6 +62,8 @@ region = Rect2(610, 226, 12, 12)
 atlas = ExtResource("5_mumiu")
 region = Rect2(626, 230, 12, 4)
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0w5gm"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pyu7k"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j32we"]
@@ -76,7 +78,7 @@ shader_parameter/brightness = 1.036
 
 [node name="SpriteGenerator" type="CanvasLayer" node_paths=PackedStringArray("_startGenerationBtn", "MainScene3D", "_rawViewport", "_rawViewportContainer")]
 script = ExtResource("1_ws6fq")
-_startGenerationBtn = NodePath("MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/FinalGenerationButton/StartGenerationBtn")
+_startGenerationBtn = NodePath("MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MarginContainer4/FinalGenerationButton/StartGenerationBtn")
 MainScene3D = NodePath("MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/ModelPanelContainer/RawViewportContainer/RawSubViewport/Model/MainScene3D")
 _rawViewport = NodePath("MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/ModelPanelContainer/RawViewportContainer/RawSubViewport")
 _rawViewportContainer = NodePath("MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/ModelPanelContainer/RawViewportContainer")
@@ -111,11 +113,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-current_tab = 1
+current_tab = 0
 all_tabs_in_front = true
 
 [node name="Sprite" type="PanelContainer" parent="MainUI/TabContainer"]
-visible = false
 clip_contents = true
 layout_mode = 2
 metadata/_tab_index = 0
@@ -159,7 +160,7 @@ transparent_bg = true
 handle_input_locally = false
 canvas_item_default_texture_filter = 0
 physics_object_picking = true
-render_target_update_mode = 0
+render_target_update_mode = 4
 
 [node name="Model" type="Node3D" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/ModelPanelContainer/RawViewportContainer/RawSubViewport"]
 
@@ -273,23 +274,34 @@ expand_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_0w5gm")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer"]
+[node name="MainSpriteOptions" type="MarginContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions"]
+layout_mode = 2
+
+[node name="SpriteOptionsVBox" type="HBoxContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer"]
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="OptionsGroup1VBoxCont" type="VBoxContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/HBoxContainer"]
+[node name="OptionsGroup1VBoxCont" type="VBoxContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox"]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="SpriteResHBoxCont" type="HBoxContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/HBoxContainer/OptionsGroup1VBoxCont"]
+[node name="SpriteResHBoxCont" type="HBoxContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="ResolutionLabel" type="Label" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/HBoxContainer/OptionsGroup1VBoxCont/SpriteResHBoxCont"]
+[node name="ResolutionLabel" type="Label" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/SpriteResHBoxCont"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 text = " Sprite Resolution"
@@ -298,7 +310,7 @@ vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="ResOptionButton" type="OptionButton" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/HBoxContainer/OptionsGroup1VBoxCont/SpriteResHBoxCont"]
+[node name="ResOptionButton" type="OptionButton" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/SpriteResHBoxCont"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 32)
 layout_mode = 2
@@ -315,11 +327,11 @@ popup/item_2/id = 2
 popup/item_3/text = "512px"
 popup/item_3/id = 3
 
-[node name="FrameSkipHBoxCont" type="HBoxContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/HBoxContainer/OptionsGroup1VBoxCont"]
+[node name="FrameSkipHBoxCont" type="HBoxContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="FrameStepLabel" type="Label" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/HBoxContainer/OptionsGroup1VBoxCont/FrameSkipHBoxCont"]
+[node name="FrameStepLabel" type="Label" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/FrameSkipHBoxCont"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 text = " Frames Skip"
@@ -328,28 +340,28 @@ vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="FrameStepTextEdit" type="LineEdit" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/HBoxContainer/OptionsGroup1VBoxCont/FrameSkipHBoxCont"]
+[node name="FrameStepTextEdit" type="LineEdit" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/FrameSkipHBoxCont"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(25, 32)
 layout_mode = 2
 
-[node name="ClearFolderHBoxCont" type="HBoxContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/HBoxContainer/OptionsGroup1VBoxCont"]
+[node name="ClearFolderHBoxCont" type="HBoxContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont"]
 visible = false
 layout_mode = 2
 
-[node name="ClearFolderLabel" type="Label" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/HBoxContainer/OptionsGroup1VBoxCont/ClearFolderHBoxCont"]
+[node name="ClearFolderLabel" type="Label" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/ClearFolderHBoxCont"]
 layout_mode = 2
 text = "Clear Folder: "
 
-[node name="ClearFolderCheckBtn" type="CheckButton" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/HBoxContainer/OptionsGroup1VBoxCont/ClearFolderHBoxCont"]
+[node name="ClearFolderCheckBtn" type="CheckButton" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/ClearFolderHBoxCont"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="PixelEffectHBoxCont" type="HBoxContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/HBoxContainer/OptionsGroup1VBoxCont"]
+[node name="PixelEffectHBoxCont" type="HBoxContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="PixelEffectLabel" type="Label" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/HBoxContainer/OptionsGroup1VBoxCont/PixelEffectHBoxCont"]
+[node name="PixelEffectLabel" type="Label" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/PixelEffectHBoxCont"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 text = " Pixel Effect "
@@ -358,20 +370,29 @@ vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="PixelEffectCheckBtn" type="CheckButton" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/HBoxContainer/OptionsGroup1VBoxCont/PixelEffectHBoxCont"]
+[node name="MarginContainer" type="MarginContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/PixelEffectHBoxCont"]
+layout_mode = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 4
+
+[node name="PixelEffectCheckBtn" type="CheckButton" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/PixelEffectHBoxCont/MarginContainer"]
 unique_name_in_owner = true
 texture_filter = 2
 clip_contents = true
+custom_minimum_size = Vector2(80, 24)
 layout_mode = 2
 size_flags_horizontal = 4
 focus_mode = 0
 theme = ExtResource("3_30nce")
+text = "False"
 
-[node name="PixelShaderLvlHBoxCont" type="HBoxContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/HBoxContainer/OptionsGroup1VBoxCont"]
+[node name="PixelShaderLvlHBoxCont" type="HBoxContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="PixelShaderLabel" type="Label" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/HBoxContainer/OptionsGroup1VBoxCont/PixelShaderLvlHBoxCont"]
+[node name="PixelShaderLabel" type="Label" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/PixelShaderLvlHBoxCont"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 text = " Effect Level "
@@ -380,7 +401,7 @@ vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="PixelShaderOptionBtn" type="OptionButton" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/HBoxContainer/OptionsGroup1VBoxCont/PixelShaderLvlHBoxCont"]
+[node name="PixelShaderOptionBtn" type="OptionButton" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/PixelShaderLvlHBoxCont"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 32)
 layout_mode = 2
@@ -401,14 +422,14 @@ popup/item_4/id = 4
 popup/item_5/text = "6 - Minimal"
 popup/item_5/id = 5
 
-[node name="OptionsGroup1VBoxCont2" type="VBoxContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/HBoxContainer"]
+[node name="OptionsGroup1VBoxCont2" type="VBoxContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox"]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="AngleSelectionHBoxCont" type="HBoxContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/HBoxContainer/OptionsGroup1VBoxCont2"]
+[node name="AngleSelectionHBoxCont" type="HBoxContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/HBoxContainer/OptionsGroup1VBoxCont2/AngleSelectionHBoxCont"]
+[node name="Label" type="Label" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/AngleSelectionHBoxCont"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 text = " Angles:"
@@ -417,7 +438,7 @@ vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="angleSelectionItemList" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/HBoxContainer/OptionsGroup1VBoxCont2/AngleSelectionHBoxCont" instance=ExtResource("7_j32we")]
+[node name="angleSelectionItemList" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/AngleSelectionHBoxCont" instance=ExtResource("7_j32we")]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(180, 75)
 layout_mode = 2
@@ -427,11 +448,11 @@ max_columns = 3
 same_column_width = true
 fixed_column_width = 55
 
-[node name="PlaybackSpeedHBoxCont" type="HBoxContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/HBoxContainer/OptionsGroup1VBoxCont2"]
+[node name="PlaybackSpeedHBoxCont" type="HBoxContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/HBoxContainer/OptionsGroup1VBoxCont2/PlaybackSpeedHBoxCont"]
+[node name="Label" type="Label" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/PlaybackSpeedHBoxCont"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 text = " Play Speed"
@@ -440,16 +461,16 @@ vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="PlayBackSpeedLineEdit" type="LineEdit" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/HBoxContainer/OptionsGroup1VBoxCont2/PlaybackSpeedHBoxCont"]
+[node name="PlayBackSpeedLineEdit" type="LineEdit" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/PlaybackSpeedHBoxCont"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(25, 32)
 layout_mode = 2
 
-[node name="ShowGridHBoxCont" type="HBoxContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/HBoxContainer/OptionsGroup1VBoxCont2"]
+[node name="ShowGridHBoxCont" type="HBoxContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/HBoxContainer/OptionsGroup1VBoxCont2/ShowGridHBoxCont"]
+[node name="Label" type="Label" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/ShowGridHBoxCont"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 text = " ShowGrid"
@@ -458,31 +479,46 @@ vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="ShowGridCheckButton" type="CheckButton" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/HBoxContainer/OptionsGroup1VBoxCont2/ShowGridHBoxCont"]
+[node name="MarginContainer" type="MarginContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/ShowGridHBoxCont"]
+layout_mode = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 4
+
+[node name="ShowGridCheckButton" type="CheckButton" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/ShowGridHBoxCont/MarginContainer"]
 unique_name_in_owner = true
 texture_filter = 2
 clip_contents = true
+custom_minimum_size = Vector2(80, 24)
 layout_mode = 2
 size_flags_horizontal = 4
 focus_mode = 0
 theme = ExtResource("3_30nce")
+text = "False"
 
-[node name="MeshReplacerPanelCont" type="PanelContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer"]
-custom_minimum_size = Vector2(0, 150)
+[node name="MeshOptions" type="MarginContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 1
+
+[node name="MeshReplacerPanelCont" type="PanelContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshReplacerPanelCont"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont"]
 layout_mode = 2
 
-[node name="MeshReplacerVboxOpt1" type="VBoxContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshReplacerPanelCont/HBoxContainer"]
+[node name="MeshReplacerVboxOpt1" type="VBoxContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="BodyTypeHBoxCont" type="HBoxContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1"]
+[node name="BodyTypeHBoxCont" type="HBoxContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="BodyTypeLabel" type="Label" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/BodyTypeHBoxCont"]
+[node name="BodyTypeLabel" type="Label" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/BodyTypeHBoxCont"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 text = " BodyMesh"
@@ -491,22 +527,29 @@ vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="BodyTypeHSlider" type="HSlider" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/BodyTypeHBoxCont"]
+[node name="BodyTypeHSlider" type="HSlider" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/BodyTypeHBoxCont"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 min_value = 1.0
 max_value = 3.0
 value = 1.0
 
-[node name="BodyTypeColorBtn" type="ColorPickerButton" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/BodyTypeHBoxCont"]
-custom_minimum_size = Vector2(40, 32)
+[node name="MarginContainer" type="MarginContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/BodyTypeHBoxCont"]
+layout_mode = 2
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 6
+
+[node name="BodyTypeColorBtn" type="ColorPickerButton" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/BodyTypeHBoxCont/MarginContainer"]
+custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
 
-[node name="HeadMeshHBoxCont" type="HBoxContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1"]
+[node name="HeadMeshHBoxCont" type="HBoxContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="HeadMeshLabel" type="Label" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/HeadMeshHBoxCont"]
+[node name="HeadMeshLabel" type="Label" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/HeadMeshHBoxCont"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 text = " HeadMesh"
@@ -515,18 +558,18 @@ vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="HeadMeshOptBtn" type="OptionButton" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/HeadMeshHBoxCont"]
+[node name="HeadMeshOptBtn" type="OptionButton" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/HeadMeshHBoxCont"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(150, 32)
 layout_mode = 2
 clip_text = true
 fit_to_longest_item = false
 
-[node name="HairMeshHBoxCont" type="HBoxContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1"]
+[node name="HairMeshHBoxCont" type="HBoxContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="HairMeshLabel" type="Label" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/HairMeshHBoxCont"]
+[node name="HairMeshLabel" type="Label" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/HairMeshHBoxCont"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 text = " HairMesh"
@@ -535,23 +578,30 @@ vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="HairMeshOptBtn" type="OptionButton" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/HairMeshHBoxCont"]
+[node name="HairMeshOptBtn" type="OptionButton" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/HairMeshHBoxCont"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(150, 32)
 layout_mode = 2
 clip_text = true
 fit_to_longest_item = false
 
-[node name="HairColorBtn" type="ColorPickerButton" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/HairMeshHBoxCont"]
+[node name="MarginContainer" type="MarginContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/HairMeshHBoxCont"]
+layout_mode = 2
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 6
+
+[node name="HairColorBtn" type="ColorPickerButton" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/HairMeshHBoxCont/MarginContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(40, 32)
+custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
 
-[node name="TorsoMeshHBoxCont" type="HBoxContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1"]
+[node name="TorsoMeshHBoxCont" type="HBoxContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="TorsoMeshLabel" type="Label" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/TorsoMeshHBoxCont"]
+[node name="TorsoMeshLabel" type="Label" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/TorsoMeshHBoxCont"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 text = " TorsoMesh"
@@ -560,56 +610,72 @@ vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="TorsoHSlider" type="HSlider" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/TorsoMeshHBoxCont"]
+[node name="TorsoHSlider" type="HSlider" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/TorsoMeshHBoxCont"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 min_value = 1.0
 max_value = 3.0
 value = 1.0
 
-[node name="MeshReplacerVboxOpt2" type="VBoxContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshReplacerPanelCont/HBoxContainer"]
+[node name="MeshReplacerVboxOpt2" type="VBoxContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="AnimSelectPanelCont" type="PanelContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer"]
+[node name="MarginContainer3" type="MarginContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="AnimSelectPanelCont" type="PanelContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MarginContainer3"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="MarginContainer" type="MarginContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/AnimSelectPanelCont"]
+[node name="MarginContainer" type="MarginContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MarginContainer3/AnimSelectPanelCont"]
 layout_mode = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/AnimSelectPanelCont/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MarginContainer3/AnimSelectPanelCont/MarginContainer"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/AnimSelectPanelCont/MarginContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MarginContainer3/AnimSelectPanelCont/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="LoadAllAnimationsBtn" type="Button" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/AnimSelectPanelCont/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="LoadAllAnimationsBtn" type="Button" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MarginContainer3/AnimSelectPanelCont/MarginContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 text = "Load Animations"
 
-[node name="SelectAllAnimCheckBox" type="CheckBox" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/AnimSelectPanelCont/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="SelectAllAnimCheckBox" type="CheckBox" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MarginContainer3/AnimSelectPanelCont/MarginContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 text = "SelectAll"
 
-[node name="animSelectionItemList" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/AnimSelectPanelCont/MarginContainer/VBoxContainer" instance=ExtResource("7_j32we")]
+[node name="animSelectionItemList" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MarginContainer3/AnimSelectPanelCont/MarginContainer/VBoxContainer" instance=ExtResource("7_j32we")]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(10, 200)
 layout_mode = 2
+max_columns = 2
+same_column_width = true
 
-[node name="FinalGenerationButton" type="HBoxContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer"]
+[node name="MarginContainer4" type="MarginContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="FinalGenerationButton" type="HBoxContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MarginContainer4"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/FinalGenerationButton"]
+[node name="Label" type="Label" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MarginContainer4/FinalGenerationButton"]
 custom_minimum_size = Vector2(90, 32)
 layout_mode = 2
 text = "  Final Step : "
@@ -617,7 +683,7 @@ label_settings = ExtResource("9_0w5gm")
 vertical_alignment = 1
 clip_text = true
 
-[node name="StartGenerationBtn" type="Button" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/FinalGenerationButton"]
+[node name="StartGenerationBtn" type="Button" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MarginContainer4/FinalGenerationButton"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(20, 32)
 layout_mode = 2
@@ -627,24 +693,25 @@ text = "Start Generation
 "
 
 [node name="SpriteSheetManager" type="PanelContainer" parent="MainUI/TabContainer" node_paths=PackedStringArray("_textureRect", "_saturationSlider", "_saturationLabel", "_brightnessSlider", "_outlineCheckbox", "_outlineThicknessSlider", "_outlineColorPicker", "_ditheringCheckbox", "_ditheringSlider", "_colorReductionCheckbox", "_colorCountSpinBox", "_saveButton", "_statusLabel", "_enableSaturationCheckbox", "_enableBrightnessCheckbox")]
+visible = false
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_pyu7k")
 script = ExtResource("8_seol6")
 _textureRect = NodePath("HBoxContainer/SpriteSheetContainer/MarginContainer/SpriteSheetTextureRect")
-_saturationSlider = NodePath("HBoxContainer/OptionsContainer/VBoxContainer/SaturationHBox/SaturationHSlider")
-_saturationLabel = NodePath("HBoxContainer/OptionsContainer/VBoxContainer/SaturationHBox/SaturationLabel")
-_brightnessSlider = NodePath("HBoxContainer/OptionsContainer/VBoxContainer/BrightnessHBox/BrightnessHSlider")
-_outlineCheckbox = NodePath("HBoxContainer/OptionsContainer/VBoxContainer/OutlineHBox/OutlineCheckBox")
-_outlineThicknessSlider = NodePath("HBoxContainer/OptionsContainer/VBoxContainer/OutlineHBox/OutlineHSlider")
-_outlineColorPicker = NodePath("HBoxContainer/OptionsContainer/VBoxContainer/OutlineHBox/OutlineColorPickerBtn")
-_ditheringCheckbox = NodePath("HBoxContainer/OptionsContainer/VBoxContainer/DitheringHBox/DitheringCheckBox")
-_ditheringSlider = NodePath("HBoxContainer/OptionsContainer/VBoxContainer/DitheringHBox/DitheringHSlider")
-_colorReductionCheckbox = NodePath("HBoxContainer/OptionsContainer/VBoxContainer/ColorReductionHBox/ColorReductionCheckBox")
-_colorCountSpinBox = NodePath("HBoxContainer/OptionsContainer/VBoxContainer/ColorReductionHBox/ColorReducSpinBox")
-_saveButton = NodePath("HBoxContainer/OptionsContainer/VBoxContainer/SavingHBox/SaveSpriteSheetBtn")
-_statusLabel = NodePath("HBoxContainer/OptionsContainer/VBoxContainer/EffectStatusLabel")
-_enableSaturationCheckbox = NodePath("HBoxContainer/OptionsContainer/VBoxContainer/SaturationHBox/SaturationCheckBox")
-_enableBrightnessCheckbox = NodePath("HBoxContainer/OptionsContainer/VBoxContainer/BrightnessHBox/BrightnessCheckBox")
+_saturationSlider = NodePath("HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/SaturationHBox/SaturationHSlider")
+_saturationLabel = NodePath("HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/SaturationHBox/SaturationLabel")
+_brightnessSlider = NodePath("HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/BrightnessHBox/BrightnessHSlider")
+_outlineCheckbox = NodePath("HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/OutlineHBox/OutlineCheckBox")
+_outlineThicknessSlider = NodePath("HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/OutlineHBox/OutlineHSlider")
+_outlineColorPicker = NodePath("HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/OutlineHBox/MarginContainer/OutlineColorPickerBtn")
+_ditheringCheckbox = NodePath("HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/DitheringHBox/DitheringCheckBox")
+_ditheringSlider = NodePath("HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/DitheringHBox/DitheringHSlider")
+_colorReductionCheckbox = NodePath("HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/ColorReductionHBox/ColorReductionCheckBox")
+_colorCountSpinBox = NodePath("HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/ColorReductionHBox/ColorReducSpinBox")
+_saveButton = NodePath("HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/MarginContainer3/PanelContainer/MarginContainer/SavingHBox/SaveSpriteSheetBtn")
+_statusLabel = NodePath("HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/EffectStatusPanel/PanelContainer/EffectStatusLabel")
+_enableSaturationCheckbox = NodePath("HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/SaturationHBox/SaturationCheckBox")
+_enableBrightnessCheckbox = NodePath("HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/BrightnessHBox/BrightnessCheckBox")
 metadata/_tab_index = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MainUI/TabContainer/SpriteSheetManager"]
@@ -673,116 +740,201 @@ expand_mode = 3
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer"]
+[node name="SpriteSheetMainPanel" type="MarginContainer" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 1
+
+[node name="SpriteSheetVBoxCont" type="VBoxContainer" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/SpriteSheetMainPanel"]
 layout_mode = 2
 
-[node name="EffectStatusLabel" type="Label" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer"]
+[node name="EffectStatusPanel" type="MarginContainer" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/EffectStatusPanel"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[node name="EffectStatusLabel" type="Label" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/EffectStatusPanel/PanelContainer"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 text = "EffectStatusLabel progress...."
 
-[node name="SaturationHBox" type="HBoxContainer" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer"]
+[node name="SpriteSheetOptions" type="MarginContainer" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions"]
+custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="SaturationCheckBox" type="CheckBox" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer/SaturationHBox"]
+[node name="MarginContainer" type="MarginContainer" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[node name="SaturationHBox" type="HBoxContainer" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[node name="SaturationCheckBox" type="CheckBox" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/SaturationHBox"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(10, 10)
+custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 text = "Saturation"
 
-[node name="SaturationHSlider" type="HSlider" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer/SaturationHBox"]
+[node name="SaturationHSlider" type="HSlider" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/SaturationHBox"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(200, 25)
+custom_minimum_size = Vector2(150, 32)
 layout_mode = 2
 max_value = 2.0
 step = 0.1
 tick_count = 5
 ticks_on_borders = true
 
-[node name="SaturationLabel" type="Label" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer/SaturationHBox"]
+[node name="SaturationLabel" type="Label" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/SaturationHBox"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 text = "00"
 
-[node name="BrightnessHBox" type="HBoxContainer" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer"]
+[node name="BrightnessHBox" type="HBoxContainer" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="BrightnessCheckBox" type="CheckBox" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer/BrightnessHBox"]
+[node name="BrightnessCheckBox" type="CheckBox" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/BrightnessHBox"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(10, 10)
+custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 text = "Brightness"
 
-[node name="BrightnessHSlider" type="HSlider" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer/BrightnessHBox"]
+[node name="BrightnessHSlider" type="HSlider" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/BrightnessHBox"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(200, 25)
+custom_minimum_size = Vector2(150, 32)
 layout_mode = 2
 max_value = 2.0
 step = 0.1
 tick_count = 5
 ticks_on_borders = true
 
-[node name="BrightnessLabel" type="Label" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer/BrightnessHBox"]
+[node name="BrightnessLabel" type="Label" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/BrightnessHBox"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 text = "00"
 
-[node name="OutlineHBox" type="HBoxContainer" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer"]
+[node name="OutlineHBox" type="HBoxContainer" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="OutlineCheckBox" type="CheckBox" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer/OutlineHBox"]
+[node name="OutlineCheckBox" type="CheckBox" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/OutlineHBox"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(10, 10)
+custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 text = "Outline
 "
 
-[node name="OutlineHSlider" type="HSlider" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer/OutlineHBox"]
+[node name="OutlineHSlider" type="HSlider" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/OutlineHBox"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(200, 25)
+custom_minimum_size = Vector2(150, 32)
 layout_mode = 2
 max_value = 10.0
 step = 0.5
+tick_count = 5
+ticks_on_borders = true
 
-[node name="OutlineColorPickerBtn" type="ColorPickerButton" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer/OutlineHBox"]
+[node name="MarginContainer" type="MarginContainer" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/OutlineHBox"]
+layout_mode = 2
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 6
+
+[node name="OutlineColorPickerBtn" type="ColorPickerButton" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/OutlineHBox/MarginContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(100, 25)
+custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
 
-[node name="DitheringHBox" type="HBoxContainer" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer"]
+[node name="DitheringHBox" type="HBoxContainer" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="DitheringCheckBox" type="CheckBox" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer/DitheringHBox"]
+[node name="DitheringCheckBox" type="CheckBox" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/DitheringHBox"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(10, 10)
+custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 text = "Dithering
 "
 
-[node name="DitheringHSlider" type="HSlider" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer/DitheringHBox"]
+[node name="DitheringHSlider" type="HSlider" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/DitheringHBox"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(200, 25)
+custom_minimum_size = Vector2(150, 32)
+layout_mode = 2
+tick_count = 5
+ticks_on_borders = true
+
+[node name="ColorReductionHBox" type="HBoxContainer" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="ColorReductionHBox" type="HBoxContainer" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="ColorReductionCheckBox" type="CheckBox" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer/ColorReductionHBox"]
+[node name="ColorReductionCheckBox" type="CheckBox" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/ColorReductionHBox"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
-text = "Color Reduction
+text = "Reduce Color
 "
 
-[node name="ColorReducSpinBox" type="SpinBox" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer/ColorReductionHBox"]
+[node name="ColorReducSpinBox" type="SpinBox" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/ColorReductionHBox"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 
-[node name="SavingHBox" type="HBoxContainer" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer"]
+[node name="MarginContainer3" type="MarginContainer" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/MarginContainer3"]
+custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="SaveSpriteSheetBtn" type="Button" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/VBoxContainer/SavingHBox"]
+[node name="MarginContainer" type="MarginContainer" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/MarginContainer3/PanelContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="SavingHBox" type="HBoxContainer" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/MarginContainer3/PanelContainer/MarginContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[node name="SaveSpriteSheetBtn" type="Button" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/MarginContainer3/PanelContainer/MarginContainer/SavingHBox"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(20, 32)
+custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4

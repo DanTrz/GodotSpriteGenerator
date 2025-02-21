@@ -66,6 +66,9 @@ public partial class SpriteGenerator : Node
         MeshReplacer.UpdateUIOprtionHairList(_hairMeshOptBtn);
         _hairMeshOptBtn.Selected = 1;
         _hairColorBtn.Color = Colors.White;
+        _showGridCheckButton.ButtonPressed = true;
+        _showGridCheckButton.Text = _showGridCheckButton.ButtonPressed.ToString();
+        _pixelEffectCheckBtn.Text = _pixelEffectCheckBtn.ButtonPressed.ToString();
 
 
         //Set Default Resolution and Shader Strenght
@@ -89,8 +92,8 @@ public partial class SpriteGenerator : Node
         _hairMeshOptBtn.ItemSelected += OnHairMeshOptBtnItemSelected;
         // _showGridCheckButton.Toggled += (value) => ShowGrid = value;
         //_showGridCheckButton.Pressed += () => ShowGrid = _showGridCheckButton.ButtonPressed;
-        _showGridCheckButton.Pressed += () => _pixelGridTextRect.Visible = _showGridCheckButton.ButtonPressed;
-        _showGridCheckButton.ButtonPressed = true;
+        //_showGridCheckButton.Pressed += () => _pixelGridTextRect.Visible = _showGridCheckButton.ButtonPressed;
+        _showGridCheckButton.Pressed += OnShowGridCheckButtonPressed;
         _hairColorBtn.ColorChanged += OnHairColorChanged;
 
 
@@ -124,8 +127,6 @@ public partial class SpriteGenerator : Node
 
 
     }
-
-
 
     private void OnStartGeneration()
     {
@@ -597,11 +598,20 @@ public partial class SpriteGenerator : Node
 
     }
 
+    private void OnShowGridCheckButtonPressed()
+    {
+        _pixelGridTextRect.Visible = _showGridCheckButton.ButtonPressed;
+        _showGridCheckButton.Text = _showGridCheckButton.ButtonPressed.ToString();
+
+    }
+
 
     private void OnPixelEffectPressed()
     {
         _usePixelEffect = _pixelEffectCheckBtn.ButtonPressed;
         _pixelShaderTextRect.Visible = _usePixelEffect;
+
+        _pixelEffectCheckBtn.Text = _pixelEffectCheckBtn.ButtonPressed.ToString();
 
         GD.PrintT("Use PixelEffect: " + _usePixelEffect);
 
