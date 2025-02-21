@@ -71,12 +71,12 @@ bg_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_seol6"]
 shader = ExtResource("12_0w5gm")
-shader_parameter/enable_saturation = true
+shader_parameter/enable_saturation = false
 shader_parameter/saturation = 1.0
-shader_parameter/enable_brightness = true
+shader_parameter/enable_brightness = false
 shader_parameter/brightness = 1.0
-shader_parameter/num_colors = 512
-shader_parameter/enable_color_reduction = true
+shader_parameter/num_colors = 4
+shader_parameter/enable_color_reduction = false
 
 [sub_resource type="LabelSettings" id="LabelSettings_0w5gm"]
 font_size = 10
@@ -814,7 +814,7 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(150, 32)
 layout_mode = 2
 max_value = 2.0
-step = 0.05
+step = 0.1
 tick_count = 5
 ticks_on_borders = true
 
@@ -841,7 +841,7 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(150, 32)
 layout_mode = 2
 max_value = 2.0
-step = 0.05
+step = 0.1
 tick_count = 5
 ticks_on_borders = true
 

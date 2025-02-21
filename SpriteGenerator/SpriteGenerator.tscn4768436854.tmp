@@ -12,7 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://cae2jelncoq3w" path="res://Anim_Running_spriteSheet.png" id="8_pyu7k"]
 [ext_resource type="Script" uid="uid://cacdskl17dkmj" path="res://SpriteGenerator/SpriteSheetManager.cs" id="8_seol6"]
 [ext_resource type="LabelSettings" uid="uid://usv7beyw1bj8" path="res://Assets/UI/Theme/Label.tres" id="9_0w5gm"]
-[ext_resource type="Shader" uid="uid://dxbhtgfqkjj57" path="res://SpriteGenerator/UnifiedImageEffects.gdshader" id="12_0w5gm"]
+[ext_resource type="Shader" uid="uid://c58xcvgi0wwu8" path="res://Assets/Shaders/brightness_saturation.gdshader" id="9_ud05t"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ivn07"]
 bg_color = Color(0.0728432, 0.0728424, 0.0728425, 1)
@@ -70,13 +70,11 @@ region = Rect2(626, 230, 12, 4)
 bg_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_seol6"]
-shader = ExtResource("12_0w5gm")
-shader_parameter/enable_saturation = true
-shader_parameter/saturation = 1.0
+shader = ExtResource("9_ud05t")
+shader_parameter/enable_saturation = false
+shader_parameter/saturation = 0.993
 shader_parameter/enable_brightness = true
-shader_parameter/brightness = 1.0
-shader_parameter/num_colors = 512
-shader_parameter/enable_color_reduction = true
+shader_parameter/brightness = 1.036
 
 [sub_resource type="LabelSettings" id="LabelSettings_0w5gm"]
 font_size = 10
@@ -814,7 +812,7 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(150, 32)
 layout_mode = 2
 max_value = 2.0
-step = 0.05
+step = 0.1
 tick_count = 5
 ticks_on_borders = true
 
@@ -841,7 +839,7 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(150, 32)
 layout_mode = 2
 max_value = 2.0
-step = 0.05
+step = 0.1
 tick_count = 5
 ticks_on_borders = true
 

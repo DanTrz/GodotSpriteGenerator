@@ -1,8 +1,6 @@
 using Godot;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Image = Godot.Image;
 
@@ -11,6 +9,8 @@ public partial class SpriteSheetManager : PanelContainer
     [Export] private TextureRect _textureRect;
     [Export] private HSlider _saturationSlider;
     [Export] private Label _saturationLabel;
+    [Export] private Label _brightnessLabel;
+    [Export] private Label _outlineLabel;
     [Export] private HSlider _brightnessSlider;
     [Export] private CheckBox _outlineCheckbox;
     [Export] private HSlider _outlineThicknessSlider;
@@ -28,7 +28,27 @@ public partial class SpriteSheetManager : PanelContainer
 
     private Texture2D _originalTexture;
     private Image _originalImage;
-    private bool _isProcessing = false;
+
+    private bool _isProcessing;
+    public bool IsEffectProcessing
+    {
+        get
+        {
+            return _isProcessing;
+        }
+        set
+        {
+            _isProcessing = value;
+            if (_isProcessing)
+            {
+                ProcessMode = ProcessModeEnum.Disabled;
+            }
+            else
+            {
+                ProcessMode = ProcessModeEnum.Always;
+            }
+        }
+    }
     private ShaderMaterial _shaderMaterial; // Store the ShaderMaterial
 
     public override void _Ready()
@@ -56,13 +76,15 @@ public partial class SpriteSheetManager : PanelContainer
         _outlineColorPicker.ColorChanged += (color) => QueueApplyEffects();
         _ditheringCheckbox.Toggled += (pressed) => QueueApplyEffects();
         _ditheringSlider.ValueChanged += (value) => QueueApplyEffects();
-        _colorReductionCheckbox.Toggled += (pressed) => QueueApplyEffects();
-        _colorCountSpinBox.ValueChanged += (value) => QueueApplyEffects();
+        //_colorReductionCheckbox.Toggled += (pressed) => QueueApplyEffects();
+        //_colorCountSpinBox.ValueChanged += (value) => QueueApplyEffects();
         _saveButton.Pressed += OnSaveButtonPressed;
 
-        // Connect Shader Related Toggles for Brightness and Saturation
+        // Connect Shader Related Effects for Brightness, Color Reduction and Saturation
         _enableSaturationCheckbox.Toggled += (pressed) => UpdateBrightnessAndSaturationShader();
         _enableBrightnessCheckbox.Toggled += (pressed) => UpdateBrightnessAndSaturationShader();
+        _colorCountSpinBox.ValueChanged += (value) => UpdateBrightnessAndSaturationShader();
+        _colorReductionCheckbox.Toggled += (pressed) => UpdateBrightnessAndSaturationShader();
 
         _statusLabel.Text = "Ready";
 
@@ -77,6 +99,8 @@ public partial class SpriteSheetManager : PanelContainer
         _enableBrightnessCheckbox.ButtonPressed = false;
         _saturationSlider.Value = 1.0f;
         _saturationLabel.Text = _saturationSlider.Value.ToString("0.0");
+        _brightnessLabel.Text = _brightnessSlider.Value.ToString("0.0");
+        _outlineLabel.Text = _outlineThicknessSlider.Value.ToString("0.0");
         _enableSaturationCheckbox.ButtonPressed = false;
         _outlineCheckbox.ButtonPressed = false;
         _outlineThicknessSlider.Value = 0;
@@ -90,8 +114,12 @@ public partial class SpriteSheetManager : PanelContainer
 
     private void QueueApplyEffects()
     {
-        if (_isProcessing) return;
-        _isProcessing = true;
+        //Update UI Elements where needed:
+        _outlineLabel.Text = _outlineThicknessSlider.Value.ToString("0.0");
+
+        // Check if processing is already in progress
+        if (IsEffectProcessing) return;
+        IsEffectProcessing = true;
 
         // Capture UI state for image processing effects (excluding shader controls
         // This is needed as I don't receive the values from the Signal Connection
@@ -112,17 +140,23 @@ public partial class SpriteSheetManager : PanelContainer
     private async Task ApplyEffectsAsync(bool doColorReduction, int colorCount, bool doOutline,
         int outlineThickness, Color outlineColor, bool doDithering, float ditheringStrength)
     {
-        Image modifiedImage = (Image)_originalImage.Duplicate();
+
+        //I always start with a copy of the original image, preserving the original for "undo" (to be implemented)
+        Image modifiedImage = (Image)_originalImage.Duplicate(); //First code version (working)
+        //Image modifiedImage = (Image)_textureRect.Texture.GetImage();
+        //Image modifiedImage = (Image)_textureRect.Texture.GetImage().Duplicate();//TODO: Find a way to store the last image reduced color without other effects, to use as a enw starting point
 
         // Apply All effects in sequence, to ensure they are applied in the correct order
         // Even if only one is modified, I update all to avoid conflicts. 
-        if (doColorReduction)
-        {
-            CallDeferred(nameof(SetStatus), "Reducing colors...");
-            modifiedImage = await Task.Run(() => ReduceColors(modifiedImage, colorCount));
-            CallDeferred(nameof(SetStatus), "Color reduction complete.");
-        }
-
+        //if (doColorReduction)
+        //{
+        //    //if (colorCount != (int)GetTotalColorCount(modifiedImage))
+        //    //{
+        //    CallDeferred(nameof(SetStatus), "Reducing colors...");
+        //    modifiedImage = await Task.Run(() => ReduceColors(modifiedImage, colorCount));
+        //    CallDeferred(nameof(SetStatus), "Color reduction complete.");
+        //    //}
+        //}
 
         if (doOutline)
         {
@@ -149,10 +183,14 @@ public partial class SpriteSheetManager : PanelContainer
         // Set shader parameters based on UI controls
         _shaderMaterial.SetShaderParameter("enable_saturation", _enableSaturationCheckbox.ButtonPressed);
         _shaderMaterial.SetShaderParameter("saturation", _saturationSlider.Value);
-        _saturationLabel.Text = _saturationSlider.Value.ToString("0.00");
-
         _shaderMaterial.SetShaderParameter("enable_brightness", _enableBrightnessCheckbox.ButtonPressed);
         _shaderMaterial.SetShaderParameter("brightness", _brightnessSlider.Value);
+        _shaderMaterial.SetShaderParameter("enable_color_reduction", _colorReductionCheckbox.ButtonPressed);
+        _shaderMaterial.SetShaderParameter("num_colors", _colorCountSpinBox.Value);
+
+        // Update UI labels with current values
+        _saturationLabel.Text = _saturationSlider.Value.ToString("0.00");
+        _brightnessLabel.Text = _brightnessSlider.Value.ToString("0.00");
     }
 
     private Image AddOutline(Image image, int thickness, Color color)
@@ -337,9 +375,13 @@ public partial class SpriteSheetManager : PanelContainer
     private void UpdateTexture(Image modifiedImage)
     {
         _textureRect.Texture = ImageTexture.CreateFromImage(modifiedImage);
-        _isProcessing = false;
+
+        //-> Update shader params after image update with other C# code effects.
+        UpdateBrightnessAndSaturationShader(); // Shader changes always last to ensure we will not get mixed up with other effects
+
+        IsEffectProcessing = false;
         SetStatus("Ready");
-        UpdateBrightnessAndSaturationShader(); // Update shader params after image update
+
     }
 
 
@@ -443,31 +485,6 @@ public partial class SpriteSheetManager : PanelContainer
         return new Color(sumR / count, sumG / count, sumB / count, sumA / count);
     }
 
-    private int GetTotalColorCount(Image image)
-    {
-        int width = image.GetWidth();
-        int height = image.GetHeight();
-        byte[] data = image.GetData();
-
-        ConcurrentBag<Color> totalUniqueColors = new();
-
-        Parallel.For(0, height, y =>
-        {
-            for (int x = 0; x < width; x++)
-            {
-                int index = (y * width + x) * 4;
-                Color color = GetColorFromBytes(data, index);
-
-                if (color.A != 0)
-                {
-                    totalUniqueColors.Add(new Color(color.R, color.G, color.B, color.A));
-                }
-            }
-        });
-
-        return totalUniqueColors.Distinct().Count();
-    }
-
     private Color FindClosestColor(Color targetColor, List<Color> palette)
     {
         Color closestColor = palette[0];
@@ -503,6 +520,29 @@ public partial class SpriteSheetManager : PanelContainer
         data[index + 2] = (byte)(color.B * 255);
         data[index + 3] = (byte)(color.A * 255);
     }
+
+    public int GetTotalColorCount(Image image)
+    {
+        if (image.IsEmpty())
+        {
+            return 0;
+        }
+
+        HashSet<ulong> uniqueColors = new HashSet<ulong>(); // Use ulong for color comparison
+
+        for (int x = 0; x < image.GetWidth(); x++)
+        {
+            for (int y = 0; y < image.GetHeight(); y++)
+            {
+                Color color = image.GetPixel(x, y);
+                // Convert Color to a single ulong for efficient comparison
+                ulong colorValue = ((ulong)(color.R8) << 24) | ((ulong)(color.G8) << 16) | ((ulong)(color.B8) << 8) | (ulong)(color.A8);
+                uniqueColors.Add(colorValue);
+            }
+        }
+        return uniqueColors.Count;
+    }
+
     private Color FindClosestPaletteColor(Color color) => new Color(Mathf.Round(color.R * 255) / 255, Mathf.Round(color.G * 255) / 255, Mathf.Round(color.B * 255) / 255, color.A);
     private Color ClampColor(Color color) => new Color(Mathf.Clamp(color.R, 0, 1), Mathf.Clamp(color.G, 0, 1), Mathf.Clamp(color.B, 0, 1), color.A);
 

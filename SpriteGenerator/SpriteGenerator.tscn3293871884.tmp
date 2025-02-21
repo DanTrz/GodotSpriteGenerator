@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://dghyusd0bdjxt"]
+[gd_scene load_steps=29 format=3 uid="uid://dghyusd0bdjxt"]
 
 [ext_resource type="Script" uid="uid://dj2tgr0hxsbd3" path="res://SpriteGenerator/SpriteGenerator.cs" id="1_ws6fq"]
 [ext_resource type="PackedScene" uid="uid://iuwovcd804os" path="res://SpriteGenerator/MainScene3D.tscn" id="2_jyiui"]
@@ -12,7 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://cae2jelncoq3w" path="res://Anim_Running_spriteSheet.png" id="8_pyu7k"]
 [ext_resource type="Script" uid="uid://cacdskl17dkmj" path="res://SpriteGenerator/SpriteSheetManager.cs" id="8_seol6"]
 [ext_resource type="LabelSettings" uid="uid://usv7beyw1bj8" path="res://Assets/UI/Theme/Label.tres" id="9_0w5gm"]
-[ext_resource type="Shader" uid="uid://dxbhtgfqkjj57" path="res://SpriteGenerator/UnifiedImageEffects.gdshader" id="12_0w5gm"]
+[ext_resource type="Shader" uid="uid://c58xcvgi0wwu8" path="res://Assets/Shaders/brightness_saturation.gdshader" id="9_ud05t"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ivn07"]
 bg_color = Color(0.0728432, 0.0728424, 0.0728425, 1)
@@ -70,16 +70,11 @@ region = Rect2(626, 230, 12, 4)
 bg_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_seol6"]
-shader = ExtResource("12_0w5gm")
-shader_parameter/enable_saturation = true
-shader_parameter/saturation = 1.0
+shader = ExtResource("9_ud05t")
+shader_parameter/enable_saturation = false
+shader_parameter/saturation = 0.993
 shader_parameter/enable_brightness = true
-shader_parameter/brightness = 1.0
-shader_parameter/num_colors = 512
-shader_parameter/enable_color_reduction = true
-
-[sub_resource type="LabelSettings" id="LabelSettings_0w5gm"]
-font_size = 10
+shader_parameter/brightness = 1.036
 
 [node name="SpriteGenerator" type="CanvasLayer" node_paths=PackedStringArray("_startGenerationBtn", "MainScene3D", "_rawViewport", "_rawViewportContainer")]
 script = ExtResource("1_ws6fq")
@@ -698,15 +693,13 @@ size_flags_vertical = 4
 text = "Start Generation
 "
 
-[node name="SpriteSheetManager" type="PanelContainer" parent="MainUI/TabContainer" node_paths=PackedStringArray("_textureRect", "_saturationSlider", "_saturationLabel", "_brightnessLabel", "_outlineLabel", "_brightnessSlider", "_outlineCheckbox", "_outlineThicknessSlider", "_outlineColorPicker", "_ditheringCheckbox", "_ditheringSlider", "_colorReductionCheckbox", "_colorCountSpinBox", "_saveButton", "_statusLabel", "_enableSaturationCheckbox", "_enableBrightnessCheckbox")]
+[node name="SpriteSheetManager" type="PanelContainer" parent="MainUI/TabContainer" node_paths=PackedStringArray("_textureRect", "_saturationSlider", "_saturationLabel", "_brightnessSlider", "_outlineCheckbox", "_outlineThicknessSlider", "_outlineColorPicker", "_ditheringCheckbox", "_ditheringSlider", "_colorReductionCheckbox", "_colorCountSpinBox", "_saveButton", "_statusLabel", "_enableSaturationCheckbox", "_enableBrightnessCheckbox")]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_pyu7k")
 script = ExtResource("8_seol6")
 _textureRect = NodePath("HBoxContainer/SpriteSheetContainer/MarginContainer/SpriteSheetTextureRect")
 _saturationSlider = NodePath("HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/SaturationHBox/SaturationHSlider")
 _saturationLabel = NodePath("HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/SaturationHBox/SaturationLabel")
-_brightnessLabel = NodePath("HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/BrightnessHBox/BrightnessLabel")
-_outlineLabel = NodePath("HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/OutlineHBox/OutlineLabel")
 _brightnessSlider = NodePath("HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/BrightnessHBox/BrightnessHSlider")
 _outlineCheckbox = NodePath("HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/OutlineHBox/OutlineCheckBox")
 _outlineThicknessSlider = NodePath("HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/OutlineHBox/OutlineHSlider")
@@ -814,17 +807,15 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(150, 32)
 layout_mode = 2
 max_value = 2.0
-step = 0.05
+step = 0.1
 tick_count = 5
 ticks_on_borders = true
 
 [node name="SaturationLabel" type="Label" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/SaturationHBox"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(20, 20)
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 text = "00"
-label_settings = SubResource("LabelSettings_0w5gm")
-vertical_alignment = 1
 
 [node name="BrightnessHBox" type="HBoxContainer" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 32)
@@ -841,17 +832,15 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(150, 32)
 layout_mode = 2
 max_value = 2.0
-step = 0.05
+step = 0.1
 tick_count = 5
 ticks_on_borders = true
 
 [node name="BrightnessLabel" type="Label" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/BrightnessHBox"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(20, 20)
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 text = "00"
-label_settings = SubResource("LabelSettings_0w5gm")
-vertical_alignment = 1
 
 [node name="OutlineHBox" type="HBoxContainer" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 32)
@@ -872,14 +861,6 @@ max_value = 10.0
 step = 0.5
 tick_count = 5
 ticks_on_borders = true
-
-[node name="OutlineLabel" type="Label" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/OutlineHBox"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(20, 20)
-layout_mode = 2
-text = "00"
-label_settings = SubResource("LabelSettings_0w5gm")
-vertical_alignment = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/OutlineHBox"]
 layout_mode = 2
