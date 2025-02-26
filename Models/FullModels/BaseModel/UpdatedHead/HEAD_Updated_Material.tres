@@ -1,0 +1,11 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://s4myyc1mdigs"]
+
+[ext_resource type="Texture2D" uid="uid://cr78qca6l41js" path="res://Models/FullModels/BaseModel/UpdatedHead/BaseModel_HEADMesh2_HEAD_Updated_Color.png" id="1_vnqvg"]
+
+[resource]
+resource_name = "HEAD_Updated_Material"
+cull_mode = 2
+shading_mode = 0
+albedo_texture = ExtResource("1_vnqvg")
+texture_filter = 0
+texture_repeat = false

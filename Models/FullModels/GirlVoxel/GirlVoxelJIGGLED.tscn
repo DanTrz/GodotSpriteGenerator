@@ -1,8 +1,8 @@
 [gd_scene load_steps=12 format=3 uid="uid://bwfpoeg8tf1hw"]
 
 [ext_resource type="ArrayMesh" uid="uid://dkaloxpe2h2pm" path="res://Models/FullModels/GirlVoxel/GirlVoxelOBJ.res" id="1_5bsys"]
-[ext_resource type="PackedScene" uid="uid://dpa7h0crxxisw" path="res://Models/MeshRepository/Hair/HairMale01.tscn" id="3_wkw4n"]
-[ext_resource type="ArrayMesh" uid="uid://nsojkdt21yac" path="res://Models/MeshRepository/Head/HeadMesh_Original.res" id="4_hmjjc"]
+[ext_resource type="PackedScene" uid="uid://dpa7h0crxxisw" path="res://Models/MeshRepository/Hair/1_HairMale01.tscn" id="3_wkw4n"]
+[ext_resource type="ArrayMesh" uid="uid://nsojkdt21yac" path="res://Models/MeshRepository/Head/2_HeadMesh_Original.res" id="4_hmjjc"]
 [ext_resource type="Script" uid="uid://b1ehblsx7n5cr" path="res://addons/jigglebones/jigglebone.gd" id="5_fnq30"]
 [ext_resource type="AnimationLibrary" uid="uid://bcv2d4kf15dyh" path="res://AnimWalk.res" id="6_8b1n2"]
 

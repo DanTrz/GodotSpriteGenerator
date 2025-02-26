@@ -91,6 +91,7 @@ public partial class SpriteSheetManager : PanelContainer
         UpdateUIElementsOnLoad();
         QueueApplyEffects();
         UpdateBrightnessAndSaturationShader(); // Initial shader parameter update
+
     }
 
     private void UpdateUIElementsOnLoad()

@@ -38,6 +38,7 @@ public partial class SpriteGenerator : Node
     [OnReady("%HeadMeshOptBtn")] private OptionButton _headMeshOptBtn;
     [OnReady("%TorsoMeshOptBtn")] private OptionButton _torsoMeshOptBtn;
     [OnReady("%HairMeshOptBtn")] private OptionButton _hairMeshOptBtn;
+    [OnReady("%LegsMeshOptBtn")] private OptionButton _legsMeshOptBtn;
     [OnReady("%HairColorBtn")] private ColorPickerButton _hairColorBtn;
 
 
@@ -64,6 +65,7 @@ public partial class SpriteGenerator : Node
         _playBackSpeedLineEdit.Text = _animationPlaybackSpeed.ToString();
         _angleSelectionItemList.CreateItemsFromList(allAngles.Select(x => x.ToString()).ToArray());
         MeshReplacer.UpdateUIOptionMesheList(_headMeshOptBtn, "HEAD");
+        MeshReplacer.UpdateUIOptionMesheList(_legsMeshOptBtn, "LEGS");
         MeshReplacer.UpdateUIOptionMesheList(_torsoMeshOptBtn, "TORSO");
         MeshReplacer.UpdateUIOprtionHairList(_hairMeshOptBtn);
         _hairMeshOptBtn.Selected = 1;
@@ -91,13 +93,16 @@ public partial class SpriteGenerator : Node
         _pixelEffectCheckBtn.Pressed += OnPixelEffectPressed;
         _loadAllAnimationsBtn.Pressed += OnLoadAllAnimationsPressed;
         _saveIntervalTimer.Timeout += OnSaveIntervalTimerTimeout;
+        _showGridCheckButton.Pressed += OnShowGridCheckButtonPressed;
+
+        //MeshReplacer Signals
         _headMeshOptBtn.ItemSelected += OnHeadMeshOptBtnItemSelected;
         _hairMeshOptBtn.ItemSelected += OnHairMeshOptBtnItemSelected;
         _torsoMeshOptBtn.ItemSelected += OnTorsoMeshOptBtnItemSelected;
+        _legsMeshOptBtn.ItemSelected += OnLegsMeshOptBtnItemSelected;
         // _showGridCheckButton.Toggled += (value) => ShowGrid = value;
         //_showGridCheckButton.Pressed += () => ShowGrid = _showGridCheckButton.ButtonPressed;
         //_showGridCheckButton.Pressed += () => _pixelGridTextRect.Visible = _showGridCheckButton.ButtonPressed;
-        _showGridCheckButton.Pressed += OnShowGridCheckButtonPressed;
         _hairColorBtn.ColorChanged += OnHairColorChanged;
 
 
@@ -127,10 +132,11 @@ public partial class SpriteGenerator : Node
 
         _animationPlayer.AnimationFinished += OnAnimationFinished;
 
+        UpdateAllMeshesAndMeshesUI();
         UpdateViewPort();
 
-
     }
+
 
     private void OnStartGeneration()
     {
@@ -656,6 +662,21 @@ public partial class SpriteGenerator : Node
 
     }
 
+    private void UpdateAllMeshesAndMeshesUI()
+    {
+        _headMeshOptBtn.Selected = 0;
+        OnHeadMeshOptBtnItemSelected(0);
+
+        _torsoMeshOptBtn.Selected = 0;
+        OnTorsoMeshOptBtnItemSelected(0);
+
+        _legsMeshOptBtn.Selected = 0;
+        OnLegsMeshOptBtnItemSelected(0);
+
+        _hairMeshOptBtn.Selected = 0;
+        OnHairMeshOptBtnItemSelected(0);
+    }
+
 
     private void OnHeadMeshOptBtnItemSelected(long index)
     {
@@ -669,6 +690,12 @@ public partial class SpriteGenerator : Node
         MeshInstance3D _torsoMeshObject = _characterModelObject.GetNode<MeshInstance3D>("%TORSO");
         string itemSelected = _torsoMeshOptBtn.GetItemText((int)index);
         MeshReplacer.UpdateMesh(_torsoMeshObject, Const.TORSO_MESHES_FOLDER_PATH + itemSelected + ".res");
+    }
+    private void OnLegsMeshOptBtnItemSelected(long index)
+    {
+        MeshInstance3D _legsMeshObject = _characterModelObject.GetNode<MeshInstance3D>("%LEGS");
+        string itemSelected = _legsMeshOptBtn.GetItemText((int)index);
+        MeshReplacer.UpdateMesh(_legsMeshObject, Const.LEGS_MESHES_FOLDER_PATH + itemSelected + ".res");
     }
 
     private void OnHairMeshOptBtnItemSelected(long index)

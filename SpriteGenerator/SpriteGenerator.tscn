@@ -604,7 +604,7 @@ layout_mode = 2
 [node name="TorsoMeshLabel" type="Label" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/TorsoMeshHBoxCont"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
-text = " TorsoMesh"
+text = " Torso Mesh"
 label_settings = ExtResource("9_0w5gm")
 vertical_alignment = 1
 autowrap_mode = 2
@@ -620,6 +620,26 @@ fit_to_longest_item = false
 [node name="MeshReplacerVboxOpt2" type="VBoxContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="LegsMeshHBoxCont" type="HBoxContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt2"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[node name="LegsMeshLabel" type="Label" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt2/LegsMeshHBoxCont"]
+custom_minimum_size = Vector2(120, 32)
+layout_mode = 2
+text = "Legs Mesh"
+label_settings = ExtResource("9_0w5gm")
+vertical_alignment = 1
+autowrap_mode = 2
+clip_text = true
+
+[node name="LegsMeshOptBtn" type="OptionButton" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt2/LegsMeshHBoxCont"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 32)
+layout_mode = 2
+clip_text = true
+fit_to_longest_item = false
 
 [node name="MarginContainer3" type="MarginContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer"]
 layout_mode = 2

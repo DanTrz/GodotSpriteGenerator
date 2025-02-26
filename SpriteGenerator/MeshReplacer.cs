@@ -35,6 +35,24 @@ public partial class MeshReplacer : Node
                 return ResourceLoader.ListDirectory(Const.TORSO_MESHES_FOLDER_PATH);
             case "HAIR":
                 return ResourceLoader.ListDirectory(Const.HAIR_MESHES_FOLDER_PATH);
+            case "LEGS":
+                return ResourceLoader.ListDirectory(Const.LEGS_MESHES_FOLDER_PATH);
+            default:
+                return null;
+        }
+    }
+    public static string GetMeshFolderPath(string bodyPart)
+    {
+        switch (bodyPart)
+        {
+            case "HEAD":
+                return Const.HEAD_MESHES_FOLDER_PATH;
+            case "TORSO":
+                return Const.TORSO_MESHES_FOLDER_PATH;
+            case "HAIR":
+                return Const.HAIR_MESHES_FOLDER_PATH;
+            case "LEGS":
+                return Const.LEGS_MESHES_FOLDER_PATH;
             default:
                 return null;
         }
@@ -53,7 +71,8 @@ public partial class MeshReplacer : Node
                 buttonToUpdate.AddItem(itemName, itemId);
                 int itemIndex = buttonToUpdate.GetItemIndex(itemId);
 
-                Texture2D icon = GD.Load<Texture2D>(GetMeshFolderPath(bodyPart) + itemName + "_Icon.png");
+                string iconPath = GetMeshFolderPath(bodyPart) + itemName + "_Icon.png";
+                Texture2D icon = GD.Load<Texture2D>(iconPath);
 
                 if (icon != null)
                 {
@@ -68,21 +87,6 @@ public partial class MeshReplacer : Node
 
             }
 
-        }
-    }
-
-    public static string GetMeshFolderPath(string bodyPart)
-    {
-        switch (bodyPart)
-        {
-            case "HEAD":
-                return Const.HEAD_MESHES_FOLDER_PATH;
-            case "TORSO":
-                return Const.TORSO_MESHES_FOLDER_PATH;
-            case "HAIR":
-                return Const.HAIR_MESHES_FOLDER_PATH;
-            default:
-                return null;
         }
     }
 
