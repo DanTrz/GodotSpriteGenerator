@@ -36,6 +36,7 @@ public partial class SpriteGenerator : Node
 
     //MeshReplacer Nodes and Variables
     [OnReady("%HeadMeshOptBtn")] private OptionButton _headMeshOptBtn;
+    [OnReady("%TorsoMeshOptBtn")] private OptionButton _torsoMeshOptBtn;
     [OnReady("%HairMeshOptBtn")] private OptionButton _hairMeshOptBtn;
     [OnReady("%HairColorBtn")] private ColorPickerButton _hairColorBtn;
 
@@ -62,9 +63,11 @@ public partial class SpriteGenerator : Node
         _frameStepTextEdit.Text = frameSkipStep.ToString();
         _playBackSpeedLineEdit.Text = _animationPlaybackSpeed.ToString();
         _angleSelectionItemList.CreateItemsFromList(allAngles.Select(x => x.ToString()).ToArray());
-        MeshReplacer.UpdateUIOptionMesheList(_headMeshOptBtn, "Head");
+        MeshReplacer.UpdateUIOptionMesheList(_headMeshOptBtn, "HEAD");
+        MeshReplacer.UpdateUIOptionMesheList(_torsoMeshOptBtn, "TORSO");
         MeshReplacer.UpdateUIOprtionHairList(_hairMeshOptBtn);
         _hairMeshOptBtn.Selected = 1;
+
         _hairColorBtn.Color = Colors.White;
         _showGridCheckButton.ButtonPressed = true;
         _showGridCheckButton.Text = _showGridCheckButton.ButtonPressed.ToString();
@@ -90,6 +93,7 @@ public partial class SpriteGenerator : Node
         _saveIntervalTimer.Timeout += OnSaveIntervalTimerTimeout;
         _headMeshOptBtn.ItemSelected += OnHeadMeshOptBtnItemSelected;
         _hairMeshOptBtn.ItemSelected += OnHairMeshOptBtnItemSelected;
+        _torsoMeshOptBtn.ItemSelected += OnTorsoMeshOptBtnItemSelected;
         // _showGridCheckButton.Toggled += (value) => ShowGrid = value;
         //_showGridCheckButton.Pressed += () => ShowGrid = _showGridCheckButton.ButtonPressed;
         //_showGridCheckButton.Pressed += () => _pixelGridTextRect.Visible = _showGridCheckButton.ButtonPressed;
@@ -537,10 +541,10 @@ public partial class SpriteGenerator : Node
                 shaderResolution = 108;
                 break;
             case 4:
-                shaderResolution = 148;
+                shaderResolution = 168;
                 break;
             case 5:
-                shaderResolution = 192;
+                shaderResolution = 218;
                 break;
         }
 
@@ -655,9 +659,16 @@ public partial class SpriteGenerator : Node
 
     private void OnHeadMeshOptBtnItemSelected(long index)
     {
-        MeshInstance3D _headMeshObject = _characterModelObject.GetNode<MeshInstance3D>("%Head");
+        MeshInstance3D _headMeshObject = _characterModelObject.GetNode<MeshInstance3D>("%HEAD");
         string itemSelected = _headMeshOptBtn.GetItemText((int)index);
         MeshReplacer.UpdateMesh(_headMeshObject, Const.HEAD_MESHES_FOLDER_PATH + itemSelected + ".res");
+    }
+
+    private void OnTorsoMeshOptBtnItemSelected(long index)
+    {
+        MeshInstance3D _torsoMeshObject = _characterModelObject.GetNode<MeshInstance3D>("%TORSO");
+        string itemSelected = _torsoMeshOptBtn.GetItemText((int)index);
+        MeshReplacer.UpdateMesh(_torsoMeshObject, Const.TORSO_MESHES_FOLDER_PATH + itemSelected + ".res");
     }
 
     private void OnHairMeshOptBtnItemSelected(long index)

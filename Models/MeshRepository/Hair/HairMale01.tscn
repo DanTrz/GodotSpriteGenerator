@@ -38,7 +38,7 @@ bind/2/pose = Transform3D(3.46085, 0, 0, 0, 0, -3.46085, 0, 3.46085, 0, -0.06955
 [node name="HairMale01" type="Node3D"]
 
 [node name="HairNode" type="Node3D" parent="."]
-transform = Transform3D(-2.7, -4.36877e-15, 2.36042e-07, -9.23996e-08, 2.48453, -1.05693, -2.17205e-07, -1.05693, -2.48453, -0.707762, 4.54148, 0.438695)
+transform = Transform3D(-2.7, -4.36877e-15, 2.36042e-07, -9.23996e-08, 2.48453, -1.05693, -2.17205e-07, -1.05693, -2.48453, -0.708, 4.2, 0.439)
 
 [node name="Skeleton3D" type="Skeleton3D" parent="HairNode"]
 bones/0/name = "CenterHair"

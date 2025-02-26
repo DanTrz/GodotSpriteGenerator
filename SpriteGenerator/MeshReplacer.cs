@@ -29,11 +29,11 @@ public partial class MeshReplacer : Node
     {
         switch (bodyPart)
         {
-            case "Head":
+            case "HEAD":
                 return ResourceLoader.ListDirectory(Const.HEAD_MESHES_FOLDER_PATH);
-            case "Torso":
+            case "TORSO":
                 return ResourceLoader.ListDirectory(Const.TORSO_MESHES_FOLDER_PATH);
-            case "Hair":
+            case "HAIR":
                 return ResourceLoader.ListDirectory(Const.HAIR_MESHES_FOLDER_PATH);
             default:
                 return null;
@@ -53,7 +53,7 @@ public partial class MeshReplacer : Node
                 buttonToUpdate.AddItem(itemName, itemId);
                 int itemIndex = buttonToUpdate.GetItemIndex(itemId);
 
-                Texture2D icon = GD.Load<Texture2D>(Const.HEAD_MESHES_FOLDER_PATH + itemName + "_Icon.png");
+                Texture2D icon = GD.Load<Texture2D>(GetMeshFolderPath(bodyPart) + itemName + "_Icon.png");
 
                 if (icon != null)
                 {
@@ -71,10 +71,25 @@ public partial class MeshReplacer : Node
         }
     }
 
+    public static string GetMeshFolderPath(string bodyPart)
+    {
+        switch (bodyPart)
+        {
+            case "HEAD":
+                return Const.HEAD_MESHES_FOLDER_PATH;
+            case "TORSO":
+                return Const.TORSO_MESHES_FOLDER_PATH;
+            case "HAIR":
+                return Const.HAIR_MESHES_FOLDER_PATH;
+            default:
+                return null;
+        }
+    }
+
 
     public static void UpdateUIOprtionHairList(OptionButton buttonToUpdate)
     {
-        string[] itemList = GetAllMesheNamesByBodyPart("Hair");
+        string[] itemList = GetAllMesheNamesByBodyPart("HAIR");
         int itemId = 1;
         foreach (string item in itemList)
         {

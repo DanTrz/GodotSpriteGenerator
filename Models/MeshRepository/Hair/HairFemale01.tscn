@@ -6,7 +6,7 @@
 
 [node name="HairMesh" type="MeshInstance3D" parent="."]
 unique_name_in_owner = true
-transform = Transform3D(0.996417, 2.08489, -0.0646175, -0.580642, 0.0872618, -1.06131, 2.21811, -0.913729, -0.248797, -0.940384, 6.62167, 2.10217)
+transform = Transform3D(0.996417, 2.08489, -0.0646175, -0.580642, 0.0872618, -1.06131, 2.21811, -0.913729, -0.248797, -0.94, 6.4, 2.102)
 cast_shadow = 0
 mesh = ExtResource("1_hti0o")
 skeleton = NodePath("")

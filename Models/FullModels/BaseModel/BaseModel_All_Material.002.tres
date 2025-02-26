@@ -1,0 +1,11 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://gm68vv6o3vrh"]
+
+[ext_resource type="Texture2D" uid="uid://deiv2dm6kuwgl" path="res://Models/FullModels/BaseModel/BaseModel_OBJ5_BaseModel_All_Material.png" id="1_188qa"]
+
+[resource]
+resource_name = "BaseModel_All_Material.002"
+cull_mode = 2
+shading_mode = 0
+diffuse_mode = 3
+specular_mode = 1
+albedo_texture = ExtResource("1_188qa")

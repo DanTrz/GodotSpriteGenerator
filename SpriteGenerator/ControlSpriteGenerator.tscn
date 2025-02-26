@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://de676sb25ueye" path="res://UIComponents/ItemListCheckBox.tscn" id="8_dmlgb"]
 [ext_resource type="Script" uid="uid://cacdskl17dkmj" path="res://SpriteGenerator/SpriteSheetManager.cs" id="9_u55wy"]
 [ext_resource type="Shader" uid="uid://c58xcvgi0wwu8" path="res://Assets/Shaders/brightness_saturation.gdshader" id="10_71fex"]
-[ext_resource type="Texture2D" uid="uid://cae2jelncoq3w" path="res://Anim_Running_spriteSheet.png" id="11_dtwjj"]
+[ext_resource type="Texture2D" uid="uid://cae2jelncoq3w" path="res://Assets/SpriteSheetTemp/Anim_Running_spriteSheet.png" id="11_dtwjj"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ivn07"]
 bg_color = Color(0.0728432, 0.0728424, 0.0728425, 1)

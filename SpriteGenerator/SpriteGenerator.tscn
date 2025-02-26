@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://dghyusd0bdjxt"]
+[gd_scene load_steps=31 format=3 uid="uid://dghyusd0bdjxt"]
 
 [ext_resource type="Script" uid="uid://dj2tgr0hxsbd3" path="res://SpriteGenerator/SpriteGenerator.cs" id="1_ws6fq"]
 [ext_resource type="PackedScene" uid="uid://iuwovcd804os" path="res://SpriteGenerator/MainScene3D.tscn" id="2_jyiui"]
@@ -9,28 +9,23 @@
 [ext_resource type="Texture2D" uid="uid://k5o1cpbx7oa4" path="res://Assets/UI/ModelTransformReferenceImg.png" id="6_4hdfw"]
 [ext_resource type="Shader" uid="uid://cwbfwv0g6if3e" path="res://Assets/Shaders/TextRecPixelEffect.gdshader" id="6_30nce"]
 [ext_resource type="PackedScene" uid="uid://de676sb25ueye" path="res://UIComponents/ItemListCheckBox.tscn" id="7_j32we"]
-[ext_resource type="Texture2D" uid="uid://cae2jelncoq3w" path="res://Anim_Running_spriteSheet.png" id="8_pyu7k"]
 [ext_resource type="Script" uid="uid://cacdskl17dkmj" path="res://SpriteGenerator/SpriteSheetManager.cs" id="8_seol6"]
 [ext_resource type="LabelSettings" uid="uid://usv7beyw1bj8" path="res://Assets/UI/Theme/Label.tres" id="9_0w5gm"]
 [ext_resource type="Shader" uid="uid://dxbhtgfqkjj57" path="res://SpriteGenerator/UnifiedImageEffects.gdshader" id="12_0w5gm"]
+[ext_resource type="Texture2D" uid="uid://bln1foey02paq" path="res://Assets/SpriteSheetTemp/B__Running_spriteSheet.png" id="13_0w5gm"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ivn07"]
-bg_color = Color(0.0728432, 0.0728424, 0.0728425, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0, 0.513585, 0.933356, 1)
-corner_radius_top_left = 2
-corner_radius_top_right = 2
-corner_radius_bottom_right = 2
-corner_radius_bottom_left = 2
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0w5gm"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0w5gm"]
 shader = ExtResource("6_30nce")
 shader_parameter/pixel_size = 512.0
+shader_parameter/viewport_size = Vector2(512, 512)
 
-[sub_resource type="CanvasTexture" id="CanvasTexture_ulv1c"]
+[sub_resource type="Gradient" id="Gradient_0w5gm"]
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_jd2q0"]
+gradient = SubResource("Gradient_0w5gm")
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_o31co"]
 load_path = "res://.godot/imported/Basic UI spritesheet.png-87ee5eabcb55cdff2aca9bd2f618217d.ctex"
@@ -118,11 +113,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-current_tab = 1
+current_tab = 0
 all_tabs_in_front = true
 
 [node name="Sprite" type="PanelContainer" parent="MainUI/TabContainer"]
-visible = false
 clip_contents = true
 layout_mode = 2
 metadata/_tab_index = 0
@@ -150,7 +144,7 @@ custom_minimum_size = Vector2(512, 512)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme_override_styles/panel = SubResource("StyleBoxFlat_ivn07")
+theme_override_styles/panel = SubResource("StyleBoxFlat_0w5gm")
 
 [node name="RawViewportContainer" type="SubViewportContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/ModelPanelContainer"]
 unique_name_in_owner = true
@@ -166,7 +160,7 @@ transparent_bg = true
 handle_input_locally = false
 canvas_item_default_texture_filter = 0
 physics_object_picking = true
-render_target_update_mode = 0
+render_target_update_mode = 4
 
 [node name="Model" type="Node3D" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/ModelPanelContainer/RawViewportContainer/RawSubViewport"]
 
@@ -181,7 +175,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = SubResource("CanvasTexture_ulv1c")
+texture = SubResource("GradientTexture1D_jd2q0")
 
 [node name="Pixel32GridTextRect" type="TextureRect" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/ModelPanelContainer/RawViewportContainer/RawSubViewport"]
 unique_name_in_owner = true
@@ -616,12 +610,12 @@ vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="TorsoHSlider" type="HSlider" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/TorsoMeshHBoxCont"]
-custom_minimum_size = Vector2(120, 32)
+[node name="TorsoMeshOptBtn" type="OptionButton" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/TorsoMeshHBoxCont"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 32)
 layout_mode = 2
-min_value = 1.0
-max_value = 3.0
-value = 1.0
+clip_text = true
+fit_to_longest_item = false
 
 [node name="MeshReplacerVboxOpt2" type="VBoxContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer"]
 layout_mode = 2
@@ -699,6 +693,7 @@ text = "Start Generation
 "
 
 [node name="SpriteSheetManager" type="PanelContainer" parent="MainUI/TabContainer" node_paths=PackedStringArray("_textureRect", "_saturationSlider", "_saturationLabel", "_brightnessLabel", "_outlineLabel", "_brightnessSlider", "_outlineCheckbox", "_outlineThicknessSlider", "_outlineColorPicker", "_ditheringCheckbox", "_ditheringSlider", "_colorReductionCheckbox", "_colorCountSpinBox", "_saveButton", "_statusLabel", "_enableSaturationCheckbox", "_enableBrightnessCheckbox")]
+visible = false
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_pyu7k")
 script = ExtResource("8_seol6")
@@ -740,7 +735,7 @@ theme_override_constants/margin_bottom = 10
 unique_name_in_owner = true
 material = SubResource("ShaderMaterial_seol6")
 layout_mode = 2
-texture = ExtResource("8_pyu7k")
+texture = ExtResource("13_0w5gm")
 expand_mode = 3
 
 [node name="OptionsContainer" type="PanelContainer" parent="MainUI/TabContainer/SpriteSheetManager/HBoxContainer"]
