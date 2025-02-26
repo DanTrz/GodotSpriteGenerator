@@ -37,6 +37,8 @@ public partial class MeshReplacer : Node
                 return ResourceLoader.ListDirectory(Const.HAIR_MESHES_FOLDER_PATH);
             case "LEGS":
                 return ResourceLoader.ListDirectory(Const.LEGS_MESHES_FOLDER_PATH);
+            case "FEET":
+                return ResourceLoader.ListDirectory(Const.FEET_MESHES_FOLDER_PATH);
             default:
                 return null;
         }
@@ -53,6 +55,8 @@ public partial class MeshReplacer : Node
                 return Const.HAIR_MESHES_FOLDER_PATH;
             case "LEGS":
                 return Const.LEGS_MESHES_FOLDER_PATH;
+            case "FEET":
+                return Const.FEET_MESHES_FOLDER_PATH;
             default:
                 return null;
         }

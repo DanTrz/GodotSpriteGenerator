@@ -38,8 +38,10 @@ public partial class SpriteGenerator : Node
     [OnReady("%HeadMeshOptBtn")] private OptionButton _headMeshOptBtn;
     [OnReady("%TorsoMeshOptBtn")] private OptionButton _torsoMeshOptBtn;
     [OnReady("%HairMeshOptBtn")] private OptionButton _hairMeshOptBtn;
-    [OnReady("%LegsMeshOptBtn")] private OptionButton _legsMeshOptBtn;
     [OnReady("%HairColorBtn")] private ColorPickerButton _hairColorBtn;
+    [OnReady("%LegsMeshOptBtn")] private OptionButton _legsMeshOptBtn;
+    [OnReady("%FeetMeshOptBtn")] private OptionButton _feetMeshOptBtn;
+
 
 
     private Node3D _modelPivotNode;
@@ -66,6 +68,7 @@ public partial class SpriteGenerator : Node
         _angleSelectionItemList.CreateItemsFromList(allAngles.Select(x => x.ToString()).ToArray());
         MeshReplacer.UpdateUIOptionMesheList(_headMeshOptBtn, "HEAD");
         MeshReplacer.UpdateUIOptionMesheList(_legsMeshOptBtn, "LEGS");
+        MeshReplacer.UpdateUIOptionMesheList(_feetMeshOptBtn, "FEET");
         MeshReplacer.UpdateUIOptionMesheList(_torsoMeshOptBtn, "TORSO");
         MeshReplacer.UpdateUIOprtionHairList(_hairMeshOptBtn);
         _hairMeshOptBtn.Selected = 1;
@@ -100,6 +103,7 @@ public partial class SpriteGenerator : Node
         _hairMeshOptBtn.ItemSelected += OnHairMeshOptBtnItemSelected;
         _torsoMeshOptBtn.ItemSelected += OnTorsoMeshOptBtnItemSelected;
         _legsMeshOptBtn.ItemSelected += OnLegsMeshOptBtnItemSelected;
+        _feetMeshOptBtn.ItemSelected += OnFeetMeshOptBtnItemSelected;
         // _showGridCheckButton.Toggled += (value) => ShowGrid = value;
         //_showGridCheckButton.Pressed += () => ShowGrid = _showGridCheckButton.ButtonPressed;
         //_showGridCheckButton.Pressed += () => _pixelGridTextRect.Visible = _showGridCheckButton.ButtonPressed;
@@ -675,8 +679,20 @@ public partial class SpriteGenerator : Node
 
         _hairMeshOptBtn.Selected = 0;
         OnHairMeshOptBtnItemSelected(0);
+
+        _feetMeshOptBtn.Selected = 0;
+        OnFeetMeshOptBtnItemSelected(0);
     }
 
+
+    private void OnFeetMeshOptBtnItemSelected(long index)
+    {
+        MeshInstance3D feetMeshObject = _characterModelObject.GetNode<MeshInstance3D>("%FEET");
+        string itemSelected = _feetMeshOptBtn.GetItemText((int)index);
+        MeshReplacer.UpdateMesh(feetMeshObject, Const.FEET_MESHES_FOLDER_PATH + itemSelected + ".res");
+
+
+    }
 
     private void OnHeadMeshOptBtnItemSelected(long index)
     {

@@ -2225,7 +2225,13 @@ bones/24/position = Vector3(-0.280743, 1.02939, 0.0127415)
 bones/24/rotation = Quaternion(-0.132862, 0.990227, 0.000341154, -0.0423933)
 bones/24/scale = Vector3(1, 1, 1)
 
+[node name="LEGS" type="MeshInstance3D" parent="BaseModel_Armature/GeneralSkeleton"]
+unique_name_in_owner = true
+mesh = ExtResource("4_fe036")
+skin = SubResource("Skin_ftg4b")
+
 [node name="FEET" type="MeshInstance3D" parent="BaseModel_Armature/GeneralSkeleton"]
+unique_name_in_owner = true
 mesh = ExtResource("1_igd6e")
 skin = SubResource("Skin_ftg4b")
 
@@ -2236,11 +2242,6 @@ skin = SubResource("Skin_ftg4b")
 
 [node name="LEFT ARM2" type="MeshInstance3D" parent="BaseModel_Armature/GeneralSkeleton"]
 mesh = ExtResource("3_58l4l")
-skin = SubResource("Skin_ftg4b")
-
-[node name="LEGS" type="MeshInstance3D" parent="BaseModel_Armature/GeneralSkeleton"]
-unique_name_in_owner = true
-mesh = ExtResource("4_fe036")
 skin = SubResource("Skin_ftg4b")
 
 [node name="RIGHT ARM2" type="MeshInstance3D" parent="BaseModel_Armature/GeneralSkeleton"]

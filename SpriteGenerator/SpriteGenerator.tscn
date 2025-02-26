@@ -641,6 +641,27 @@ layout_mode = 2
 clip_text = true
 fit_to_longest_item = false
 
+[node name="FeetMeshHBoxCont" type="HBoxContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt2"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[node name="FeetMeshLabel" type="Label" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt2/FeetMeshHBoxCont"]
+custom_minimum_size = Vector2(120, 32)
+layout_mode = 2
+text = "Feet
+ Mesh"
+label_settings = ExtResource("9_0w5gm")
+vertical_alignment = 1
+autowrap_mode = 2
+clip_text = true
+
+[node name="FeetMeshOptBtn" type="OptionButton" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt2/FeetMeshHBoxCont"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 32)
+layout_mode = 2
+clip_text = true
+fit_to_longest_item = false
+
 [node name="MarginContainer3" type="MarginContainer" parent="MainUI/TabContainer/Sprite/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 2

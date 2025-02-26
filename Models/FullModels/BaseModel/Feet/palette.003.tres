@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://c1bngo8iyessh"]
+
+[ext_resource type="Texture2D" uid="uid://bil4wj73uuoaj" path="res://Models/FullModels/BaseModel/Feet/BaseModel_Boots_BaseModel_Male_V6_NewBodyCut-0-BOOT.png" id="1_c5aq5"]
+
+[resource]
+resource_name = "palette.003"
+cull_mode = 2
+shading_mode = 0
+albedo_texture = ExtResource("1_c5aq5")
