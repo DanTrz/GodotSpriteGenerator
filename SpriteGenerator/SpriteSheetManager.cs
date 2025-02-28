@@ -109,8 +109,8 @@ public partial class SpriteSheetManager : PanelContainer
         _ditheringCheckbox.ButtonPressed = false;
         _ditheringSlider.Value = 0.0f;
         _colorReductionCheckbox.ButtonPressed = false;
-        _colorCountSpinBox.Value = GetTotalColorCount(_originalImage);
-        _colorCountSpinBox.MaxValue = GetTotalColorCount(_originalImage);
+        _colorCountSpinBox.Value = GlobalUtil.GetTotalColorCount(_originalImage);
+        _colorCountSpinBox.MaxValue = GlobalUtil.GetTotalColorCount(_originalImage);
     }
 
     private void QueueApplyEffects()
@@ -255,19 +255,19 @@ public partial class SpriteSheetManager : PanelContainer
                 int index = (y * width + x) * 4;
 
                 // Apply error from the error buffer
-                float oldR = ClampFloat(data[index] + errorBufferR[x], 0, 255);
-                float oldG = ClampFloat(data[index + 1] + errorBufferG[x], 0, 255);
-                float oldB = ClampFloat(data[index + 2] + errorBufferB[x], 0, 255);
+                float oldR = GlobalUtil.ClampFloat(data[index] + errorBufferR[x], 0, 255);
+                float oldG = GlobalUtil.ClampFloat(data[index + 1] + errorBufferG[x], 0, 255);
+                float oldB = GlobalUtil.ClampFloat(data[index + 2] + errorBufferB[x], 0, 255);
                 float oldA = data[index + 3]; // Alpha is unchanged
                 Color oldPixel = new Color(oldR / 255f, oldG / 255f, oldB / 255f, oldA / 255f);
 
-                Color newPixel = FindClosestPaletteColor(oldPixel);
+                Color newPixel = GlobalUtil.FindClosestPaletteColor(oldPixel);
 
                 // Directly modify the data array (in-place modification)
-                data[index] = (byte)ClampFloat(newPixel.R * 255, 0, 255);
-                data[index + 1] = (byte)ClampFloat(newPixel.G * 255, 0, 255);
-                data[index + 2] = (byte)ClampFloat(newPixel.B * 255, 0, 255);
-                data[index + 3] = (byte)ClampFloat(newPixel.A * 255, 0, 255); // Keep original alpha
+                data[index] = (byte)GlobalUtil.ClampFloat(newPixel.R * 255, 0, 255);
+                data[index + 1] = (byte)GlobalUtil.ClampFloat(newPixel.G * 255, 0, 255);
+                data[index + 2] = (byte)GlobalUtil.ClampFloat(newPixel.B * 255, 0, 255);
+                data[index + 3] = (byte)GlobalUtil.ClampFloat(newPixel.A * 255, 0, 255); // Keep original alpha
 
 
                 // Calculate error *per channel*
@@ -288,21 +288,21 @@ public partial class SpriteSheetManager : PanelContainer
                     if (x - 1 >= 0)
                     {
                         int nextIndex = ((y + 1) * width + (x - 1)) * 4;
-                        data[nextIndex] = (byte)ClampFloat(data[nextIndex] + errorR * (3.0f / 16.0f) * strength, 0, 255);
-                        data[nextIndex + 1] = (byte)ClampFloat(data[nextIndex + 1] + errorG * (3.0f / 16.0f) * strength, 0, 255);
-                        data[nextIndex + 2] = (byte)ClampFloat(data[nextIndex + 2] + errorB * (3.0f / 16.0f) * strength, 0, 255);
+                        data[nextIndex] = (byte)GlobalUtil.ClampFloat(data[nextIndex] + errorR * (3.0f / 16.0f) * strength, 0, 255);
+                        data[nextIndex + 1] = (byte)GlobalUtil.ClampFloat(data[nextIndex + 1] + errorG * (3.0f / 16.0f) * strength, 0, 255);
+                        data[nextIndex + 2] = (byte)GlobalUtil.ClampFloat(data[nextIndex + 2] + errorB * (3.0f / 16.0f) * strength, 0, 255);
                     }
                     if (x + 1 < width)
                     {
                         int nextIndex = ((y + 1) * width + (x + 1)) * 4;
-                        data[nextIndex] = (byte)ClampFloat(data[nextIndex] + errorR * (1.0f / 16.0f) * strength, 0, 255);
-                        data[nextIndex + 1] = (byte)ClampFloat(data[nextIndex + 1] + errorG * (1.0f / 16.0f) * strength, 0, 255);
-                        data[nextIndex + 2] = (byte)ClampFloat(data[nextIndex + 2] + errorB * (1.0f / 16.0f) * strength, 0, 255);
+                        data[nextIndex] = (byte)GlobalUtil.ClampFloat(data[nextIndex] + errorR * (1.0f / 16.0f) * strength, 0, 255);
+                        data[nextIndex + 1] = (byte)GlobalUtil.ClampFloat(data[nextIndex + 1] + errorG * (1.0f / 16.0f) * strength, 0, 255);
+                        data[nextIndex + 2] = (byte)GlobalUtil.ClampFloat(data[nextIndex + 2] + errorB * (1.0f / 16.0f) * strength, 0, 255);
                     }
                     int nextIndexCenter = ((y + 1) * width + x) * 4;
-                    data[nextIndexCenter] = (byte)ClampFloat(data[nextIndexCenter] + errorR * (5.0f / 16.0f) * strength, 0, 255);
-                    data[nextIndexCenter + 1] = (byte)ClampFloat(data[nextIndexCenter + 1] + errorG * (5.0f / 16.0f) * strength, 0, 255);
-                    data[nextIndexCenter + 2] = (byte)ClampFloat(data[nextIndexCenter + 2] + errorB * (5.0f / 16.0f) * strength, 0, 255);
+                    data[nextIndexCenter] = (byte)GlobalUtil.ClampFloat(data[nextIndexCenter] + errorR * (5.0f / 16.0f) * strength, 0, 255);
+                    data[nextIndexCenter + 1] = (byte)GlobalUtil.ClampFloat(data[nextIndexCenter + 1] + errorG * (5.0f / 16.0f) * strength, 0, 255);
+                    data[nextIndexCenter + 2] = (byte)GlobalUtil.ClampFloat(data[nextIndexCenter + 2] + errorB * (5.0f / 16.0f) * strength, 0, 255);
                 }
             }
         });
@@ -312,7 +312,7 @@ public partial class SpriteSheetManager : PanelContainer
 
     private Image ReduceColors(Image image, int numColors)
     {
-        List<Color> palette = KMeansClustering(image, numColors);
+        List<Color> palette = GlobalUtil.KMeansClustering(image, numColors, _colorCountSpinBox);
         int width = image.GetWidth();
         int height = image.GetHeight();
         byte[] originalData = image.GetData();
@@ -323,7 +323,7 @@ public partial class SpriteSheetManager : PanelContainer
             for (int x = 0; x < width; x++)
             {
                 int index = (y * width + x) * 4;
-                Color originalColor = GetColorFromBytes(originalData, index);
+                Color originalColor = GlobalUtil.GetColorFromBytes(originalData, index);
 
                 if (originalColor.A == 0)
                 {
@@ -331,9 +331,9 @@ public partial class SpriteSheetManager : PanelContainer
                 }
                 else
                 {
-                    Color closestColor = FindClosestColor(originalColor, palette);
+                    Color closestColor = GlobalUtil.FindClosestColor(originalColor, palette);
                     closestColor.A = originalColor.A; // Preserve Alpha
-                    SetColorToBytes(reducedData, index, closestColor);
+                    GlobalUtil.SetColorToBytes(reducedData, index, closestColor);
                 }
             }
         });
@@ -352,18 +352,38 @@ public partial class SpriteSheetManager : PanelContainer
     private void OnSaveButtonPressed()
     {
         if (_textureRect.Texture == null) return;
-
         Image modifiedImage = ((ImageTexture)_textureRect.Texture).GetImage();
-        FileDialog fileDialog = new FileDialog
+
+        using FileDialog fileDialog = new FileDialog
         {
             FileMode = FileDialog.FileModeEnum.SaveFile,
             Filters = new string[] { "*.png ; PNG Images" },
-            CurrentDir = "res://",
-            CurrentFile = "modified_image.png"
+            Access = FileDialog.AccessEnum.Filesystem
         };
+
+        AddChild(fileDialog); // Add to scene first 
+
+        string folderCurrentDir = GlobalUtil.SaveFolderPath; // Ensure it's inside user:// or res://
+        string globalizedPath = ProjectSettings.GlobalizePath(folderCurrentDir);
+
+        if (!GlobalUtil.HasDirectory(globalizedPath, this))
+        {
+            GD.Print("Directory does NOT exist: " + folderCurrentDir);
+            globalizedPath = "res://"; // Fallback to a safe default
+        }
+
+        fileDialog.CurrentDir = globalizedPath; //Set Current Directory at the end after adding Child to Scene otherwise it was not working
+
         fileDialog.FileSelected += (path) => SaveImageToFile(modifiedImage, path);
-        AddChild(fileDialog);
-        fileDialog.PopupCentered();
+
+        fileDialog.PopupCentered(); // Show the dialog
+
+    }
+
+
+    private void OnFileSelected(string path)
+    {
+        GD.Print("Selected file path: " + path); //handle file selection
     }
 
     private void SaveImageToFile(Image image, string filePath)
@@ -386,172 +406,6 @@ public partial class SpriteSheetManager : PanelContainer
     }
 
 
-    // --- Helper Functions ---
-    #region Helper Functions
 
-    private List<Color> KMeansClustering(Image image, int k)
-    {
-        if (_colorCountSpinBox.Value == 0) { return new List<Color> { new Color(0, 0, 0, 0) }; }
-
-        List<Color> colors = new List<Color>();
-        int width = image.GetWidth();
-        int height = image.GetHeight();
-        byte[] data = image.GetData();
-
-        for (int y = 0; y < height; y++)
-        {
-            for (int x = 0; x < width; x++)
-            {
-                int index = (y * width + x) * 4;
-                if (data[index + 3] > 0)
-                {
-                    colors.Add(GetColorFromBytes(data, index));
-                }
-            }
-        }
-
-        if (colors.Count == 0) return new List<Color>() { new Color(0, 0, 0, 0) };
-
-        List<Color> centroids = new List<Color>();
-        Random random = new Random();
-        for (int i = 0; i < k; i++) centroids.Add(colors[random.Next(colors.Count)]);
-
-        // --- Limit iterations and optimize cluster assignment ---
-        int maxIterations = 16;
-        List<Color>[] clusters = new List<Color>[k]; // Initialize clusters *outside* the main loop
-        for (int i = 0; i < k; i++) clusters[i] = new List<Color>();
-
-        for (int iter = 0; iter < maxIterations; iter++)
-        {
-            // Clear clusters at the *beginning* of each iteration.  Crucial for correctness.
-            for (int i = 0; i < k; i++)
-            {
-                clusters[i].Clear();
-            }
-
-            // Assign colors to clusters (more efficient using index)
-            foreach (Color color in colors)
-            {
-                int nearestCentroidIndex = FindNearestCentroidIndex(color, centroids);
-                clusters[nearestCentroidIndex].Add(color);
-            }
-
-            // Update centroids
-            List<Color> newCentroids = new List<Color>();
-            for (int i = 0; i < k; i++)
-            {
-                newCentroids.Add(clusters[i].Count > 0 ? CalculateMeanColor(clusters[i]) : colors[random.Next(colors.Count)]);
-            }
-            centroids = newCentroids;
-        }
-        return centroids;
-    }
-
-    private int FindNearestCentroidIndex(Color color, List<Color> centroids)
-    {
-        int nearestIndex = 0;
-        float minDistanceSquared = float.MaxValue; // Use squared distance
-
-        for (int i = 0; i < centroids.Count; i++)
-        {
-            // Calculate squared distance (avoiding square root)
-            float distanceSquared = ColorDistanceSquared(color, centroids[i]);
-            if (distanceSquared < minDistanceSquared)
-            {
-                minDistanceSquared = distanceSquared;
-                nearestIndex = i;
-            }
-        }
-        return nearestIndex;
-    }
-
-    // Calculate squared color distance
-    private float ColorDistanceSquared(Color c1, Color c2)
-    {
-        float dr = c1.R - c2.R;
-        float dg = c1.G - c2.G;
-        float db = c1.B - c2.B;
-        float da = c1.A - c2.A;
-        return dr * dr + dg * dg + db * db + da * da; // No square root!
-    }
-
-    private Color CalculateMeanColor(List<Color> colors)
-    {
-        float sumR = 0, sumG = 0, sumB = 0, sumA = 0;
-        foreach (Color color in colors)
-        {
-            sumR += color.R; sumG += color.G; sumB += color.B; sumA += color.A;
-        }
-        int count = colors.Count;
-        return new Color(sumR / count, sumG / count, sumB / count, sumA / count);
-    }
-
-    private Color FindClosestColor(Color targetColor, List<Color> palette)
-    {
-        Color closestColor = palette[0];
-        float minDistanceSquared = ColorDistanceSquared(targetColor, closestColor); // Use squared distance
-
-        foreach (Color paletteColor in palette)
-        {
-            float distanceSquared = ColorDistanceSquared(targetColor, paletteColor); // Use squared distance
-            if (distanceSquared < minDistanceSquared)
-            {
-                minDistanceSquared = distanceSquared;
-                closestColor = paletteColor;
-            }
-        }
-        return closestColor;
-    }
-    //private Color GetColorFromBytes(byte[] data, int index) => new Color(data[index] / 255.0f, data[index + 1] / 255.0f, data[index + 2] / 255.0f, data[index + 3] / 255.0f);
-
-    private Color GetColorFromBytes(byte[] data, int index)
-    {
-        if (index + 3 >= data.Length)
-        {
-            throw new IndexOutOfRangeException("Index exceeds the bounds of the data array.");
-        }
-
-        return new Color(data[index] / 255.0f, data[index + 1] / 255.0f, data[index + 2] / 255.0f, data[index + 3] / 255.0f);
-    }
-
-    private void SetColorToBytes(byte[] data, int index, Color color)
-    {
-        data[index] = (byte)(color.R * 255);
-        data[index + 1] = (byte)(color.G * 255);
-        data[index + 2] = (byte)(color.B * 255);
-        data[index + 3] = (byte)(color.A * 255);
-    }
-
-    public int GetTotalColorCount(Image image)
-    {
-        if (image.IsEmpty())
-        {
-            return 0;
-        }
-
-        HashSet<ulong> uniqueColors = new HashSet<ulong>(); // Use ulong for color comparison
-
-        for (int x = 0; x < image.GetWidth(); x++)
-        {
-            for (int y = 0; y < image.GetHeight(); y++)
-            {
-                Color color = image.GetPixel(x, y);
-                // Convert Color to a single ulong for efficient comparison
-                ulong colorValue = ((ulong)(color.R8) << 24) | ((ulong)(color.G8) << 16) | ((ulong)(color.B8) << 8) | (ulong)(color.A8);
-                uniqueColors.Add(colorValue);
-            }
-        }
-        return uniqueColors.Count;
-    }
-
-    private Color FindClosestPaletteColor(Color color) => new Color(Mathf.Round(color.R * 255) / 255, Mathf.Round(color.G * 255) / 255, Mathf.Round(color.B * 255) / 255, color.A);
-    private Color ClampColor(Color color) => new Color(Mathf.Clamp(color.R, 0, 1), Mathf.Clamp(color.G, 0, 1), Mathf.Clamp(color.B, 0, 1), color.A);
-
-    private float ClampFloat(float value, float min, float max)
-    {
-        return Mathf.Clamp(value, min, max);
-    }
-
-    #endregion Helper Functions
 
 }

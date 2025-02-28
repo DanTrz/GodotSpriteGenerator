@@ -5,5 +5,4 @@
 [resource]
 resource_name = "palette.003"
 cull_mode = 2
-shading_mode = 0
 albedo_texture = ExtResource("1_c5aq5")

@@ -1,16 +1,12 @@
-using System.Collections.Generic;
+using Godot;
 
 public static class Const
 {
     public const string MOUSE_RIGHT_CLICK = "MouseRightClick";
 
-    public static Dictionary<int, float> ImgRenderTimeInterval = new()
-    {
-        { 1, 0.031f },
-        { 2, 0.015f },
-        { 3, 0.007f },
-        { 4, 0.003f },
-    };
+    public static readonly string RES_ROOT_FOLDER_PATH = ProjectSettings.GlobalizePath("res://");
+    public static readonly string RES_TEMPSAVE_FOLDER_PATH = ProjectSettings.GlobalizePath("res://SpriteSheets");
+    public static readonly string USER_ROOT_FOLDER_PATH = ProjectSettings.GlobalizePath("user://");
 
     public const string HEAD_ORIG_MESH_PATH = "res://Models/MeshRepository/Head/HeadMesh_Original.res";
     public const string HEAD_YELLOW_MESH_PATH = "res://Models/MeshRepository/Head/HeadMesh_Yellow.res";

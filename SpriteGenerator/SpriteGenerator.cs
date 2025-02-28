@@ -1,6 +1,5 @@
 using Godot;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -11,7 +10,22 @@ public partial class SpriteGenerator : Node
     [Export] public Node3D MainScene3D;
     [Export] private SubViewport _rawViewport;
     [Export] private SubViewportContainer _rawViewportContainer;
-    [Export] private string _outputFolder = "res://SpriteSheets";
+
+    //private string _saveSpriteFolderPath;
+    //public string SaveSpriteFolderPath;
+    ////public string SaveSpriteFolderPath
+    ////{
+    ////    get
+    ////    {
+    ////        return _saveSpriteFolderPath;
+    ////    }
+    ////    set
+    ////    {
+    ////        _saveSpriteFolderPath = value;
+    ////        _spriteGenFolderPathLineEdit.Text = _saveSpriteFolderPath;
+    ////    }
+    ////}
+
     [Export] private int _spriteResolution = 256;
     [Export] private int frameSkipStep = 4; // Control how frequently frames are captured
     [Export] private bool _clearFolderBeforeGeneration = true;
@@ -33,6 +47,11 @@ public partial class SpriteGenerator : Node
     [OnReady("%angleSelectionItemList")] private ItemListCheckBox _angleSelectionItemList;
     [OnReady("%Pixel32GridTextRect")] private TextureRect _pixelGridTextRect;
     [OnReady("%ShowGridCheckButton")] private CheckButton _showGridCheckButton;
+
+    //Main Settings and Folder Path Variables
+    [OnReady("%SelectFolderPathBtn")] private Button _selectFolderPathBtn;
+    [OnReady("%OpenFolderPathBtn")] private Button _openFolderPathBtn;
+    [OnReady("%SpriteGenFolderPathLineEdit")] LineEdit _spriteGenFolderPathLineEdit;
 
     //MeshReplacer Nodes and Variables
     [OnReady("%HeadMeshOptBtn")] private OptionButton _headMeshOptBtn;
@@ -59,7 +78,34 @@ public partial class SpriteGenerator : Node
 
     public override void _Ready()
     {
+        //Connect UI Signals
+        _spriteGenFolderPathLineEdit.TextChanged += (newDir) => GlobalUtil.OnFolderSelected(newDir, _spriteGenFolderPathLineEdit);
+        _selectFolderPathBtn.Pressed += OnSelectFolderPathPressed;
+        _openFolderPathBtn.Pressed += OnOpenFolderPathPressed;
+        _startGenerationBtn.Pressed += OnStartGeneration;
+        _resolutionOptionBtn.ItemSelected += OnRenderResolutionChanged;
+        _pixelShaderOptionBtn.ItemSelected += OnPixelShaderResolutionChanged;
+        _frameStepTextEdit.TextChanged += OnFrameStepChanged;
+        _playBackSpeedLineEdit.TextChanged += OnPlayBackSpeedChanged;
+        _clearFolderCheckBtn.Pressed += OnClearFolderPressed;
+        _pixelEffectCheckBtn.Pressed += OnPixelEffectPressed;
+        _loadAllAnimationsBtn.Pressed += OnLoadAllAnimationsPressed;
+        //_saveIntervalTimer.Timeout += OnSaveIntervalTimerTimeout;
+        _showGridCheckButton.Pressed += OnShowGridCheckButtonPressed;
+
+        //MeshReplacer Signals
+        _headMeshOptBtn.ItemSelected += OnHeadMeshOptBtnItemSelected;
+        _hairMeshOptBtn.ItemSelected += OnHairMeshOptBtnItemSelected;
+        _torsoMeshOptBtn.ItemSelected += OnTorsoMeshOptBtnItemSelected;
+        _legsMeshOptBtn.ItemSelected += OnLegsMeshOptBtnItemSelected;
+        _feetMeshOptBtn.ItemSelected += OnFeetMeshOptBtnItemSelected;
+        // _showGridCheckButton.Toggled += (value) => ShowGrid = value;
+        //_showGridCheckButton.Pressed += () => ShowGrid = _showGridCheckButton.ButtonPressed;
+        //_showGridCheckButton.Pressed += () => _pixelGridTextRect.Visible = _showGridCheckButton.ButtonPressed;
+        _hairColorBtn.ColorChanged += OnHairColorChanged;
+
         //Set Default UI Control Values
+        _spriteGenFolderPathLineEdit.Text = GlobalUtil.SaveFolderPath;
         _clearFolderCheckBtn.ButtonPressed = _clearFolderBeforeGeneration;
         _pixelEffectCheckBtn.ButtonPressed = _usePixelEffect;
         _pixelShaderTextRect.Visible = _usePixelEffect;
@@ -78,36 +124,11 @@ public partial class SpriteGenerator : Node
         _showGridCheckButton.Text = _showGridCheckButton.ButtonPressed.ToString();
         _pixelEffectCheckBtn.Text = _pixelEffectCheckBtn.ButtonPressed.ToString();
 
-
         //Set Default Resolution and Shader Strenght
         _resolutionOptionBtn.Selected = _resolutionOptionBtn.ItemCount - 1;
         OnRenderResolutionChanged(_resolutionOptionBtn.ItemCount - 1);
         _pixelShaderOptionBtn.Selected = _pixelShaderOptionBtn.ItemCount - 1;
         OnPixelShaderResolutionChanged(_pixelShaderOptionBtn.ItemCount - 1);
-
-
-        //Connect Signals
-        _startGenerationBtn.Pressed += OnStartGeneration;
-        _resolutionOptionBtn.ItemSelected += OnRenderResolutionChanged;
-        _pixelShaderOptionBtn.ItemSelected += OnPixelShaderResolutionChanged;
-        _frameStepTextEdit.TextChanged += OnFrameStepChanged;
-        _playBackSpeedLineEdit.TextChanged += OnPlayBackSpeedChanged;
-        _clearFolderCheckBtn.Pressed += OnClearFolderPressed;
-        _pixelEffectCheckBtn.Pressed += OnPixelEffectPressed;
-        _loadAllAnimationsBtn.Pressed += OnLoadAllAnimationsPressed;
-        _saveIntervalTimer.Timeout += OnSaveIntervalTimerTimeout;
-        _showGridCheckButton.Pressed += OnShowGridCheckButtonPressed;
-
-        //MeshReplacer Signals
-        _headMeshOptBtn.ItemSelected += OnHeadMeshOptBtnItemSelected;
-        _hairMeshOptBtn.ItemSelected += OnHairMeshOptBtnItemSelected;
-        _torsoMeshOptBtn.ItemSelected += OnTorsoMeshOptBtnItemSelected;
-        _legsMeshOptBtn.ItemSelected += OnLegsMeshOptBtnItemSelected;
-        _feetMeshOptBtn.ItemSelected += OnFeetMeshOptBtnItemSelected;
-        // _showGridCheckButton.Toggled += (value) => ShowGrid = value;
-        //_showGridCheckButton.Pressed += () => ShowGrid = _showGridCheckButton.ButtonPressed;
-        //_showGridCheckButton.Pressed += () => _pixelGridTextRect.Visible = _showGridCheckButton.ButtonPressed;
-        _hairColorBtn.ColorChanged += OnHairColorChanged;
 
 
 
@@ -134,18 +155,28 @@ public partial class SpriteGenerator : Node
             GD.PrintErr("MainScene3D is null");
         }
 
-        _animationPlayer.AnimationFinished += OnAnimationFinished;
+        //_animationPlayer.AnimationFinished += OnAnimationFinished;
 
         UpdateAllMeshesAndMeshesUI();
         UpdateViewPort();
 
     }
 
+    private void OnFolderPathTextChanged(string newText)
+    {
+        GD.PrintT("New folder: " + newText);
+        _spriteGenFolderPathLineEdit.Text = newText;
+        GlobalUtil.SaveFolderPath = newText;
+        GD.PrintT("Const Save folder: " + GlobalUtil.SaveFolderPath);
+    }
 
     private void OnStartGeneration()
     {
+        if (!GlobalUtil.HasDirectory(GlobalUtil.SaveFolderPath, this)) return;
+
         spriteCount = 0;
-        saveFolder = ProjectSettings.GlobalizePath(_outputFolder + "/" + _characterModelObject.Name);
+        saveFolder = ProjectSettings.GlobalizePath(GlobalUtil.SaveFolderPath + "/" + _characterModelObject.Name);
+
         _pixelGridTextRect.Visible = false;
 
         if (!Directory.Exists(ProjectSettings.GlobalizePath(saveFolder)))
@@ -158,11 +189,11 @@ public partial class SpriteGenerator : Node
 
         if (_isTimeBaseExport)
         {
-            GenerateSpritesTimeBased();
+            //GenerateSpritesTimeBased();
         }
         else
         {
-            GenerateSpritesFrameBased2();
+            GenerateSpritesFrameBased();
         }
 
     }
@@ -177,161 +208,6 @@ public partial class SpriteGenerator : Node
     }
 
     private async void GenerateSpritesFrameBased()
-    {
-        int[] selectedAngles = _angleSelectionItemList.GetSelectedItems().Select(x => Convert.ToInt32(_angleSelectionItemList.
-        GetItemText(x))).ToArray();
-        int[] selectedAnimations = _animSelectionItemList.GetSelectedItems();
-
-        if (selectedAngles.Length == 0)
-        {
-            GD.PrintErr("No Angles Selected");
-            return;
-        }
-
-        if (selectedAnimations.Length == 0)
-        {
-            GD.PrintErr("No Aniimations Selected");
-            return;
-        }
-
-        _animationPlayer.Stop();
-        _animationPlayer.SpeedScale = _animationPlaybackSpeed;
-
-        _modelPivotNode.RotationDegrees = new Vector3(0, 0, 0);
-
-        // foreach (var anim in _animationPlayer.GetAnimationList())
-        foreach (var selectedAnimItem in _animSelectionItemList.GetSelectedItems())
-        {
-            string anim = _animSelectionItemList.GetItemText(selectedAnimItem);
-
-            if (anim == "RESET" || anim == "TPose") continue;
-
-            currentAnimation = anim;
-            currentAnimationName = anim.Replace("/", "_");
-            // currentAnimation = anim;
-            // currentAnimation = anim.GetBaseName();
-
-            foreach (var angle in selectedAngles)
-            {
-                _modelPivotNode.RotationDegrees = new Vector3(0, angle, 0);
-
-                await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame); //Give time to the model to rotate.
-
-                frameIndex = 0;
-
-                _animationPlayer.Play(anim);
-                GD.PrintT("FRAME BASED = save every: " + frameSkipStep + " frames");
-
-                while (_animationPlayer.IsPlaying())
-                {
-                    await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame); //Skip one frame.
-
-                    //Only capture frames where frameIndex is a multiple of frameStep
-                    if (frameIndex % frameSkipStep == 0)
-                    {
-                        SaveFrameAsImgPNG(angle);
-                    }
-                    frameIndex++;
-                }
-            }
-
-            _modelPivotNode.RotationDegrees = new Vector3(0, 0, 0);
-        }
-
-        await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
-        GenerateSpriteSheet(saveFolder, currentAnimationName + "_spriteSheet", 4);
-    }
-
-    private async void GenerateSpritesTimeBased()
-    {
-        int[] selectedAngles = _angleSelectionItemList.GetSelectedItems().Select(x => Convert.ToInt32(_angleSelectionItemList.
-        GetItemText(x))).ToArray();
-        int[] selectedAnimations = _animSelectionItemList.GetSelectedItems();
-
-        if (selectedAngles.Length == 0)
-        {
-            GD.PrintErr("No Angles Selected");
-            return;
-        }
-
-        if (selectedAnimations.Length == 0)
-        {
-            GD.PrintErr("No Aniimations Selected");
-            return;
-        }
-
-        _animationPlayer.Stop();
-        _animationPlayer.SpeedScale = _animationPlaybackSpeed;
-
-        _modelPivotNode.RotationDegrees = new Vector3(0, 0, 0);
-
-        // foreach (var anim in _animationPlayer.GetAnimationList())
-        foreach (var selectedAnimItem in _animSelectionItemList.GetSelectedItems())
-        {
-            string anim = _animSelectionItemList.GetItemText(selectedAnimItem);
-
-            if (anim == "RESET" || anim == "TPose") continue;
-
-            currentAnimation = anim;
-            currentAnimationName = anim.Replace("/", "_");
-
-            foreach (var angle in selectedAngles)
-            {
-                spriteCount = 0;
-
-                _modelPivotNode.RotationDegrees = new Vector3(0, angle, 0);
-
-                await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame); //Give time to the model to rotate.
-
-                float saveFileSecondsInterval = Const.ImgRenderTimeInterval.GetValueOrDefault((int)_animationPlaybackSpeed);
-                //float saveFileSecondsInterval = Const.ImgRenderTimeInterval.GetValueOrDefault(4);
-
-
-                // TODO / #BUG Improve this part - I have not fond a way to consistely reposition the animation on the screen without stopping and playing it again. It's working for nowbut needs a better solution.
-                _animationPlayer.Play(anim);
-                await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame); //Gives time to position the AnimPlayer.
-                _animationPlayer.Stop(); //Stops the animation and reset to make sure the first image will show the first frame. 
-
-                //TODO NEW PIECE OF CODE.....
-                float awaitTime = (_animationPlayer.GetAnimation(anim).Step) / _animationPlaybackSpeed;
-                awaitTime = 0.001f;
-
-                _saveIntervalTimer.WaitTime = awaitTime;
-
-                renderAngle = angle;
-
-                //Starts playing the animation for capture pngs.  
-                _animationPlayer.Play(anim);
-
-                await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame); //Give time for AnimPlayer to push to first frame. 
-
-                _saveIntervalTimer.Start();
-
-                GD.PrintT("TIME BASED = save every sec: " + awaitTime);
-
-                await ToSignal(_animationPlayer, AnimationPlayer.SignalName.AnimationFinished);
-
-            }
-        }
-    }
-
-    private void OnSaveIntervalTimerTimeout()
-    {
-        SaveFrameAsImgPNG(renderAngle);
-    }
-
-    private async void OnAnimationFinished(StringName animName)
-    {
-        if (!_isTimeBaseExport) return;
-
-        _saveIntervalTimer.Stop();
-        _modelPivotNode.RotationDegrees = new Vector3(0, 0, 0);
-
-        await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
-        GenerateSpriteSheet(saveFolder, currentAnimationName + "_spriteSheet", 4);
-    }
-
-    private async void GenerateSpritesFrameBased2()
     {
 
         int[] selectedAngles = _angleSelectionItemList.GetSelectedItems().Select(x => Convert.ToInt32(_angleSelectionItemList.
@@ -441,18 +317,6 @@ public partial class SpriteGenerator : Node
 
     }
 
-    // private void SaveFramePixelShader(int angle)
-    // {
-    //     GD.PrintT("Saving Sprite with Pixel Shader : ", spriteCount);
-    //     var img = _textureRectPixelShader.Texture.GetImage();
-
-    //     string path = $"{saveFolder}/{currentAnimationName}_{"angle_" + angle}_{spriteCount}.png";
-    //     spriteCount++;
-
-    //     img.SavePng(ProjectSettings.GlobalizePath(path));
-    //     frameIndex++;
-
-    // }
 
     private void GenerateSpriteSheet(string folderPath, string outputFileName, int columns)
     {
@@ -507,6 +371,46 @@ public partial class SpriteGenerator : Node
         GD.Print("Sprite sheet saved: " + outputPath);
 
         _pixelGridTextRect.Visible = true;
+    }
+    private void OnOpenFolderPathPressed()
+    {
+
+        string directory = ProjectSettings.GlobalizePath(_spriteGenFolderPathLineEdit.Text);
+        if (GlobalUtil.HasDirectory(directory, this))
+        {
+            OS.ShellOpen(directory);
+        }
+        else
+        {
+            GD.PrintErr("Directory does not exist: " + directory);
+
+            using Godot.AcceptDialog acceptDialog = new Godot.AcceptDialog
+            {
+                Title = "Error: Directory not Found",
+                DialogText = "Directory does not exist: " + directory
+            };
+
+            AddChild(acceptDialog);
+            acceptDialog.PopupCentered();
+        }
+    }
+
+    private void OnSelectFolderPathPressed()
+    {
+        using Godot.FileDialog fileDialog = new Godot.FileDialog
+        {
+            FileMode = FileDialog.FileModeEnum.OpenDir,
+            Access = FileDialog.AccessEnum.Filesystem
+        };
+
+        AddChild(fileDialog);
+
+        fileDialog.CurrentDir = GlobalUtil.SaveFolderPath; //Set this after adding Child to Scene
+
+        fileDialog.DirSelected += (newDir) => GlobalUtil.OnFolderSelected(newDir, _spriteGenFolderPathLineEdit);
+
+        fileDialog.PopupCentered();
+
     }
 
     private void OnRenderResolutionChanged(long itemSelectedIndex)
