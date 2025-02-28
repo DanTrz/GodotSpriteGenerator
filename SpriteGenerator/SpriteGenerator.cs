@@ -52,6 +52,13 @@ public partial class SpriteGenerator : Node
     [OnReady("%SelectFolderPathBtn")] private Button _selectFolderPathBtn;
     [OnReady("%OpenFolderPathBtn")] private Button _openFolderPathBtn;
     [OnReady("%SpriteGenFolderPathLineEdit")] LineEdit _spriteGenFolderPathLineEdit;
+    [OnReady("%SettingsMainPanel")] MarginContainer _settingsMainPanel;
+    [OnReady("%OpenSettingPanelBtn")] Button _openSettingPanelBtn;
+    //[OnReady("%MainTabContainer")] TabContainer _mainTabContainer;
+
+
+    //SettingsMarginOptionsPanel
+
 
     //MeshReplacer Nodes and Variables
     [OnReady("%HeadMeshOptBtn")] private OptionButton _headMeshOptBtn;
@@ -76,8 +83,11 @@ public partial class SpriteGenerator : Node
     private int spriteCount = 1;
     private string saveFolder = "Model";
 
+    private Control _lastFocusedControl;
+
     public override void _Ready()
     {
+
         //Connect UI Signals
         _spriteGenFolderPathLineEdit.TextChanged += (newDir) => GlobalUtil.OnFolderSelected(newDir, _spriteGenFolderPathLineEdit);
         _selectFolderPathBtn.Pressed += OnSelectFolderPathPressed;
@@ -92,6 +102,8 @@ public partial class SpriteGenerator : Node
         _loadAllAnimationsBtn.Pressed += OnLoadAllAnimationsPressed;
         //_saveIntervalTimer.Timeout += OnSaveIntervalTimerTimeout;
         _showGridCheckButton.Pressed += OnShowGridCheckButtonPressed;
+        _openSettingPanelBtn.Pressed += () => _settingsMainPanel.Visible = !_settingsMainPanel.Visible;
+        //_mainTabContainer.MouseEntered += () => GD.Print("Tab Cointainer Mouse Entered"); //_settingsMainPanel.Visible = false;
 
         //MeshReplacer Signals
         _headMeshOptBtn.ItemSelected += OnHeadMeshOptBtnItemSelected;
@@ -105,6 +117,7 @@ public partial class SpriteGenerator : Node
         _hairColorBtn.ColorChanged += OnHairColorChanged;
 
         //Set Default UI Control Values
+        _settingsMainPanel.Visible = false;
         _spriteGenFolderPathLineEdit.Text = GlobalUtil.SaveFolderPath;
         _clearFolderCheckBtn.ButtonPressed = _clearFolderBeforeGeneration;
         _pixelEffectCheckBtn.ButtonPressed = _usePixelEffect;
@@ -162,13 +175,13 @@ public partial class SpriteGenerator : Node
 
     }
 
-    private void OnFolderPathTextChanged(string newText)
-    {
-        GD.PrintT("New folder: " + newText);
-        _spriteGenFolderPathLineEdit.Text = newText;
-        GlobalUtil.SaveFolderPath = newText;
-        GD.PrintT("Const Save folder: " + GlobalUtil.SaveFolderPath);
-    }
+    //private void OnFolderPathTextChanged(string newText)
+    //{
+    //    GD.PrintT("New folder: " + newText);
+    //    _spriteGenFolderPathLineEdit.Text = newText;
+    //    GlobalUtil.SaveFolderPath = newText;
+    //    GD.PrintT("Const Save folder: " + GlobalUtil.SaveFolderPath);
+    //}
 
     private void OnStartGeneration()
     {
