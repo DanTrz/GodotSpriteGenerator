@@ -540,7 +540,7 @@ layout_mode = 2
 [node name="BodyTypeLabel" type="Label" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/BodyTypeHBoxCont"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
-text = " BodyMesh"
+text = " BodyMeshSKIN?"
 label_settings = ExtResource("9_0w5gm")
 vertical_alignment = 1
 autowrap_mode = 2
@@ -675,6 +675,46 @@ autowrap_mode = 2
 clip_text = true
 
 [node name="FeetMeshOptBtn" type="OptionButton" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt2/FeetMeshHBoxCont"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 32)
+layout_mode = 2
+clip_text = true
+fit_to_longest_item = false
+
+[node name="RightArmHBoxCont" type="HBoxContainer" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt2"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[node name="RightArmtMeshLabel" type="Label" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt2/RightArmHBoxCont"]
+custom_minimum_size = Vector2(120, 32)
+layout_mode = 2
+text = "RightArm"
+label_settings = ExtResource("9_0w5gm")
+vertical_alignment = 1
+autowrap_mode = 2
+clip_text = true
+
+[node name="RightArmMeshOptBtn" type="OptionButton" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt2/RightArmHBoxCont"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 32)
+layout_mode = 2
+clip_text = true
+fit_to_longest_item = false
+
+[node name="LeftArmMeshHBoxCont3" type="HBoxContainer" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt2"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[node name="LeftArmMeshLabel" type="Label" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt2/LeftArmMeshHBoxCont3"]
+custom_minimum_size = Vector2(120, 32)
+layout_mode = 2
+text = "LeftArm"
+label_settings = ExtResource("9_0w5gm")
+vertical_alignment = 1
+autowrap_mode = 2
+clip_text = true
+
+[node name="LeftArmMeshOptBtn" type="OptionButton" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt2/LeftArmMeshHBoxCont3"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(150, 32)
 layout_mode = 2

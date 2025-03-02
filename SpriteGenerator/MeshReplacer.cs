@@ -39,6 +39,10 @@ public partial class MeshReplacer : Node
                 return ResourceLoader.ListDirectory(Const.LEGS_MESHES_FOLDER_PATH);
             case "FEET":
                 return ResourceLoader.ListDirectory(Const.FEET_MESHES_FOLDER_PATH);
+            case "LEFT_ARM":
+                return ResourceLoader.ListDirectory(Const.LEFT_ARM_MESHES_FOLDER_PATH);
+            case "RIGHT_ARM":
+                return ResourceLoader.ListDirectory(Const.RIGHT_ARM_MESHES_FOLDER_PATH);
             default:
                 return null;
         }
@@ -57,6 +61,10 @@ public partial class MeshReplacer : Node
                 return Const.LEGS_MESHES_FOLDER_PATH;
             case "FEET":
                 return Const.FEET_MESHES_FOLDER_PATH;
+            case "LEFT_ARM":
+                return Const.LEFT_ARM_MESHES_FOLDER_PATH;
+            case "RIGHT_ARM":
+                return Const.RIGHT_ARM_MESHES_FOLDER_PATH;
             default:
                 return null;
         }

@@ -2240,11 +2240,13 @@ unique_name_in_owner = true
 mesh = ExtResource("2_ew3vs")
 skin = SubResource("Skin_ftg4b")
 
-[node name="LEFT ARM2" type="MeshInstance3D" parent="BaseModel_Armature/GeneralSkeleton"]
+[node name="LEFT_ARM" type="MeshInstance3D" parent="BaseModel_Armature/GeneralSkeleton"]
+unique_name_in_owner = true
 mesh = ExtResource("3_58l4l")
 skin = SubResource("Skin_ftg4b")
 
-[node name="RIGHT ARM2" type="MeshInstance3D" parent="BaseModel_Armature/GeneralSkeleton"]
+[node name="RIGHT_ARM" type="MeshInstance3D" parent="BaseModel_Armature/GeneralSkeleton"]
+unique_name_in_owner = true
 mesh = ExtResource("5_gc5ao")
 skin = SubResource("Skin_ftg4b")
 

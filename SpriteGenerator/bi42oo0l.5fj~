@@ -627,7 +627,7 @@ public partial class SpriteGenerator : Node
     private void OnLeftArmMeshOptBtnItemSelected(long index)
     {
         MeshInstance3D leftArmMeshObject = _characterModelObject.GetNode<MeshInstance3D>("%LEFT_ARM");
-        string itemSelected = _leftArmMeshOptBtn.GetItemText((int)index);
+        string itemSelected = _feetMeshOptBtn.GetItemText((int)index);
         MeshReplacer.UpdateMesh(leftArmMeshObject, Const.LEFT_ARM_MESHES_FOLDER_PATH + itemSelected + ".res");
 
     }
@@ -635,7 +635,7 @@ public partial class SpriteGenerator : Node
     private void OnRightArmMeshOptBtnItemSelected(long index)
     {
         MeshInstance3D rightArmMeshObject = _characterModelObject.GetNode<MeshInstance3D>("%RIGHT_ARM");
-        string itemSelected = _rightArmMeshOptBtn.GetItemText((int)index);
+        string itemSelected = _feetMeshOptBtn.GetItemText((int)index);
         MeshReplacer.UpdateMesh(rightArmMeshObject, Const.RIGHT_ARM_MESHES_FOLDER_PATH + itemSelected + ".res");
 
     }

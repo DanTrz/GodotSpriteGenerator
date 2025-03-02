@@ -20,7 +20,8 @@ public static class Const
     public const string HAIR_MESHES_FOLDER_PATH = "res://Models/MeshRepository/Hair/";
     public const string LEGS_MESHES_FOLDER_PATH = "res://Models/MeshRepository/Leg/";
     public const string FEET_MESHES_FOLDER_PATH = "res://Models/MeshRepository/Feet/";
-
+    public const string LEFT_ARM_MESHES_FOLDER_PATH = "res://Models/MeshRepository/LeftArm/";
+    public const string RIGHT_ARM_MESHES_FOLDER_PATH = "res://Models/MeshRepository/RightArm/";
     //
 
 
