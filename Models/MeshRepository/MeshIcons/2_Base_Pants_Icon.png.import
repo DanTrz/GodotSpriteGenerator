@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bpswqt6n4t2xj"
-path="res://.godot/imported/3_ArmourPlate_Icon.png-12727eeb979ac836c80df82e903709e3.ctex"
+uid="uid://cqryfcjooopmd"
+path="res://.godot/imported/2_Base_Pants_Icon.png-8889ac4bc475c75c874a2cf9f89f5212.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Models/MeshRepository/TorsoBody/3_ArmourPlate_Icon.png"
-dest_files=["res://.godot/imported/3_ArmourPlate_Icon.png-12727eeb979ac836c80df82e903709e3.ctex"]
+source_file="res://Models/MeshRepository/MeshIcons/2_Base_Pants_Icon.png"
+dest_files=["res://.godot/imported/2_Base_Pants_Icon.png-8889ac4bc475c75c874a2cf9f89f5212.ctex"]
 
 [params]
 

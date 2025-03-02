@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ArrayMeshDataObject" load_steps=4 format=3 uid="uid://m46pltqavbiu"]
+
+[ext_resource type="Texture2D" uid="uid://bpswqt6n4t2xj" path="res://Models/MeshRepository/MeshIcons/3_ArmourPlate_Icon.png" id="1_os2e6"]
+[ext_resource type="ArrayMesh" uid="uid://bh6voy2iax7u0" path="res://Models/MeshRepository/MeshResources/3_ArmourPlate.res" id="2_0e5jh"]
+[ext_resource type="Script" uid="uid://cmuqvgdb2248c" path="res://SpriteGenerator/ArrayMeshDataObject.cs" id="3_ttk7h"]
+
+[resource]
+script = ExtResource("3_ttk7h")
+ItemName = "Gray ArmourPlateMeshItem"
+MeshItem = ExtResource("2_0e5jh")
+BodyPartType = 1
+Icon = ExtResource("1_os2e6")
+metadata/_custom_type_script = "uid://cmuqvgdb2248c"

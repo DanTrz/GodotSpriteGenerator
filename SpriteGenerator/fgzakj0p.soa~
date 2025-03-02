@@ -61,18 +61,15 @@ public partial class SpriteGenerator : Node
 
 
     //MeshReplacer Nodes and Variables
-    [OnReady("%MeshReplacerPanelCont")] private PanelContainer _meshReplacerPanelParentNode;
+    [OnReady("%HeadMeshOptBtn")] private OptionButton _headMeshOptBtn;
+    [OnReady("%TorsoMeshOptBtn")] private OptionButton _torsoMeshOptBtn;
     [OnReady("%HairMeshOptBtn")] private OptionButton _hairMeshOptBtn;
     [OnReady("%HairColorBtn")] private ColorPickerButton _hairColorBtn;
-    //[OnReady("%HeadMeshOptBtn")] private OptionButton _headMeshOptBtn;
-    //[OnReady("%TorsoMeshOptBtn")] private OptionButton _torsoMeshOptBtn;
-
-
-    //[OnReady("%LegsMeshOptBtn")] private OptionButton _legsMeshOptBtn;
-    //[OnReady("%FeetMeshOptBtn")] private OptionButton _feetMeshOptBtn;
-    //[OnReady("%RightArmMeshOptBtn")] private OptionButton _rightArmMeshOptBtn;
-    //[OnReady("%LeftArmMeshOptBtn")] private OptionButton _leftArmMeshOptBtn;
-    //[OnReady("%TorsoItemMeshOptBtn")] private MeshReplacerOptButton _torsoItemMeshOptBtn;
+    [OnReady("%LegsMeshOptBtn")] private OptionButton _legsMeshOptBtn;
+    [OnReady("%FeetMeshOptBtn")] private OptionButton _feetMeshOptBtn;
+    [OnReady("%RightArmMeshOptBtn")] private OptionButton _rightArmMeshOptBtn;
+    [OnReady("%LeftArmMeshOptBtn")] private OptionButton _leftArmMeshOptBtn;
+    [OnReady("%TorsoItemMeshOptBtn")] private OptionButton _torsoItemMeshOptBtn;
 
 
 
@@ -112,8 +109,17 @@ public partial class SpriteGenerator : Node
         //_mainTabContainer.MouseEntered += () => GD.Print("Tab Cointainer Mouse Entered"); //_settingsMainPanel.Visible = false;
 
         //MeshReplacer Signals
-        _hairColorBtn.ColorChanged += OnHairColorChanged;
+        _headMeshOptBtn.ItemSelected += OnHeadMeshOptBtnItemSelected;
         _hairMeshOptBtn.ItemSelected += OnHairMeshOptBtnItemSelected;
+        _torsoMeshOptBtn.ItemSelected += OnTorsoMeshOptBtnItemSelected;
+        _legsMeshOptBtn.ItemSelected += OnLegsMeshOptBtnItemSelected;
+        _feetMeshOptBtn.ItemSelected += OnFeetMeshOptBtnItemSelected;
+        _rightArmMeshOptBtn.ItemSelected += OnRightArmMeshOptBtnItemSelected;
+        _leftArmMeshOptBtn.ItemSelected += OnLeftArmMeshOptBtnItemSelected;
+        // _showGridCheckButton.Toggled += (value) => ShowGrid = value;
+        //_showGridCheckButton.Pressed += () => ShowGrid = _showGridCheckButton.ButtonPressed;
+        //_showGridCheckButton.Pressed += () => _pixelGridTextRect.Visible = _showGridCheckButton.ButtonPressed;
+        _hairColorBtn.ColorChanged += OnHairColorChanged;
 
         //Set Default UI Control Values
         _settingsMainPanel.Visible = false;
@@ -124,8 +130,17 @@ public partial class SpriteGenerator : Node
         _frameStepTextEdit.Text = frameSkipStep.ToString();
         _playBackSpeedLineEdit.Text = _animationPlaybackSpeed.ToString();
         _angleSelectionItemList.CreateItemsFromList(allAngles.Select(x => x.ToString()).ToArray());
+        MeshReplacer.UpdateUIOptionMesheList(_headMeshOptBtn, "HEAD");
+        MeshReplacer.UpdateUIOptionMesheList(_legsMeshOptBtn, "LEGS");
+        MeshReplacer.UpdateUIOptionMesheList(_feetMeshOptBtn, "FEET");
+        MeshReplacer.UpdateUIOptionMesheList(_torsoMeshOptBtn, "TORSO");
+        MeshReplacer.UpdateUIOptionMesheList(_leftArmMeshOptBtn, "LEFT_ARM");
+        MeshReplacer.UpdateUIOptionMesheList(_rightArmMeshOptBtn, "RIGHT_ARM");
+        //MeshReplacer.UpdateUIOptionMesheItemList(_torsoItemMeshOptBtn, Const.BodyPartType.TORSO);
+        MeshReplacer.UpdateUIOprtionHairList(_hairMeshOptBtn);
+        _hairMeshOptBtn.Selected = 1;
 
-        //Effects and Core Grid Options
+        _hairColorBtn.Color = Colors.White;
         _showGridCheckButton.ButtonPressed = true;
         _showGridCheckButton.Text = _showGridCheckButton.ButtonPressed.ToString();
         _pixelEffectCheckBtn.Text = _pixelEffectCheckBtn.ButtonPressed.ToString();
@@ -163,20 +178,19 @@ public partial class SpriteGenerator : Node
 
         //_animationPlayer.AnimationFinished += OnAnimationFinished;
 
-
-        //Mesh Replace Variables and UI
-        MeshReplacer.UpdateUIOptionsHairList(_hairMeshOptBtn);
-        LoadAllMeshReplacerBtnAndMeshItemData();
-        _hairMeshOptBtn.Selected = 0;
-        OnHairMeshOptBtnItemSelected(0);
-        _hairColorBtn.Color = Colors.White;
-
-
-        //UpdateAllMeshesAndMeshesUI();
+        UpdateAllMeshesAndMeshesUI();
         UpdateViewPort();
 
     }
 
+
+    //private void OnFolderPathTextChanged(string newText)
+    //{
+    //    GD.PrintT("New folder: " + newText);
+    //    _spriteGenFolderPathLineEdit.Text = newText;
+    //    GlobalUtil.SaveFolderPath = newText;
+    //    GD.PrintT("Const Save folder: " + GlobalUtil.SaveFolderPath);
+    //}
 
     private void OnStartGeneration()
     {
@@ -578,6 +592,76 @@ public partial class SpriteGenerator : Node
 
     }
 
+    private void UpdateAllMeshesAndMeshesUI()
+    {
+        _headMeshOptBtn.Selected = 0;
+        OnHeadMeshOptBtnItemSelected(0);
+
+        _torsoMeshOptBtn.Selected = 0;
+        OnTorsoMeshOptBtnItemSelected(0);
+
+        _legsMeshOptBtn.Selected = 0;
+        OnLegsMeshOptBtnItemSelected(0);
+
+        _hairMeshOptBtn.Selected = 0;
+        OnHairMeshOptBtnItemSelected(0);
+
+        _feetMeshOptBtn.Selected = 0;
+        OnFeetMeshOptBtnItemSelected(0);
+
+        _leftArmMeshOptBtn.Selected = 0;
+        OnLeftArmMeshOptBtnItemSelected(0);
+
+        _rightArmMeshOptBtn.Selected = 0;
+        OnRightArmMeshOptBtnItemSelected(0);
+    }
+
+
+    private void OnFeetMeshOptBtnItemSelected(long index)
+    {
+        MeshInstance3D feetMeshObject = _characterModelObject.GetNode<MeshInstance3D>("%FEET");
+        string itemSelected = _feetMeshOptBtn.GetItemText((int)index);
+        MeshReplacer.UpdateMesh(feetMeshObject, Const.FEET_MESHES_FOLDER_PATH + itemSelected + ".res");
+
+
+    }
+
+    private void OnLeftArmMeshOptBtnItemSelected(long index)
+    {
+        MeshInstance3D leftArmMeshObject = _characterModelObject.GetNode<MeshInstance3D>("%LEFT_ARM");
+        string itemSelected = _leftArmMeshOptBtn.GetItemText((int)index);
+        MeshReplacer.UpdateMesh(leftArmMeshObject, Const.LEFT_ARM_MESHES_FOLDER_PATH + itemSelected + ".res");
+
+    }
+
+    private void OnRightArmMeshOptBtnItemSelected(long index)
+    {
+        MeshInstance3D rightArmMeshObject = _characterModelObject.GetNode<MeshInstance3D>("%RIGHT_ARM");
+        string itemSelected = _rightArmMeshOptBtn.GetItemText((int)index);
+        MeshReplacer.UpdateMesh(rightArmMeshObject, Const.RIGHT_ARM_MESHES_FOLDER_PATH + itemSelected + ".res");
+
+    }
+
+    private void OnHeadMeshOptBtnItemSelected(long index)
+    {
+        MeshInstance3D _headMeshObject = _characterModelObject.GetNode<MeshInstance3D>("%HEAD");
+        string itemSelected = _headMeshOptBtn.GetItemText((int)index);
+        MeshReplacer.UpdateMesh(_headMeshObject, Const.HEAD_MESHES_FOLDER_PATH + itemSelected + ".res");
+    }
+
+    private void OnTorsoMeshOptBtnItemSelected(long index)
+    {
+        MeshInstance3D _torsoMeshObject = _characterModelObject.GetNode<MeshInstance3D>("%TORSO");
+        string itemSelected = _torsoMeshOptBtn.GetItemText((int)index);
+        MeshReplacer.UpdateMesh(_torsoMeshObject, Const.TORSO_MESHES_FOLDER_PATH + itemSelected + ".res");
+    }
+    private void OnLegsMeshOptBtnItemSelected(long index)
+    {
+        MeshInstance3D _legsMeshObject = _characterModelObject.GetNode<MeshInstance3D>("%LEGS");
+        string itemSelected = _legsMeshOptBtn.GetItemText((int)index);
+        MeshReplacer.UpdateMesh(_legsMeshObject, Const.LEGS_MESHES_FOLDER_PATH + itemSelected + ".res");
+    }
+
     private void OnHairMeshOptBtnItemSelected(long index)
     {
         BoneAttachment3D _hairBoneAttachNode = _characterModelObject.GetNode<BoneAttachment3D>("%HairBoneAttach");
@@ -586,60 +670,7 @@ public partial class SpriteGenerator : Node
     }
 
 
-    private void LoadAllMeshReplacerBtnAndMeshItemData()
-    {
-        var allMeshReplacerOptButtons = GlobalUtil.GetAllNodesOfType<MeshReplacerOptButton>(_meshReplacerPanelParentNode);
-        GD.PrintT("Found " + allMeshReplacerOptButtons.Count + " MeshReplacerOptButton");
 
-        foreach (var meshReplacerOptButton in allMeshReplacerOptButtons)
-        {
-            //Connecct the signal and load items
-            meshReplacerOptButton.ItemSelected += (itemIndex) => OnMeshItemSelected(itemIndex, meshReplacerOptButton);
-            MeshReplacer.UpdateUIOptionMesheItemList(meshReplacerOptButton, meshReplacerOptButton.BodyPartType);
-
-            //Align UI display to the first item
-            meshReplacerOptButton.Selected = 0;
-            OnMeshItemSelected(0, meshReplacerOptButton);
-        }
-
-    }
-
-    //Change the Mesh base based on the MeshReplacaeOpt button selection (Connected signal)
-    private void OnMeshItemSelected(long itemIndex, MeshReplacerOptButton meshReplacerOptButton)
-    {
-
-        string itemSelected = meshReplacerOptButton.GetItemText((int)itemIndex);
-        GD.PrintT("Mesh Item Selected: " + itemSelected + " + FromButton: " + meshReplacerOptButton.Name);
-
-        string bodyPart = "%" + meshReplacerOptButton.BodyPartType.ToString();
-        MeshInstance3D _meshInstanceObject = _characterModelObject.GetNode<MeshInstance3D>(bodyPart);
-
-        MeshReplacer.UpdateMeshFromResourceItem(_meshInstanceObject, itemSelected);
-    }
-
-    private void UpdateAllMeshesAndMeshesUI()
-    {
-        //_headMeshOptBtn.Selected = 0;
-        //OnHeadMeshOptBtnItemSelected(0);
-
-        //_torsoMeshOptBtn.Selected = 0;
-        //OnTorsoMeshOptBtnItemSelected(0);
-
-        //_legsMeshOptBtn.Selected = 0;
-        //OnLegsMeshOptBtnItemSelected(0);
-
-        //_hairMeshOptBtn.Selected = 0;
-        //OnHairMeshOptBtnItemSelected(0);
-
-        //_feetMeshOptBtn.Selected = 0;
-        //OnFeetMeshOptBtnItemSelected(0);
-
-        //_leftArmMeshOptBtn.Selected = 0;
-        //OnLeftArmMeshOptBtnItemSelected(0);
-
-        //_rightArmMeshOptBtn.Selected = 0;
-        //OnRightArmMeshOptBtnItemSelected(0);
-    }
 
 
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cgh0gm8yt3yi"
-path="res://.godot/imported/1_Skin_Feet_Icon.png-31682b27d01a7800421619f23491dd4d.ctex"
+uid="uid://c2muxf2ef5p2s"
+path="res://.godot/imported/1_LegSkin_Icon.png-d74b08cbe499083d8e10640495ab16f6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Models/MeshRepository/Feet/1_Skin_Feet_Icon.png"
-dest_files=["res://.godot/imported/1_Skin_Feet_Icon.png-31682b27d01a7800421619f23491dd4d.ctex"]
+source_file="res://Models/MeshRepository/MeshIcons/1_LegSkin_Icon.png"
+dest_files=["res://.godot/imported/1_LegSkin_Icon.png-d74b08cbe499083d8e10640495ab16f6.ctex"]
 
 [params]
 

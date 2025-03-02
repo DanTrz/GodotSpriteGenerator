@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ArrayMeshDataObject" load_steps=4 format=3 uid="uid://cyowd71qiip1p"]
+
+[ext_resource type="Texture2D" uid="uid://cgh0gm8yt3yi" path="res://Models/MeshRepository/MeshIcons/1_Skin_Feet_Icon.png" id="1_lctqi"]
+[ext_resource type="ArrayMesh" uid="uid://dy6y1otnm2nhe" path="res://Models/MeshRepository/MeshResources/1_Skin_Feet.res" id="2_lctqi"]
+[ext_resource type="Script" uid="uid://cmuqvgdb2248c" path="res://SpriteGenerator/ArrayMeshDataObject.cs" id="3_tmtq8"]
+
+[resource]
+script = ExtResource("3_tmtq8")
+ItemName = "Feet Skin"
+MeshItem = ExtResource("2_lctqi")
+BodyPartType = 4
+Icon = ExtResource("1_lctqi")
+ItemOrder = 0
+metadata/_custom_type_script = "uid://cmuqvgdb2248c"

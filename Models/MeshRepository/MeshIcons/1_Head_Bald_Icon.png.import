@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d3uf60n31lslc"
-path="res://.godot/imported/2_Boot_Simple_Icon.png-e17efd51f5b26b30791da4078490bb6f.ctex"
+uid="uid://breacb0ecgrb6"
+path="res://.godot/imported/1_Head_Bald_Icon.png-3504c0dbfc9814fe3d117f484ea1a62b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Models/MeshRepository/Feet/2_Boot_Simple_Icon.png"
-dest_files=["res://.godot/imported/2_Boot_Simple_Icon.png-e17efd51f5b26b30791da4078490bb6f.ctex"]
+source_file="res://Models/MeshRepository/MeshIcons/1_Head_Bald_Icon.png"
+dest_files=["res://.godot/imported/1_Head_Bald_Icon.png-3504c0dbfc9814fe3d117f484ea1a62b.ctex"]
 
 [params]
 

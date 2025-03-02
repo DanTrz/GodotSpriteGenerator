@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://pvt412ll4014"
-path="res://.godot/imported/1_Skin_Icon.png-fb2eec6d4f7532763a66c74917e287f3.ctex"
+uid="uid://d3uf60n31lslc"
+path="res://.godot/imported/2_Boot_Simple_Icon.png-0a48457490e83b31aff2f87cbe0a4299.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Models/MeshRepository/TorsoBody/1_Skin_Icon.png"
-dest_files=["res://.godot/imported/1_Skin_Icon.png-fb2eec6d4f7532763a66c74917e287f3.ctex"]
+source_file="res://Models/MeshRepository/MeshIcons/2_Boot_Simple_Icon.png"
+dest_files=["res://.godot/imported/2_Boot_Simple_Icon.png-0a48457490e83b31aff2f87cbe0a4299.ctex"]
 
 [params]
 

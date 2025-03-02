@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://dghyusd0bdjxt"]
+[gd_scene load_steps=35 format=3 uid="uid://dghyusd0bdjxt"]
 
 [ext_resource type="Script" uid="uid://dj2tgr0hxsbd3" path="res://SpriteGenerator/SpriteGenerator.cs" id="1_ws6fq"]
 [ext_resource type="PackedScene" uid="uid://iuwovcd804os" path="res://SpriteGenerator/MainScene3D.tscn" id="2_jyiui"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://de676sb25ueye" path="res://UIComponents/ItemListCheckBox.tscn" id="7_j32we"]
 [ext_resource type="Script" uid="uid://cacdskl17dkmj" path="res://SpriteGenerator/SpriteSheetManager.cs" id="8_seol6"]
 [ext_resource type="LabelSettings" uid="uid://usv7beyw1bj8" path="res://Assets/UI/Theme/Label.tres" id="9_0w5gm"]
+[ext_resource type="PackedScene" uid="uid://mjnysgbmwfbp" path="res://SpriteGenerator/MeshReplacerOptButton.tscn" id="11_jd2q0"]
 [ext_resource type="Shader" uid="uid://dxbhtgfqkjj57" path="res://SpriteGenerator/UnifiedImageEffects.gdshader" id="12_0w5gm"]
 [ext_resource type="Texture2D" uid="uid://cae2jelncoq3w" path="res://Assets/SpriteSheetTemp/Anim_Running_spriteSheet.png" id="13_0w5gm"]
 
@@ -524,6 +525,7 @@ theme_override_constants/margin_right = 1
 theme_override_constants/margin_bottom = 1
 
 [node name="MeshReplacerPanelCont" type="PanelContainer" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions"]
+unique_name_in_owner = true
 layout_mode = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont"]
@@ -533,56 +535,34 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="BodyTypeHBoxCont" type="HBoxContainer" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1"]
+[node name="ModelTypeHBoxCont" type="HBoxContainer" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="BodyTypeLabel" type="Label" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/BodyTypeHBoxCont"]
+[node name="ModelTypeLabel" type="Label" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/ModelTypeHBoxCont"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
-text = " BodyMeshSKIN?"
+text = "ModelType temMesh"
 label_settings = ExtResource("9_0w5gm")
 vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="BodyTypeHSlider" type="HSlider" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/BodyTypeHBoxCont"]
-custom_minimum_size = Vector2(120, 32)
-layout_mode = 2
-min_value = 1.0
-max_value = 3.0
-value = 1.0
-
-[node name="MarginContainer" type="MarginContainer" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/BodyTypeHBoxCont"]
-layout_mode = 2
-theme_override_constants/margin_left = 6
-theme_override_constants/margin_top = 6
-theme_override_constants/margin_right = 6
-theme_override_constants/margin_bottom = 6
-
-[node name="BodyTypeColorBtn" type="ColorPickerButton" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/BodyTypeHBoxCont/MarginContainer"]
-custom_minimum_size = Vector2(20, 20)
-layout_mode = 2
-
-[node name="HeadMeshHBoxCont" type="HBoxContainer" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1"]
+[node name="HeadItemMeshHBoxCont" type="HBoxContainer" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="HeadMeshLabel" type="Label" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/HeadMeshHBoxCont"]
+[node name="HeadItemMeshLabel" type="Label" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/HeadItemMeshHBoxCont"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
-text = " HeadMesh"
+text = "HeadtemMesh"
 label_settings = ExtResource("9_0w5gm")
 vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="HeadMeshOptBtn" type="OptionButton" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/HeadMeshHBoxCont"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(150, 32)
+[node name="HeadItemMeshOptBtn" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/HeadItemMeshHBoxCont" instance=ExtResource("11_jd2q0")]
 layout_mode = 2
-clip_text = true
-fit_to_longest_item = false
 
 [node name="HairMeshHBoxCont" type="HBoxContainer" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1"]
 custom_minimum_size = Vector2(0, 32)
@@ -616,110 +596,61 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
 
-[node name="TorsoMeshHBoxCont" type="HBoxContainer" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1"]
+[node name="TorsoItemMeshHBoxCont" type="HBoxContainer" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="TorsoMeshLabel" type="Label" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/TorsoMeshHBoxCont"]
+[node name="TorsoItemMeshLabel" type="Label" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/TorsoItemMeshHBoxCont"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
-text = " Torso Mesh"
+text = "TorsoItemMesh"
 label_settings = ExtResource("9_0w5gm")
 vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="TorsoMeshOptBtn" type="OptionButton" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/TorsoMeshHBoxCont"]
+[node name="TorsoItemMeshOptBtn" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/TorsoItemMeshHBoxCont" instance=ExtResource("11_jd2q0")]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(150, 32)
 layout_mode = 2
-clip_text = true
-fit_to_longest_item = false
+BodyPartType = 1
 
-[node name="MeshReplacerVboxOpt2" type="VBoxContainer" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer"]
+[node name="MeshReplacerVboxOpt" type="VBoxContainer" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="LegsMeshHBoxCont" type="HBoxContainer" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt2"]
+[node name="FeetItemMeshHBoxCont" type="HBoxContainer" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="LegsMeshLabel" type="Label" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt2/LegsMeshHBoxCont"]
+[node name="FeetItemMeshLabel" type="Label" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt/FeetItemMeshHBoxCont"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
-text = "Legs Mesh"
+text = "Feet ItemMesh"
 label_settings = ExtResource("9_0w5gm")
 vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="LegsMeshOptBtn" type="OptionButton" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt2/LegsMeshHBoxCont"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(150, 32)
+[node name="FeettemMeshOptBtn" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt/FeetItemMeshHBoxCont" instance=ExtResource("11_jd2q0")]
 layout_mode = 2
-clip_text = true
-fit_to_longest_item = false
+BodyPartType = 4
 
-[node name="FeetMeshHBoxCont" type="HBoxContainer" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt2"]
+[node name="LegsItemMeshHBoxCont" type="HBoxContainer" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="FeetMeshLabel" type="Label" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt2/FeetMeshHBoxCont"]
+[node name="LegItemMeshLabel" type="Label" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt/LegsItemMeshHBoxCont"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
-text = "Feet
- Mesh"
+text = "Legs ItemMesh"
 label_settings = ExtResource("9_0w5gm")
 vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="FeetMeshOptBtn" type="OptionButton" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt2/FeetMeshHBoxCont"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(150, 32)
+[node name="LegItemMeshOptBtn" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt/LegsItemMeshHBoxCont" instance=ExtResource("11_jd2q0")]
 layout_mode = 2
-clip_text = true
-fit_to_longest_item = false
-
-[node name="RightArmHBoxCont" type="HBoxContainer" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt2"]
-custom_minimum_size = Vector2(0, 32)
-layout_mode = 2
-
-[node name="RightArmtMeshLabel" type="Label" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt2/RightArmHBoxCont"]
-custom_minimum_size = Vector2(120, 32)
-layout_mode = 2
-text = "RightArm"
-label_settings = ExtResource("9_0w5gm")
-vertical_alignment = 1
-autowrap_mode = 2
-clip_text = true
-
-[node name="RightArmMeshOptBtn" type="OptionButton" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt2/RightArmHBoxCont"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(150, 32)
-layout_mode = 2
-clip_text = true
-fit_to_longest_item = false
-
-[node name="LeftArmMeshHBoxCont3" type="HBoxContainer" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt2"]
-custom_minimum_size = Vector2(0, 32)
-layout_mode = 2
-
-[node name="LeftArmMeshLabel" type="Label" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt2/LeftArmMeshHBoxCont3"]
-custom_minimum_size = Vector2(120, 32)
-layout_mode = 2
-text = "LeftArm"
-label_settings = ExtResource("9_0w5gm")
-vertical_alignment = 1
-autowrap_mode = 2
-clip_text = true
-
-[node name="LeftArmMeshOptBtn" type="OptionButton" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt2/LeftArmMeshHBoxCont3"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(150, 32)
-layout_mode = 2
-clip_text = true
-fit_to_longest_item = false
+BodyPartType = 3
 
 [node name="MarginContainer3" type="MarginContainer" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer"]
 layout_mode = 2

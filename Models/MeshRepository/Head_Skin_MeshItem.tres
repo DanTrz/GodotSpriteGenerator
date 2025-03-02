@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ArrayMeshDataObject" load_steps=4 format=3 uid="uid://dky11bpgome0"]
+
+[ext_resource type="Texture2D" uid="uid://breacb0ecgrb6" path="res://Models/MeshRepository/MeshIcons/1_Head_Bald_Icon.png" id="1_ovbif"]
+[ext_resource type="ArrayMesh" uid="uid://cioryr7kv5on5" path="res://Models/MeshRepository/MeshResources/1_Head_Bald.res" id="2_ovbif"]
+[ext_resource type="Script" uid="uid://cmuqvgdb2248c" path="res://SpriteGenerator/ArrayMeshDataObject.cs" id="3_y1q23"]
+
+[resource]
+script = ExtResource("3_y1q23")
+ItemName = "Head Skin"
+MeshItem = ExtResource("2_ovbif")
+BodyPartType = 0
+Icon = ExtResource("1_ovbif")
+ItemOrder = 0
+metadata/_custom_type_script = "uid://cmuqvgdb2248c"

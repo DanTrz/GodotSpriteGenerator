@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bn4ytwgq8ngex"
-path="res://.godot/imported/2_HairFemale01_Icon.png-521aa25a8a04bb51cc28a135bb873116.ctex"
+uid="uid://bpswqt6n4t2xj"
+path="res://.godot/imported/3_ArmourPlate_Icon.png-93a7ac9304768b401223c14dc08d2240.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Models/MeshRepository/Hair/2_HairFemale01_Icon.png"
-dest_files=["res://.godot/imported/2_HairFemale01_Icon.png-521aa25a8a04bb51cc28a135bb873116.ctex"]
+source_file="res://Models/MeshRepository/MeshIcons/3_ArmourPlate_Icon.png"
+dest_files=["res://.godot/imported/3_ArmourPlate_Icon.png-93a7ac9304768b401223c14dc08d2240.ctex"]
 
 [params]
 

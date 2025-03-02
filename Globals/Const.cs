@@ -22,8 +22,12 @@ public static class Const
     public const string FEET_MESHES_FOLDER_PATH = "res://Models/MeshRepository/Feet/";
     public const string LEFT_ARM_MESHES_FOLDER_PATH = "res://Models/MeshRepository/LeftArm/";
     public const string RIGHT_ARM_MESHES_FOLDER_PATH = "res://Models/MeshRepository/RightArm/";
+    public const string MESH_REPO_FOLDER_PATH = "res://Models/MeshRepository/";
     //
 
+
+    //Custom Mesh Data
+    public enum BodyPartType { HEAD, TORSO, HAIR, LEGS, FEET, LEFT_ARM, RIGHT_ARM };
 
     // 0.031f 
 }

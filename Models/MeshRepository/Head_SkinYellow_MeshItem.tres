@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ArrayMeshDataObject" load_steps=4 format=3 uid="uid://0ls8444gjxk1"]
+
+[ext_resource type="Texture2D" uid="uid://b0jqajacpc5eo" path="res://Models/MeshRepository/MeshIcons/3_HeadMesh_Yellow_Icon.png" id="1_3pa8i"]
+[ext_resource type="ArrayMesh" uid="uid://dtdn5rdyv6dqv" path="res://Models/MeshRepository/MeshResources/3_HeadMesh_Yellow.res" id="1_28oxd"]
+[ext_resource type="Script" uid="uid://cmuqvgdb2248c" path="res://SpriteGenerator/ArrayMeshDataObject.cs" id="2_3pa8i"]
+
+[resource]
+script = ExtResource("2_3pa8i")
+ItemName = "Skin Yellow"
+MeshItem = ExtResource("1_28oxd")
+BodyPartType = 0
+Icon = ExtResource("1_3pa8i")
+metadata/_custom_type_script = "uid://cmuqvgdb2248c"

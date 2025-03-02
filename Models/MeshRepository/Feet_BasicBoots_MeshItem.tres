@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ArrayMeshDataObject" load_steps=4 format=3 uid="uid://cgu87ke7ru0y5"]
+
+[ext_resource type="Texture2D" uid="uid://d3uf60n31lslc" path="res://Models/MeshRepository/MeshIcons/2_Boot_Simple_Icon.png" id="1_udrx6"]
+[ext_resource type="ArrayMesh" uid="uid://t4xijmj5dd1f" path="res://Models/MeshRepository/MeshResources/2_Boot_Simple.res" id="2_mv1jd"]
+[ext_resource type="Script" uid="uid://cmuqvgdb2248c" path="res://SpriteGenerator/ArrayMeshDataObject.cs" id="3_5rkex"]
+
+[resource]
+script = ExtResource("3_5rkex")
+ItemName = "Basic Boots"
+MeshItem = ExtResource("2_mv1jd")
+BodyPartType = 4
+Icon = ExtResource("1_udrx6")
+metadata/_custom_type_script = "uid://cmuqvgdb2248c"

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bn4ytwgq8ngex"
-path="res://.godot/imported/2_HairFemale01_Icon.png-521aa25a8a04bb51cc28a135bb873116.ctex"
+uid="uid://bpcpt4m3qo5jf"
+path="res://.godot/imported/1_HairMale01_Icon.png-8a6ddb1551622a846bcd85829cd1d341.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Models/MeshRepository/Hair/2_HairFemale01_Icon.png"
-dest_files=["res://.godot/imported/2_HairFemale01_Icon.png-521aa25a8a04bb51cc28a135bb873116.ctex"]
+source_file="res://Models/MeshRepository/MeshIcons/1_HairMale01_Icon.png"
+dest_files=["res://.godot/imported/1_HairMale01_Icon.png-8a6ddb1551622a846bcd85829cd1d341.ctex"]
 
 [params]
 

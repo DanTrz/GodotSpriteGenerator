@@ -1,11 +1,11 @@
 [gd_scene load_steps=17 format=3 uid="uid://c00refh5p8c4o"]
 
 [ext_resource type="ArrayMesh" uid="uid://c4ameyumdw42y" path="res://Models/FullModels/BaseModel/BaseModel_OBJ5_BASE_MODEL_001.res" id="1_igd6e"]
-[ext_resource type="ArrayMesh" uid="uid://cioryr7kv5on5" path="res://Models/MeshRepository/Head/1_Head_Bald.res" id="2_ew3vs"]
+[ext_resource type="ArrayMesh" uid="uid://cioryr7kv5on5" path="res://Models/MeshRepository/MeshResources/1_Head_Bald.res" id="2_ew3vs"]
 [ext_resource type="ArrayMesh" uid="uid://cggu0kspb5ctv" path="res://Models/FullModels/BaseModel/BaseModel_OBJ5_BASE_MODEL_012.res" id="3_58l4l"]
 [ext_resource type="ArrayMesh" uid="uid://rpxuessyoojl" path="res://Models/FullModels/BaseModel/BaseModel_OBJ5_BASE_MODEL_006.res" id="4_fe036"]
 [ext_resource type="ArrayMesh" uid="uid://du21ggco4kaqh" path="res://Models/FullModels/BaseModel/BaseModel_OBJ5_BASE_MODEL_011.res" id="5_gc5ao"]
-[ext_resource type="ArrayMesh" uid="uid://b1gru2q23rr5f" path="res://Models/MeshRepository/TorsoBody/1_Skin.res" id="6_ew3vs"]
+[ext_resource type="ArrayMesh" uid="uid://b1gru2q23rr5f" path="res://Models/MeshRepository/MeshResources/1_Skin.res" id="6_ew3vs"]
 [ext_resource type="PackedScene" uid="uid://dpa7h0crxxisw" path="res://Models/MeshRepository/Hair/1_HairMale01.tscn" id="7_ew3vs"]
 
 [sub_resource type="Skin" id="Skin_ftg4b"]
@@ -2257,7 +2257,7 @@ skin = SubResource("Skin_ftg4b")
 
 [node name="HairBoneAttach" type="BoneAttachment3D" parent="BaseModel_Armature/GeneralSkeleton"]
 unique_name_in_owner = true
-transform = Transform3D(0.994306, 0.0267748, -0.103148, -0.0246412, 0.999456, 0.0219042, 0.103679, -0.0192378, 0.994425, -0.228131, 19.7174, 1.60196)
+transform = Transform3D(0.994306, 0.0267749, -0.103148, -0.0246412, 0.999456, 0.0219042, 0.103679, -0.0192378, 0.994425, -0.228131, 19.7174, 1.60196)
 bone_name = "Head"
 bone_idx = 5
 

@@ -217,4 +217,28 @@ public static partial class GlobalUtil
 
     #endregion IMAGE Processing:  Helper Functions
 
+
+    #region NODE Processing:  Helper Functions
+
+    public static List<T> GetAllNodesOfType<T>(Node startPointParent) where T : Node
+    {
+        List<T> foundNodes = new List<T>();
+
+        // Check the current node
+        if (startPointParent is T typedNode)
+        {
+            foundNodes.Add(typedNode);
+        }
+
+        // Recursively check all children
+        foreach (Node child in startPointParent.GetChildren())
+        {
+            foundNodes.AddRange(GetAllNodesOfType<T>(child));
+        }
+
+        return foundNodes;
+    }
+
+    #endregion NODE Processing:  Helper Functions
+
 }

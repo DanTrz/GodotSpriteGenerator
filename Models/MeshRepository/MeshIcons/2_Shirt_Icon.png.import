@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b0jqajacpc5eo"
-path="res://.godot/imported/3_HeadMesh_Yellow_Icon.png-e7e15eece8281cf5827331308e4e4ff6.ctex"
+uid="uid://dn753oo184sa8"
+path="res://.godot/imported/2_Shirt_Icon.png-3eda1bbbcb82da9410c56bfb8457dd4e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Models/MeshRepository/Head/3_HeadMesh_Yellow_Icon.png"
-dest_files=["res://.godot/imported/3_HeadMesh_Yellow_Icon.png-e7e15eece8281cf5827331308e4e4ff6.ctex"]
+source_file="res://Models/MeshRepository/MeshIcons/2_Shirt_Icon.png"
+dest_files=["res://.godot/imported/2_Shirt_Icon.png-3eda1bbbcb82da9410c56bfb8457dd4e.ctex"]
 
 [params]
 
