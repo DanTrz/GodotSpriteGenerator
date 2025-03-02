@@ -220,18 +220,23 @@ public static partial class GlobalUtil
 
     #region NODE Processing:  Helper Functions
 
-    public static List<T> GetAllNodesOfType<T>(Node startPointParent) where T : Node
+
+    /// <summary>
+    /// Returns all Nodes as a List that matches the type T. Recursive search from the Parent Node "fromParentNode"
+    /// Returns all children, grandchildren, etc.
+    /// </summary>
+    public static List<T> GetAllNodesOfType<T>(Node fromParentNode) where T : Node
     {
         List<T> foundNodes = new List<T>();
 
         // Check the current node
-        if (startPointParent is T typedNode)
+        if (fromParentNode is T typedNode)
         {
             foundNodes.Add(typedNode);
         }
 
         // Recursively check all children
-        foreach (Node child in startPointParent.GetChildren())
+        foreach (Node child in fromParentNode.GetChildren())
         {
             foundNodes.AddRange(GetAllNodesOfType<T>(child));
         }

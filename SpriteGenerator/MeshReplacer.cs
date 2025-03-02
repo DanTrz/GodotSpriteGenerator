@@ -90,7 +90,7 @@ public partial class MeshReplacer : Node
 
     public static void UpdateUIOptionsHairList(OptionButton buttonToUpdate)
     {
-        string[] hairItemList = ResourceLoader.ListDirectory(Const.HAIR_MESHES_FOLDER_PATH);
+        string[] hairItemList = ResourceLoader.ListDirectory(Const.HAIR_SCENES_FOLDER_PATH);
         int itemId = 1;
         foreach (string item in hairItemList)
         {
@@ -100,7 +100,7 @@ public partial class MeshReplacer : Node
                 string itemName = item.Substring(0, stringIndex);
                 buttonToUpdate.AddItem(itemName, itemId);
                 int itemIndex = buttonToUpdate.GetItemIndex(itemId);
-                string iconPath = Const.HAIR_MESHES_FOLDER_PATH + itemName + "_Icon.png";
+                string iconPath = Const.HAIR_SCENES_FOLDER_PATH + itemName + "_Icon.png";
                 Texture2D icon = GD.Load<Texture2D>(iconPath);
 
                 if (icon != null)

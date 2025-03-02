@@ -582,7 +582,7 @@ public partial class SpriteGenerator : Node
     {
         BoneAttachment3D _hairBoneAttachNode = _characterModelObject.GetNode<BoneAttachment3D>("%HairBoneAttach");
         string itemSelected = _hairMeshOptBtn.GetItemText((int)index);
-        MeshReplacer.UpdateHairScene(_hairBoneAttachNode, Const.HAIR_MESHES_FOLDER_PATH + itemSelected + ".tscn");
+        MeshReplacer.UpdateHairScene(_hairBoneAttachNode, Const.HAIR_SCENES_FOLDER_PATH + itemSelected + ".tscn");
     }
 
 
@@ -611,8 +611,12 @@ public partial class SpriteGenerator : Node
         string itemSelected = meshReplacerOptButton.GetItemText((int)itemIndex);
         GD.PrintT("Mesh Item Selected: " + itemSelected + " + FromButton: " + meshReplacerOptButton.Name);
 
-        string bodyPart = "%" + meshReplacerOptButton.BodyPartType.ToString();
-        MeshInstance3D _meshInstanceObject = _characterModelObject.GetNode<MeshInstance3D>(bodyPart);
+
+        //Gets the only Skeletion we have in the Model Scene
+        Skeleton3D _parentSkeletion = GlobalUtil.GetAllNodesOfType<Skeleton3D>(_characterModelObject).FirstOrDefault();
+
+        var _meshInstanceObject = GlobalUtil.GetAllNodesOfType<BodyPartMeshInstance3D>(_characterModelObject).
+            Where(x => x.BodyPartType == meshReplacerOptButton.BodyPartType).FirstOrDefault();
 
         MeshReplacer.UpdateMeshFromResourceItem(_meshInstanceObject, itemSelected);
     }
