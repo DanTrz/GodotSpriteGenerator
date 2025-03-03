@@ -1,0 +1,76 @@
+[gd_scene load_steps=4 format=3 uid="uid://dvac6gfkhhmd1"]
+
+[ext_resource type="LabelSettings" uid="uid://usv7beyw1bj8" path="res://Assets/UI/Theme/Label.tres" id="1_1g1k6"]
+[ext_resource type="Script" uid="uid://dxxk1s8ap5skr" path="res://UIComponents/TransformUiGroup.cs" id="1_eokdb"]
+[ext_resource type="Script" uid="uid://dgheknehyjkc6" path="res://UIComponents/TransformLineTextEdit.cs" id="3_kltav"]
+
+[node name="TransformUINodeGroup" type="HBoxContainer" node_paths=PackedStringArray("MainGroupLabel", "XAxisLabelLineTextEdit", "YAxisLabelLineTextEdit", "ZAxisLabelLineTextEdit")]
+custom_minimum_size = Vector2(0, 24)
+offset_right = 356.0
+offset_bottom = 29.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_constants/separation = 10
+script = ExtResource("1_eokdb")
+MainGroupLabel = NodePath("TransformTypeLabel")
+TransformType = 1
+XAxisLabelLineTextEdit = NodePath("XAxisLabelLineTextEdit")
+YAxisLabelLineTextEdit = NodePath("YAxisLabelLineTextEdit")
+ZAxisLabelLineTextEdit = NodePath("ZAxisLabelLineTextEdit")
+
+[node name="TransformTypeLabel" type="Label" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 24)
+layout_mode = 2
+text = "TEST"
+label_settings = ExtResource("1_1g1k6")
+vertical_alignment = 1
+autowrap_mode = 2
+clip_text = true
+
+[node name="XAxisLabel" type="Label" parent="."]
+custom_minimum_size = Vector2(12, 24)
+layout_mode = 2
+text = "X"
+label_settings = ExtResource("1_1g1k6")
+vertical_alignment = 1
+autowrap_mode = 2
+clip_text = true
+
+[node name="XAxisLabelLineTextEdit" type="LineEdit" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(25, 24)
+layout_mode = 2
+script = ExtResource("3_kltav")
+axis = 0
+
+[node name="YAxisLabel" type="Label" parent="."]
+custom_minimum_size = Vector2(12, 24)
+layout_mode = 2
+text = "Y"
+label_settings = ExtResource("1_1g1k6")
+vertical_alignment = 1
+autowrap_mode = 2
+clip_text = true
+
+[node name="YAxisLabelLineTextEdit" type="LineEdit" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(25, 24)
+layout_mode = 2
+script = ExtResource("3_kltav")
+axis = 1
+
+[node name="ZAxisLabel" type="Label" parent="."]
+custom_minimum_size = Vector2(12, 24)
+layout_mode = 2
+text = "Z"
+label_settings = ExtResource("1_1g1k6")
+vertical_alignment = 1
+autowrap_mode = 2
+clip_text = true
+
+[node name="ZAxisLabelLineTextEdit" type="LineEdit" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(25, 24)
+layout_mode = 2
+script = ExtResource("3_kltav")

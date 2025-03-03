@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 public static partial class GlobalUtil
 {
@@ -225,7 +226,7 @@ public static partial class GlobalUtil
     /// Returns all Nodes as a List that matches the type T. Recursive search from the Parent Node "fromParentNode"
     /// Returns all children, grandchildren, etc.
     /// </summary>
-    public static List<T> GetAllNodesByType<T>(Node fromParentNode) where T : Node
+    public static List<T> GetAllNodesOfType<T>(Node fromParentNode) where T : Node
     {
         List<T> foundNodes = new List<T>();
 
@@ -238,14 +239,14 @@ public static partial class GlobalUtil
         // Recursively check all children
         foreach (Node child in fromParentNode.GetChildren())
         {
-            foundNodes.AddRange(GetAllNodesByType<T>(child));
+            foundNodes.AddRange(GetAllNodesOfType<T>(child));
         }
 
         return foundNodes;
     }
 
 
-    public static List<T> GetResourcesByType<T>(string resourceDirPath)
+    public static List<T> GetResourcesOfType<T>(string resourceDirPath)
     {
         var allResourceFiles = ResourceLoader.ListDirectory(resourceDirPath);
         List<T> resourceList = new List<T>();
@@ -265,6 +266,18 @@ public static partial class GlobalUtil
         }
 
         return resourceList;
+    }
+
+    public static T GetSingleResourceByName<T>(string itemResName, List<T> resourceList)
+    {
+        var myResource = resourceList.Where(myResource => myResource.Name == itemResName).FirstOrDefault();
+
+        if (mesh != null)
+        {
+            return mesh;
+        }
+
+        return null;
     }
 
 

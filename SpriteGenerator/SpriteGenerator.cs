@@ -588,7 +588,7 @@ public partial class SpriteGenerator : Node
 
     private void LoadAllMeshReplacerBtnAndMeshItemData()
     {
-        var allMeshReplacerOptButtons = GlobalUtil.GetAllNodesOfType<MeshReplacerOptButton>(_meshReplacerPanelParentNode);
+        var allMeshReplacerOptButtons = GlobalUtil.GetAllNodesByType<MeshReplacerOptButton>(_meshReplacerPanelParentNode);
         GD.PrintT("Found " + allMeshReplacerOptButtons.Count + " MeshReplacerOptButton");
 
         foreach (var meshReplacerOptButton in allMeshReplacerOptButtons)
@@ -613,9 +613,9 @@ public partial class SpriteGenerator : Node
 
 
         //Gets the only Skeletion we have in the Model Scene
-        Skeleton3D _parentSkeletion = GlobalUtil.GetAllNodesOfType<Skeleton3D>(_characterModelObject).FirstOrDefault();
+        Skeleton3D _parentSkeletion = GlobalUtil.GetAllNodesByType<Skeleton3D>(_characterModelObject).FirstOrDefault();
 
-        var _meshInstanceObject = GlobalUtil.GetAllNodesOfType<BodyPartMeshInstance3D>(_characterModelObject).
+        var _meshInstanceObject = GlobalUtil.GetAllNodesByType<BodyPartMeshInstance3D>(_characterModelObject).
             Where(x => x.BodyPartType == meshReplacerOptButton.BodyPartType).FirstOrDefault();
 
         MeshReplacer.UpdateMeshFromResourceItem(_meshInstanceObject, itemSelected);

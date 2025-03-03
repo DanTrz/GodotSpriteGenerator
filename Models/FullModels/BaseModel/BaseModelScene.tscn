@@ -2178,7 +2178,7 @@ BodyPartType = 1
 
 [node name="HairBoneAttach" type="BoneAttachment3D" parent="BaseModel_Armature/GeneralSkeleton"]
 unique_name_in_owner = true
-transform = Transform3D(0.994306, 0.0267749, -0.103148, -0.0246412, 0.999456, 0.0219042, 0.103679, -0.0192378, 0.994425, -0.228131, 19.7174, 1.60196)
+transform = Transform3D(0.994306, 0.0267748, -0.103148, -0.0246412, 0.999456, 0.0219042, 0.103679, -0.0192378, 0.994425, -0.228131, 19.7174, 1.60196)
 bone_name = "Head"
 bone_idx = 5
 

@@ -10,7 +10,9 @@ public partial class MeshReplacer : Node
 
     public static void UpdateUIOptionMesheItemList(MeshReplacerOptButton itemMeshOptBtn, Const.BodyPartType bodyPart)
     {
-        GetAllMeshItemRes();
+        //GetAllMeshItemRes();
+        arrayMeshDataObjects = GlobalUtil.GetResourcesByType<ArrayMeshDataObject>(Const.MESH_REPO_FOLDER_PATH);
+        arrayMeshDataObjects.Sort((a, b) => a.ItemOrder.CompareTo(b.ItemOrder));
 
         var bodyPartMeshes = arrayMeshDataObjects.Where(mesh => mesh.BodyPartType == itemMeshOptBtn.BodyPartType).ToList();
 
@@ -35,14 +37,14 @@ public partial class MeshReplacer : Node
         }
     }
 
-    public static void UpdateMeshFromResourceItem(MeshInstance3D meshTargetToReplace, string resourceitemName)
+    public static void UpdateMeshFromResourceItem(MeshInstance3D meshTargetToReplace, string resourceItemName)
     {
-        meshTargetToReplace.Mesh = GetMeshItemResByName(resourceitemName);
+        meshTargetToReplace.Mesh = GetMeshItemByName(resourceItemName, arrayMeshDataObjects);
     }
 
-    public static Mesh GetMeshItemResByName(string itemResName)
+    public static Mesh GetMeshItemByName(string itemResName, List<ArrayMeshDataObject> resourceMeshList)
     {
-        var mesh = arrayMeshDataObjects.Where(MeshData => MeshData.ItemName == itemResName).Select(mesh => mesh.MeshItem).FirstOrDefault();
+        var mesh = resourceMeshList.Where(MeshData => MeshData.ItemName == itemResName).Select(mesh => mesh.MeshItem).FirstOrDefault();
 
         if (mesh != null)
         {
@@ -50,29 +52,6 @@ public partial class MeshReplacer : Node
         }
 
         return null;
-    }
-
-    public static void GetAllMeshItemRes()
-    {
-        var allMeshItems = ResourceLoader.ListDirectory(Const.MESH_REPO_FOLDER_PATH);
-        arrayMeshDataObjects = new List<ArrayMeshDataObject>();
-
-
-        foreach (string itemName in allMeshItems)
-        {
-            string itemPath = Const.MESH_REPO_FOLDER_PATH + itemName;
-            if (itemPath.EndsWith(".res") || itemPath.EndsWith(".tres"))
-            {
-                var meshItem = GD.Load<Resource>(itemPath);
-                if (meshItem is ArrayMeshDataObject meshItemObject)
-                {
-                    arrayMeshDataObjects.Add(meshItemObject);
-                }
-            }
-        }
-
-        arrayMeshDataObjects.Sort((a, b) => a.ItemOrder.CompareTo(b.ItemOrder));
-
     }
 
     public static void UpdateHairScene(BoneAttachment3D hairParentNode, string hairScenePath)

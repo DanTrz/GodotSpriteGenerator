@@ -2,7 +2,7 @@ using Godot;
 
 public partial class Model3DMainPivotControl : Node3D
 {
-    public Node3D MainMesh;
+    //public Node3D MainMesh;
     [Export] public float RotationSpeed = 0.01f;
     [Export] public float VerticalAngleLimit = 180.0f;  // Limit vertical angle to prevent flipping.
     [Export] public float scrollSpeed = 1f;
@@ -14,7 +14,7 @@ public partial class Model3DMainPivotControl : Node3D
 
     public override void _Ready()
     {
-        MainMesh = GetChild<Node3D>(0);
+        //       MainMesh = GetChild<Node3D>(0);
     }
 
     public override void _Input(InputEvent @event)
@@ -26,7 +26,7 @@ public partial class Model3DMainPivotControl : Node3D
             _verticalAngle = Mathf.Clamp(_verticalAngle - mouseMotion.Relative.Y * RotationSpeed, -VerticalAngleLimit, VerticalAngleLimit);
 
             // Apply the rotation to the actual MODEL keeping the camera in place
-            MainMesh.RotationDegrees = new Vector3(-_verticalAngle * Rad2Deg, -_horizontalAngle * Rad2Deg, 0);
+            this.RotationDegrees = new Vector3(-_verticalAngle * Rad2Deg, -_horizontalAngle * Rad2Deg, 0);
         }
     }
 }

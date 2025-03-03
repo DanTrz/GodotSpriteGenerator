@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://dghyusd0bdjxt"]
+[gd_scene load_steps=36 format=3 uid="uid://dghyusd0bdjxt"]
 
 [ext_resource type="Script" uid="uid://dj2tgr0hxsbd3" path="res://SpriteGenerator/SpriteGenerator.cs" id="1_ws6fq"]
 [ext_resource type="PackedScene" uid="uid://iuwovcd804os" path="res://SpriteGenerator/MainScene3D.tscn" id="2_jyiui"]
@@ -6,9 +6,10 @@
 [ext_resource type="Script" uid="uid://b78ehve5xa1ia" path="res://SpriteGenerator/ModelPositionManager.cs" id="4_fx5pg"]
 [ext_resource type="Texture2D" uid="uid://cr55nbf56ybvc" path="res://Assets/UI/Basic UI spritesheet.png" id="5_mumiu"]
 [ext_resource type="Texture2D" uid="uid://b8fnciwttkrvi" path="res://Assets/UI/32PixelGrid_16C_16_R_Total512Pixel.png" id="5_ulv1c"]
-[ext_resource type="Texture2D" uid="uid://k5o1cpbx7oa4" path="res://Assets/UI/ModelTransformReferenceImg.png" id="6_4hdfw"]
 [ext_resource type="Shader" uid="uid://cwbfwv0g6if3e" path="res://Assets/Shaders/TextRecPixelEffect.gdshader" id="6_30nce"]
 [ext_resource type="PackedScene" uid="uid://de676sb25ueye" path="res://UIComponents/ItemListCheckBox.tscn" id="7_j32we"]
+[ext_resource type="Script" uid="uid://dxxk1s8ap5skr" path="res://UIComponents/TransformUiGroup.cs" id="8_8pcxw"]
+[ext_resource type="PackedScene" uid="uid://dvac6gfkhhmd1" path="res://UIComponents/TransformUIGroup.tscn" id="8_jd2q0"]
 [ext_resource type="Script" uid="uid://cacdskl17dkmj" path="res://SpriteGenerator/SpriteSheetManager.cs" id="8_seol6"]
 [ext_resource type="LabelSettings" uid="uid://usv7beyw1bj8" path="res://Assets/UI/Theme/Label.tres" id="9_0w5gm"]
 [ext_resource type="PackedScene" uid="uid://mjnysgbmwfbp" path="res://SpriteGenerator/MeshReplacerOptButton.tscn" id="11_jd2q0"]
@@ -284,11 +285,89 @@ layout_mode = 2
 text = "(-)"
 icon = SubResource("AtlasTexture_pyu7k")
 
-[node name="TextureRect" type="TextureRect" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/ImageOptionsPanel/HBoxContainer/VBoxContainer"]
-custom_minimum_size = Vector2(10, 100)
+[node name="ZoomTransfNodeGroup" type="HBoxContainer" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/ImageOptionsPanel/HBoxContainer/VBoxContainer" node_paths=PackedStringArray("MainGroupLabel", "XAxisLabelLineTextEdit", "YAxisLabelLineTextEdit", "ZAxisLabelLineTextEdit")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 24)
 layout_mode = 2
-texture = ExtResource("6_4hdfw")
-expand_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_constants/separation = 10
+script = ExtResource("8_8pcxw")
+MainLabelName = " Zoom Distance"
+MainGroupLabel = NodePath("TransformTypeLabel")
+TransformType = 0
+XAxisLabelLineTextEdit = NodePath("XAxisLabelLineTextEdit")
+YAxisLabelLineTextEdit = NodePath("YAxisLabelLineTextEdit")
+ZAxisLabelLineTextEdit = NodePath("ZAxisLabelLineTextEdit")
+
+[node name="TransformTypeLabel" type="Label" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/ImageOptionsPanel/HBoxContainer/VBoxContainer/ZoomTransfNodeGroup"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(101, 24)
+layout_mode = 2
+text = " Zoom Distance"
+label_settings = ExtResource("9_0w5gm")
+vertical_alignment = 1
+autowrap_mode = 2
+clip_text = true
+
+[node name="XAxisLabel" type="Label" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/ImageOptionsPanel/HBoxContainer/VBoxContainer/ZoomTransfNodeGroup"]
+visible = false
+custom_minimum_size = Vector2(12, 24)
+layout_mode = 2
+text = "X"
+label_settings = ExtResource("9_0w5gm")
+vertical_alignment = 1
+autowrap_mode = 2
+clip_text = true
+
+[node name="XAxisLabelLineTextEdit" type="LineEdit" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/ImageOptionsPanel/HBoxContainer/VBoxContainer/ZoomTransfNodeGroup"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(25, 24)
+layout_mode = 2
+
+[node name="YAxisLabel" type="Label" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/ImageOptionsPanel/HBoxContainer/VBoxContainer/ZoomTransfNodeGroup"]
+visible = false
+custom_minimum_size = Vector2(12, 24)
+layout_mode = 2
+text = "Y"
+label_settings = ExtResource("9_0w5gm")
+vertical_alignment = 1
+autowrap_mode = 2
+clip_text = true
+
+[node name="YAxisLabelLineTextEdit" type="LineEdit" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/ImageOptionsPanel/HBoxContainer/VBoxContainer/ZoomTransfNodeGroup"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(25, 24)
+layout_mode = 2
+
+[node name="ZAxisLabel" type="Label" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/ImageOptionsPanel/HBoxContainer/VBoxContainer/ZoomTransfNodeGroup"]
+visible = false
+custom_minimum_size = Vector2(12, 24)
+layout_mode = 2
+text = "Z"
+label_settings = ExtResource("9_0w5gm")
+vertical_alignment = 1
+autowrap_mode = 2
+clip_text = true
+
+[node name="ZAxisLabelLineTextEdit" type="LineEdit" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/ImageOptionsPanel/HBoxContainer/VBoxContainer/ZoomTransfNodeGroup"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(25, 24)
+layout_mode = 2
+
+[node name="PositionTransfNodeGroup" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/ImageOptionsPanel/HBoxContainer/VBoxContainer" instance=ExtResource("8_jd2q0")]
+unique_name_in_owner = true
+layout_mode = 2
+MainLabelName = " Position"
+TransformType = 2
+
+[node name="RotationTransfNodeGroup" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/ImageOptionsPanel/HBoxContainer/VBoxContainer" instance=ExtResource("8_jd2q0")]
+unique_name_in_owner = true
+layout_mode = 2
+MainLabelName = " Rotation"
+TransformType = 3
 
 [node name="OptionsPanelCont" type="PanelContainer" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer"]
 layout_mode = 2

@@ -13,4 +13,8 @@ public static class Const
     public const string HAIR_SCENES_FOLDER_PATH = "res://Models/MeshRepository/Hair/";
     public const string MESH_REPO_FOLDER_PATH = "res://Models/MeshRepository/";
 
+    //Transform Data
+    public enum TransformType { CAMERA_ZOOM, SCALE, POSITION, ROTATION };
+    public enum TransformAxis { X, Y, Z };
+
 }
