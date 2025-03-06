@@ -33,6 +33,11 @@ public partial class SpriteGenerator : Node
     [Export] private bool _isTimeBaseExport = true;
     [Export(PropertyHint.Range, "1,4,1")] private float _animationPlaybackSpeed = 1.0f;
 
+
+    //SaveConfigBtn
+
+    [OnReady("%SaveConfigBtn")] private Button _saveConfigBtn;
+
     [OnReady("%ResOptionButton")] private OptionButton _resolutionOptionBtn;
     [OnReady("%PixelShaderOptionBtn")] private OptionButton _pixelShaderOptionBtn;
     [OnReady("%FrameStepTextEdit")] private LineEdit _frameStepTextEdit;
@@ -94,6 +99,7 @@ public partial class SpriteGenerator : Node
     {
 
         //Connect UI Signals
+        _saveConfigBtn.Pressed += OnSaveConfigBtnPressed;
         _spriteGenFolderPathLineEdit.TextChanged += (newDir) => GlobalUtil.OnFolderSelected(newDir, _spriteGenFolderPathLineEdit);
         _selectFolderPathBtn.Pressed += OnSelectFolderPathPressed;
         _openFolderPathBtn.Pressed += OnOpenFolderPathPressed;
@@ -176,6 +182,10 @@ public partial class SpriteGenerator : Node
 
     }
 
+    private async void OnSaveConfigBtnPressed()
+    {
+        await SaveGameManager.Instance.SaveGameData();
+    }
 
     private void OnStartGeneration()
     {
