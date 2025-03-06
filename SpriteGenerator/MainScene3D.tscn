@@ -20,9 +20,9 @@ glow_enabled = true
 
 [node name="MainCamera" type="Camera3D" parent="."]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 0.939693, 0.34202, 0, -0.34202, 0.939693, 0, 7, 11)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 10)
+keep_aspect = 0
 projection = 1
-current = true
 size = 7.0
 
 [node name="Model3DMainPivotControl" type="Node3D" parent="."]

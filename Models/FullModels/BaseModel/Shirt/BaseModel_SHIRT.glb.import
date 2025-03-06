@@ -4,12 +4,11 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://cf7jy6gnpfgl3"
-path="res://.godot/imported/BaseModel_SHIRT.glb-b625078abb608356e4c1b4a38626e415.scn"
+valid=false
 
 [deps]
 
 source_file="res://Models/FullModels/BaseModel/Shirt/BaseModel_SHIRT.glb"
-dest_files=["res://.godot/imported/BaseModel_SHIRT.glb-b625078abb608356e4c1b4a38626e415.scn"]
 
 [params]
 

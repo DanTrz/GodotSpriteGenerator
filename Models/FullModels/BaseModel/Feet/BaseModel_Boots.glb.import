@@ -4,12 +4,11 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://chim6w148tfw3"
-path="res://.godot/imported/BaseModel_Boots.glb-dd23e4c7c75febab61a98bc51921c5c5.scn"
+valid=false
 
 [deps]
 
 source_file="res://Models/FullModels/BaseModel/Feet/BaseModel_Boots.glb"
-dest_files=["res://.godot/imported/BaseModel_Boots.glb-dd23e4c7c75febab61a98bc51921c5c5.scn"]
 
 [params]
 

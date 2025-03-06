@@ -1,24 +1,19 @@
+using System;
 using Godot;
 
 public partial class ModelPositionManager : Node
 {
 
-    [Export] public float MoveSpeed = 0.1f;
-    [Export] public float RotateSpeed = 1.0f;
-    [Export] public float ZoomScale = 0.1f;
+    [OnReady("%CamDistancelLineTextEdit")] private LineEdit _camDistancelLineTextEdit;
+    [OnReady("%CamXRotationLineTextEdit")] private LineEdit _camXRotationLineTextEdit;
 
-    [OnReady("%MoveLeftBtn")] private Button _moveLeftBtn;
-    [OnReady("%MoveRightBtn")] private Button _moveRightBtn;
-    [OnReady("%MoveUpBtn")] private Button _moveUpBtn;
-    [OnReady("%MoveDownBtn")] private Button _moveDownBtn;
-    [OnReady("%RotateXAxisBtn")] private Button _rotateXAxisBtn;
-    [OnReady("%RotateYAxisBtn")] private Button _rotateYAxisBtn;
-    [OnReady("%ZoomInBtn")] private Button _zoomInBtn;
-    [OnReady("%ZoomOutBtn")] private Button _zoomOutBtn;
+    [OnReady("%PosiXAxisLineTextEdit")] private LineEdit _posXAxisLineTextEdit;
+    [OnReady("%PosYAxisLineTextEdit")] private LineEdit _posYAxisLineTextEdit;
+    [OnReady("%PosZAxisLineTextEdit")] private LineEdit _posZAxisLineTextEdit;
 
-    [OnReady("%ZoomTransfNodeGroup")] private TransformUiGroup _zoomTransfNodeGroup;
-    [OnReady("%PositionTransfNodeGroup")] private TransformUiGroup _positionTransfNodeGroup;
-    [OnReady("%RotationTransfNodeGroup")] private TransformUiGroup _rotationTransfNodeGroup;
+    [OnReady("%RotationXAxisLineTextEdit")] private LineEdit _rotationXAxisLineTextEdit;
+    [OnReady("%RotationYAxisLineTextEdit")] private LineEdit _rotationYAxisLineTextEdit;
+    [OnReady("%RotationZAxisLineTextEdit")] private LineEdit _rotationZAxisLineTextEdit;
 
     public Node3D ModelNode;
     public Camera3D CameraNode;
@@ -26,162 +21,28 @@ public partial class ModelPositionManager : Node
 
     public override void _Ready()
     {
-        _moveLeftBtn.Pressed += MoveModelLeft;
-        _moveRightBtn.Pressed += MoveModelRight;
-        _moveUpBtn.Pressed += MoveModeUp;
-        _moveDownBtn.Pressed += MoveModeDown;
+        //Check if the ModelNode is not null
+        this.CallDeferred(MethodName.CheckIfModelLoaded);
 
-        _rotateXAxisBtn.Pressed += RotateModeXAxis;
-        _rotateYAxisBtn.Pressed += RotateModeYAxis;
+        GD.Print("LoadTransformValueToUI being called");
+        this.CallDeferred(MethodName.LoadTransformValueToUI);
+        this.CallDeferred(MethodName.ConnectTransformUINodeSignals);
 
-        _zoomInBtn.Pressed += ZoomModelIn;
-        _zoomOutBtn.Pressed += ZoomModelOut;
+        //_moveLeftBtn.Pressed += MoveModelLeft;
+        //_moveRightBtn.Pressed += MoveModelRight;
+        //_moveUpBtn.Pressed += MoveModeUp;
+        //_moveDownBtn.Pressed += MoveModeDown;
+
+        //_rotateXAxisBtn.Pressed += RotateModeXAxis;
+        //_rotateYAxisBtn.Pressed += RotateModeYAxis;
+
+        //_zoomInBtn.Pressed += ZoomModelIn;
+        //_zoomOutBtn.Pressed += ZoomModelOut;
 
 
         //Test for future code to track button being held down
         // _moveLeftBtn.ButtonDown += () => { _isModeLeftBtnHeld = true; };
         // _moveLeftBtn.ButtonUp += () => { _isModeLeftBtnHeld = false; };
-
-        //Check if the ModelNode is not null
-        this.CallDeferred(MethodName.CheckIfModelLoaded);
-
-        this.CallDeferred(MethodName.LoadTransformValueToUI);
-
-        this.CallDeferred(MethodName.ConnectTransformUINodeSignals);
-
-
-    }
-
-    private void ConnectTransformUINodeSignals()
-    {
-        //_zoomTransfNodeGroup
-
-        foreach (var node in _zoomTransfNodeGroup.GetChildren())
-        {
-            if (node is TransformLineTextEdit transformlineEdit)
-            {
-                transformlineEdit.TextChanged += (newValue) => OnTransformUIChanged(newValue, _zoomTransfNodeGroup, transformlineEdit);
-                // transformlineEdit.TextChanged += OnTransformUIChanged;
-            }
-        }
-
-        foreach (var node in _positionTransfNodeGroup.GetChildren())
-        {
-            if (node is TransformLineTextEdit transformlineEdit)
-            {
-                transformlineEdit.TextChanged += (newValue) => OnTransformUIChanged(newValue, _positionTransfNodeGroup, transformlineEdit);
-                // transformlineEdit.TextChanged += OnTransformUIChanged;
-            }
-        }
-
-
-        foreach (var node in _rotationTransfNodeGroup.GetChildren())
-        {
-            if (node is TransformLineTextEdit transformlineEdit)
-            {
-                transformlineEdit.TextChanged += (newValue) => OnTransformUIChanged(newValue, _rotationTransfNodeGroup, transformlineEdit);
-                // transformlineEdit.TextChanged += OnTransformUIChanged;
-            }
-        }
-
-
-    }
-
-    private void OnTransformUIChanged(string newValue, TransformUiGroup transformNodeGroup, TransformLineTextEdit lineEdit)
-    {
-        switch (transformNodeGroup.TransformType)
-        {
-            case Const.TransformType.CAMERA_ZOOM:
-                GD.PrintT("CAMERA ZOOM CHANGED TO " + newValue);
-                break;
-            case Const.TransformType.POSITION:
-                GD.PrintT("POSITION " + "Axis: " + lineEdit.axis + " ToValue: " + newValue);
-                break;
-            case Const.TransformType.ROTATION:
-                GD.PrintT("POSITION " + "Axis: " + lineEdit.axis + " ToValue: " + newValue);
-                break;
-            default:
-                break;
-        }
-    }
-
-    private void LoadTransformValueToUI()
-    {
-        _positionTransfNodeGroup.XAxisLabelLineTextEdit.Text = ModelNode.Position.X.ToString();
-        _positionTransfNodeGroup.YAxisLabelLineTextEdit.Text = ModelNode.Position.Y.ToString();
-        _positionTransfNodeGroup.ZAxisLabelLineTextEdit.Text = ModelNode.Position.Z.ToString();
-
-        _zoomTransfNodeGroup.XAxisLabelLineTextEdit.Text = CameraNode.Size.ToString();
-        //_zoomTransfNodeGroup.YAxisLabelLineTextEdit.Text = CameraNode.Scale.Y.ToString();
-        //_zoomTransfNodeGroup.ZAxisLabelLineTextEdit.Text = CameraNode.Scale.Z.ToString();
-
-        _rotationTransfNodeGroup.XAxisLabelLineTextEdit.Text = ModelNode.Rotation.X.ToString();
-        _rotationTransfNodeGroup.YAxisLabelLineTextEdit.Text = ModelNode.Rotation.Y.ToString();
-        _rotationTransfNodeGroup.ZAxisLabelLineTextEdit.Text = ModelNode.Rotation.Z.ToString();
-    }
-
-    private void ZoomModelOut()
-    {
-        CameraNode.Size += ZoomScale;
-    }
-
-
-    private void ZoomModelIn()
-    {
-        CameraNode.Size -= ZoomScale;
-    }
-
-
-    public override void _Process(double delta)
-    {
-        if (_moveLeftBtn.IsPressed())
-        {
-            //GD.Print("Button Left move is being held down!");
-            MoveModelLeft();
-        }
-
-        if (_rotateXAxisBtn.IsPressed())
-        {
-            RotateModeXAxis();
-        }
-
-        if (_rotateYAxisBtn.IsPressed())
-        {
-
-            RotateModeYAxis();
-        }
-
-        // LoadTransformValueToUI();
-    }
-
-    private void MoveModelLeft()
-    {
-        ModelNode.Position += new Vector3(-MoveSpeed, 0, 0);
-    }
-
-    private void MoveModelRight()
-    {
-        ModelNode.Position += new Vector3(MoveSpeed, 0, 0);
-    }
-
-    private void MoveModeUp()
-    {
-        ModelNode.Position += new Vector3(0, MoveSpeed, 0);
-    }
-
-    private void MoveModeDown()
-    {
-        ModelNode.Position += new Vector3(0, -MoveSpeed, 0);
-    }
-
-    private void RotateModeXAxis()
-    {
-        ModelNode.RotationDegrees += new Vector3(RotateSpeed, 0, 0);
-    }
-
-    private void RotateModeYAxis()
-    {
-        ModelNode.RotationDegrees += new Vector3(0, RotateSpeed, 0);
     }
 
     public void CheckIfModelLoaded()
@@ -191,4 +52,130 @@ public partial class ModelPositionManager : Node
             GD.PrintErr("Model or Camera in ModelPositionManager is null");
         }
     }
+
+    private void ConnectTransformUINodeSignals()
+    {
+        //GlobalUtil.GetAllNodesByType<LineEdit>(this).ForEach((transformlineEdit) =>
+        //{
+        //    transformlineEdit.TextChanged += (newValue) => OnTransformUIChanged(newValue, _zoomTransfNodeGroup, transformlineEdit);
+        //});
+
+        foreach (var node in GlobalUtil.GetAllNodesByType<LineEdit>(this))
+        {
+            if (node is LineEdit transformlineEdit)
+            {
+                //transformlineEdit.TextChanged += (newValue) => OnTransformUIChanged(newValue, transformlineEdit);
+                transformlineEdit.TextChanged += OnTransformUIChanged;
+
+            }
+        }
+    }
+
+    private void OnTransformUIChanged(string newValue)
+    {
+        if (!String.IsNullOrEmpty(newValue) && !String.IsNullOrWhiteSpace(newValue) && float.TryParse(newValue, out float out_))
+        {
+            GD.PrintT("Valid Input: " + newValue);
+            SetTransformValueToModel();
+            //LoadTransformValueToUI();
+        }
+    }
+
+    private void SetTransformValueToModel()
+    {
+        ModelNode.Position = new Vector3(float.Parse(_posXAxisLineTextEdit.Text), float.Parse(_posYAxisLineTextEdit.Text), float.Parse(_posZAxisLineTextEdit.Text));
+        ModelNode.Rotation = new Vector3(float.Parse(_rotationXAxisLineTextEdit.Text), float.Parse(_rotationYAxisLineTextEdit.Text), float.Parse(_rotationZAxisLineTextEdit.Text));
+        CameraNode.Size = Math.Max(float.Parse(_camDistancelLineTextEdit.Text), 1.00f);
+        CameraNode.RotationDegrees = new Vector3(float.Parse(_camXRotationLineTextEdit.Text), 0, 0);
+    }
+
+    private void LoadTransformValueToUI()
+    {
+        if (_posXAxisLineTextEdit is null && _camDistancelLineTextEdit is null) return;
+
+        _posXAxisLineTextEdit.Text = ModelNode.Position.X.ToString("0.0");
+        _posYAxisLineTextEdit.Text = ModelNode.Position.Y.ToString("0.0");
+        _posZAxisLineTextEdit.Text = ModelNode.Position.Z.ToString("0.0");
+
+        _camDistancelLineTextEdit.Text = Math.Max(CameraNode.Size, 1.00f).ToString("0.0"); //CameraNode.Size.ToString("0.0");
+        _camXRotationLineTextEdit.Text = CameraNode.RotationDegrees.X.ToString("0.0");
+
+        _rotationXAxisLineTextEdit.Text = ModelNode.Rotation.X.ToString("0.0");
+        _rotationYAxisLineTextEdit.Text = ModelNode.Rotation.Y.ToString("0.0");
+        _rotationZAxisLineTextEdit.Text = ModelNode.Rotation.Z.ToString("0.0");
+    }
+
+    //private void ZoomModelOut()
+    //{
+    //    CameraNode.Size += ZoomScale;
+    //    LoadTransformValueToUI();
+    //}
+
+
+    //private void ZoomModelIn()
+    //{
+    //    CameraNode.Size -= ZoomScale;
+    //    LoadTransformValueToUI();
+    //}
+
+
+    //public override void _Process(double delta)
+    //{
+    //    if (_moveLeftBtn.IsPressed())
+    //    {
+    //        //GD.Print("Button Left move is being held down!");
+    //        MoveModelLeft();
+    //    }
+
+    //    if (_rotateXAxisBtn.IsPressed())
+    //    {
+    //        RotateModeXAxis();
+    //    }
+
+    //    if (_rotateYAxisBtn.IsPressed())
+    //    {
+
+    //        RotateModeYAxis();
+    //    }
+
+    //    // LoadTransformValueToUI();
+    //}
+
+    //private void MoveModelLeft()
+    //{
+    //    ModelNode.Position += new Vector3(-MoveSpeed, 0, 0);
+    //    LoadTransformValueToUI();
+    //}
+
+    //private void MoveModelRight()
+    //{
+    //    ModelNode.Position += new Vector3(MoveSpeed, 0, 0);
+    //    LoadTransformValueToUI();
+    //}
+
+    //private void MoveModeUp()
+    //{
+    //    ModelNode.Position += new Vector3(0, MoveSpeed, 0);
+    //    LoadTransformValueToUI();
+    //}
+
+    //private void MoveModeDown()
+    //{
+    //    ModelNode.Position += new Vector3(0, -MoveSpeed, 0);
+    //    LoadTransformValueToUI();
+    //}
+
+    //private void RotateModeXAxis()
+    //{
+    //    ModelNode.RotationDegrees += new Vector3(RotateSpeed, 0, 0);
+    //    LoadTransformValueToUI();
+    //}
+
+    //private void RotateModeYAxis()
+    //{
+    //    ModelNode.RotationDegrees += new Vector3(0, RotateSpeed, 0);
+    //    LoadTransformValueToUI();
+    //}
+
+
 }

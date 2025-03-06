@@ -1,0 +1,196 @@
+[gd_scene load_steps=10 format=3 uid="uid://bvlyygki15ma7"]
+
+[ext_resource type="Script" uid="uid://dhlpap3l8dsgw" path="res://SpriteGenerator/MainUiManager.cs" id="1_cjbp2"]
+[ext_resource type="PackedScene" uid="uid://c6fc3dmnwx8vw" path="res://SpriteGenerator/SpriteGenerationUIManager.tscn" id="3_eqnn4"]
+[ext_resource type="PackedScene" uid="uid://cyslrrhdruiiw" path="res://SpriteGenerator/SpriteSheetGenUIManager.tscn" id="4_12lld"]
+[ext_resource type="LabelSettings" uid="uid://usv7beyw1bj8" path="res://Assets/UI/Theme/Label.tres" id="6_ymv0e"]
+[ext_resource type="Theme" uid="uid://drswssji8tnu3" path="res://Assets/UI/Theme/MainTheme.tres" id="7_12haf"]
+[ext_resource type="Texture2D" uid="uid://cr55nbf56ybvc" path="res://Assets/UI/Basic UI spritesheet.png" id="13_fixxa"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6xjxu"]
+bg_color = Color(0.6, 0.6, 0.6, 0.721569)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lp8d3"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cv7xt"]
+atlas = ExtResource("13_fixxa")
+region = Rect2(258, 112, 13, 16)
+
+[node name="MainUIManager" type="Control" node_paths=PackedStringArray("SpriteGenUIManager", "SpriteSheetGenUIManager", "_saveConfigBtn", "_loadConfigBtn")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("7_12haf")
+script = ExtResource("1_cjbp2")
+SpriteGenUIManager = NodePath("MainTabContainer/SpriteGenerationTabUI")
+SpriteSheetGenUIManager = NodePath("MainTabContainer/SpriteSheetGenerationTabUI")
+_saveConfigBtn = NodePath("SettingsMainPanel/PanelContainer/SettingsMarginOptionsPanel/PanelContainer/VBoxContainer/SpriteGenSettings/VBoxContainer/SaveConfigSettingsPanel/VboxContainer/SaveConfigBtn")
+_loadConfigBtn = NodePath("SettingsMainPanel/PanelContainer/SettingsMarginOptionsPanel/PanelContainer/VBoxContainer/SpriteGenSettings/VBoxContainer/SaveConfigSettingsPanel/VboxContainer/LoadConfigBtn")
+
+[node name="MainTabContainer" type="TabContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+current_tab = 1
+all_tabs_in_front = true
+
+[node name="SpriteGenerationTabUI" parent="MainTabContainer" instance=ExtResource("3_eqnn4")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="SpriteSheetGenerationTabUI" parent="MainTabContainer" instance=ExtResource("4_12lld")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="SettingsMainPanel" type="MarginContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -668.0
+offset_bottom = 124.0
+grow_horizontal = 0
+theme_override_constants/margin_top = 30
+
+[node name="PanelContainer" type="PanelContainer" parent="SettingsMainPanel"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_6xjxu")
+
+[node name="SettingsMarginOptionsPanel" type="MarginContainer" parent="SettingsMainPanel/PanelContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="PanelContainer" type="PanelContainer" parent="SettingsMainPanel/PanelContainer/SettingsMarginOptionsPanel"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SettingsMainPanel/PanelContainer/SettingsMarginOptionsPanel/PanelContainer"]
+layout_mode = 2
+
+[node name="SpriteGenSettings" type="MarginContainer" parent="SettingsMainPanel/PanelContainer/SettingsMarginOptionsPanel/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SettingsMainPanel/PanelContainer/SettingsMarginOptionsPanel/PanelContainer/VBoxContainer/SpriteGenSettings"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="SaveConfigSettingsPanel" type="PanelContainer" parent="SettingsMainPanel/PanelContainer/SettingsMarginOptionsPanel/PanelContainer/VBoxContainer/SpriteGenSettings/VBoxContainer"]
+layout_mode = 2
+
+[node name="VboxContainer" type="HBoxContainer" parent="SettingsMainPanel/PanelContainer/SettingsMarginOptionsPanel/PanelContainer/VBoxContainer/SpriteGenSettings/VBoxContainer/SaveConfigSettingsPanel"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="ConfigLabel" type="Label" parent="SettingsMainPanel/PanelContainer/SettingsMarginOptionsPanel/PanelContainer/VBoxContainer/SpriteGenSettings/VBoxContainer/SaveConfigSettingsPanel/VboxContainer"]
+custom_minimum_size = Vector2(50, 20)
+layout_mode = 2
+text = "  Config :"
+label_settings = ExtResource("6_ymv0e")
+vertical_alignment = 1
+
+[node name="SavedConfigListOptBtn" type="OptionButton" parent="SettingsMainPanel/PanelContainer/SettingsMarginOptionsPanel/PanelContainer/VBoxContainer/SpriteGenSettings/VBoxContainer/SaveConfigSettingsPanel/VboxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 32)
+layout_mode = 2
+clip_text = true
+fit_to_longest_item = false
+
+[node name="SaveConfigBtn" type="Button" parent="SettingsMainPanel/PanelContainer/SettingsMarginOptionsPanel/PanelContainer/VBoxContainer/SpriteGenSettings/VBoxContainer/SaveConfigSettingsPanel/VboxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 20)
+layout_mode = 2
+text = "Save Config"
+
+[node name="LoadConfigBtn" type="Button" parent="SettingsMainPanel/PanelContainer/SettingsMarginOptionsPanel/PanelContainer/VBoxContainer/SpriteGenSettings/VBoxContainer/SaveConfigSettingsPanel/VboxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 20)
+layout_mode = 2
+text = "Load Config"
+
+[node name="SaveFolderSettingsPanel" type="PanelContainer" parent="SettingsMainPanel/PanelContainer/SettingsMarginOptionsPanel/PanelContainer/VBoxContainer/SpriteGenSettings/VBoxContainer"]
+layout_mode = 2
+
+[node name="VboxContainer" type="HBoxContainer" parent="SettingsMainPanel/PanelContainer/SettingsMarginOptionsPanel/PanelContainer/VBoxContainer/SpriteGenSettings/VBoxContainer/SaveFolderSettingsPanel"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="SaveFolderLabel" type="Label" parent="SettingsMainPanel/PanelContainer/SettingsMarginOptionsPanel/PanelContainer/VBoxContainer/SpriteGenSettings/VBoxContainer/SaveFolderSettingsPanel/VboxContainer"]
+custom_minimum_size = Vector2(50, 20)
+layout_mode = 2
+text = "  Save folder :"
+label_settings = ExtResource("6_ymv0e")
+vertical_alignment = 1
+
+[node name="SpriteGenFolderPathLineEdit" type="LineEdit" parent="SettingsMainPanel/PanelContainer/SettingsMarginOptionsPanel/PanelContainer/VBoxContainer/SpriteGenSettings/VBoxContainer/SaveFolderSettingsPanel/VboxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(350, 20)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 8
+
+[node name="SelectFolderPathBtn" type="Button" parent="SettingsMainPanel/PanelContainer/SettingsMarginOptionsPanel/PanelContainer/VBoxContainer/SpriteGenSettings/VBoxContainer/SaveFolderSettingsPanel/VboxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 20)
+layout_mode = 2
+text = "Select Folder"
+
+[node name="OpenFolderPathBtn" type="Button" parent="SettingsMainPanel/PanelContainer/SettingsMarginOptionsPanel/PanelContainer/VBoxContainer/SpriteGenSettings/VBoxContainer/SaveFolderSettingsPanel/VboxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 20)
+layout_mode = 2
+text = "Open Folder"
+
+[node name="OpenSettingsPanel" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -666.0
+offset_bottom = 32.0
+grow_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_lp8d3")
+
+[node name="MarginContainer" type="MarginContainer" parent="OpenSettingsPanel"]
+layout_mode = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 2
+
+[node name="VboxContainer" type="HBoxContainer" parent="OpenSettingsPanel/MarginContainer"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+theme_override_constants/separation = 4
+alignment = 2
+
+[node name="OpenSettingPanelBtn" type="Button" parent="OpenSettingsPanel/MarginContainer/VboxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 20)
+layout_mode = 2
+text = "Main Settings"
+icon = SubResource("AtlasTexture_cv7xt")

@@ -4,12 +4,11 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://bkndqwbtukehd"
-path="res://.godot/imported/BaseModel_PANTS.glb-2c20fe90838e2965e9ae06fca6602d6e.scn"
+valid=false
 
 [deps]
 
 source_file="res://Models/FullModels/BaseModel/PantsLeg/BaseModel_PANTS.glb"
-dest_files=["res://.godot/imported/BaseModel_PANTS.glb-2c20fe90838e2965e9ae06fca6602d6e.scn"]
 
 [params]
 

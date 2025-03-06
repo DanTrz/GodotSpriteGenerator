@@ -4,12 +4,11 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://0b447laqxjwx"
-path="res://.godot/imported/BaseModel_ARMOUR.glb-2afceb2b5d07fc3a8de1d8ec23d2b147.scn"
+valid=false
 
 [deps]
 
 source_file="res://Models/FullModels/BaseModel/Armour/BaseModel_ARMOUR.glb"
-dest_files=["res://.godot/imported/BaseModel_ARMOUR.glb-2afceb2b5d07fc3a8de1d8ec23d2b147.scn"]
 
 [params]
 

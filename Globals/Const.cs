@@ -17,4 +17,9 @@ public static class Const
     public enum TransformType { CAMERA_ZOOM, SCALE, POSITION, ROTATION };
     public enum TransformAxis { X, Y, Z };
 
+    //SAVE Data
+    public const string SAVE_GAME_PATH = "user://";
+
+
+
 }

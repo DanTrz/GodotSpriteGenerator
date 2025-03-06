@@ -10,20 +10,36 @@ public partial class GlobalOnReadyResolver : Node
         GetTree().NodeAdded += OnNodeAdded;
 
         // Resolver needs to be executed for all nodes already in the scene tree (auto-load nodes)
-        foreach (var node in GetTree().Root.GetChildren())
+        ResolveSceneTreeNodes(GetTree().Root.GetChildren());
+
+
+    }
+
+    private void ResolveSceneTreeNodes(Godot.Collections.Array<Node> nodeCollection)
+    {
+        foreach (var node in nodeCollection)
         {
+            string nodeName = node.Name;
             OnNodeAdded(node);
+
+            // Get the children once and iterate over them
+            var children = node.GetChildren();
+            foreach (Node child in children)
+            {
+                ResolveSceneTreeNodes(new Godot.Collections.Array<Node> { child });
+            }
         }
     }
+
 
     private void OnNodeAdded(Node node)
     {
         //// // Resolve internal node references by resolving [OnReady] attributes
 
-        //var name = node.Name.ToString();
+        var name = node.Name.ToString();
         OnReadyResolver.Resolve(node);
 
-        //GD.PrintT("Node Resolved" + node.Name);
+        GD.PrintT("Node Resolved:  " + node.Name);
     }
 
 }

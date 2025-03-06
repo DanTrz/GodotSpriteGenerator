@@ -1,7 +1,7 @@
-using Godot;
 using System;
 using System.IO;
 using System.Linq;
+using Godot;
 
 public partial class SpriteGenerator : Node
 {
@@ -33,7 +33,6 @@ public partial class SpriteGenerator : Node
     [Export] private bool _isTimeBaseExport = true;
     [Export(PropertyHint.Range, "1,4,1")] private float _animationPlaybackSpeed = 1.0f;
 
-    [OnReady("%SaveIntervalTimer")] private Timer _saveIntervalTimer;
     [OnReady("%ResOptionButton")] private OptionButton _resolutionOptionBtn;
     [OnReady("%PixelShaderOptionBtn")] private OptionButton _pixelShaderOptionBtn;
     [OnReady("%FrameStepTextEdit")] private LineEdit _frameStepTextEdit;
@@ -41,7 +40,7 @@ public partial class SpriteGenerator : Node
     [OnReady("%ClearFolderCheckBtn")] private CheckButton _clearFolderCheckBtn;
     [OnReady("%PixelEffectCheckBtn")] private CheckButton _pixelEffectCheckBtn;
     [OnReady("%PixelShaderTextRect")] private TextureRect _pixelShaderTextRect;
-    [OnReady("%3DModelPositionManager")] private ModelPositionManager _modelPositionManager;
+    [OnReady("%ModelPositionManager")] private ModelPositionManager _modelPositionManager;
     [OnReady("%LoadAllAnimationsBtn")] private Button _loadAllAnimationsBtn;
     [OnReady("%animSelectionItemList")] private ItemListCheckBox _animSelectionItemList;
     [OnReady("%angleSelectionItemList")] private ItemListCheckBox _angleSelectionItemList;

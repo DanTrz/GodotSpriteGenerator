@@ -1,7 +1,6 @@
 using Godot;
 
 [GlobalClass]
-[Tool]
 public partial class ArrayMeshDataObject : Resource
 {
 

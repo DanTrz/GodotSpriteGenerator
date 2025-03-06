@@ -9,16 +9,20 @@
       "name": "C# Main",
       "type": "coreclr",
       "request": "launch",
-      "preLaunchTask": "build",
-      "program": "C:/Local Documents/Development/Godot/Other Godot Versions/Godot_4.3_NETCsharp/Godot_v4.3-stable_mono_win64.exe",
+      //"preLaunchTask": "build",
+      "preLaunchTask": "dotnet: build",
+      "program": "C:/Local Documents/Development/Godot/Other Godot Versions/Godot_v4.4-stable_mono_win64/Godot_v4.4-stable_mono_win64.exe",
       "args": [
         // "--debug-collisions",
         // "--debug-paths",
-        // "--debug-navigation"
+        // "--debug-navigation",
+        "--path",
+        "${workspaceFolder}"
       ],
       "cwd": "${workspaceFolder}",
       "stopAtEntry": false,
-      "console": "integratedTerminal"
+      "console": "integratedTerminal", // <--- CHANGE THIS
+      //"internalConsoleOptions": "openOnSessionStart"
     },
     // Debug the scene that matches the name of the currently open *.cs file
     // (if there's a scene with the same name in the same directory).
@@ -27,7 +31,7 @@
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build",
-      "program": "C:/Local Documents/Development/Godot/Other Godot Versions/Godot_4.3_NETCsharp/Godot_v4.3-stable_mono_win64.exe",
+      "program": "C:/Local Documents/Development/Godot/Other Godot Versions/Godot_v4.4-stable_mono_win64/Godot_v4.4-stable_mono_win64.exe",
       "args": [
         "${fileDirname}/${fileBasenameNoExtension}.tscn"
       ],
@@ -41,7 +45,7 @@
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build",
-      "program": "C:/Local Documents/Development/Godot/Other Godot Versions/Godot_4.3_NETCsharp/Godot_v4.3-stable_mono_win64.exe",
+      "program": "C:/Local Documents/Development/Godot/Other Godot Versions/Godot_v4.4-stable_mono_win64/Godot_v4.4-stable_mono_win64.exe",
       "debugServer": 6006,
       "args": [
         "--remote-debug",

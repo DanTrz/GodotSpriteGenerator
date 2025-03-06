@@ -19,13 +19,14 @@ config/icon="res://icon.svg"
 [autoload]
 
 GlobalOnReadyResolver="*res://Globals/OnReady/GlobalOnReadyResolver.cs"
+SaveGameManager="*res://Globals/SaveGameManager/SaveGameManager.cs"
 
 [display]
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
-window/size/window_width_override=1280
-window/size/window_height_override=720
+window/size/window_width_override=1600
+window/size/window_height_override=900
 window/stretch/mode="canvas_items"
 
 [dotnet]
