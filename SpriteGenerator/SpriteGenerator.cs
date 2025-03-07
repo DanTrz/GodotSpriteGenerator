@@ -5,11 +5,11 @@ using Godot;
 
 public partial class SpriteGenerator : Node
 {
-    [Export] private Button _startGenerationBtn;
+    [Export] public Button _startGenerationBtn;
 
     [Export] public Node3D MainScene3D;
-    [Export] private SubViewport _rawViewport;
-    [Export] private SubViewportContainer _rawViewportContainer;
+    [Export] public SubViewport _rawViewport;
+    [Export] public SubViewportContainer _rawViewportContainer;
 
     //private string _saveSpriteFolderPath;
     //public string SaveSpriteFolderPath;
@@ -26,38 +26,39 @@ public partial class SpriteGenerator : Node
     ////    }
     ////}
 
-    [Export] private int _spriteResolution = 256;
-    [Export] private int frameSkipStep = 4; // Control how frequently frames are captured
-    [Export] private bool _clearFolderBeforeGeneration = true;
-    [Export] private bool _usePixelEffect = true;
-    [Export] private bool _isTimeBaseExport = true;
+    public static int _spriteResolution = 256;
+    [Export] public int frameSkipStep = 4; // Control how frequently frames are captured
+    [Export] public bool _clearFolderBeforeGeneration = true;
+    [Export] public bool _usePixelEffect = true;
+
     [Export(PropertyHint.Range, "1,4,1")] private float _animationPlaybackSpeed = 1.0f;
 
 
     //SaveConfigBtn
 
-    [OnReady("%SaveConfigBtn")] private Button _saveConfigBtn;
+    [Export] public Button _saveConfigBtn;
+    [Export] public Button _loadConfigBtn;
 
-    [OnReady("%ResOptionButton")] private OptionButton _resolutionOptionBtn;
-    [OnReady("%PixelShaderOptionBtn")] private OptionButton _pixelShaderOptionBtn;
-    [OnReady("%FrameStepTextEdit")] private LineEdit _frameStepTextEdit;
-    [OnReady("%PlayBackSpeedLineEdit")] private LineEdit _playBackSpeedLineEdit;
-    [OnReady("%ClearFolderCheckBtn")] private CheckButton _clearFolderCheckBtn;
-    [OnReady("%PixelEffectCheckBtn")] private CheckButton _pixelEffectCheckBtn;
-    [OnReady("%PixelShaderTextRect")] private TextureRect _pixelShaderTextRect;
-    [OnReady("%ModelPositionManager")] private ModelPositionManager _modelPositionManager;
-    [OnReady("%LoadAllAnimationsBtn")] private Button _loadAllAnimationsBtn;
-    [OnReady("%animSelectionItemList")] private ItemListCheckBox _animSelectionItemList;
-    [OnReady("%angleSelectionItemList")] private ItemListCheckBox _angleSelectionItemList;
-    [OnReady("%Pixel32GridTextRect")] private TextureRect _pixelGridTextRect;
-    [OnReady("%ShowGridCheckButton")] private CheckButton _showGridCheckButton;
+    [Export] public OptionButton _resolutionOptionBtn;
+    [Export] public OptionButton _pixelShaderOptionBtn;
+    [Export] public LineEdit _frameStepTextEdit;
+    [Export] public LineEdit _playBackSpeedLineEdit;
+    [Export] public CheckButton _clearFolderCheckBtn;
+    [Export] public CheckButton _pixelEffectCheckBtn;
+    [Export] public TextureRect _pixelShaderTextRect;
+    [Export] public ModelPositionManager _modelPositionManager;
+    [Export] public Button _loadAllAnimationsBtn;
+    [Export] public ItemListCheckBox _animSelectionItemList;
+    [Export] public ItemListCheckBox _angleSelectionItemList;
+    [Export] public TextureRect _pixelGridTextRect;
+    [Export] public CheckButton _showGridCheckButton;
 
     //Main Settings and Folder Path Variables
-    [OnReady("%SelectFolderPathBtn")] private Button _selectFolderPathBtn;
-    [OnReady("%OpenFolderPathBtn")] private Button _openFolderPathBtn;
-    [OnReady("%SpriteGenFolderPathLineEdit")] LineEdit _spriteGenFolderPathLineEdit;
-    [OnReady("%SettingsMainPanel")] MarginContainer _settingsMainPanel;
-    [OnReady("%OpenSettingPanelBtn")] Button _openSettingPanelBtn;
+    [Export] public Button _selectFolderPathBtn;
+    [Export] public Button _openFolderPathBtn;
+    [Export] public LineEdit _spriteGenFolderPathLineEdit;
+    [Export] public MarginContainer _settingsMainPanel;
+    [Export] public Button _openSettingPanelBtn;
     //[OnReady("%MainTabContainer")] TabContainer _mainTabContainer;
 
 
@@ -65,9 +66,9 @@ public partial class SpriteGenerator : Node
 
 
     //MeshReplacer Nodes and Variables
-    [OnReady("%MeshReplacerPanelCont")] private PanelContainer _meshReplacerPanelParentNode;
-    [OnReady("%HairMeshOptBtn")] private OptionButton _hairMeshOptBtn;
-    [OnReady("%HairColorBtn")] private ColorPickerButton _hairColorBtn;
+    [Export] public PanelContainer _meshReplacerPanelParentNode;
+    [Export] public OptionButton _hairMeshOptBtn;
+    [Export] public ColorPickerButton _hairColorBtn;
     //[OnReady("%HeadMeshOptBtn")] private OptionButton _headMeshOptBtn;
     //[OnReady("%TorsoMeshOptBtn")] private OptionButton _torsoMeshOptBtn;
 
@@ -95,11 +96,45 @@ public partial class SpriteGenerator : Node
 
     private Control _lastFocusedControl;
 
+
+    // public void OnSaveData(Godot.Collections.Dictionary<string, Godot.Collections.Dictionary> nodeSaveData2)
+    // {
+    //     GD.PrintT("Started OnSaveData from:", this.Name);
+    //     //nodeSaveData.Add(_spriteResolution);
+
+    //     Godot.Collections.Dictionary localNodeData = new();
+
+    //     localNodeData[nameof(_spriteResolution)] = _spriteResolution;
+    //     localNodeData[nameof(_pixelEffectCheckBtn)] = _pixelEffectCheckBtn.ButtonPressed;
+    //     localNodeData[nameof(_showGridCheckButton)] = _showGridCheckButton.ButtonPressed;
+
+    //     nodeSaveData2[this.Name] = localNodeData;
+
+    // }
+
+    public void OnSaveData(SaveGameData newSaveGameData)
+    {
+        GD.PrintT("Started OnSaveData from:", this.Name);
+        //nodeSaveData.Add(_spriteResolution);
+        newSaveGameData.ShowPixelEffect = _pixelEffectCheckBtn.ButtonPressed;
+
+    }
+
+    public void OnLoadData(SaveGameData newLoadData)
+    {
+        GD.PrintT("Started OnLoadData from:", this.Name);
+        _pixelEffectCheckBtn.ButtonPressed = newLoadData.ShowPixelEffect;
+        _pixelEffectCheckBtn.Text = _pixelEffectCheckBtn.ButtonPressed.ToString();
+
+    }
+
+
     public override void _Ready()
     {
 
         //Connect UI Signals
         _saveConfigBtn.Pressed += OnSaveConfigBtnPressed;
+        _loadConfigBtn.Pressed += OnLoadConfigBtnPressed;
         _spriteGenFolderPathLineEdit.TextChanged += (newDir) => GlobalUtil.OnFolderSelected(newDir, _spriteGenFolderPathLineEdit);
         _selectFolderPathBtn.Pressed += OnSelectFolderPathPressed;
         _openFolderPathBtn.Pressed += OnOpenFolderPathPressed;
@@ -182,6 +217,12 @@ public partial class SpriteGenerator : Node
 
     }
 
+    private async void OnLoadConfigBtnPressed()
+    {
+        await SaveGameManager.Instance.LoadGameData();
+    }
+
+
     private async void OnSaveConfigBtnPressed()
     {
         await SaveGameManager.Instance.SaveGameData();
@@ -204,14 +245,9 @@ public partial class SpriteGenerator : Node
         if (_clearFolderBeforeGeneration)
             ClearFolder(saveFolder);
 
-        if (_isTimeBaseExport)
-        {
-            //GenerateSpritesTimeBased();
-        }
-        else
-        {
-            GenerateSpritesFrameBased();
-        }
+
+        GenerateSpritesFrameBased();
+
 
     }
 
@@ -630,29 +666,6 @@ public partial class SpriteGenerator : Node
         MeshReplacer.UpdateMeshFromResourceItem(_meshInstanceObject, itemSelected);
     }
 
-    private void UpdateAllMeshesAndMeshesUI()
-    {
-        //_headMeshOptBtn.Selected = 0;
-        //OnHeadMeshOptBtnItemSelected(0);
-
-        //_torsoMeshOptBtn.Selected = 0;
-        //OnTorsoMeshOptBtnItemSelected(0);
-
-        //_legsMeshOptBtn.Selected = 0;
-        //OnLegsMeshOptBtnItemSelected(0);
-
-        //_hairMeshOptBtn.Selected = 0;
-        //OnHairMeshOptBtnItemSelected(0);
-
-        //_feetMeshOptBtn.Selected = 0;
-        //OnFeetMeshOptBtnItemSelected(0);
-
-        //_leftArmMeshOptBtn.Selected = 0;
-        //OnLeftArmMeshOptBtnItemSelected(0);
-
-        //_rightArmMeshOptBtn.Selected = 0;
-        //OnRightArmMeshOptBtnItemSelected(0);
-    }
 
 
 

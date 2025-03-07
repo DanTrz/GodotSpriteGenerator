@@ -1,14 +1,22 @@
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using Godot;
+using Godot.Collections;
 
 public partial class SaveGameManager : Node
 {
     public static SaveGameManager Instance { get; private set; }
+
+    //public Godot.Collections.Array nodeSaveData { get; private set; }
+    public Godot.Collections.Dictionary<string, Dictionary> nodeSaveData { get; private set; }
+
     public override void _Ready() { Instance = this; }
 
     public async Task SaveGameData()
     {
+
         GD.Print("SaveGamedata started");
         SaveGameData newSaveGameData = new();
 
@@ -16,6 +24,29 @@ public partial class SaveGameManager : Node
         newSaveGameData.SaveFileName = "savegamedata.tres";
 
         await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+
+        //List<SaveGameData> newList = new();
+        // get_tree().call_group("persistent_data", "on_save_game", persistent_data_objects)
+        nodeSaveData = new();
+        //nodeSaveData2 = new();
+
+        GetTree().CallGroup("save_data", SpriteGenerator.MethodName.OnSaveData, nodeSaveData);
+
+        //GetTree().CallGroup("save_data", SpriteGenerator.MethodName.OnSaveData2);
+
+        GD.PrintT(nodeSaveData.Count.ToString());
+        var spriteRes = nodeSaveData[nameof(SpriteGenerator)].GetValueOrDefault(nameof(SpriteGenerator._spriteResolution)).ToString();
+        //
+        var CamDistance = nodeSaveData[nameof(ModelPositionManager)].GetValueOrDefault("CameraDistance").ToString();
+        var CamDistance2 = nodeSaveData[nameof(ModelPositionManager)].GetValueOrDefault(nameof(ModelPositionManager.CamDistancelLineTextEdit)).ToString();
+        var _showGridCheckButton = nodeSaveData[nameof(SpriteGenerator)].GetValueOrDefault(nameof(SpriteGenerator._showGridCheckButton)).ToString();
+
+
+        var _pixelEffectCheckBtn = nodeSaveData[nameof(SpriteGenerator)].GetValueOrDefault(nameof(SpriteGenerator._pixelEffectCheckBtn)).ToString();
+
+        newSaveGameData.ShowPixelEffect = (bool)nodeSaveData[nameof(SpriteGenerator)].GetValueOrDefault(nameof(SpriteGenerator._pixelEffectCheckBtn));
+
+        GD.PrintT(spriteRes, CamDistance, CamDistance2, _showGridCheckButton, _pixelEffectCheckBtn);
 
         //Get the data from the Game (Nodes, etc) and sets it to the SaveGame file
         newSaveGameData.GetSaveGameDataFromNodes();
@@ -37,6 +68,8 @@ public partial class SaveGameManager : Node
         newLoadSaveGameData = ResourceLoader.Load<SaveGameData>(Const.SAVE_GAME_PATH + "savegamedata.tres");
 
         await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+
+        GetTree().CallGroup("save_data", SpriteGenerator.MethodName.OnLoadData, newLoadSaveGameData);
 
         //Push the data from the SaveGame file to the game
         newLoadSaveGameData.SetSaveGameDataToNodes(newLoadSaveGameData);

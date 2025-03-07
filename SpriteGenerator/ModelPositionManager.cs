@@ -4,20 +4,37 @@ using Godot;
 public partial class ModelPositionManager : Node
 {
 
-    [OnReady("%CamDistancelLineTextEdit")] private LineEdit _camDistancelLineTextEdit;
-    [OnReady("%CamXRotationLineTextEdit")] private LineEdit _camXRotationLineTextEdit;
 
-    [OnReady("%PosiXAxisLineTextEdit")] private LineEdit _posXAxisLineTextEdit;
-    [OnReady("%PosYAxisLineTextEdit")] private LineEdit _posYAxisLineTextEdit;
-    [OnReady("%PosZAxisLineTextEdit")] private LineEdit _posZAxisLineTextEdit;
+    [Export] public LineEdit _camXRotationLineTextEdit;
 
-    [OnReady("%RotationXAxisLineTextEdit")] private LineEdit _rotationXAxisLineTextEdit;
-    [OnReady("%RotationYAxisLineTextEdit")] private LineEdit _rotationYAxisLineTextEdit;
-    [OnReady("%RotationZAxisLineTextEdit")] private LineEdit _rotationZAxisLineTextEdit;
+    [Export] public LineEdit CamDistancelLineTextEdit;
+
+    [Export] public LineEdit _posXAxisLineTextEdit;
+    [Export] public LineEdit _posYAxisLineTextEdit;
+    [Export] public LineEdit _posZAxisLineTextEdit;
+
+    [Export] public LineEdit _rotationXAxisLineTextEdit;
+    [Export] public LineEdit _rotationYAxisLineTextEdit;
+    [Export] public LineEdit _rotationZAxisLineTextEdit;
 
     public Node3D ModelNode;
     public Camera3D CameraNode;
     private bool _isModeLeftBtnHeld = false;
+
+    public void OnSaveData(Godot.Collections.Dictionary<string, Godot.Collections.Dictionary> nodeSaveData2)
+    {
+        GD.PrintT("Started OnSaveData from:", this.Name);
+        //nodeSaveData.Add(_spriteResolution);
+
+        Godot.Collections.Dictionary localNodeData = new();
+
+        localNodeData["CameraDistance"] = float.Parse(CamDistancelLineTextEdit.Text);
+        //localNodeData[CamDistancelLineTextEdit.Name] = float.Parse(CamDistancelLineTextEdit.Text);
+        localNodeData[nameof(CamDistancelLineTextEdit)] = float.Parse(CamDistancelLineTextEdit.Text);
+
+        nodeSaveData2[this.Name] = localNodeData;
+
+    }
 
     public override void _Ready()
     {
@@ -85,19 +102,19 @@ public partial class ModelPositionManager : Node
     {
         ModelNode.Position = new Vector3(float.Parse(_posXAxisLineTextEdit.Text), float.Parse(_posYAxisLineTextEdit.Text), float.Parse(_posZAxisLineTextEdit.Text));
         ModelNode.Rotation = new Vector3(float.Parse(_rotationXAxisLineTextEdit.Text), float.Parse(_rotationYAxisLineTextEdit.Text), float.Parse(_rotationZAxisLineTextEdit.Text));
-        CameraNode.Size = Math.Max(float.Parse(_camDistancelLineTextEdit.Text), 1.00f);
+        CameraNode.Size = Math.Max(float.Parse(CamDistancelLineTextEdit.Text), 1.00f);
         CameraNode.RotationDegrees = new Vector3(float.Parse(_camXRotationLineTextEdit.Text), 0, 0);
     }
 
     private void LoadTransformValueToUI()
     {
-        if (_posXAxisLineTextEdit is null && _camDistancelLineTextEdit is null) return;
+        if (_posXAxisLineTextEdit == null || CamDistancelLineTextEdit == null) return;
 
         _posXAxisLineTextEdit.Text = ModelNode.Position.X.ToString("0.0");
         _posYAxisLineTextEdit.Text = ModelNode.Position.Y.ToString("0.0");
         _posZAxisLineTextEdit.Text = ModelNode.Position.Z.ToString("0.0");
 
-        _camDistancelLineTextEdit.Text = Math.Max(CameraNode.Size, 1.00f).ToString("0.0"); //CameraNode.Size.ToString("0.0");
+        CamDistancelLineTextEdit.Text = Math.Max(CameraNode.Size, 1.00f).ToString("0.0"); //CameraNode.Size.ToString("0.0");
         _camXRotationLineTextEdit.Text = CameraNode.RotationDegrees.X.ToString("0.0");
 
         _rotationXAxisLineTextEdit.Text = ModelNode.Rotation.X.ToString("0.0");

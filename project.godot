@@ -18,7 +18,6 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-GlobalOnReadyResolver="*res://Globals/OnReady/GlobalOnReadyResolver.cs"
 SaveGameManager="*res://Globals/SaveGameManager/SaveGameManager.cs"
 
 [display]
@@ -36,6 +35,10 @@ project/assembly_name="SpriteGenerator"
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/jigglebones/plugin.cfg")
+
+[global_group]
+
+save_data=""
 
 [gui]
 

@@ -63,15 +63,36 @@ corner_radius_bottom_left = 5
 atlas = ExtResource("5_mumiu")
 region = Rect2(258, 112, 13, 16)
 
-[node name="SpriteGenerator" type="CanvasLayer" node_paths=PackedStringArray("_startGenerationBtn", "MainScene3D", "_rawViewport", "_rawViewportContainer")]
+[node name="SpriteGenerator" type="CanvasLayer" node_paths=PackedStringArray("_startGenerationBtn", "MainScene3D", "_rawViewport", "_rawViewportContainer", "_saveConfigBtn", "_loadConfigBtn", "_resolutionOptionBtn", "_pixelShaderOptionBtn", "_frameStepTextEdit", "_playBackSpeedLineEdit", "_clearFolderCheckBtn", "_pixelEffectCheckBtn", "_pixelShaderTextRect", "_modelPositionManager", "_loadAllAnimationsBtn", "_animSelectionItemList", "_angleSelectionItemList", "_pixelGridTextRect", "_showGridCheckButton", "_selectFolderPathBtn", "_openFolderPathBtn", "_spriteGenFolderPathLineEdit", "_settingsMainPanel", "_openSettingPanelBtn", "_meshReplacerPanelParentNode", "_hairMeshOptBtn", "_hairColorBtn") groups=["save_data"]]
 script = ExtResource("1_ws6fq")
 _startGenerationBtn = NodePath("MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MarginContainer4/FinalGenerationButton/StartGenerationBtn")
 MainScene3D = NodePath("MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/ModelPanelContainer/RawViewportContainer/RawSubViewport/Model/MainScene3D")
 _rawViewport = NodePath("MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/ModelPanelContainer/RawViewportContainer/RawSubViewport")
 _rawViewportContainer = NodePath("MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/ModelPanelContainer/RawViewportContainer")
-_spriteResolution = 512
 frameSkipStep = 1
-_isTimeBaseExport = false
+_saveConfigBtn = NodePath("MainUI/SettingsMainPanel/PanelContainer/SettingsMarginOptionsPanel/PanelContainer/VBoxContainer/SpriteGenSettings/VBoxContainer/SaveConfigSettingsPanel/VboxContainer/SaveConfigBtn")
+_loadConfigBtn = NodePath("MainUI/SettingsMainPanel/PanelContainer/SettingsMarginOptionsPanel/PanelContainer/VBoxContainer/SpriteGenSettings/VBoxContainer/SaveConfigSettingsPanel/VboxContainer/LoadConfigBtn")
+_resolutionOptionBtn = NodePath("MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/SpriteResHBoxCont/ResOptionButton")
+_pixelShaderOptionBtn = NodePath("MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/PixelShaderLvlHBoxCont/PixelShaderOptionBtn")
+_frameStepTextEdit = NodePath("MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/FrameSkipHBoxCont/FrameStepTextEdit")
+_playBackSpeedLineEdit = NodePath("MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/PlaybackSpeedHBoxCont/PlayBackSpeedLineEdit")
+_clearFolderCheckBtn = NodePath("MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/ClearFolderHBoxCont/ClearFolderCheckBtn")
+_pixelEffectCheckBtn = NodePath("MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/PixelEffectHBoxCont/MarginContainer/PixelEffectCheckBtn")
+_pixelShaderTextRect = NodePath("MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/ModelPanelContainer/RawViewportContainer/RawSubViewport/PixelShaderTextRect")
+_modelPositionManager = NodePath("MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/ImageOptionsPanel/ModelPositionManager")
+_loadAllAnimationsBtn = NodePath("MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MarginContainer3/AnimSelectPanelCont/MarginContainer/VBoxContainer/HBoxContainer/LoadAllAnimationsBtn")
+_animSelectionItemList = NodePath("MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MarginContainer3/AnimSelectPanelCont/MarginContainer/VBoxContainer/animSelectionItemList")
+_angleSelectionItemList = NodePath("MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/AngleSelectionHBoxCont/angleSelectionItemList")
+_pixelGridTextRect = NodePath("MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/ModelPanelContainer/RawViewportContainer/RawSubViewport/Pixel32GridTextRect")
+_showGridCheckButton = NodePath("MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/ShowGridHBoxCont/MarginContainer/ShowGridCheckButton")
+_selectFolderPathBtn = NodePath("MainUI/SettingsMainPanel/PanelContainer/SettingsMarginOptionsPanel/PanelContainer/VBoxContainer/SpriteGenSettings/VBoxContainer/SaveFolderSettingsPanel/VboxContainer/SelectFolderPathBtn")
+_openFolderPathBtn = NodePath("MainUI/SettingsMainPanel/PanelContainer/SettingsMarginOptionsPanel/PanelContainer/VBoxContainer/SpriteGenSettings/VBoxContainer/SaveFolderSettingsPanel/VboxContainer/OpenFolderPathBtn")
+_spriteGenFolderPathLineEdit = NodePath("MainUI/SettingsMainPanel/PanelContainer/SettingsMarginOptionsPanel/PanelContainer/VBoxContainer/SpriteGenSettings/VBoxContainer/SaveFolderSettingsPanel/VboxContainer/SpriteGenFolderPathLineEdit")
+_settingsMainPanel = NodePath("MainUI/SettingsMainPanel")
+_openSettingPanelBtn = NodePath("MainUI/OpenSettingsPanel/MarginContainer/VboxContainer/OpenSettingPanelBtn")
+_meshReplacerPanelParentNode = NodePath("MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont")
+_hairMeshOptBtn = NodePath("MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/HairMeshHBoxCont/HairMeshOptBtn")
+_hairColorBtn = NodePath("MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/HairMeshHBoxCont/MarginContainer/HairColorBtn")
 
 [node name="MainUI" type="Control" parent="."]
 texture_filter = 2
@@ -881,6 +902,7 @@ text = "Save SpriteSheet
 
 [node name="SettingsMainPanel" type="MarginContainer" parent="MainUI"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
