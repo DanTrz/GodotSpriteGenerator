@@ -10,25 +10,26 @@ public partial class SaveGameData : Resource
     [Export] public bool ShowPixelEffect { get; set; }
 
     [Export] public int PixelEffectLevel { get; set; }
-    [Export] private int SpriteResolution { get; set; }
+    [Export] public int SpriteResolution { get; set; }
+    [Export] public int SpriteResolutionOptBtn { get; set; }
 
-    [Export] private int FrameSkipStep { get; set; }
-    [Export] private bool ClearFolderBeforeGeneration { get; set; }
-    [Export] private bool UsePixelEffect { get; set; }
+    [Export] public int FrameSkipStep { get; set; }
+    [Export] public bool ClearFolderBeforeGeneration { get; set; }
+    [Export] public bool UsePixelEffect { get; set; }
 
-    [Export] private int PlaybackSpeed { get; set; }
+    [Export] public float PlaybackSpeed { get; set; }
 
     //MODEL POSITION MANAGER VARIABLES AND CONFIG
-    [Export] private float CameraDistance { get; set; }
-    [Export] private float CameraRotation { get; set; }
+    [Export] public float CameraDistance { get; set; }
+    [Export] public float CameraRotation { get; set; }
 
-    [Export] private float ModelPositionXAxis { get; set; }
-    [Export] private float ModelPositionYAxis { get; set; }
-    [Export] private float ModelPositionZAxis { get; set; }
+    [Export] public float ModelPositionXAxis { get; set; }
+    [Export] public float ModelPositionYAxis { get; set; }
+    [Export] public float ModelPositionZAxis { get; set; }
 
-    [Export] private float ModelRotationXAxis { get; set; }
-    [Export] private float ModelRotationYAxis { get; set; }
-    [Export] private float ModelRotationZAxis { get; set; }
+    [Export] public float ModelRotationXAxis { get; set; }
+    [Export] public float ModelRotationYAxis { get; set; }
+    [Export] public float ModelRotationZAxis { get; set; }
 
     //SPRITE SHEET GEN VARIABLES AND CONFIG
     // [Export] private int SpriteResolution { get; set; }

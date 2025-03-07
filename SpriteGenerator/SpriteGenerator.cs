@@ -116,17 +116,38 @@ public partial class SpriteGenerator : Node
     {
         GD.PrintT("Started OnSaveData from:", this.Name);
         //nodeSaveData.Add(_spriteResolution);
+        newSaveGameData.SpriteResolution = _spriteResolution;
+        newSaveGameData.SpriteResolutionOptBtn = _resolutionOptionBtn.Selected;
+        newSaveGameData.FrameSkipStep = frameSkipStep;
         newSaveGameData.ShowPixelEffect = _pixelEffectCheckBtn.ButtonPressed;
-
+        newSaveGameData.PixelEffectLevel = _pixelShaderOptionBtn.Selected;
+        newSaveGameData.PlaybackSpeed = _animationPlaybackSpeed;
+        newSaveGameData.ShowGrid = _showGridCheckButton.ButtonPressed;
     }
 
     public void OnLoadData(SaveGameData newLoadData)
     {
         GD.PrintT("Started OnLoadData from:", this.Name);
+        _spriteResolution = newLoadData.SpriteResolution;
+        _resolutionOptionBtn.Selected = newLoadData.SpriteResolutionOptBtn;
+        frameSkipStep = newLoadData.FrameSkipStep;
+        _frameStepTextEdit.Text = frameSkipStep.ToString();
         _pixelEffectCheckBtn.ButtonPressed = newLoadData.ShowPixelEffect;
         _pixelEffectCheckBtn.Text = _pixelEffectCheckBtn.ButtonPressed.ToString();
+        _pixelShaderOptionBtn.Selected = newLoadData.PixelEffectLevel;
+        _animationPlaybackSpeed = newLoadData.PlaybackSpeed;
+        _playBackSpeedLineEdit.Text = _animationPlaybackSpeed.ToString();
+        _showGridCheckButton.ButtonPressed = newLoadData.ShowGrid;
 
+        UpdateViewPort();
+        OnRenderResolutionChanged(0);
+        OnPixelShaderResolutionChanged(0);
+        OnPlayBackSpeedChanged(newLoadData.PlaybackSpeed.ToString());
+        OnFrameStepChanged(newLoadData.FrameSkipStep.ToString());
+        OnShowGridCheckButtonPressed();
+        OnPixelEffectPressed();
     }
+
 
 
     public override void _Ready()

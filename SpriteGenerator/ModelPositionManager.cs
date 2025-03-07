@@ -21,19 +21,44 @@ public partial class ModelPositionManager : Node
     public Camera3D CameraNode;
     private bool _isModeLeftBtnHeld = false;
 
-    public void OnSaveData(Godot.Collections.Dictionary<string, Godot.Collections.Dictionary> nodeSaveData2)
+    public void OnSaveData(SaveGameData newSaveGameData)
     {
         GD.PrintT("Started OnSaveData from:", this.Name);
+        newSaveGameData.CameraDistance = float.Parse(CamDistancelLineTextEdit.Text);
+        newSaveGameData.CameraRotation = float.Parse(_camXRotationLineTextEdit.Text);
+        newSaveGameData.ModelPositionXAxis = float.Parse(_posXAxisLineTextEdit.Text);
+        newSaveGameData.ModelPositionYAxis = float.Parse(_posYAxisLineTextEdit.Text);
+        newSaveGameData.ModelPositionZAxis = float.Parse(_posZAxisLineTextEdit.Text);
+        newSaveGameData.ModelRotationXAxis = float.Parse(_rotationXAxisLineTextEdit.Text);
+        newSaveGameData.ModelRotationYAxis = float.Parse(_rotationYAxisLineTextEdit.Text);
+        newSaveGameData.ModelRotationZAxis = float.Parse(_rotationZAxisLineTextEdit.Text);
+
+
+
         //nodeSaveData.Add(_spriteResolution);
 
-        Godot.Collections.Dictionary localNodeData = new();
+        // Godot.Collections.Dictionary localNodeData = new();
 
-        localNodeData["CameraDistance"] = float.Parse(CamDistancelLineTextEdit.Text);
-        //localNodeData[CamDistancelLineTextEdit.Name] = float.Parse(CamDistancelLineTextEdit.Text);
-        localNodeData[nameof(CamDistancelLineTextEdit)] = float.Parse(CamDistancelLineTextEdit.Text);
+        // localNodeData["CameraDistance"] = float.Parse(CamDistancelLineTextEdit.Text);
+        // //localNodeData[CamDistancelLineTextEdit.Name] = float.Parse(CamDistancelLineTextEdit.Text);
+        // localNodeData[nameof(CamDistancelLineTextEdit)] = float.Parse(CamDistancelLineTextEdit.Text);
 
-        nodeSaveData2[this.Name] = localNodeData;
+        // nodeSaveData2[this.Name] = localNodeData;
 
+    }
+
+    public void OnLoadData(SaveGameData newLoadData)
+    {
+        GD.PrintT("Started OnLoadData from:", this.Name);
+        CamDistancelLineTextEdit.Text = newLoadData.CameraDistance.ToString();
+        _camXRotationLineTextEdit.Text = newLoadData.CameraRotation.ToString();
+        _posXAxisLineTextEdit.Text = newLoadData.ModelPositionXAxis.ToString();
+        _posYAxisLineTextEdit.Text = newLoadData.ModelPositionYAxis.ToString();
+        _posZAxisLineTextEdit.Text = newLoadData.ModelPositionZAxis.ToString();
+        _rotationXAxisLineTextEdit.Text = newLoadData.ModelRotationXAxis.ToString();
+        _rotationYAxisLineTextEdit.Text = newLoadData.ModelRotationYAxis.ToString();
+        _rotationZAxisLineTextEdit.Text = newLoadData.ModelRotationZAxis.ToString();
+        SetTransformValueToModel();
     }
 
     public override void _Ready()

@@ -30,23 +30,23 @@ public partial class SaveGameManager : Node
         nodeSaveData = new();
         //nodeSaveData2 = new();
 
-        GetTree().CallGroup("save_data", SpriteGenerator.MethodName.OnSaveData, nodeSaveData);
+        GetTree().CallGroup("save_data", SpriteGenerator.MethodName.OnSaveData, newSaveGameData);
 
-        //GetTree().CallGroup("save_data", SpriteGenerator.MethodName.OnSaveData2);
+        // //GetTree().CallGroup("save_data", SpriteGenerator.MethodName.OnSaveData2);
 
-        GD.PrintT(nodeSaveData.Count.ToString());
-        var spriteRes = nodeSaveData[nameof(SpriteGenerator)].GetValueOrDefault(nameof(SpriteGenerator._spriteResolution)).ToString();
-        //
-        var CamDistance = nodeSaveData[nameof(ModelPositionManager)].GetValueOrDefault("CameraDistance").ToString();
-        var CamDistance2 = nodeSaveData[nameof(ModelPositionManager)].GetValueOrDefault(nameof(ModelPositionManager.CamDistancelLineTextEdit)).ToString();
-        var _showGridCheckButton = nodeSaveData[nameof(SpriteGenerator)].GetValueOrDefault(nameof(SpriteGenerator._showGridCheckButton)).ToString();
+        // GD.PrintT(nodeSaveData.Count.ToString());
+        // var spriteRes = nodeSaveData[nameof(SpriteGenerator)].GetValueOrDefault(nameof(SpriteGenerator._spriteResolution)).ToString();
+        // //
+        // var CamDistance = nodeSaveData[nameof(ModelPositionManager)].GetValueOrDefault("CameraDistance").ToString();
+        // var CamDistance2 = nodeSaveData[nameof(ModelPositionManager)].GetValueOrDefault(nameof(ModelPositionManager.CamDistancelLineTextEdit)).ToString();
+        // var _showGridCheckButton = nodeSaveData[nameof(SpriteGenerator)].GetValueOrDefault(nameof(SpriteGenerator._showGridCheckButton)).ToString();
 
 
-        var _pixelEffectCheckBtn = nodeSaveData[nameof(SpriteGenerator)].GetValueOrDefault(nameof(SpriteGenerator._pixelEffectCheckBtn)).ToString();
+        // var _pixelEffectCheckBtn = nodeSaveData[nameof(SpriteGenerator)].GetValueOrDefault(nameof(SpriteGenerator._pixelEffectCheckBtn)).ToString();
 
-        newSaveGameData.ShowPixelEffect = (bool)nodeSaveData[nameof(SpriteGenerator)].GetValueOrDefault(nameof(SpriteGenerator._pixelEffectCheckBtn));
+        // newSaveGameData.ShowPixelEffect = (bool)nodeSaveData[nameof(SpriteGenerator)].GetValueOrDefault(nameof(SpriteGenerator._pixelEffectCheckBtn));
 
-        GD.PrintT(spriteRes, CamDistance, CamDistance2, _showGridCheckButton, _pixelEffectCheckBtn);
+        // GD.PrintT(spriteRes, CamDistance, CamDistance2, _showGridCheckButton, _pixelEffectCheckBtn);
 
         //Get the data from the Game (Nodes, etc) and sets it to the SaveGame file
         newSaveGameData.GetSaveGameDataFromNodes();
