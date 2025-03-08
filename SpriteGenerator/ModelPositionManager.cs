@@ -21,46 +21,6 @@ public partial class ModelPositionManager : Node
     public Camera3D CameraNode;
     private bool _isModeLeftBtnHeld = false;
 
-    public void OnSaveData(SaveGameData newSaveGameData)
-    {
-        GD.PrintT("Started OnSaveData from:", this.Name);
-        newSaveGameData.CameraDistance = float.Parse(CamDistancelLineTextEdit.Text);
-        newSaveGameData.CameraRotation = float.Parse(_camXRotationLineTextEdit.Text);
-        newSaveGameData.ModelPositionXAxis = float.Parse(_posXAxisLineTextEdit.Text);
-        newSaveGameData.ModelPositionYAxis = float.Parse(_posYAxisLineTextEdit.Text);
-        newSaveGameData.ModelPositionZAxis = float.Parse(_posZAxisLineTextEdit.Text);
-        newSaveGameData.ModelRotationXAxis = float.Parse(_rotationXAxisLineTextEdit.Text);
-        newSaveGameData.ModelRotationYAxis = float.Parse(_rotationYAxisLineTextEdit.Text);
-        newSaveGameData.ModelRotationZAxis = float.Parse(_rotationZAxisLineTextEdit.Text);
-
-
-
-        //nodeSaveData.Add(_spriteResolution);
-
-        // Godot.Collections.Dictionary localNodeData = new();
-
-        // localNodeData["CameraDistance"] = float.Parse(CamDistancelLineTextEdit.Text);
-        // //localNodeData[CamDistancelLineTextEdit.Name] = float.Parse(CamDistancelLineTextEdit.Text);
-        // localNodeData[nameof(CamDistancelLineTextEdit)] = float.Parse(CamDistancelLineTextEdit.Text);
-
-        // nodeSaveData2[this.Name] = localNodeData;
-
-    }
-
-    public void OnLoadData(SaveGameData newLoadData)
-    {
-        GD.PrintT("Started OnLoadData from:", this.Name);
-        CamDistancelLineTextEdit.Text = newLoadData.CameraDistance.ToString();
-        _camXRotationLineTextEdit.Text = newLoadData.CameraRotation.ToString();
-        _posXAxisLineTextEdit.Text = newLoadData.ModelPositionXAxis.ToString();
-        _posYAxisLineTextEdit.Text = newLoadData.ModelPositionYAxis.ToString();
-        _posZAxisLineTextEdit.Text = newLoadData.ModelPositionZAxis.ToString();
-        _rotationXAxisLineTextEdit.Text = newLoadData.ModelRotationXAxis.ToString();
-        _rotationYAxisLineTextEdit.Text = newLoadData.ModelRotationYAxis.ToString();
-        _rotationZAxisLineTextEdit.Text = newLoadData.ModelRotationZAxis.ToString();
-        SetTransformValueToModel();
-    }
-
     public override void _Ready()
     {
         //Check if the ModelNode is not null
@@ -147,77 +107,46 @@ public partial class ModelPositionManager : Node
         _rotationZAxisLineTextEdit.Text = ModelNode.Rotation.Z.ToString("0.0");
     }
 
-    //private void ZoomModelOut()
-    //{
-    //    CameraNode.Size += ZoomScale;
-    //    LoadTransformValueToUI();
-    //}
+    public void OnSaveData(SaveGameData newSaveGameData)
+    {
+        GD.PrintT("Started OnSaveData from:", this.Name);
+        newSaveGameData.CameraDistance = float.Parse(CamDistancelLineTextEdit.Text);
+        newSaveGameData.CameraRotation = float.Parse(_camXRotationLineTextEdit.Text);
+        newSaveGameData.ModelPositionXAxis = float.Parse(_posXAxisLineTextEdit.Text);
+        newSaveGameData.ModelPositionYAxis = float.Parse(_posYAxisLineTextEdit.Text);
+        newSaveGameData.ModelPositionZAxis = float.Parse(_posZAxisLineTextEdit.Text);
+        newSaveGameData.ModelRotationXAxis = float.Parse(_rotationXAxisLineTextEdit.Text);
+        newSaveGameData.ModelRotationYAxis = float.Parse(_rotationYAxisLineTextEdit.Text);
+        newSaveGameData.ModelRotationZAxis = float.Parse(_rotationZAxisLineTextEdit.Text);
 
 
-    //private void ZoomModelIn()
-    //{
-    //    CameraNode.Size -= ZoomScale;
-    //    LoadTransformValueToUI();
-    //}
 
+        //nodeSaveData.Add(_spriteResolution);
 
-    //public override void _Process(double delta)
-    //{
-    //    if (_moveLeftBtn.IsPressed())
-    //    {
-    //        //GD.Print("Button Left move is being held down!");
-    //        MoveModelLeft();
-    //    }
+        // Godot.Collections.Dictionary localNodeData = new();
 
-    //    if (_rotateXAxisBtn.IsPressed())
-    //    {
-    //        RotateModeXAxis();
-    //    }
+        // localNodeData["CameraDistance"] = float.Parse(CamDistancelLineTextEdit.Text);
+        // //localNodeData[CamDistancelLineTextEdit.Name] = float.Parse(CamDistancelLineTextEdit.Text);
+        // localNodeData[nameof(CamDistancelLineTextEdit)] = float.Parse(CamDistancelLineTextEdit.Text);
 
-    //    if (_rotateYAxisBtn.IsPressed())
-    //    {
+        // nodeSaveData2[this.Name] = localNodeData;
 
-    //        RotateModeYAxis();
-    //    }
+    }
 
-    //    // LoadTransformValueToUI();
-    //}
+    public void OnLoadData(SaveGameData newLoadData)
+    {
+        GD.PrintT("Started OnLoadData from:", this.Name);
+        CamDistancelLineTextEdit.Text = newLoadData.CameraDistance.ToString();
+        _camXRotationLineTextEdit.Text = newLoadData.CameraRotation.ToString();
+        _posXAxisLineTextEdit.Text = newLoadData.ModelPositionXAxis.ToString();
+        _posYAxisLineTextEdit.Text = newLoadData.ModelPositionYAxis.ToString();
+        _posZAxisLineTextEdit.Text = newLoadData.ModelPositionZAxis.ToString();
+        _rotationXAxisLineTextEdit.Text = newLoadData.ModelRotationXAxis.ToString();
+        _rotationYAxisLineTextEdit.Text = newLoadData.ModelRotationYAxis.ToString();
+        _rotationZAxisLineTextEdit.Text = newLoadData.ModelRotationZAxis.ToString();
+        SetTransformValueToModel();
+    }
 
-    //private void MoveModelLeft()
-    //{
-    //    ModelNode.Position += new Vector3(-MoveSpeed, 0, 0);
-    //    LoadTransformValueToUI();
-    //}
-
-    //private void MoveModelRight()
-    //{
-    //    ModelNode.Position += new Vector3(MoveSpeed, 0, 0);
-    //    LoadTransformValueToUI();
-    //}
-
-    //private void MoveModeUp()
-    //{
-    //    ModelNode.Position += new Vector3(0, MoveSpeed, 0);
-    //    LoadTransformValueToUI();
-    //}
-
-    //private void MoveModeDown()
-    //{
-    //    ModelNode.Position += new Vector3(0, -MoveSpeed, 0);
-    //    LoadTransformValueToUI();
-    //}
-
-    //private void RotateModeXAxis()
-    //{
-    //    ModelNode.RotationDegrees += new Vector3(RotateSpeed, 0, 0);
-    //    LoadTransformValueToUI();
-    //}
-
-    //private void RotateModeYAxis()
-    //{
-    //    ModelNode.RotationDegrees += new Vector3(0, RotateSpeed, 0);
-    //    LoadTransformValueToUI();
-    //}
 
 
 }

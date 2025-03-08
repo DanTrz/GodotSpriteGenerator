@@ -37,6 +37,7 @@ public partial class SpriteGenerator : Node
     //SaveConfigBtn
 
     [Export] public Button _saveConfigBtn;
+    [Export] public OptionButton SavedConfigListOptBtn;
     [Export] public Button _loadConfigBtn;
 
     [Export] public OptionButton _resolutionOptionBtn;
@@ -95,60 +96,6 @@ public partial class SpriteGenerator : Node
     private string saveFolder = "Model";
 
     private Control _lastFocusedControl;
-
-
-    // public void OnSaveData(Godot.Collections.Dictionary<string, Godot.Collections.Dictionary> nodeSaveData2)
-    // {
-    //     GD.PrintT("Started OnSaveData from:", this.Name);
-    //     //nodeSaveData.Add(_spriteResolution);
-
-    //     Godot.Collections.Dictionary localNodeData = new();
-
-    //     localNodeData[nameof(_spriteResolution)] = _spriteResolution;
-    //     localNodeData[nameof(_pixelEffectCheckBtn)] = _pixelEffectCheckBtn.ButtonPressed;
-    //     localNodeData[nameof(_showGridCheckButton)] = _showGridCheckButton.ButtonPressed;
-
-    //     nodeSaveData2[this.Name] = localNodeData;
-
-    // }
-
-    public void OnSaveData(SaveGameData newSaveGameData)
-    {
-        GD.PrintT("Started OnSaveData from:", this.Name);
-        //nodeSaveData.Add(_spriteResolution);
-        newSaveGameData.SpriteResolution = _spriteResolution;
-        newSaveGameData.SpriteResolutionOptBtn = _resolutionOptionBtn.Selected;
-        newSaveGameData.FrameSkipStep = frameSkipStep;
-        newSaveGameData.ShowPixelEffect = _pixelEffectCheckBtn.ButtonPressed;
-        newSaveGameData.PixelEffectLevel = _pixelShaderOptionBtn.Selected;
-        newSaveGameData.PlaybackSpeed = _animationPlaybackSpeed;
-        newSaveGameData.ShowGrid = _showGridCheckButton.ButtonPressed;
-    }
-
-    public void OnLoadData(SaveGameData newLoadData)
-    {
-        GD.PrintT("Started OnLoadData from:", this.Name);
-        _spriteResolution = newLoadData.SpriteResolution;
-        _resolutionOptionBtn.Selected = newLoadData.SpriteResolutionOptBtn;
-        frameSkipStep = newLoadData.FrameSkipStep;
-        _frameStepTextEdit.Text = frameSkipStep.ToString();
-        _pixelEffectCheckBtn.ButtonPressed = newLoadData.ShowPixelEffect;
-        _pixelEffectCheckBtn.Text = _pixelEffectCheckBtn.ButtonPressed.ToString();
-        _pixelShaderOptionBtn.Selected = newLoadData.PixelEffectLevel;
-        _animationPlaybackSpeed = newLoadData.PlaybackSpeed;
-        _playBackSpeedLineEdit.Text = _animationPlaybackSpeed.ToString();
-        _showGridCheckButton.ButtonPressed = newLoadData.ShowGrid;
-
-        UpdateViewPort();
-        OnRenderResolutionChanged(0);
-        OnPixelShaderResolutionChanged(0);
-        OnPlayBackSpeedChanged(newLoadData.PlaybackSpeed.ToString());
-        OnFrameStepChanged(newLoadData.FrameSkipStep.ToString());
-        OnShowGridCheckButtonPressed();
-        OnPixelEffectPressed();
-    }
-
-
 
     public override void _Ready()
     {
@@ -240,13 +187,64 @@ public partial class SpriteGenerator : Node
 
     private async void OnLoadConfigBtnPressed()
     {
-        await SaveGameManager.Instance.LoadGameData();
+        using Godot.FileDialog fileDialog = new Godot.FileDialog
+        {
+            FileMode = FileDialog.FileModeEnum.OpenFile,
+            Filters = new string[] { "*.tres ; SaveGame File" },
+            Access = FileDialog.AccessEnum.Filesystem
+        };
+
+        AddChild(fileDialog);
+
+        fileDialog.CurrentDir = ProjectSettings.GlobalizePath(Const.SAVE_GAME_PATH); //Set this after adding Child to Scene
+
+        //fileDialog.DirSelected += (newDir) => GlobalUtil.OnFolderSelected(newDir, _spriteGenFolderPathLineEdit);
+
+        //fileDialog.FileSelected += async (path) => await SaveGameManager.Instance.LoadGameData(path);
+
+        await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+
+        fileDialog.PopupCentered();
+
+        await ToSignal(fileDialog, FileDialog.SignalName.FileSelected);
+
+        string file = fileDialog.CurrentFile;
+        string fullLoadFilePath = fileDialog.CurrentDir + "/" + file;
+
+        await SaveGameManager.Instance.LoadGameData(fullLoadFilePath);
+
     }
 
 
     private async void OnSaveConfigBtnPressed()
     {
-        await SaveGameManager.Instance.SaveGameData();
+        using FileDialog fileDialog = new FileDialog
+        {
+            FileMode = FileDialog.FileModeEnum.SaveFile,
+            Filters = new string[] { "*.tres ; SaveGame File" },
+            Access = FileDialog.AccessEnum.Filesystem
+        };
+
+        AddChild(fileDialog); // Add to scene first 
+
+        //string folderCurrentDir = Const.USER_ROOT_FOLDER_PATH; // Ensure it's inside user:// or res://
+        string globalizedSavePath = ProjectSettings.GlobalizePath(Const.SAVE_GAME_PATH);
+
+        if (!GlobalUtil.HasDirectory(globalizedSavePath, this))
+        {
+            GD.Print("Directory does NOT exist: " + globalizedSavePath);
+            globalizedSavePath = "user://"; // Fallback to a safe default
+        }
+
+        fileDialog.CurrentDir = globalizedSavePath; //Set Current Directory at the end after adding Child to Scene otherwise it was not working
+
+        fileDialog.FileSelected += async (path) => await SaveGameManager.Instance.SaveGameData(path);
+
+        await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+
+        fileDialog.PopupCentered(); // Show the dialog
+
+        //await SaveGameManager.Instance.SaveGameData(saveFileName);
     }
 
     private void OnStartGeneration()
@@ -686,6 +684,46 @@ public partial class SpriteGenerator : Node
 
         MeshReplacer.UpdateMeshFromResourceItem(_meshInstanceObject, itemSelected);
     }
+
+
+    public void OnSaveData(SaveGameData newSaveGameData)
+    {
+        GD.PrintT("Started OnSaveData from:", this.Name);
+        //nodeSaveData.Add(_spriteResolution);
+        newSaveGameData.SpriteResolution = _spriteResolution;
+        newSaveGameData.SpriteResolutionOptBtn = _resolutionOptionBtn.Selected;
+        newSaveGameData.FrameSkipStep = frameSkipStep;
+        newSaveGameData.ShowPixelEffect = _pixelEffectCheckBtn.ButtonPressed;
+        newSaveGameData.PixelEffectLevel = _pixelShaderOptionBtn.Selected;
+        newSaveGameData.PlaybackSpeed = _animationPlaybackSpeed;
+        newSaveGameData.ShowGrid = _showGridCheckButton.ButtonPressed;
+    }
+
+    public void OnLoadData(SaveGameData newLoadData)
+    {
+        GD.PrintT("Started OnLoadData from:", this.Name);
+        _spriteResolution = newLoadData.SpriteResolution;
+        _resolutionOptionBtn.Selected = newLoadData.SpriteResolutionOptBtn;
+        frameSkipStep = newLoadData.FrameSkipStep;
+        _frameStepTextEdit.Text = frameSkipStep.ToString();
+        _pixelEffectCheckBtn.ButtonPressed = newLoadData.ShowPixelEffect;
+        _pixelEffectCheckBtn.Text = _pixelEffectCheckBtn.ButtonPressed.ToString();
+        _pixelShaderOptionBtn.Selected = newLoadData.PixelEffectLevel;
+        _animationPlaybackSpeed = newLoadData.PlaybackSpeed;
+        _playBackSpeedLineEdit.Text = _animationPlaybackSpeed.ToString();
+        _showGridCheckButton.ButtonPressed = newLoadData.ShowGrid;
+
+        UpdateViewPort();
+        OnRenderResolutionChanged(newLoadData.SpriteResolutionOptBtn);
+        OnPixelShaderResolutionChanged(newLoadData.PixelEffectLevel);
+        OnPlayBackSpeedChanged(newLoadData.PlaybackSpeed.ToString());
+        OnFrameStepChanged(newLoadData.FrameSkipStep.ToString());
+        OnShowGridCheckButtonPressed();
+        OnPixelEffectPressed();
+
+        _settingsMainPanel.Visible = false;
+    }
+
 
 
 

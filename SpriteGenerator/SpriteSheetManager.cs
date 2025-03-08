@@ -1,7 +1,7 @@
-using Godot;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Godot;
 using Image = Godot.Image;
 
 public partial class SpriteSheetManager : PanelContainer
@@ -402,6 +402,56 @@ public partial class SpriteSheetManager : PanelContainer
 
         IsEffectProcessing = false;
         SetStatus("Ready");
+
+    }
+
+    public void OnSaveData(SaveGameData newSaveGameData)
+    {
+        GD.PrintT("Started OnSaveData from:", this.Name);
+        newSaveGameData.SaturationIsOn = _enableSaturationCheckbox.ButtonPressed;
+        newSaveGameData.SaturationSliderValue = (float)_saturationSlider.Value;
+        newSaveGameData.BrightnessIsOn = _enableBrightnessCheckbox.ButtonPressed;
+        newSaveGameData.BrightnessSliderValue = (float)_brightnessSlider.Value;
+        newSaveGameData.OutlineIsOn = _outlineCheckbox.ButtonPressed;
+        newSaveGameData.OutlineThicknessSliderValue = (float)_outlineThicknessSlider.Value;
+        newSaveGameData.OutlineColor = _outlineColorPicker.Color;
+        newSaveGameData.ColorReductionIsOn = _colorReductionCheckbox.ButtonPressed;
+        newSaveGameData.ColorReductionValue = (float)_colorCountSpinBox.Value;
+
+    }
+
+    public async void OnLoadData(SaveGameData newLoadData)
+    {
+
+        GD.PrintT("Started OnLoadData from:", this.Name);
+        UpdateUIElementsOnLoad();
+        UpdateTexture(_originalImage);
+
+        _enableSaturationCheckbox.ButtonPressed = newLoadData.SaturationIsOn;
+        _saturationSlider.Value = newLoadData.SaturationSliderValue;
+        _enableBrightnessCheckbox.ButtonPressed = newLoadData.BrightnessIsOn;
+        _brightnessSlider.Value = newLoadData.BrightnessSliderValue;
+        _outlineCheckbox.ButtonPressed = newLoadData.OutlineIsOn;
+        _outlineThicknessSlider.Value = newLoadData.OutlineThicknessSliderValue;
+        _outlineColorPicker.Color = newLoadData.OutlineColor;
+        _colorReductionCheckbox.ButtonPressed = newLoadData.ColorReductionIsOn;
+        _colorCountSpinBox.Value = newLoadData.ColorReductionValue;
+
+
+        UpdateBrightnessAndSaturationShader();
+        QueueApplyEffects();
+
+        if (newLoadData.OutlineIsOn)
+        {
+            await ApplyEffectsAsync(
+                newLoadData.ColorReductionIsOn,
+                (int)newLoadData.ColorReductionValue,
+                newLoadData.OutlineIsOn,
+                (int)newLoadData.OutlineThicknessSliderValue,
+                newLoadData.OutlineColor,
+                false,
+                0);
+        }
 
     }
 

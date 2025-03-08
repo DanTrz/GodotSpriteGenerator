@@ -14,14 +14,23 @@ public partial class SaveGameManager : Node
 
     public override void _Ready() { Instance = this; }
 
-    public async Task SaveGameData()
+    public async Task SaveGameData(string fullSaveFilePath)
     {
 
         GD.Print("SaveGamedata started");
+        //1. Open Window to allow the user to save the game and choose a name
+
+
+
+        //2. Pass the choosen name to the SaveGameManager
+
+
+
+        //3. Start the same Game Process
         SaveGameData newSaveGameData = new();
 
         //TODO: Change so we can Save different files names etc...
-        newSaveGameData.SaveFileName = "savegamedata.tres";
+        newSaveGameData.SaveFileName = fullSaveFilePath;
 
         await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
 
@@ -53,11 +62,12 @@ public partial class SaveGameManager : Node
 
         await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
 
-        ResourceSaver.Save(newSaveGameData, Const.SAVE_GAME_PATH + newSaveGameData.SaveFileName);
+        //ResourceSaver.Save(newSaveGameData, Const.SAVE_GAME_PATH + newSaveGameData.SaveFileName);
+        ResourceSaver.Save(newSaveGameData, fullSaveFilePath);
 
     }
 
-    public async Task LoadGameData()
+    public async Task LoadGameData(string fullLoadFilePath)
     {
         GD.Print("LoadGamedata started");
         SaveGameData newLoadSaveGameData = new();
@@ -65,7 +75,7 @@ public partial class SaveGameManager : Node
         await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
 
         //TODO: Change so we can load different files
-        newLoadSaveGameData = ResourceLoader.Load<SaveGameData>(Const.SAVE_GAME_PATH + "savegamedata.tres");
+        newLoadSaveGameData = ResourceLoader.Load<SaveGameData>(fullLoadFilePath);
 
         await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
 
@@ -73,6 +83,8 @@ public partial class SaveGameManager : Node
 
         //Push the data from the SaveGame file to the game
         newLoadSaveGameData.SetSaveGameDataToNodes(newLoadSaveGameData);
+
+        GD.PrintT("LoadGamedata Loaded: " + newLoadSaveGameData.SaveFileName);
     }
 
     //TODO: Consider implementing 

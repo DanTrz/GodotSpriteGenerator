@@ -32,10 +32,19 @@ public partial class SaveGameData : Resource
     [Export] public float ModelRotationZAxis { get; set; }
 
     //SPRITE SHEET GEN VARIABLES AND CONFIG
-    // [Export] private int SpriteResolution { get; set; }
-    // [Export] private int SpriteResolution { get; set; }
-    // [Export] private int SpriteResolution { get; set; }
-    // [Export] private int SpriteResolution { get; set; }
+
+    [Export] public bool SaturationIsOn { get; set; }
+    [Export] public float SaturationSliderValue { get; set; }
+
+    [Export] public bool BrightnessIsOn { get; set; }
+    [Export] public float BrightnessSliderValue { get; set; }
+
+    [Export] public bool OutlineIsOn { get; set; }
+    [Export] public float OutlineThicknessSliderValue { get; set; }
+    [Export] public Color OutlineColor;
+
+    [Export] public bool ColorReductionIsOn { get; set; }
+    [Export] public float ColorReductionValue { get; set; }
 
 
 

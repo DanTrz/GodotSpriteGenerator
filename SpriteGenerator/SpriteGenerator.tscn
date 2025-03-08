@@ -636,7 +636,7 @@ size_flags_vertical = 4
 text = "Start Generation
 "
 
-[node name="TabSpriteSheetGenManager" type="PanelContainer" parent="MainUI/MainTabContainer" node_paths=PackedStringArray("_textureRect", "_saturationSlider", "_saturationLabel", "_brightnessLabel", "_outlineLabel", "_brightnessSlider", "_outlineCheckbox", "_outlineThicknessSlider", "_outlineColorPicker", "_ditheringCheckbox", "_ditheringSlider", "_colorReductionCheckbox", "_colorCountSpinBox", "_saveButton", "_statusLabel", "_enableSaturationCheckbox", "_enableBrightnessCheckbox")]
+[node name="TabSpriteSheetGenManager" type="PanelContainer" parent="MainUI/MainTabContainer" node_paths=PackedStringArray("_textureRect", "_saturationSlider", "_saturationLabel", "_brightnessLabel", "_outlineLabel", "_brightnessSlider", "_outlineCheckbox", "_outlineThicknessSlider", "_outlineColorPicker", "_ditheringCheckbox", "_ditheringSlider", "_colorReductionCheckbox", "_colorCountSpinBox", "_saveButton", "_statusLabel", "_enableSaturationCheckbox", "_enableBrightnessCheckbox") groups=["save_data"]]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
@@ -902,7 +902,6 @@ text = "Save SpriteSheet
 
 [node name="SettingsMainPanel" type="MarginContainer" parent="MainUI"]
 unique_name_in_owner = true
-visible = false
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -1037,7 +1036,3 @@ custom_minimum_size = Vector2(80, 20)
 layout_mode = 2
 text = "Main Settings"
 icon = SubResource("AtlasTexture_0w5gm")
-
-[node name="Camera2D" type="Camera2D" parent="."]
-visible = false
-anchor_mode = 0
