@@ -2,7 +2,6 @@
 
 [ext_resource type="ArrayMesh" uid="uid://dkaloxpe2h2pm" path="res://Models/FullModels/GirlVoxel/GirlVoxelOBJ.res" id="1_5bsys"]
 [ext_resource type="PackedScene" uid="uid://dpa7h0crxxisw" path="res://Models/MeshRepository/Hair/1_HairMale01.tscn" id="3_wkw4n"]
-[ext_resource type="ArrayMesh" uid="uid://nsojkdt21yac" path="res://Models/MeshRepository/Head/2_HeadMesh_Original.res" id="4_hmjjc"]
 [ext_resource type="Script" uid="uid://b1ehblsx7n5cr" path="res://addons/jigglebones/jigglebone.gd" id="5_fnq30"]
 [ext_resource type="AnimationLibrary" uid="uid://bcv2d4kf15dyh" path="res://AnimWalk.res" id="6_8b1n2"]
 
@@ -222,6 +221,9 @@ bind/20/pose = Transform3D(1.90735e-06, -100, -4.47035e-06, 1.46031e-06, 3.57628
 bind/21/name = &"LeftHand"
 bind/21/bone = -1
 bind/21/pose = Transform3D(-100, -9.53674e-07, 3.72529e-08, 1.46031e-06, 3.57628e-07, -100, 1.90735e-06, -100, -4.47035e-06, -2.15911, -2.73538, 4.75887)
+
+[sub_resource type="Resource" id="Resource_wkw4n"]
+metadata/__load_path__ = "res://Models/MeshRepository/Head/2_HeadMesh_Original.res"
 
 [sub_resource type="Skin" id="Skin_he7jk"]
 resource_name = "Skin"
@@ -552,5 +554,5 @@ visible = false
 [node name="Head" type="MeshInstance3D" parent="Node3DPivot/GeneralSkeleton"]
 unique_name_in_owner = true
 visible = false
-mesh = ExtResource("4_hmjjc")
+mesh = SubResource("Resource_wkw4n")
 skin = SubResource("Skin_he7jk")

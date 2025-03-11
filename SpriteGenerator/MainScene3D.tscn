@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://iuwovcd804os"]
+[gd_scene load_steps=9 format=3 uid="uid://iuwovcd804os"]
 
 [ext_resource type="Script" uid="uid://dasxiorjhfw8t" path="res://SpriteGenerator/Model3DMainPivotControl.cs" id="1_4ce3b"]
 [ext_resource type="PackedScene" uid="uid://c00refh5p8c4o" path="res://Models/FullModels/BaseModel/BaseModelScene.tscn" id="2_qo4h8"]
+[ext_resource type="Shader" uid="uid://berumhfcmd50a" path="res://Assets/Shaders/Original_Pixelize3DShader.gdshader" id="3_xukee"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_wy6cq"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -11,10 +12,24 @@ ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
 sky_material = SubResource("ProceduralSkyMaterial_wy6cq")
 
 [sub_resource type="Environment" id="Environment_e1sc8"]
-background_mode = 2
+background_mode = 1
+background_color = Color(1, 0, 1, 0)
 sky = SubResource("Sky_ote1o")
 tonemap_mode = 2
 glow_enabled = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xukee"]
+render_priority = 0
+shader = ExtResource("3_xukee")
+shader_parameter/target_resolution = 512.0
+shader_parameter/colors_per_channel = 128.0
+shader_parameter/outline_strength = 2.0
+shader_parameter/normal_outline_strength = 0.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_xukee"]
+material = SubResource("ShaderMaterial_xukee")
+flip_faces = true
+size = Vector2(10, 10)
 
 [node name="MainScene3D" type="Node3D"]
 
@@ -37,3 +52,8 @@ shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_e1sc8")
+
+[node name="Outline3DShaderMesh3D" type="MeshInstance3D" parent="."]
+visible = false
+extra_cull_margin = 16384.0
+mesh = SubResource("QuadMesh_xukee")

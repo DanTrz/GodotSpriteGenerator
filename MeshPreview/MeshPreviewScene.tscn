@@ -1,7 +1,5 @@
 [gd_scene load_steps=5 format=3 uid="uid://dh1d7g6nqouhm"]
 
-[ext_resource type="ArrayMesh" uid="uid://celrnrf5afx0o" path="res://Models/MeshRepository/TorsoBody/TorsoMesh_Yellow.res" id="1_oeara"]
-
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0hja6"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
 ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -14,6 +12,9 @@ background_mode = 2
 sky = SubResource("Sky_oeara")
 tonemap_mode = 2
 glow_enabled = true
+
+[sub_resource type="Resource" id="Resource_0hja6"]
+metadata/__load_path__ = "res://Models/MeshRepository/TorsoBody/TorsoMesh_Yellow.res"
 
 [node name="MeshPreviewScene" type="Node3D"]
 
@@ -31,4 +32,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6.99634)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="MeshItemsNode"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -12, 0)
-mesh = ExtResource("1_oeara")
+mesh = SubResource("Resource_0hja6")

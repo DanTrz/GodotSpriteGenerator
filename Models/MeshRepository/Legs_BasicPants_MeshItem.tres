@@ -10,4 +10,5 @@ ItemName = "Basic Pants"
 MeshItem = ExtResource("2_pt8gm")
 BodyPartType = 3
 Icon = ExtResource("1_j4ecn")
+ItemOrder = 1
 metadata/_custom_type_script = "uid://cmuqvgdb2248c"

@@ -11,6 +11,13 @@ public partial class SpriteGenerator : Node
     [Export] public SubViewport _rawViewport;
     [Export] public SubViewportContainer _rawViewportContainer;
 
+    [Export] public SubViewport BgRemoverViewport;
+    [Export] public SubViewportContainer BgRemoverViewportContainer;
+
+    [Export] public MeshInstance3D MeshShaderPixel3D;
+
+
+
     //private string _saveSpriteFolderPath;
     //public string SaveSpriteFolderPath;
     ////public string SaveSpriteFolderPath
@@ -29,7 +36,6 @@ public partial class SpriteGenerator : Node
     public static int _spriteResolution = 256;
     [Export] public int frameSkipStep = 4; // Control how frequently frames are captured
     [Export] public bool _clearFolderBeforeGeneration = true;
-    [Export] public bool _usePixelEffect = true;
 
     [Export(PropertyHint.Range, "1,4,1")] private float _animationPlaybackSpeed = 1.0f;
 
@@ -41,11 +47,14 @@ public partial class SpriteGenerator : Node
     [Export] public Button _loadConfigBtn;
 
     [Export] public OptionButton _resolutionOptionBtn;
-    [Export] public OptionButton _pixelShaderOptionBtn;
+    [Export] public OptionButton EffectsChoicesOptionBtn;
+    [Export] public OptionButton EffectLevelOptionBtn;
+
+    [Export] public HSlider Outline3DStrenghtSlider;
+    [Export] public ColorPickerButton Outline3DColorPicker;
     [Export] public LineEdit _frameStepTextEdit;
     [Export] public LineEdit _playBackSpeedLineEdit;
     [Export] public CheckButton _clearFolderCheckBtn;
-    [Export] public CheckButton _pixelEffectCheckBtn;
     [Export] public TextureRect _pixelShaderTextRect;
     [Export] public ModelPositionManager _modelPositionManager;
     [Export] public Button _loadAllAnimationsBtn;
@@ -93,6 +102,7 @@ public partial class SpriteGenerator : Node
     private string currentAnimationName;
     private int frameIndex;
     private int spriteCount = 1;
+    private int spriteSheetCollumnCount = 8;
     private string saveFolder = "Model";
 
     private Control _lastFocusedControl;
@@ -108,11 +118,13 @@ public partial class SpriteGenerator : Node
         _openFolderPathBtn.Pressed += OnOpenFolderPathPressed;
         _startGenerationBtn.Pressed += OnStartGeneration;
         _resolutionOptionBtn.ItemSelected += OnRenderResolutionChanged;
-        _pixelShaderOptionBtn.ItemSelected += OnPixelShaderResolutionChanged;
+        EffectLevelOptionBtn.ItemSelected += OnEffectLevelChanged;
+        EffectsChoicesOptionBtn.ItemSelected += OnEffectsChoiceItemSelected;
+        Outline3DStrenghtSlider.ValueChanged += OnOutline3DStrenghtChanged;
+        Outline3DColorPicker.ColorChanged += OnOutline3DColorChanged;
         _frameStepTextEdit.TextChanged += OnFrameStepChanged;
         _playBackSpeedLineEdit.TextChanged += OnPlayBackSpeedChanged;
         _clearFolderCheckBtn.Pressed += OnClearFolderPressed;
-        _pixelEffectCheckBtn.Pressed += OnPixelEffectPressed;
         _loadAllAnimationsBtn.Pressed += OnLoadAllAnimationsPressed;
         //_saveIntervalTimer.Timeout += OnSaveIntervalTimerTimeout;
         _showGridCheckButton.Pressed += OnShowGridCheckButtonPressed;
@@ -127,23 +139,26 @@ public partial class SpriteGenerator : Node
         _settingsMainPanel.Visible = false;
         _spriteGenFolderPathLineEdit.Text = GlobalUtil.SaveFolderPath;
         _clearFolderCheckBtn.ButtonPressed = _clearFolderBeforeGeneration;
-        _pixelEffectCheckBtn.ButtonPressed = _usePixelEffect;
-        _pixelShaderTextRect.Visible = _usePixelEffect;
         _frameStepTextEdit.Text = frameSkipStep.ToString();
         _playBackSpeedLineEdit.Text = _animationPlaybackSpeed.ToString();
         _angleSelectionItemList.CreateItemsFromList(allAngles.Select(x => x.ToString()).ToArray());
 
         //Effects and Core Grid Options
-        _showGridCheckButton.ButtonPressed = true;
+        _showGridCheckButton.ButtonPressed = false;
         _showGridCheckButton.Text = _showGridCheckButton.ButtonPressed.ToString();
-        _pixelEffectCheckBtn.Text = _pixelEffectCheckBtn.ButtonPressed.ToString();
 
         //Set Default Resolution and Shader Strenght
-        _resolutionOptionBtn.Selected = _resolutionOptionBtn.ItemCount - 1;
-        OnRenderResolutionChanged(_resolutionOptionBtn.ItemCount - 1);
-        _pixelShaderOptionBtn.Selected = _pixelShaderOptionBtn.ItemCount - 1;
-        OnPixelShaderResolutionChanged(_pixelShaderOptionBtn.ItemCount - 1);
+        _resolutionOptionBtn.Selected = _resolutionOptionBtn.ItemCount - 1; //Select the Last Option
+        OnRenderResolutionChanged(_resolutionOptionBtn.Selected);
+        EffectLevelOptionBtn.Selected = EffectLevelOptionBtn.ItemCount - 1; //Last option 
+        OnEffectLevelChanged(EffectLevelOptionBtn.Selected);
 
+        EffectsChoicesOptionBtn.Selected = 0;
+        OnEffectsChoiceItemSelected(EffectsChoicesOptionBtn.Selected);
+        MeshShaderPixel3D.Visible = true;
+        OnEffectLevelChanged(99);
+        EffectLevelOptionBtn.Visible = false;
+        Outline3DStrenghtSlider.Value = 0.0f;
 
 
         //Pass the objects from MainScene3D to the SpriteGenerator
@@ -180,10 +195,11 @@ public partial class SpriteGenerator : Node
         _hairColorBtn.Color = Colors.White;
 
 
-        //UpdateAllMeshesAndMeshesUI();
-        UpdateViewPort();
+        //Update initial views
+        UpdateViewPorts();
 
     }
+
 
     private async void OnLoadConfigBtnPressed()
     {
@@ -367,7 +383,7 @@ public partial class SpriteGenerator : Node
         }
 
         await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
-        GenerateSpriteSheet(saveFolder, currentAnimationName + "_spriteSheet", 4);
+        GenerateSpriteSheet(saveFolder, currentAnimationName + "_spriteSheet", spriteSheetCollumnCount);
 
     }
 
@@ -378,7 +394,7 @@ public partial class SpriteGenerator : Node
         GD.PrintT("SavingFile : ", spriteCount + " / AnimSecond: " + currentAnimPosInSec);
 
         //GD.PrintT("Frame: " + frameIndex, " AnimPosition: " + (float)_animationPlayer.CurrentAnimationPosition);
-        var img = _rawViewport.GetTexture().GetImage();
+        var img = BgRemoverViewport.GetTexture().GetImage();
 
         //img.FlipY();4
         string path = $"{saveFolder}/{currentAnimationName}_{"angle_" + angle}_{spriteCount}.png";
@@ -499,16 +515,62 @@ public partial class SpriteGenerator : Node
                 _spriteResolution = 256;
                 break;
             case 3:
+                _spriteResolution = 384;
+                break;
+            case 4:
                 _spriteResolution = 512;
                 break;
         }
-        GD.PrintT("Selected resolution: " + _spriteResolution);
+        GD.PrintT("Sprite Size/Res: " + _spriteResolution);
 
-        UpdateViewPort();
+        UpdateViewPorts();
     }
 
 
-    private void OnPixelShaderResolutionChanged(long itemSelectedIndex)
+    private void OnEffectsChoiceItemSelected(long itemSelectedIndex)
+    {
+
+        GD.PrintT("Effect Selected: " + itemSelectedIndex);
+        switch (itemSelectedIndex)
+        {
+            case 0:
+                //No Effect - Turn off MeshInstance3d
+                MeshShaderPixel3D.Visible = true;
+                OnEffectLevelChanged(99);
+                EffectLevelOptionBtn.Visible = false;
+                break;
+            case 1:
+                //Pixel Effect
+                MeshShaderPixel3D.Visible = true;
+                EffectLevelOptionBtn.Visible = true;
+                OnEffectLevelChanged(EffectLevelOptionBtn.Selected);
+                break;
+            case 2:
+                //Toon Effect
+                break;
+        }
+
+
+
+
+        UpdateViewPorts();
+
+    }
+
+    // private void ApplyPixelEffect()
+    // {
+
+    //     if (MeshShaderPixel3D.Mesh.SurfaceGetMaterial(0) is ShaderMaterial shaderMaterial)
+    //     {
+    //         shaderMaterial.SetShaderParameter("target_resolution", shaderResolution);
+    //     }
+
+    //     UpdateViewPorts();
+    // }
+
+
+
+    private void OnEffectLevelChanged(long itemSelectedIndex)
     {
         int shaderResolution = 0;
 
@@ -524,33 +586,48 @@ public partial class SpriteGenerator : Node
                 shaderResolution = 96;
                 break;
             case 3:
-                shaderResolution = 108;
+                shaderResolution = 128;
                 break;
             case 4:
-                shaderResolution = 168;
+                shaderResolution = 192;
                 break;
             case 5:
-                shaderResolution = 218;
+                shaderResolution = 256;
                 break;
+            case 99:
+                shaderResolution = 512;
+                break;
+
         }
 
-        //((ShaderMaterial)_pixelShaderTextRect.MaterialOverride).SetShaderParameter("pixel_size", shaderResolution);
-        //GD.PrintT("Shader resolution: " + shaderResolution);
+        GD.PrintT("Effect Pixel Resolution: " + _spriteResolution);
 
-        //_pixelShaderTextRect.Material.
-
-
-        if (_pixelShaderTextRect.Material is ShaderMaterial shaderMaterial)
+        if (MeshShaderPixel3D.Mesh.SurfaceGetMaterial(0) is ShaderMaterial shaderMaterial)
         {
-            shaderMaterial.SetShaderParameter("pixel_size", shaderResolution);
+            shaderMaterial.SetShaderParameter("target_resolution", shaderResolution);
         }
 
+        UpdateViewPorts();
+    }
 
 
+    private void OnOutline3DStrenghtChanged(double value)
+    {
 
+        if (MeshShaderPixel3D.Mesh.SurfaceGetMaterial(0) is ShaderMaterial shaderMaterial)
+        {
+            shaderMaterial.SetShaderParameter("outline_strength", value);
+        }
 
+    }
 
-        UpdateViewPort();
+    private void OnOutline3DColorChanged(Color color)
+    {
+        if (MeshShaderPixel3D.Mesh.SurfaceGetMaterial(0) is ShaderMaterial shaderMaterial)
+        {
+            shaderMaterial.SetShaderParameter("outline_color", color);
+        }
+
     }
 
     private void OnPlayBackSpeedChanged(string newText)
@@ -562,11 +639,14 @@ public partial class SpriteGenerator : Node
 
     }
 
-    private void UpdateViewPort()
+    private void UpdateViewPorts()
     {
         Vector2I viewPortSize = new Vector2I(_spriteResolution, _spriteResolution);
         _rawViewport.CallDeferred("set_size", viewPortSize);
         _rawViewportContainer.CallDeferred("set_size", viewPortSize);
+
+        BgRemoverViewport.CallDeferred("set_size", viewPortSize);
+        BgRemoverViewportContainer.CallDeferred("set_size", viewPortSize);
 
         //_viewport.Size = viewPortSize;
         //_viewportContainer.Size = viewPortSize;
@@ -596,25 +676,25 @@ public partial class SpriteGenerator : Node
     }
 
 
-    private void OnPixelEffectPressed()
-    {
-        _usePixelEffect = _pixelEffectCheckBtn.ButtonPressed;
-        _pixelShaderTextRect.Visible = _usePixelEffect;
+    // private void OnPixelEffectPressed()
+    // {
+    //     _usePixelEffect = _pixelEffectCheckBtn.ButtonPressed;
+    //     _pixelShaderTextRect.Visible = _usePixelEffect;
 
-        _pixelEffectCheckBtn.Text = _pixelEffectCheckBtn.ButtonPressed.ToString();
+    //     _pixelEffectCheckBtn.Text = _pixelEffectCheckBtn.ButtonPressed.ToString();
 
-        GD.PrintT("Use PixelEffect: " + _usePixelEffect);
+    //     GD.PrintT("Use PixelEffect: " + _usePixelEffect);
 
 
 
-        // if (_usePixelEffect)
-        // {
-        //     _viewport.CallDeferred("set_use_pixel_effect", true);
-        // }
-        // else
-        // {
-        //     _viewport.CallDeferred("set_use_pixel_effect", false);
-    }
+    //     // if (_usePixelEffect)
+    //     // {
+    //     //     _viewport.CallDeferred("set_use_pixel_effect", true);
+    //     // }
+    //     // else
+    //     // {
+    //     //     _viewport.CallDeferred("set_use_pixel_effect", false);
+    // }
 
     private void OnLoadAllAnimationsPressed()
     {
@@ -693,8 +773,8 @@ public partial class SpriteGenerator : Node
         newSaveGameData.SpriteResolution = _spriteResolution;
         newSaveGameData.SpriteResolutionOptBtn = _resolutionOptionBtn.Selected;
         newSaveGameData.FrameSkipStep = frameSkipStep;
-        newSaveGameData.ShowPixelEffect = _pixelEffectCheckBtn.ButtonPressed;
-        newSaveGameData.PixelEffectLevel = _pixelShaderOptionBtn.Selected;
+        //newSaveGameData.ShowPixelEffect = _pixelEffectCheckBtn.ButtonPressed;
+        newSaveGameData.PixelEffectLevel = EffectLevelOptionBtn.Selected;
         newSaveGameData.PlaybackSpeed = _animationPlaybackSpeed;
         newSaveGameData.ShowGrid = _showGridCheckButton.ButtonPressed;
     }
@@ -706,20 +786,23 @@ public partial class SpriteGenerator : Node
         _resolutionOptionBtn.Selected = newLoadData.SpriteResolutionOptBtn;
         frameSkipStep = newLoadData.FrameSkipStep;
         _frameStepTextEdit.Text = frameSkipStep.ToString();
-        _pixelEffectCheckBtn.ButtonPressed = newLoadData.ShowPixelEffect;
-        _pixelEffectCheckBtn.Text = _pixelEffectCheckBtn.ButtonPressed.ToString();
-        _pixelShaderOptionBtn.Selected = newLoadData.PixelEffectLevel;
+        //_pixelEffectCheckBtn.ButtonPressed = newLoadData.ShowPixelEffect;
+        //_pixelEffectCheckBtn.Text = _pixelEffectCheckBtn.ButtonPressed.ToString();
+        EffectLevelOptionBtn.Selected = newLoadData.PixelEffectLevel;
         _animationPlaybackSpeed = newLoadData.PlaybackSpeed;
         _playBackSpeedLineEdit.Text = _animationPlaybackSpeed.ToString();
         _showGridCheckButton.ButtonPressed = newLoadData.ShowGrid;
 
-        UpdateViewPort();
+        UpdateViewPorts();
         OnRenderResolutionChanged(newLoadData.SpriteResolutionOptBtn);
-        OnPixelShaderResolutionChanged(newLoadData.PixelEffectLevel);
+        OnEffectLevelChanged(newLoadData.PixelEffectLevel);
         OnPlayBackSpeedChanged(newLoadData.PlaybackSpeed.ToString());
         OnFrameStepChanged(newLoadData.FrameSkipStep.ToString());
         OnShowGridCheckButtonPressed();
-        OnPixelEffectPressed();
+
+        //EffectsChoicesOptionBtn.Selected = newLoadData.EffectsChoicesOptionBtn;
+        OnEffectsChoiceItemSelected(EffectsChoicesOptionBtn.Selected);
+        //OnPixelEffectPressed();
 
         _settingsMainPanel.Visible = false;
     }

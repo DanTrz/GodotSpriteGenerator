@@ -1,0 +1,25 @@
+[gd_resource type="ShaderMaterial" load_steps=5 format=3 uid="uid://dkga8ungoddca"]
+
+[ext_resource type="Shader" uid="uid://ddm5o0q1n23e" path="res://Assets/Shaders/HeadToonShader.gdshader" id="1_hi4a8"]
+[ext_resource type="Texture2D" uid="uid://bcedkkbrsj431" path="res://Assets/Shaders/color_gradient.tres" id="2_dktdc"]
+[ext_resource type="Texture2D" uid="uid://did3p25l52we" path="res://Assets/Shaders/fresnel_gradient.tres" id="3_6mo8e"]
+[ext_resource type="Texture2D" uid="uid://cr78qca6l41js" path="res://Models/FullModels/BaseModel/UpdatedHead/BaseModel_HEAD_Updated_ColorText.png" id="4_tpqxy"]
+
+[resource]
+resource_name = "HEAD_Updated_Material"
+render_priority = 1
+shader = ExtResource("1_hi4a8")
+shader_parameter/color_gradient = ExtResource("2_dktdc")
+shader_parameter/fresnel_gradient = ExtResource("3_6mo8e")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/texture_albedo = ExtResource("4_tpqxy")
+shader_parameter/albedo_texture_size = Vector2i(634, 634)
+shader_parameter/point_size = 1.0
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = Vector4(1, 0, 0, 0)
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)

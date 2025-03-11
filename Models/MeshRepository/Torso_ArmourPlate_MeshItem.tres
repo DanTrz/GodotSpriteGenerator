@@ -10,4 +10,5 @@ ItemName = "Gray ArmourPlateMeshItem"
 MeshItem = ExtResource("2_0e5jh")
 BodyPartType = 1
 Icon = ExtResource("1_os2e6")
+ItemOrder = 1
 metadata/_custom_type_script = "uid://cmuqvgdb2248c"

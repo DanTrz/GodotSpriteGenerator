@@ -1,8 +1,10 @@
-[gd_scene load_steps=26 format=3 uid="uid://dghyusd0bdjxt"]
+[gd_scene load_steps=35 format=3 uid="uid://dghyusd0bdjxt"]
 
 [ext_resource type="Script" uid="uid://dj2tgr0hxsbd3" path="res://SpriteGenerator/SpriteGenerator.cs" id="1_ws6fq"]
 [ext_resource type="PackedScene" uid="uid://iuwovcd804os" path="res://SpriteGenerator/MainScene3D.tscn" id="2_jyiui"]
+[ext_resource type="Shader" uid="uid://ch0nfn1xoj6yh" path="res://Assets/Shaders/SubViewPortTransparency.gdshader" id="3_8pcxw"]
 [ext_resource type="Theme" uid="uid://drswssji8tnu3" path="res://Assets/UI/Theme/MainTheme.tres" id="3_30nce"]
+[ext_resource type="Shader" uid="uid://o32y8sg4fot8" path="res://Assets/Shaders/Simplified_Pixelize3DShader.gdshader" id="4_h87xq"]
 [ext_resource type="Texture2D" uid="uid://cr55nbf56ybvc" path="res://Assets/UI/Basic UI spritesheet.png" id="5_mumiu"]
 [ext_resource type="Texture2D" uid="uid://b8fnciwttkrvi" path="res://Assets/UI/32PixelGrid_16C_16_R_Total512Pixel.png" id="5_ulv1c"]
 [ext_resource type="Shader" uid="uid://cwbfwv0g6if3e" path="res://Assets/Shaders/TextRecPixelEffect.gdshader" id="6_30nce"]
@@ -12,13 +14,29 @@
 [ext_resource type="LabelSettings" uid="uid://usv7beyw1bj8" path="res://Assets/UI/Theme/Label.tres" id="9_0w5gm"]
 [ext_resource type="PackedScene" uid="uid://mjnysgbmwfbp" path="res://SpriteGenerator/MeshReplacerOptButton.tscn" id="11_jd2q0"]
 [ext_resource type="Shader" uid="uid://dxbhtgfqkjj57" path="res://Assets/Shaders/UnifiedImageEffects.gdshader" id="12_0w5gm"]
-[ext_resource type="Texture2D" uid="uid://cae2jelncoq3w" path="res://Assets/SpriteSheetTemp/Anim_Running_spriteSheet.png" id="13_0w5gm"]
+[ext_resource type="Texture2D" uid="uid://bln1foey02paq" path="res://Assets/SpriteSheetTemp/B__Running_spriteSheet.png" id="14_8pcxw"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0w5gm"]
+bg_color = Color(0.345946, 0.345946, 0.345946, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jd2q0"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_64ieu"]
+render_priority = 0
+shader = ExtResource("4_h87xq")
+shader_parameter/target_resolution = 512.0
+shader_parameter/outline_strength = 0.0
+shader_parameter/outline_thickness = 5.0
+shader_parameter/outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_4o1c1"]
+material = SubResource("ShaderMaterial_64ieu")
+flip_faces = true
+size = Vector2(10, 10)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0w5gm"]
 shader = ExtResource("6_30nce")
-shader_parameter/pixel_size = 512.0
+shader_parameter/pixel_size = 128.0
 shader_parameter/viewport_size = Vector2(512, 512)
 
 [sub_resource type="Gradient" id="Gradient_0w5gm"]
@@ -27,7 +45,118 @@ colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 0)
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_jd2q0"]
 gradient = SubResource("Gradient_0w5gm")
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8pcxw"]
+shader = ExtResource("3_8pcxw")
+shader_parameter/transp_color1 = Color(1, 0, 1, 1)
+shader_parameter/tolerance = 0.5
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_h87xq"]
+viewport_path = NodePath("MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/RawRenderPanelContainer/RawViewportContainer/RawSubViewport")
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0w5gm"]
+
+[sub_resource type="Shader" id="Shader_8pcxw"]
+code = "shader_type spatial;
+render_mode unshaded, fog_disabled;
+
+//uniform vec2 target_resolution = vec2(512.0, 512.0);
+uniform float target_resolution : hint_range(32.0, 512.0, 32.0) = 512.0;
+uniform float colors_per_channel: hint_range(1.0, 128.0, 1.0) = 64.0;
+
+uniform float outline_strength: hint_range(0.0, 1.0, 0.1) = 1.0; // Deprecated: Use new thickness_outline
+uniform float normal_outline_strength: hint_range(0.0, 2.0, 0.1) = 0.5;
+uniform vec4 outline_color : source_color = vec4(0.0, 0.0, 0.0, 1.0); // Black outline by default
+uniform float outline_thickness : hint_range(0.1, 5.0, 0.1) = 1.0; // Thickness control
+
+uniform sampler2D screen_texture: hint_screen_texture, filter_nearest;
+uniform sampler2D depth_texture: hint_depth_texture, filter_nearest;
+uniform sampler2D normal_texture: hint_normal_roughness_texture, filter_nearest;
+
+void vertex() {
+	POSITION = vec4(VERTEX.xy, 1.0, 1.0);
+}
+
+vec3 get_normal(vec2 uv) {
+	return texture(normal_texture, uv).rgb;
+}
+
+float get_linear_depth(vec2 uv, mat4 inv_proj_mat) {
+	float depth = texture(depth_texture, uv).r;
+	vec3 ndc = vec3(uv * 2.0 - 1.0, depth);
+	vec4 view = inv_proj_mat * vec4(ndc, 1.0);
+	view.xyz /= view.w;
+	return -view.z;
+}
+
+void fragment() {
+	vec2 uv = floor(SCREEN_UV * target_resolution) / target_resolution;
+
+	// Calculate offset based on thickness
+	//vec2 offset = vec2(outline_thickness / target_resolution.x, outline_thickness / target_resolution.y);
+	vec2 offset = vec2(outline_thickness / target_resolution, outline_thickness / target_resolution);
+
+
+	vec2 uvs[5] = {
+		uv,
+		uv + vec2(0.0, 1.0) * offset, // Up
+		uv - vec2(0.0, 1.0) * offset, // Down
+		uv + vec2(1.0, 0.0) * offset, // Left
+		uv - vec2(1.0, 0.0) * offset  // Right
+	};
+
+
+	float dc = get_linear_depth(uvs[0], INV_PROJECTION_MATRIX);
+	float du = get_linear_depth(uvs[1], INV_PROJECTION_MATRIX);
+	float dd = get_linear_depth(uvs[2], INV_PROJECTION_MATRIX);
+	float dl = get_linear_depth(uvs[3], INV_PROJECTION_MATRIX);
+	float dr = get_linear_depth(uvs[4], INV_PROJECTION_MATRIX);
+
+	float h_depth = max(0.0, dl - dc) + max(0.0, dr - dc);
+	float v_depth = max(0.0, du - dc) + max(0.0, dd - dc);
+
+    // Adjust outline detection thresholds based on thickness
+	float h_outline = step(0.1 * outline_thickness, h_depth) * step(0.7 * outline_thickness, distance(dl, dr));
+	float v_outline = step(0.1 * outline_thickness, v_depth) * step(0.7 * outline_thickness, distance(du, dd));
+	float depth_outline = 1.0 - step(0.01, h_outline + v_outline); // Removed outline_strength here
+
+	vec3 nc = get_normal(uvs[0]);
+	vec3 nu = get_normal(uvs[1]);
+	vec3 nd = get_normal(uvs[2]);
+	vec3 nl = get_normal(uvs[3]);
+	vec3 nr = get_normal(uvs[4]);
+
+	float nu_difference = distance(nc, nu) * max(0.0, 1.0 - distance(du, dc));
+	float nd_difference = distance(nc, nd) * max(0.0, 1.0 - distance(dd, dc));
+	float nl_difference = distance(nc, nl) * max(0.0, 1.0 - distance(dl, dc));
+	float nr_difference = distance(nc, nr) * max(0.0, 1.0 - distance(dr, dc));
+
+    //Adjust threshold based on thickness
+	float h_inline = step(0.2 * outline_thickness, nl_difference + nr_difference);
+	float v_inline = step(0.2 * outline_thickness, nu_difference + nd_difference);
+	float normal_outline = step(0.1, h_inline + v_inline) * normal_outline_strength;
+
+
+	vec3 color = texture(screen_texture, uv).rgb;
+	vec3 quantized_color = floor(color * colors_per_channel) / colors_per_channel;
+
+	// Blend the outline color with the base color
+	float outline_factor = 1.0 - depth_outline * (1.0 + normal_outline);  // Calculate how much outline to show
+    ALBEDO = mix(quantized_color, outline_color.rgb, outline_factor * outline_color.a);
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_h87xq"]
+render_priority = 0
+shader = SubResource("Shader_8pcxw")
+shader_parameter/target_resolution = 512.0
+shader_parameter/colors_per_channel = 8.0
+shader_parameter/outline_strength = 1.0
+shader_parameter/normal_outline_strength = 1.8
+shader_parameter/outline_color = Color(0, 0, 0, 1)
+shader_parameter/outline_thickness = 1.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_0w5gm"]
+font_size = 10
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pyu7k"]
 
@@ -42,9 +171,6 @@ shader_parameter/enable_brightness = true
 shader_parameter/brightness = 1.0
 shader_parameter/num_colors = 512
 shader_parameter/enable_color_reduction = true
-
-[sub_resource type="LabelSettings" id="LabelSettings_0w5gm"]
-font_size = 10
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jd2q0"]
 bg_color = Color(0.6, 0.6, 0.6, 0.721569)
@@ -63,28 +189,34 @@ corner_radius_bottom_left = 5
 atlas = ExtResource("5_mumiu")
 region = Rect2(258, 112, 13, 16)
 
-[node name="SpriteGenerator" type="CanvasLayer" node_paths=PackedStringArray("_startGenerationBtn", "MainScene3D", "_rawViewport", "_rawViewportContainer", "_saveConfigBtn", "_loadConfigBtn", "_resolutionOptionBtn", "_pixelShaderOptionBtn", "_frameStepTextEdit", "_playBackSpeedLineEdit", "_clearFolderCheckBtn", "_pixelEffectCheckBtn", "_pixelShaderTextRect", "_modelPositionManager", "_loadAllAnimationsBtn", "_animSelectionItemList", "_angleSelectionItemList", "_pixelGridTextRect", "_showGridCheckButton", "_selectFolderPathBtn", "_openFolderPathBtn", "_spriteGenFolderPathLineEdit", "_settingsMainPanel", "_openSettingPanelBtn", "_meshReplacerPanelParentNode", "_hairMeshOptBtn", "_hairColorBtn") groups=["save_data"]]
+[node name="SpriteGenerator" type="CanvasLayer" node_paths=PackedStringArray("_startGenerationBtn", "MainScene3D", "_rawViewport", "_rawViewportContainer", "BgRemoverViewport", "BgRemoverViewportContainer", "MeshShaderPixel3D", "_saveConfigBtn", "SavedConfigListOptBtn", "_loadConfigBtn", "_resolutionOptionBtn", "EffectsChoicesOptionBtn", "EffectLevelOptionBtn", "Outline3DStrenghtSlider", "Outline3DColorPicker", "_frameStepTextEdit", "_playBackSpeedLineEdit", "_clearFolderCheckBtn", "_pixelShaderTextRect", "_modelPositionManager", "_loadAllAnimationsBtn", "_animSelectionItemList", "_angleSelectionItemList", "_pixelGridTextRect", "_showGridCheckButton", "_selectFolderPathBtn", "_openFolderPathBtn", "_spriteGenFolderPathLineEdit", "_settingsMainPanel", "_openSettingPanelBtn", "_meshReplacerPanelParentNode", "_hairMeshOptBtn", "_hairColorBtn") groups=["save_data"]]
 script = ExtResource("1_ws6fq")
 _startGenerationBtn = NodePath("MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MarginContainer4/FinalGenerationButton/StartGenerationBtn")
-MainScene3D = NodePath("MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/ModelPanelContainer/RawViewportContainer/RawSubViewport/Model/MainScene3D")
-_rawViewport = NodePath("MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/ModelPanelContainer/RawViewportContainer/RawSubViewport")
-_rawViewportContainer = NodePath("MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/ModelPanelContainer/RawViewportContainer")
+MainScene3D = NodePath("MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/RawRenderPanelContainer/RawViewportContainer/RawSubViewport/Model/MainScene3D")
+_rawViewport = NodePath("MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/RawRenderPanelContainer/RawViewportContainer/RawSubViewport")
+_rawViewportContainer = NodePath("MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/RawRenderPanelContainer/RawViewportContainer")
+BgRemoverViewport = NodePath("MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/BGRemoverRenderPanelContainer/BgRemoverViewportContainer/BgRemoverSubViewport")
+BgRemoverViewportContainer = NodePath("MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/BGRemoverRenderPanelContainer/BgRemoverViewportContainer")
+MeshShaderPixel3D = NodePath("MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/RawRenderPanelContainer/RawViewportContainer/RawSubViewport/Model/PixelShaderMesh3D")
 frameSkipStep = 1
 _saveConfigBtn = NodePath("MainUI/SettingsMainPanel/PanelContainer/SettingsMarginOptionsPanel/PanelContainer/VBoxContainer/SpriteGenSettings/VBoxContainer/SaveConfigSettingsPanel/VboxContainer/SaveConfigBtn")
+SavedConfigListOptBtn = NodePath("MainUI/SettingsMainPanel/PanelContainer/SettingsMarginOptionsPanel/PanelContainer/VBoxContainer/SpriteGenSettings/VBoxContainer/SaveConfigSettingsPanel/VboxContainer/SavedConfigListOptBtn")
 _loadConfigBtn = NodePath("MainUI/SettingsMainPanel/PanelContainer/SettingsMarginOptionsPanel/PanelContainer/VBoxContainer/SpriteGenSettings/VBoxContainer/SaveConfigSettingsPanel/VboxContainer/LoadConfigBtn")
 _resolutionOptionBtn = NodePath("MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/SpriteResHBoxCont/ResOptionButton")
-_pixelShaderOptionBtn = NodePath("MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/PixelShaderLvlHBoxCont/PixelShaderOptionBtn")
-_frameStepTextEdit = NodePath("MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/FrameSkipHBoxCont/FrameStepTextEdit")
+EffectsChoicesOptionBtn = NodePath("MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/EffectChoicesHBoxCont/EffectsChoicesOptionBtn")
+EffectLevelOptionBtn = NodePath("MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/EffectLvlHBoxCont/EffectLevelOptionBtn")
+Outline3DStrenghtSlider = NodePath("MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/Outline3DHBox/Outline3DHSlider")
+Outline3DColorPicker = NodePath("MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/Outline3DHBox/MarginContainer/Outline3DColorPickerBtn")
+_frameStepTextEdit = NodePath("MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/FrameSkipHBoxCont/FrameStepTextEdit")
 _playBackSpeedLineEdit = NodePath("MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/PlaybackSpeedHBoxCont/PlayBackSpeedLineEdit")
 _clearFolderCheckBtn = NodePath("MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/ClearFolderHBoxCont/ClearFolderCheckBtn")
-_pixelEffectCheckBtn = NodePath("MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/PixelEffectHBoxCont/MarginContainer/PixelEffectCheckBtn")
-_pixelShaderTextRect = NodePath("MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/ModelPanelContainer/RawViewportContainer/RawSubViewport/PixelShaderTextRect")
+_pixelShaderTextRect = NodePath("MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/RawRenderPanelContainer/RawViewportContainer/RawSubViewport/PixelShaderTextRect")
 _modelPositionManager = NodePath("MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/ImageOptionsPanel/ModelPositionManager")
 _loadAllAnimationsBtn = NodePath("MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MarginContainer3/AnimSelectPanelCont/MarginContainer/VBoxContainer/HBoxContainer/LoadAllAnimationsBtn")
 _animSelectionItemList = NodePath("MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MarginContainer3/AnimSelectPanelCont/MarginContainer/VBoxContainer/animSelectionItemList")
 _angleSelectionItemList = NodePath("MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/AngleSelectionHBoxCont/angleSelectionItemList")
-_pixelGridTextRect = NodePath("MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/ModelPanelContainer/RawViewportContainer/RawSubViewport/Pixel32GridTextRect")
-_showGridCheckButton = NodePath("MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/ShowGridHBoxCont/MarginContainer/ShowGridCheckButton")
+_pixelGridTextRect = NodePath("MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/RawRenderPanelContainer/RawViewportContainer/RawSubViewport/Pixel32GridTextRect")
+_showGridCheckButton = NodePath("MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/ShowGridHBoxCont/MarginContainer/ShowGridCheckButton")
 _selectFolderPathBtn = NodePath("MainUI/SettingsMainPanel/PanelContainer/SettingsMarginOptionsPanel/PanelContainer/VBoxContainer/SpriteGenSettings/VBoxContainer/SaveFolderSettingsPanel/VboxContainer/SelectFolderPathBtn")
 _openFolderPathBtn = NodePath("MainUI/SettingsMainPanel/PanelContainer/SettingsMarginOptionsPanel/PanelContainer/VBoxContainer/SpriteGenSettings/VBoxContainer/SaveFolderSettingsPanel/VboxContainer/OpenFolderPathBtn")
 _spriteGenFolderPathLineEdit = NodePath("MainUI/SettingsMainPanel/PanelContainer/SettingsMarginOptionsPanel/PanelContainer/VBoxContainer/SpriteGenSettings/VBoxContainer/SaveFolderSettingsPanel/VboxContainer/SpriteGenFolderPathLineEdit")
@@ -132,31 +264,36 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="RenderImageVBoxCont" type="VBoxContainer" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer"]
+texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="MainRenderPanel" type="PanelContainer" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont"]
+texture_filter = 1
 clip_contents = true
 custom_minimum_size = Vector2(350, 350)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="ModelPanelContainer" type="PanelContainer" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel"]
+[node name="RawRenderPanelContainer" type="PanelContainer" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel"]
+texture_filter = 1
 custom_minimum_size = Vector2(512, 512)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_styles/panel = SubResource("StyleBoxFlat_0w5gm")
 
-[node name="RawViewportContainer" type="SubViewportContainer" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/ModelPanelContainer"]
+[node name="RawViewportContainer" type="SubViewportContainer" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/RawRenderPanelContainer"]
 unique_name_in_owner = true
+texture_filter = 1
+material = SubResource("ShaderMaterial_jd2q0")
 clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="RawSubViewport" type="SubViewport" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/ModelPanelContainer/RawViewportContainer"]
+[node name="RawSubViewport" type="SubViewport" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/RawRenderPanelContainer/RawViewportContainer"]
 unique_name_in_owner = true
 own_world_3d = true
 transparent_bg = true
@@ -165,13 +302,20 @@ canvas_item_default_texture_filter = 0
 physics_object_picking = true
 render_target_update_mode = 4
 
-[node name="Model" type="Node3D" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/ModelPanelContainer/RawViewportContainer/RawSubViewport"]
+[node name="Model" type="Node3D" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/RawRenderPanelContainer/RawViewportContainer/RawSubViewport"]
 
-[node name="MainScene3D" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/ModelPanelContainer/RawViewportContainer/RawSubViewport/Model" instance=ExtResource("2_jyiui")]
+[node name="MainScene3D" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/RawRenderPanelContainer/RawViewportContainer/RawSubViewport/Model" instance=ExtResource("2_jyiui")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.1)
 
-[node name="PixelShaderTextRect" type="TextureRect" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/ModelPanelContainer/RawViewportContainer/RawSubViewport"]
+[node name="PixelShaderMesh3D" type="MeshInstance3D" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/RawRenderPanelContainer/RawViewportContainer/RawSubViewport/Model"]
+cast_shadow = 0
+extra_cull_margin = 16384.0
+mesh = SubResource("QuadMesh_4o1c1")
+
+[node name="PixelShaderTextRect" type="TextureRect" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/RawRenderPanelContainer/RawViewportContainer/RawSubViewport"]
 unique_name_in_owner = true
+visible = false
+texture_filter = 3
 material = SubResource("ShaderMaterial_0w5gm")
 anchors_preset = 15
 anchor_right = 1.0
@@ -180,17 +324,56 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("GradientTexture1D_jd2q0")
 
-[node name="Pixel32GridTextRect" type="TextureRect" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/ModelPanelContainer/RawViewportContainer/RawSubViewport"]
+[node name="Pixel32GridTextRect" type="TextureRect" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/RawRenderPanelContainer/RawViewportContainer/RawSubViewport"]
 unique_name_in_owner = true
-modulate = Color(1, 1, 1, 0.298039)
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -0.5
-offset_bottom = 0.5
+visible = false
+texture_filter = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -256.0
+offset_top = -256.0
+offset_right = 256.0
+offset_bottom = 257.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 texture = ExtResource("5_ulv1c")
+metadata/_edit_use_anchors_ = true
+
+[node name="BGRemoverRenderPanelContainer" type="PanelContainer" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel"]
+texture_filter = 1
+custom_minimum_size = Vector2(512, 512)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_0w5gm")
+
+[node name="BgRemoverViewportContainer" type="SubViewportContainer" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/BGRemoverRenderPanelContainer"]
+unique_name_in_owner = true
+texture_filter = 3
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="BgRemoverSubViewport" type="SubViewport" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/BGRemoverRenderPanelContainer/BgRemoverViewportContainer"]
+own_world_3d = true
+transparent_bg = true
+handle_input_locally = false
+canvas_item_default_texture_filter = 0
+physics_object_picking = true
+render_target_update_mode = 4
+
+[node name="BgRemoverTextureRect" type="TextureRect" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/BGRemoverRenderPanelContainer/BgRemoverViewportContainer/BgRemoverSubViewport"]
+texture_filter = 3
+material = SubResource("ShaderMaterial_8pcxw")
+offset_right = 40.0
+offset_bottom = 40.0
+texture = SubResource("ViewportTexture_h87xq")
 
 [node name="ImageOptionsPanel" type="PanelContainer" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont"]
 clip_contents = true
@@ -210,6 +393,7 @@ size_flags_stretch_ratio = 3.0
 theme_override_styles/panel = SubResource("StyleBoxEmpty_0w5gm")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont"]
+material = SubResource("ShaderMaterial_h87xq")
 layout_mode = 2
 
 [node name="MainSpriteOptions" type="MarginContainer" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer"]
@@ -237,7 +421,7 @@ layout_mode = 2
 [node name="ResolutionLabel" type="Label" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/SpriteResHBoxCont"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
-text = " Sprite Resolution"
+text = " Sprite Size"
 label_settings = ExtResource("9_0w5gm")
 vertical_alignment = 1
 autowrap_mode = 2
@@ -250,33 +434,17 @@ layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
 clip_text = true
-item_count = 4
+item_count = 5
 popup/item_0/text = "64px"
 popup/item_0/id = 0
 popup/item_1/text = "128px"
 popup/item_1/id = 1
 popup/item_2/text = "256px"
 popup/item_2/id = 2
-popup/item_3/text = "512px"
+popup/item_3/text = "384px"
 popup/item_3/id = 3
-
-[node name="FrameSkipHBoxCont" type="HBoxContainer" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont"]
-custom_minimum_size = Vector2(0, 32)
-layout_mode = 2
-
-[node name="FrameStepLabel" type="Label" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/FrameSkipHBoxCont"]
-custom_minimum_size = Vector2(120, 32)
-layout_mode = 2
-text = " Frames Skip"
-label_settings = ExtResource("9_0w5gm")
-vertical_alignment = 1
-autowrap_mode = 2
-clip_text = true
-
-[node name="FrameStepTextEdit" type="LineEdit" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/FrameSkipHBoxCont"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(25, 32)
-layout_mode = 2
+popup/item_4/text = "512px"
+popup/item_4/id = 4
 
 [node name="ClearFolderHBoxCont" type="HBoxContainer" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont"]
 visible = false
@@ -290,42 +458,45 @@ text = "Clear Folder: "
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="PixelEffectHBoxCont" type="HBoxContainer" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont"]
+[node name="EffectChoicesHBoxCont" type="HBoxContainer" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="PixelEffectLabel" type="Label" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/PixelEffectHBoxCont"]
+[node name="EffectsLabel" type="Label" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/EffectChoicesHBoxCont"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
-text = " Pixel Effect "
+text = "Effect Choice"
 label_settings = ExtResource("9_0w5gm")
 vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="MarginContainer" type="MarginContainer" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/PixelEffectHBoxCont"]
+[node name="MarginContainer" type="MarginContainer" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/EffectChoicesHBoxCont"]
 layout_mode = 2
 theme_override_constants/margin_left = 0
 theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 0
 theme_override_constants/margin_bottom = 4
 
-[node name="PixelEffectCheckBtn" type="CheckButton" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/PixelEffectHBoxCont/MarginContainer"]
-unique_name_in_owner = true
-texture_filter = 2
-clip_contents = true
-custom_minimum_size = Vector2(80, 24)
+[node name="EffectsChoicesOptionBtn" type="OptionButton" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/EffectChoicesHBoxCont"]
+custom_minimum_size = Vector2(100, 32)
 layout_mode = 2
-size_flags_horizontal = 4
-focus_mode = 0
-theme = ExtResource("3_30nce")
-text = "False"
+size_flags_horizontal = 0
+size_flags_vertical = 4
+clip_text = true
+item_count = 3
+popup/item_0/text = "0 - No Effect"
+popup/item_0/id = 0
+popup/item_1/text = "1 - Pixel Effect"
+popup/item_1/id = 1
+popup/item_2/text = "2 - Toon Effect"
+popup/item_2/id = 2
 
-[node name="PixelShaderLvlHBoxCont" type="HBoxContainer" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont"]
+[node name="EffectLvlHBoxCont" type="HBoxContainer" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="PixelShaderLabel" type="Label" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/PixelShaderLvlHBoxCont"]
+[node name="EffectLabel" type="Label" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/EffectLvlHBoxCont"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 text = " Effect Level "
@@ -334,7 +505,7 @@ vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="PixelShaderOptionBtn" type="OptionButton" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/PixelShaderLvlHBoxCont"]
+[node name="EffectLevelOptionBtn" type="OptionButton" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/EffectLvlHBoxCont"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 32)
 layout_mode = 2
@@ -354,6 +525,83 @@ popup/item_4/text = "5 - Very Low"
 popup/item_4/id = 4
 popup/item_5/text = "6 - Minimal"
 popup/item_5/id = 5
+
+[node name="Outline3DHBox" type="HBoxContainer" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[node name="Outline3DLabel" type="Label" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/Outline3DHBox"]
+custom_minimum_size = Vector2(120, 32)
+layout_mode = 2
+text = "Outline 3D"
+label_settings = ExtResource("9_0w5gm")
+vertical_alignment = 1
+autowrap_mode = 2
+clip_text = true
+
+[node name="Outline3DCheckBox" type="CheckBox" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/Outline3DHBox"]
+visible = false
+custom_minimum_size = Vector2(100, 32)
+layout_mode = 2
+text = "Outline
+"
+
+[node name="Outline3DHSlider" type="HSlider" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/Outline3DHBox"]
+custom_minimum_size = Vector2(150, 32)
+layout_mode = 2
+max_value = 1.0
+step = 0.1
+tick_count = 5
+ticks_on_borders = true
+
+[node name="Outline3DLabel2" type="Label" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/Outline3DHBox"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+text = "00"
+label_settings = SubResource("LabelSettings_0w5gm")
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/Outline3DHBox"]
+layout_mode = 2
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 6
+
+[node name="Outline3DColorPickerBtn" type="ColorPickerButton" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/Outline3DHBox/MarginContainer"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+
+[node name="ShowGridHBoxCont" type="HBoxContainer" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/ShowGridHBoxCont"]
+custom_minimum_size = Vector2(120, 32)
+layout_mode = 2
+text = " ShowGrid"
+label_settings = ExtResource("9_0w5gm")
+vertical_alignment = 1
+autowrap_mode = 2
+clip_text = true
+
+[node name="MarginContainer" type="MarginContainer" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/ShowGridHBoxCont"]
+layout_mode = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 4
+
+[node name="ShowGridCheckButton" type="CheckButton" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/ShowGridHBoxCont/MarginContainer"]
+unique_name_in_owner = true
+texture_filter = 2
+clip_contents = true
+custom_minimum_size = Vector2(80, 24)
+layout_mode = 2
+size_flags_horizontal = 4
+focus_mode = 0
+theme = ExtResource("3_30nce")
+text = "False"
 
 [node name="OptionsGroup1VBoxCont2" type="VBoxContainer" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox"]
 layout_mode = 2
@@ -381,6 +629,24 @@ max_columns = 3
 same_column_width = true
 fixed_column_width = 55
 
+[node name="FrameSkipHBoxCont" type="HBoxContainer" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[node name="FrameStepLabel" type="Label" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/FrameSkipHBoxCont"]
+custom_minimum_size = Vector2(120, 32)
+layout_mode = 2
+text = " Frames Skip"
+label_settings = ExtResource("9_0w5gm")
+vertical_alignment = 1
+autowrap_mode = 2
+clip_text = true
+
+[node name="FrameStepTextEdit" type="LineEdit" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/FrameSkipHBoxCont"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(25, 32)
+layout_mode = 2
+
 [node name="PlaybackSpeedHBoxCont" type="HBoxContainer" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
@@ -398,37 +664,6 @@ clip_text = true
 unique_name_in_owner = true
 custom_minimum_size = Vector2(25, 32)
 layout_mode = 2
-
-[node name="ShowGridHBoxCont" type="HBoxContainer" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2"]
-custom_minimum_size = Vector2(0, 32)
-layout_mode = 2
-
-[node name="Label" type="Label" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/ShowGridHBoxCont"]
-custom_minimum_size = Vector2(120, 32)
-layout_mode = 2
-text = " ShowGrid"
-label_settings = ExtResource("9_0w5gm")
-vertical_alignment = 1
-autowrap_mode = 2
-clip_text = true
-
-[node name="MarginContainer" type="MarginContainer" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/ShowGridHBoxCont"]
-layout_mode = 2
-theme_override_constants/margin_left = 0
-theme_override_constants/margin_top = 4
-theme_override_constants/margin_right = 0
-theme_override_constants/margin_bottom = 4
-
-[node name="ShowGridCheckButton" type="CheckButton" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/ShowGridHBoxCont/MarginContainer"]
-unique_name_in_owner = true
-texture_filter = 2
-clip_contents = true
-custom_minimum_size = Vector2(80, 24)
-layout_mode = 2
-size_flags_horizontal = 4
-focus_mode = 0
-theme = ExtResource("3_30nce")
-text = "False"
 
 [node name="MeshOptions" type="MarginContainer" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer"]
 layout_mode = 2
@@ -680,7 +915,7 @@ theme_override_constants/margin_bottom = 10
 unique_name_in_owner = true
 material = SubResource("ShaderMaterial_seol6")
 layout_mode = 2
-texture = ExtResource("13_0w5gm")
+texture = ExtResource("14_8pcxw")
 expand_mode = 3
 
 [node name="OptionsContainer" type="PanelContainer" parent="MainUI/MainTabContainer/TabSpriteSheetGenManager/HBoxContainer"]
@@ -902,6 +1137,7 @@ text = "Save SpriteSheet
 
 [node name="SettingsMainPanel" type="MarginContainer" parent="MainUI"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0

@@ -10,4 +10,5 @@ ItemName = "Skin Yellow"
 MeshItem = ExtResource("1_28oxd")
 BodyPartType = 0
 Icon = ExtResource("1_3pa8i")
+ItemOrder = 1
 metadata/_custom_type_script = "uid://cmuqvgdb2248c"

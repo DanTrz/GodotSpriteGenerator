@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://l8xgvn4s2rm6"]
+[gd_scene load_steps=27 format=3 uid="uid://l8xgvn4s2rm6"]
 
 [ext_resource type="Script" uid="uid://dj2tgr0hxsbd3" path="res://SpriteGenerator/SpriteGenerator.cs" id="1_h1ppo"]
 [ext_resource type="Script" uid="uid://b78ehve5xa1ia" path="res://SpriteGenerator/ModelPositionManager.cs" id="2_4sip0"]
@@ -11,7 +11,6 @@
 [ext_resource type="LabelSettings" uid="uid://usv7beyw1bj8" path="res://Assets/UI/Theme/Label.tres" id="9_2c1di"]
 [ext_resource type="PackedScene" uid="uid://de676sb25ueye" path="res://UIComponents/ItemListCheckBox.tscn" id="10_l7jf8"]
 [ext_resource type="Script" uid="uid://cacdskl17dkmj" path="res://SpriteGenerator/SpriteSheetManager.cs" id="11_iga6c"]
-[ext_resource type="Shader" uid="uid://c58xcvgi0wwu8" path="res://Assets/Shaders/brightness_saturation.gdshader" id="12_g30tv"]
 [ext_resource type="Texture2D" uid="uid://cae2jelncoq3w" path="res://Assets/SpriteSheetTemp/Anim_Running_spriteSheet.png" id="13_gcged"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ivn07"]
@@ -29,6 +28,7 @@ corner_radius_bottom_left = 2
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0w5gm"]
 shader = ExtResource("5_qt7jr")
 shader_parameter/pixel_size = 512.0
+shader_parameter/viewport_size = Vector2(512, 512)
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_ulv1c"]
 
@@ -68,11 +68,6 @@ region = Rect2(626, 230, 12, 4)
 bg_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_seol6"]
-shader = ExtResource("12_g30tv")
-shader_parameter/enable_saturation = false
-shader_parameter/saturation = 0.993
-shader_parameter/enable_brightness = true
-shader_parameter/brightness = 1.036
 
 [node name="SpriteGenerator" type="CanvasLayer" node_paths=PackedStringArray("_startGenerationBtn", "MainScene3D", "_rawViewport", "_rawViewportContainer")]
 script = ExtResource("1_h1ppo")

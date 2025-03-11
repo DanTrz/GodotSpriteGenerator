@@ -13,7 +13,7 @@ config_version=5
 config/name="SpriteGenerator"
 run/main_scene="uid://5ps0rlhwhjoe"
 config/features=PackedStringArray("4.4", "C#", "Forward Plus")
-run/max_fps=30
+run/max_fps=90
 config/icon="res://icon.svg"
 
 [autoload]
@@ -24,9 +24,9 @@ SaveGameManager="*res://Globals/SaveGameManager/SaveGameManager.cs"
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
-window/size/window_width_override=1600
-window/size/window_height_override=900
-window/stretch/mode="canvas_items"
+window/stretch/mode="viewport"
+window/stretch/scale_mode="integer"
+window/per_pixel_transparency/allowed=true
 
 [dotnet]
 
@@ -51,3 +51,9 @@ MouseRightClick={
 "events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":2,"position":Vector2(151, 23),"global_position":Vector2(170, 106),"factor":1.0,"button_index":2,"canceled":false,"pressed":true,"double_click":false,"script":null)
 ]
 }
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0
+textures/default_filters/use_nearest_mipmap_filter=true
+textures/default_filters/anisotropic_filtering_level=0

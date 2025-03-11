@@ -2,11 +2,11 @@
 
 [ext_resource type="ArrayMesh" uid="uid://c4ameyumdw42y" path="res://Models/FullModels/BaseModel/BaseModel_OBJ5_BASE_MODEL_001.res" id="1_igd6e"]
 [ext_resource type="ArrayMesh" uid="uid://cioryr7kv5on5" path="res://Models/MeshRepository/MeshResources/1_Head_Bald.res" id="2_ew3vs"]
+[ext_resource type="ArrayMesh" uid="uid://54540okcybk7" path="res://Models/MeshRepository/MeshResources/1_LegSkin.res" id="2_gqgxj"]
 [ext_resource type="PackedScene" uid="uid://cq7dhe7xeop3w" path="res://SpriteGenerator/BodyPartMeshInstance3D.tscn" id="2_igd6e"]
-[ext_resource type="ArrayMesh" uid="uid://cggu0kspb5ctv" path="res://Models/FullModels/BaseModel/BaseModel_OBJ5_BASE_MODEL_012.res" id="3_58l4l"]
-[ext_resource type="ArrayMesh" uid="uid://rpxuessyoojl" path="res://Models/FullModels/BaseModel/BaseModel_OBJ5_BASE_MODEL_006.res" id="4_fe036"]
-[ext_resource type="ArrayMesh" uid="uid://du21ggco4kaqh" path="res://Models/FullModels/BaseModel/BaseModel_OBJ5_BASE_MODEL_011.res" id="5_gc5ao"]
 [ext_resource type="ArrayMesh" uid="uid://b1gru2q23rr5f" path="res://Models/MeshRepository/MeshResources/1_Skin.res" id="6_ew3vs"]
+[ext_resource type="ArrayMesh" uid="uid://cmsvy64j8ounq" path="res://Models/MeshRepository/MeshResources/RIGHT_ARM_SKIN.res" id="6_gqgxj"]
+[ext_resource type="ArrayMesh" uid="uid://2c1u8t283yli" path="res://Models/MeshRepository/MeshResources/LEFT_ARM_SKIN.res" id="6_igd6e"]
 [ext_resource type="PackedScene" uid="uid://dpa7h0crxxisw" path="res://Models/MeshRepository/Hair/1_HairMale01.tscn" id="7_ew3vs"]
 
 [sub_resource type="Animation" id="Animation_ur8ua"]
@@ -1795,30 +1795,36 @@ bones/24/scale = Vector3(1, 1, 1)
 
 [node name="LEGS" parent="BaseModel_Armature/GeneralSkeleton" instance=ExtResource("2_igd6e")]
 unique_name_in_owner = true
-mesh = ExtResource("4_fe036")
+cast_shadow = 0
+mesh = ExtResource("2_gqgxj")
 BodyPartType = 3
 
 [node name="FEET" parent="BaseModel_Armature/GeneralSkeleton" instance=ExtResource("2_igd6e")]
 unique_name_in_owner = true
+cast_shadow = 0
 mesh = ExtResource("1_igd6e")
 BodyPartType = 4
 
 [node name="HEAD" parent="BaseModel_Armature/GeneralSkeleton" instance=ExtResource("2_igd6e")]
 unique_name_in_owner = true
+cast_shadow = 0
 mesh = ExtResource("2_ew3vs")
 
 [node name="LEFT_ARM" parent="BaseModel_Armature/GeneralSkeleton" instance=ExtResource("2_igd6e")]
 unique_name_in_owner = true
-mesh = ExtResource("3_58l4l")
+cast_shadow = 0
+mesh = ExtResource("6_igd6e")
 BodyPartType = 5
 
 [node name="RIGHT_ARM" parent="BaseModel_Armature/GeneralSkeleton" instance=ExtResource("2_igd6e")]
 unique_name_in_owner = true
-mesh = ExtResource("5_gc5ao")
+cast_shadow = 0
+mesh = ExtResource("6_gqgxj")
 BodyPartType = 6
 
 [node name="TORSO" parent="BaseModel_Armature/GeneralSkeleton" instance=ExtResource("2_igd6e")]
 unique_name_in_owner = true
+cast_shadow = 0
 mesh = ExtResource("6_ew3vs")
 BodyPartType = 1
 

@@ -10,4 +10,5 @@ ItemName = "Basic Boots"
 MeshItem = ExtResource("2_mv1jd")
 BodyPartType = 4
 Icon = ExtResource("1_udrx6")
+ItemOrder = 1
 metadata/_custom_type_script = "uid://cmuqvgdb2248c"
