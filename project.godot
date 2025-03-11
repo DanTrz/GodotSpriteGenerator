@@ -32,10 +32,6 @@ window/per_pixel_transparency/allowed=true
 
 project/assembly_name="SpriteGenerator"
 
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/jigglebones/plugin.cfg")
-
 [global_group]
 
 save_data=""

@@ -1831,7 +1831,7 @@ BodyPartType = 1
 
 [node name="HairBoneAttach" type="BoneAttachment3D" parent="BaseModel_Armature/GeneralSkeleton"]
 unique_name_in_owner = true
-transform = Transform3D(0.983512, 0.00555359, -0.180756, -0.023441, 0.995011, -0.0969741, 0.179316, 0.0996124, 0.978736, -0.0474114, 18.747, 0.449889)
+transform = Transform3D(0.983512, 0.00555362, -0.180756, -0.023441, 0.995011, -0.0969741, 0.179316, 0.0996124, 0.978736, -0.0474116, 18.7471, 0.449889)
 bone_name = "Head"
 bone_idx = 5
 
@@ -1839,7 +1839,7 @@ bone_idx = 5
 
 [node name="WeaponBoneAttach" type="BoneAttachment3D" parent="BaseModel_Armature/GeneralSkeleton"]
 unique_name_in_owner = true
-transform = Transform3D(0.339354, -0.518803, 0.784654, 0.747263, -0.357973, -0.55987, 0.571347, 0.776337, 0.266203, -6.42972, 14.069, -2.03149)
+transform = Transform3D(0.339354, -0.518803, 0.784654, 0.747263, -0.357973, -0.559869, 0.571347, 0.776337, 0.266203, -6.42972, 14.069, -2.03149)
 bone_name = "RightHand"
 bone_idx = 14
 
