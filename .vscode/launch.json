@@ -16,7 +16,7 @@
         // "--debug-collisions",
         // "--debug-paths",
         // "--debug-navigation",
-        "--verbose",
+        //"--verbose",
         "--path",
         "${workspaceFolder}"
       ],
