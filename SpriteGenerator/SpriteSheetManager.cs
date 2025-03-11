@@ -123,11 +123,6 @@ public partial class SpriteSheetManager : PanelContainer
 
         UpdateUIElementsOnLoad();
 
-
-
-
-
-
     }
 
     private async Task LoadTextureFromImgFile(string path)

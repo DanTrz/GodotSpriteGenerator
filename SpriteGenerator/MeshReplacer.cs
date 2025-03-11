@@ -54,25 +54,25 @@ public partial class MeshReplacer : Node
         return null;
     }
 
-    public static void UpdateHairScene(BoneAttachment3D hairParentNode, string hairScenePath)
+    public static void UpdateMeshScene(BoneAttachment3D parentNode, string scenePath)
     {
 
-        foreach (Node child in hairParentNode.GetChildren())
+        foreach (Node child in parentNode.GetChildren())
         {
-            hairParentNode.RemoveChild(child);
+            parentNode.RemoveChild(child);
             child.QueueFree();
         }
 
-        Node hairScene = GD.Load<PackedScene>(hairScenePath).Instantiate();
-        hairParentNode.AddChild(hairScene);
+        Node newScene = GD.Load<PackedScene>(scenePath).Instantiate();
+        parentNode.AddChild(newScene);
 
     }
 
-    public static void UpdateUIOptionsHairList(OptionButton buttonToUpdate)
+    public static void UpdateUIOptionsSceneItemList(OptionButton buttonToUpdate, string scenesFolderPath)
     {
-        string[] hairItemList = ResourceLoader.ListDirectory(Const.HAIR_SCENES_FOLDER_PATH);
+        string[] itemList = ResourceLoader.ListDirectory(scenesFolderPath);
         int itemId = 1;
-        foreach (string item in hairItemList)
+        foreach (string item in itemList)
         {
             if (item.EndsWith(".tscn"))
             {
@@ -80,7 +80,7 @@ public partial class MeshReplacer : Node
                 string itemName = item.Substring(0, stringIndex);
                 buttonToUpdate.AddItem(itemName, itemId);
                 int itemIndex = buttonToUpdate.GetItemIndex(itemId);
-                string iconPath = Const.HAIR_SCENES_FOLDER_PATH + itemName + "_Icon.png";
+                string iconPath = scenesFolderPath + itemName + "_Icon.png";
                 Texture2D icon = GD.Load<Texture2D>(iconPath);
 
                 if (icon != null)

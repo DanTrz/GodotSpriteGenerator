@@ -190,7 +190,7 @@ corner_radius_bottom_left = 5
 atlas = ExtResource("5_mumiu")
 region = Rect2(258, 112, 13, 16)
 
-[node name="SpriteGenerator" type="CanvasLayer" node_paths=PackedStringArray("_startGenerationBtn", "MainScene3D", "_rawViewport", "_rawViewportContainer", "BgRemoverViewport", "BgRemoverViewportContainer", "MeshShaderPixel3D", "_saveConfigBtn", "SavedConfigListOptBtn", "_loadConfigBtn", "_resolutionOptionBtn", "EffectsChoicesOptionBtn", "EffectLevelOptionBtn", "Outline3DStrenghtSlider", "Outline3DColorPicker", "_frameStepTextEdit", "_playBackSpeedLineEdit", "_clearFolderCheckBtn", "_pixelShaderTextRect", "_modelPositionManager", "_loadAllAnimationsBtn", "_animSelectionItemList", "_angleSelectionItemList", "_pixelGridTextRect", "_showGridCheckButton", "MoveSpriteSheetCheckBtn", "_selectFolderPathBtn", "_openFolderPathBtn", "_spriteGenFolderPathLineEdit", "_settingsMainPanel", "_openSettingPanelBtn", "_meshReplacerPanelParentNode", "_hairMeshOptBtn", "_hairColorBtn") groups=["save_data"]]
+[node name="SpriteGenerator" type="CanvasLayer" node_paths=PackedStringArray("_startGenerationBtn", "MainScene3D", "_rawViewport", "_rawViewportContainer", "BgRemoverViewport", "BgRemoverViewportContainer", "MeshShaderPixel3D", "_saveConfigBtn", "SavedConfigListOptBtn", "_loadConfigBtn", "_resolutionOptionBtn", "EffectsChoicesOptionBtn", "EffectLevelOptionBtn", "Outline3DStrenghtSlider", "Outline3DColorPicker", "_frameStepTextEdit", "_playBackSpeedLineEdit", "_clearFolderCheckBtn", "_pixelShaderTextRect", "_modelPositionManager", "_loadAllAnimationsBtn", "_animSelectionItemList", "_angleSelectionItemList", "_pixelGridTextRect", "_showGridCheckButton", "MoveSpriteSheetCheckBtn", "_selectFolderPathBtn", "_openFolderPathBtn", "_spriteGenFolderPathLineEdit", "_settingsMainPanel", "_openSettingPanelBtn", "_meshReplacerPanelParentNode", "_hairMeshOptBtn", "WeaponItemMeshOptBtn", "_hairColorBtn") groups=["save_data"]]
 script = ExtResource("1_ws6fq")
 _startGenerationBtn = NodePath("MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MarginContainer4/FinalGenerationButton/StartGenerationBtn")
 MainScene3D = NodePath("MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/RawRenderPanelContainer/RawViewportContainer/RawSubViewport/Model/MainScene3D")
@@ -226,6 +226,7 @@ _settingsMainPanel = NodePath("MainUI/SettingsMainPanel")
 _openSettingPanelBtn = NodePath("MainUI/OpenSettingsPanel/MarginContainer/VboxContainer/OpenSettingPanelBtn")
 _meshReplacerPanelParentNode = NodePath("MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont")
 _hairMeshOptBtn = NodePath("MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/HairMeshHBoxCont/HairMeshOptBtn")
+WeaponItemMeshOptBtn = NodePath("MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt/WeaponItemMeshHBoxCont2/WeaponItemMeshOptBtn")
 _hairColorBtn = NodePath("MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/HairMeshHBoxCont/MarginContainer/HairColorBtn")
 
 [node name="MainUI" type="Control" parent="."]
@@ -249,12 +250,11 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-current_tab = 1
+current_tab = 0
 all_tabs_in_front = true
 
 [node name="TabSpriteGenManager" type="PanelContainer" parent="MainUI/MainTabContainer"]
 unique_name_in_owner = true
-visible = false
 clip_contents = true
 layout_mode = 2
 metadata/_tab_index = 0
@@ -303,7 +303,7 @@ transparent_bg = true
 handle_input_locally = false
 canvas_item_default_texture_filter = 0
 physics_object_picking = true
-render_target_update_mode = 0
+render_target_update_mode = 4
 
 [node name="Model" type="Node3D" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/RawRenderPanelContainer/RawViewportContainer/RawSubViewport"]
 
@@ -369,7 +369,7 @@ transparent_bg = true
 handle_input_locally = false
 canvas_item_default_texture_filter = 0
 physics_object_picking = true
-render_target_update_mode = 0
+render_target_update_mode = 4
 
 [node name="BgRemoverTextureRect" type="TextureRect" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/BGRemoverRenderPanelContainer/BgRemoverViewportContainer/BgRemoverSubViewport"]
 texture_filter = 3
@@ -827,6 +827,25 @@ clip_text = true
 layout_mode = 2
 BodyPartType = 3
 
+[node name="WeaponItemMeshHBoxCont2" type="HBoxContainer" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[node name="WeaponItemMeshLabel" type="Label" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt/WeaponItemMeshHBoxCont2"]
+custom_minimum_size = Vector2(120, 32)
+layout_mode = 2
+text = "Weapon Mesh"
+label_settings = ExtResource("9_0w5gm")
+vertical_alignment = 1
+autowrap_mode = 2
+clip_text = true
+
+[node name="WeaponItemMeshOptBtn" type="OptionButton" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt/WeaponItemMeshHBoxCont2"]
+custom_minimum_size = Vector2(150, 32)
+layout_mode = 2
+clip_text = true
+fit_to_longest_item = false
+
 [node name="MarginContainer3" type="MarginContainer" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 2
@@ -900,6 +919,7 @@ text = "Start Generation
 
 [node name="TabSpriteSheetGenManager" type="PanelContainer" parent="MainUI/MainTabContainer" node_paths=PackedStringArray("_textureRect", "_saturationSlider", "_saturationLabel", "_brightnessLabel", "_outlineLabel", "_brightnessSlider", "_outlineCheckbox", "_outlineThicknessSlider", "_outlineColorPicker", "_ditheringCheckbox", "_ditheringSlider", "_colorReductionCheckbox", "_colorCountSpinBox", "_saveButton", "_statusLabel", "_enableSaturationCheckbox", "_enableBrightnessCheckbox", "SelectFileSpriteSheetBtn") groups=["save_data"]]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_pyu7k")
 script = ExtResource("8_seol6")
@@ -944,7 +964,7 @@ handle_input_locally = false
 canvas_item_default_texture_filter = 0
 physics_object_picking = true
 size = Vector2i(900, 600)
-render_target_update_mode = 4
+render_target_update_mode = 0
 
 [node name="Camera2DController" parent="MainUI/MainTabContainer/TabSpriteSheetGenManager/HBoxContainer/SpriteSheetContainer/SpriteSheetViewportContainer/SpriteSheetSubViewport" instance=ExtResource("13_h87xq")]
 

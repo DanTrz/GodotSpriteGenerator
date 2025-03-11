@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://ojco6d4xi1ow"
-path="res://.godot/imported/Silver_Sword.fbx-a14dd8834bda00b8d6eacf5130e3c391.scn"
+uid="uid://bpwqr4hf24kxp"
+path="res://.godot/imported/Silver_Axe.fbx-e06ad2623dce287fa1ba1f112bb1dfeb.scn"
 
 [deps]
 
-source_file="res://Models/MeshRepository/Weapons/Silver_Sword.fbx"
-dest_files=["res://.godot/imported/Silver_Sword.fbx-a14dd8834bda00b8d6eacf5130e3c391.scn"]
+source_file="res://Models/MeshRepository/Weapons/Silver_Axe.fbx"
+dest_files=["res://.godot/imported/Silver_Axe.fbx-e06ad2623dce287fa1ba1f112bb1dfeb.scn"]
 
 [params]
 
@@ -42,17 +42,29 @@ _subresources={
 "use_external/enabled": true,
 "use_external/path": "res://Models/MeshRepository/Weapons/color1.tres"
 },
+"color10": {
+"use_external/enabled": true,
+"use_external/path": "res://Models/MeshRepository/Weapons/color10.tres"
+},
+"color11": {
+"use_external/enabled": true,
+"use_external/path": "res://Models/MeshRepository/Weapons/color11.tres"
+},
+"color12": {
+"use_external/enabled": true,
+"use_external/path": "res://Models/MeshRepository/Weapons/color12.tres"
+},
 "color2": {
 "use_external/enabled": true,
 "use_external/path": "res://Models/MeshRepository/Weapons/color2.tres"
 },
-"color3": {
-"use_external/enabled": true,
-"use_external/path": "res://Models/MeshRepository/Weapons/color3.tres"
-},
 "color4": {
 "use_external/enabled": true,
 "use_external/path": "res://Models/MeshRepository/Weapons/color4.tres"
+},
+"color5": {
+"use_external/enabled": true,
+"use_external/path": "res://Models/MeshRepository/Weapons/color5.tres"
 },
 "color6": {
 "use_external/enabled": true,
@@ -65,6 +77,10 @@ _subresources={
 "color8": {
 "use_external/enabled": true,
 "use_external/path": "res://Models/MeshRepository/Weapons/color8.tres"
+},
+"color9": {
+"use_external/enabled": true,
+"use_external/path": "res://Models/MeshRepository/Weapons/color9.tres"
 }
 },
 "meshes": {
@@ -74,7 +90,7 @@ _subresources={
 "generate/shadow_meshes": 0,
 "lods/normal_merge_angle": 60.0,
 "save_to_file/enabled": true,
-"save_to_file/path": "res://Models/MeshRepository/Weapons/MeshsAndMaterials/SwordMesh.res"
+"save_to_file/path": "res://Models/MeshRepository/Weapons/MeshsAndMaterials/AxelMesh.res"
 }
 }
 }

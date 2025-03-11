@@ -8,7 +8,7 @@
 [ext_resource type="ArrayMesh" uid="uid://cmsvy64j8ounq" path="res://Models/MeshRepository/MeshResources/RIGHT_ARM_SKIN.res" id="6_gqgxj"]
 [ext_resource type="ArrayMesh" uid="uid://2c1u8t283yli" path="res://Models/MeshRepository/MeshResources/LEFT_ARM_SKIN.res" id="6_igd6e"]
 [ext_resource type="PackedScene" uid="uid://dpa7h0crxxisw" path="res://Models/MeshRepository/Hair/1_HairMale01.tscn" id="7_ew3vs"]
-[ext_resource type="PackedScene" uid="uid://k6hj0j021k6c" path="res://Models/MeshRepository/Weapons/SilverSwordScene.tscn" id="9_gqgxj"]
+[ext_resource type="PackedScene" uid="uid://dqvg7t4lsw2gs" path="res://Models/MeshRepository/Weapons/SilverAxeScene.tscn" id="10_58l4l"]
 
 [sub_resource type="Animation" id="Animation_ur8ua"]
 resource_name = "Armature|mixamo_com|Layer0"
@@ -1837,14 +1837,13 @@ bone_idx = 5
 
 [node name="HairMale01" parent="BaseModel_Armature/GeneralSkeleton/HairBoneAttach" instance=ExtResource("7_ew3vs")]
 
-[node name="HairBoneAttach2" type="BoneAttachment3D" parent="BaseModel_Armature/GeneralSkeleton"]
+[node name="WeaponBoneAttach" type="BoneAttachment3D" parent="BaseModel_Armature/GeneralSkeleton"]
 unique_name_in_owner = true
 transform = Transform3D(0.339354, -0.518803, 0.784654, 0.747263, -0.357973, -0.55987, 0.571347, 0.776337, 0.266203, -6.42972, 14.069, -2.03149)
 bone_name = "RightHand"
 bone_idx = 14
 
-[node name="Silver_Sword" parent="BaseModel_Armature/GeneralSkeleton/HairBoneAttach2" instance=ExtResource("9_gqgxj")]
-transform = Transform3D(-0.238089, 0.795823, 0.556759, 0.248553, -0.50423, 0.827028, 0.938901, 0.33529, -0.0777526, 4.4023, 2.14271, -0.104763)
+[node name="Silver_Axe" parent="BaseModel_Armature/GeneralSkeleton/WeaponBoneAttach" instance=ExtResource("10_58l4l")]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

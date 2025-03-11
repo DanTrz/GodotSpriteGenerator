@@ -72,6 +72,8 @@ public partial class SpriteGenerator : Node
     [Export] public LineEdit _spriteGenFolderPathLineEdit;
     [Export] public MarginContainer _settingsMainPanel;
     [Export] public Button _openSettingPanelBtn;
+
+
     //[OnReady("%MainTabContainer")] TabContainer _mainTabContainer;
 
 
@@ -81,6 +83,7 @@ public partial class SpriteGenerator : Node
     //MeshReplacer Nodes and Variables
     [Export] public PanelContainer _meshReplacerPanelParentNode;
     [Export] public OptionButton _hairMeshOptBtn;
+    [Export] public OptionButton WeaponItemMeshOptBtn;
     [Export] public ColorPickerButton _hairColorBtn;
     //[OnReady("%HeadMeshOptBtn")] private OptionButton _headMeshOptBtn;
     //[OnReady("%TorsoMeshOptBtn")] private OptionButton _torsoMeshOptBtn;
@@ -141,6 +144,7 @@ public partial class SpriteGenerator : Node
         //MeshReplacer Signals
         _hairColorBtn.ColorChanged += OnHairColorChanged;
         _hairMeshOptBtn.ItemSelected += OnHairMeshOptBtnItemSelected;
+        WeaponItemMeshOptBtn.ItemSelected += OnWeaponItemMeshOptBtnItemSelected;
 
         //Set Default UI Control Values
         _settingsMainPanel.Visible = false;
@@ -195,7 +199,8 @@ public partial class SpriteGenerator : Node
 
 
         //Mesh Replace Variables and UI
-        MeshReplacer.UpdateUIOptionsHairList(_hairMeshOptBtn);
+        MeshReplacer.UpdateUIOptionsSceneItemList(_hairMeshOptBtn, Const.HAIR_SCENES_FOLDER_PATH);
+        MeshReplacer.UpdateUIOptionsSceneItemList(WeaponItemMeshOptBtn, Const.WEAPON_SCENES_FOLDER_PATH);
         LoadAllMeshReplacerBtnAndMeshItemData();
         _hairMeshOptBtn.Selected = 0;
         OnHairMeshOptBtnItemSelected(0);
@@ -745,7 +750,15 @@ public partial class SpriteGenerator : Node
     {
         BoneAttachment3D _hairBoneAttachNode = _characterModelObject.GetNode<BoneAttachment3D>("%HairBoneAttach");
         string itemSelected = _hairMeshOptBtn.GetItemText((int)index);
-        MeshReplacer.UpdateHairScene(_hairBoneAttachNode, Const.HAIR_SCENES_FOLDER_PATH + itemSelected + ".tscn");
+        MeshReplacer.UpdateMeshScene(_hairBoneAttachNode, Const.HAIR_SCENES_FOLDER_PATH + itemSelected + ".tscn");
+    }
+
+
+    private void OnWeaponItemMeshOptBtnItemSelected(long index)
+    {
+        BoneAttachment3D weaponBoneAttachNode = _characterModelObject.GetNode<BoneAttachment3D>("%WeaponBoneAttach");
+        string itemSelected = WeaponItemMeshOptBtn.GetItemText((int)index);
+        MeshReplacer.UpdateMeshScene(weaponBoneAttachNode, Const.WEAPON_SCENES_FOLDER_PATH + itemSelected + ".tscn");
     }
 
 

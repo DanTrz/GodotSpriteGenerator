@@ -1,8 +1,0 @@
-[gd_resource type="StandardMaterial3D" format=3 uid="uid://c2qq0jp275x4a"]
-
-[resource]
-resource_name = "color7"
-vertex_color_use_as_albedo = true
-albedo_color = Color(0.951932, 0.971896, 1, 1)
-emission_enabled = true
-emission_energy_multiplier = 0.0
