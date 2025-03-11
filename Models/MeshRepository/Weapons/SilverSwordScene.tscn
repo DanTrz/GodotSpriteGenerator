@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://k6hj0j021k6c"]
+
+[ext_resource type="ArrayMesh" uid="uid://bjthcykmr4p2" path="res://Models/MeshRepository/Weapons/generated.res" id="1_drato"]
+[ext_resource type="Script" uid="uid://bmo8euegtbowp" path="res://SpriteGenerator/BodyPartMeshInstance3D.cs" id="2_acreq"]
+
+[node name="Silver_Sword" type="Node3D"]
+
+[node name="SwordMesh" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(-1.31134e-08, -0.0864689, 0.287268, 0, 0.287268, 0.0864689, -0.3, 3.77968e-09, -1.25569e-08, 0, 0, 0)
+cast_shadow = 0
+mesh = ExtResource("1_drato")
+skeleton = NodePath("")
+script = ExtResource("2_acreq")
+BodyPartType = 7

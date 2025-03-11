@@ -1,6 +1,8 @@
+
 using System;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Godot;
 
 public partial class SpriteGenerator : Node
@@ -62,6 +64,7 @@ public partial class SpriteGenerator : Node
     [Export] public ItemListCheckBox _angleSelectionItemList;
     [Export] public TextureRect _pixelGridTextRect;
     [Export] public CheckButton _showGridCheckButton;
+    [Export] public CheckButton MoveSpriteSheetCheckBtn;
 
     //Main Settings and Folder Path Variables
     [Export] public Button _selectFolderPathBtn;
@@ -105,6 +108,8 @@ public partial class SpriteGenerator : Node
     private int spriteSheetCollumnCount = 8;
     private string saveFolder = "Model";
 
+    public bool MoveSpriteSheet = true;
+
     private Control _lastFocusedControl;
 
     public override void _Ready()
@@ -128,6 +133,8 @@ public partial class SpriteGenerator : Node
         _loadAllAnimationsBtn.Pressed += OnLoadAllAnimationsPressed;
         //_saveIntervalTimer.Timeout += OnSaveIntervalTimerTimeout;
         _showGridCheckButton.Pressed += OnShowGridCheckButtonPressed;
+        //MoveSpriteSheetCheckBtn.Pressed += () => MoveSpriteSheet = MoveSpriteSheetCheckBtn.ButtonPressed;
+        MoveSpriteSheetCheckBtn.Pressed += OnMoveSpriteSheetCheckButtonPressed;
         _openSettingPanelBtn.Pressed += () => _settingsMainPanel.Visible = !_settingsMainPanel.Visible;
         //_mainTabContainer.MouseEntered += () => GD.Print("Tab Cointainer Mouse Entered"); //_settingsMainPanel.Visible = false;
 
@@ -193,6 +200,9 @@ public partial class SpriteGenerator : Node
         _hairMeshOptBtn.Selected = 0;
         OnHairMeshOptBtnItemSelected(0);
         _hairColorBtn.Color = Colors.White;
+
+        GlobalUtil.SaveFolderPath = ProjectSettings.GlobalizePath(Const.SAVE_GAME_PATH);
+        _spriteGenFolderPathLineEdit.Text = GlobalUtil.SaveFolderPath;
 
 
         //Update initial views
@@ -453,13 +463,15 @@ public partial class SpriteGenerator : Node
         }
 
         // Save the final sprite sheet
-        string outputPath = ProjectSettings.GlobalizePath(folderPath + "/" + outputFileName + ".png");
+        string outputPath = ProjectSettings.GlobalizePath(GlobalUtil.SaveFolderPath + outputFileName + ".png");
         spriteSheet.SavePng(outputPath);
 
         GD.Print("Sprite sheet saved: " + outputPath);
 
         _pixelGridTextRect.Visible = true;
     }
+
+
     private void OnOpenFolderPathPressed()
     {
 
@@ -672,6 +684,13 @@ public partial class SpriteGenerator : Node
     {
         _pixelGridTextRect.Visible = _showGridCheckButton.ButtonPressed;
         _showGridCheckButton.Text = _showGridCheckButton.ButtonPressed.ToString();
+
+    }
+
+    private void OnMoveSpriteSheetCheckButtonPressed()
+    {
+        MoveSpriteSheet = MoveSpriteSheetCheckBtn.ButtonPressed;
+        MoveSpriteSheetCheckBtn.Text = MoveSpriteSheetCheckBtn.ButtonPressed.ToString();
 
     }
 

@@ -45,6 +45,7 @@ _subresources={
 "generate/lods": 0,
 "generate/shadow_meshes": 0,
 "lods/normal_merge_angle": 60.0,
+"lods/normal_split_angle": 25.0,
 "save_to_file/enabled": true,
 "save_to_file/path": "res://Models/FullModels/BaseModel/BaseModel_OBJ5_BASE_MODEL_001.res"
 },
@@ -53,6 +54,7 @@ _subresources={
 "generate/lods": 0,
 "generate/shadow_meshes": 0,
 "lods/normal_merge_angle": 60.0,
+"lods/normal_split_angle": 25.0,
 "save_to_file/enabled": true,
 "save_to_file/path": "res://Models/FullModels/BaseModel/BaseModel_OBJ5_BASE_MODEL_005.res"
 },
@@ -61,6 +63,7 @@ _subresources={
 "generate/lods": 0,
 "generate/shadow_meshes": 0,
 "lods/normal_merge_angle": 60.0,
+"lods/normal_split_angle": 25.0,
 "save_to_file/enabled": true,
 "save_to_file/path": "res://Models/FullModels/BaseModel/BaseModel_OBJ5_BASE_MODEL_006.res"
 },
@@ -69,6 +72,7 @@ _subresources={
 "generate/lods": 0,
 "generate/shadow_meshes": 0,
 "lods/normal_merge_angle": 60.0,
+"lods/normal_split_angle": 25.0,
 "save_to_file/enabled": true,
 "save_to_file/path": "res://Models/FullModels/BaseModel/BaseModel_OBJ5_BASE_MODEL_009.res"
 },
@@ -77,6 +81,7 @@ _subresources={
 "generate/lods": 0,
 "generate/shadow_meshes": 0,
 "lods/normal_merge_angle": 60.0,
+"lods/normal_split_angle": 25.0,
 "save_to_file/enabled": true,
 "save_to_file/path": "res://Models/FullModels/BaseModel/BaseModel_OBJ5_BASE_MODEL_011.res"
 },
@@ -85,6 +90,7 @@ _subresources={
 "generate/lods": 0,
 "generate/shadow_meshes": 0,
 "lods/normal_merge_angle": 60.0,
+"lods/normal_split_angle": 25.0,
 "save_to_file/enabled": true,
 "save_to_file/path": "res://Models/FullModels/BaseModel/BaseModel_OBJ5_BASE_MODEL_012.res"
 }

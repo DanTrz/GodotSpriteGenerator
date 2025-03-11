@@ -26,6 +26,8 @@ public partial class SpriteSheetManager : PanelContainer
     [Export] private CheckBox _enableSaturationCheckbox;
     [Export] private CheckBox _enableBrightnessCheckbox;
 
+    [Export] public Button SelectFileSpriteSheetBtn;
+
     private Texture2D _originalTexture;
     private Image _originalImage;
 
@@ -86,6 +88,8 @@ public partial class SpriteSheetManager : PanelContainer
         _colorCountSpinBox.ValueChanged += (value) => UpdateBrightnessAndSaturationShader();
         _colorReductionCheckbox.Toggled += (pressed) => UpdateBrightnessAndSaturationShader();
 
+        SelectFileSpriteSheetBtn.Pressed += async () => await OnSelectFileSpriteSheetBtnPressed();
+
         _statusLabel.Text = "Ready";
 
         UpdateUIElementsOnLoad();
@@ -94,8 +98,57 @@ public partial class SpriteSheetManager : PanelContainer
 
     }
 
-    private void UpdateUIElementsOnLoad()
+    private async Task OnSelectFileSpriteSheetBtnPressed()
     {
+        using Godot.FileDialog fileDialog = new Godot.FileDialog
+        {
+            FileMode = FileDialog.FileModeEnum.OpenFile,
+            Filters = new string[] { "*.png, *.jpg, *.jpeg ; Images" },
+            Access = FileDialog.AccessEnum.Filesystem
+
+        };
+
+        AddChild(fileDialog);
+
+        fileDialog.CurrentDir = GlobalUtil.SaveFolderPath; //Set this after adding Child to Scene
+
+        fileDialog.PopupCentered();
+
+        await ToSignal(fileDialog, FileDialog.SignalName.FileSelected);
+
+
+        string selectedFiled = fileDialog.CurrentDir + "/" + fileDialog.CurrentFile;
+
+        await LoadTextureFromImgFile(selectedFiled);
+
+        UpdateUIElementsOnLoad();
+
+
+
+
+
+
+    }
+
+    private async Task LoadTextureFromImgFile(string path)
+    {
+        Image imgToLoad = Image.LoadFromFile(path);
+
+        await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+
+        _textureRect.Texture = ImageTexture.CreateFromImage(imgToLoad);
+
+    }
+
+
+    public void UpdateUIElementsOnLoad()
+    {
+        if (_textureRect.Texture != null)
+        {
+            _originalTexture = _textureRect.Texture;
+            _originalImage = _originalTexture.GetImage();
+        }
+
         _brightnessSlider.Value = 1.0f;
         _enableBrightnessCheckbox.ButtonPressed = false;
         _saturationSlider.Value = 1.0f;

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bln1foey02paq"
-path="res://.godot/imported/B__Running_spriteSheet.png-af0f821778ca021cc6ed495ebf4586dd.ctex"
+uid="uid://5yojx352m0rc"
+path="res://.godot/imported/A__SwordknifeStabbing_spriteSheet.png-c8812bde8f12a94571df52e4908857e5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/SpriteSheetTemp/B__Running_spriteSheet.png"
-dest_files=["res://.godot/imported/B__Running_spriteSheet.png-af0f821778ca021cc6ed495ebf4586dd.ctex"]
+source_file="res://Assets/SpriteSheetTemp/A__SwordknifeStabbing_spriteSheet.png"
+dest_files=["res://.godot/imported/A__SwordknifeStabbing_spriteSheet.png-c8812bde8f12a94571df52e4908857e5.ctex"]
 
 [params]
 

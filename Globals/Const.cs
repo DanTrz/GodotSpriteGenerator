@@ -9,9 +9,11 @@ public static class Const
     public static readonly string USER_ROOT_FOLDER_PATH = ProjectSettings.GlobalizePath("user://");
 
     // Mesh Data
-    public enum BodyPartType { HEAD, TORSO, HAIR, LEGS, FEET, LEFT_ARM, RIGHT_ARM };
+    public enum BodyPartType { HEAD, TORSO, HAIR, LEGS, FEET, LEFT_ARM, RIGHT_ARM, WEAPON };
+    public enum MeshType { LOW_POLY, HIGH_POLY };
     public const string HAIR_SCENES_FOLDER_PATH = "res://Models/MeshRepository/Hair/";
     public const string MESH_REPO_FOLDER_PATH = "res://Models/MeshRepository/";
+    public const string SPRITESHEET_TEMP_FOLDER_PATH = "res://Assets/SpriteSheetTemp/";
 
     //Transform Data
     public enum TransformType { CAMERA_ZOOM, SCALE, POSITION, ROTATION };

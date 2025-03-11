@@ -1,6 +1,6 @@
-using Godot;
 using System.Collections.Generic;
 using System.Linq;
+using Godot;
 public partial class MeshReplacer : Node
 {
 
@@ -60,6 +60,7 @@ public partial class MeshReplacer : Node
         foreach (Node child in hairParentNode.GetChildren())
         {
             hairParentNode.RemoveChild(child);
+            child.QueueFree();
         }
 
         Node hairScene = GD.Load<PackedScene>(hairScenePath).Instantiate();
