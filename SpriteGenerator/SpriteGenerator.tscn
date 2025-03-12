@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://dghyusd0bdjxt"]
+[gd_scene load_steps=34 format=3 uid="uid://dghyusd0bdjxt"]
 
 [ext_resource type="Script" uid="uid://dj2tgr0hxsbd3" path="res://SpriteGenerator/SpriteGenerator.cs" id="1_ws6fq"]
 [ext_resource type="PackedScene" uid="uid://iuwovcd804os" path="res://SpriteGenerator/MainScene3D.tscn" id="2_jyiui"]
@@ -13,9 +13,8 @@
 [ext_resource type="Script" uid="uid://cacdskl17dkmj" path="res://SpriteGenerator/SpriteSheetManager.cs" id="8_seol6"]
 [ext_resource type="LabelSettings" uid="uid://usv7beyw1bj8" path="res://Assets/UI/Theme/Label.tres" id="9_0w5gm"]
 [ext_resource type="PackedScene" uid="uid://mjnysgbmwfbp" path="res://SpriteGenerator/MeshReplacerOptButton.tscn" id="11_jd2q0"]
-[ext_resource type="Shader" uid="uid://dxbhtgfqkjj57" path="res://Assets/Shaders/UnifiedImageEffects.gdshader" id="12_0w5gm"]
 [ext_resource type="PackedScene" uid="uid://ffrwo5xcxd0r" path="res://SpriteGenerator/Camera2DController.tscn" id="13_h87xq"]
-[ext_resource type="Texture2D" uid="uid://cae2jelncoq3w" path="res://Assets/SpriteSheetTemp/Anim_Running_spriteSheet.png" id="14_8pcxw"]
+[ext_resource type="PackedScene" uid="uid://dm5xywerqv6gf" path="res://SpriteGenerator/ImageProcessor.tscn" id="14_8pcxw"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0w5gm"]
 bg_color = Color(0.345946, 0.345946, 0.345946, 1)
@@ -164,15 +163,6 @@ font_size = 10
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8pcxw"]
 bg_color = Color(0.359069, 0.359069, 0.359069, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_seol6"]
-shader = ExtResource("12_0w5gm")
-shader_parameter/enable_saturation = true
-shader_parameter/saturation = 1.0
-shader_parameter/enable_brightness = true
-shader_parameter/brightness = 1.0
-shader_parameter/num_colors = 512
-shader_parameter/enable_color_reduction = true
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jd2q0"]
 bg_color = Color(0.6, 0.6, 0.6, 0.721569)
 border_width_left = 4
@@ -250,11 +240,12 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-current_tab = 0
+current_tab = 1
 all_tabs_in_front = true
 
 [node name="TabSpriteGenManager" type="PanelContainer" parent="MainUI/MainTabContainer"]
 unique_name_in_owner = true
+visible = false
 clip_contents = true
 layout_mode = 2
 metadata/_tab_index = 0
@@ -303,7 +294,7 @@ transparent_bg = true
 handle_input_locally = false
 canvas_item_default_texture_filter = 0
 physics_object_picking = true
-render_target_update_mode = 4
+render_target_update_mode = 0
 
 [node name="Model" type="Node3D" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/RawRenderPanelContainer/RawViewportContainer/RawSubViewport"]
 
@@ -369,7 +360,7 @@ transparent_bg = true
 handle_input_locally = false
 canvas_item_default_texture_filter = 0
 physics_object_picking = true
-render_target_update_mode = 4
+render_target_update_mode = 0
 
 [node name="BgRemoverTextureRect" type="TextureRect" parent="MainUI/MainTabContainer/TabSpriteGenManager/SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/BGRemoverRenderPanelContainer/BgRemoverViewportContainer/BgRemoverSubViewport"]
 texture_filter = 3
@@ -919,11 +910,10 @@ text = "Start Generation
 
 [node name="TabSpriteSheetGenManager" type="PanelContainer" parent="MainUI/MainTabContainer" node_paths=PackedStringArray("_textureRect", "_saturationSlider", "_saturationLabel", "_brightnessLabel", "_outlineLabel", "_brightnessSlider", "_outlineCheckbox", "_outlineThicknessSlider", "_outlineColorPicker", "_ditheringCheckbox", "_ditheringSlider", "_colorReductionCheckbox", "_colorCountSpinBox", "_saveButton", "_statusLabel", "_enableSaturationCheckbox", "_enableBrightnessCheckbox", "SelectFileSpriteSheetBtn") groups=["save_data"]]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_pyu7k")
 script = ExtResource("8_seol6")
-_textureRect = NodePath("HBoxContainer/SpriteSheetContainer/SpriteSheetViewportContainer/SpriteSheetSubViewport/SpriteSheetTextureRect")
+_textureRect = NodePath("HBoxContainer/SpriteSheetContainer/SpriteSheetViewportContainer/SpriteSheetSubViewport/ImageProcessorTextureRect")
 _saturationSlider = NodePath("HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/SaturationHBox/SaturationHSlider")
 _saturationLabel = NodePath("HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/SaturationHBox/SaturationLabel")
 _brightnessLabel = NodePath("HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/BrightnessHBox/BrightnessLabel")
@@ -964,21 +954,12 @@ handle_input_locally = false
 canvas_item_default_texture_filter = 0
 physics_object_picking = true
 size = Vector2i(900, 600)
-render_target_update_mode = 0
+render_target_update_mode = 4
 
 [node name="Camera2DController" parent="MainUI/MainTabContainer/TabSpriteSheetGenManager/HBoxContainer/SpriteSheetContainer/SpriteSheetViewportContainer/SpriteSheetSubViewport" instance=ExtResource("13_h87xq")]
 
-[node name="SpriteSheetTextureRect" type="TextureRect" parent="MainUI/MainTabContainer/TabSpriteSheetGenManager/HBoxContainer/SpriteSheetContainer/SpriteSheetViewportContainer/SpriteSheetSubViewport"]
+[node name="ImageProcessorTextureRect" parent="MainUI/MainTabContainer/TabSpriteSheetGenManager/HBoxContainer/SpriteSheetContainer/SpriteSheetViewportContainer/SpriteSheetSubViewport" instance=ExtResource("14_8pcxw")]
 unique_name_in_owner = true
-material = SubResource("ShaderMaterial_seol6")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("14_8pcxw")
-expand_mode = 1
-stretch_mode = 4
 
 [node name="OptionsContainer" type="PanelContainer" parent="MainUI/MainTabContainer/TabSpriteSheetGenManager/HBoxContainer"]
 layout_mode = 2

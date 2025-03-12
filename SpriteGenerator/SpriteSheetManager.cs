@@ -6,7 +6,7 @@ using Image = Godot.Image;
 
 public partial class SpriteSheetManager : PanelContainer
 {
-    [Export] private TextureRect _textureRect;
+    [Export] private ImageProcessor _spriteSheetImgProcessor;
     [Export] private HSlider _saturationSlider;
     [Export] private Label _saturationLabel;
     [Export] private Label _brightnessLabel;
@@ -55,14 +55,14 @@ public partial class SpriteSheetManager : PanelContainer
 
     public override void _Ready()
     {
-        if (_textureRect.Texture != null)
+        if (_spriteSheetImgProcessor.Texture != null)
         {
-            _originalTexture = _textureRect.Texture;
+            _originalTexture = _spriteSheetImgProcessor.Texture;
             _originalImage = _originalTexture.GetImage();
         }
 
         // Get a reference to the ShaderMaterial ---
-        _shaderMaterial = (ShaderMaterial)_textureRect.Material;
+        _shaderMaterial = (ShaderMaterial)_spriteSheetImgProcessor.Material;
         if (_shaderMaterial == null)
         {
             GD.PrintErr("TextureRect does not have a ShaderMaterial assigned in the editor!");
@@ -131,16 +131,16 @@ public partial class SpriteSheetManager : PanelContainer
 
         await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
 
-        _textureRect.Texture = ImageTexture.CreateFromImage(imgToLoad);
+        _spriteSheetImgProcessor.Texture = ImageTexture.CreateFromImage(imgToLoad);
 
     }
 
 
     public void UpdateUIElementsOnLoad()
     {
-        if (_textureRect.Texture != null)
+        if (_spriteSheetImgProcessor.Texture != null)
         {
-            _originalTexture = _textureRect.Texture;
+            _originalTexture = _spriteSheetImgProcessor.Texture;
             _originalImage = _originalTexture.GetImage();
         }
 
@@ -399,8 +399,8 @@ public partial class SpriteSheetManager : PanelContainer
     //Save new Image to folder
     private void OnSaveButtonPressed()
     {
-        if (_textureRect.Texture == null) return;
-        Image modifiedImage = ((ImageTexture)_textureRect.Texture).GetImage();
+        if (_spriteSheetImgProcessor.Texture == null) return;
+        Image modifiedImage = ((ImageTexture)_spriteSheetImgProcessor.Texture).GetImage();
 
         using FileDialog fileDialog = new FileDialog
         {
@@ -443,7 +443,7 @@ public partial class SpriteSheetManager : PanelContainer
     //Method used to update the TextureRect with the modified image
     private void UpdateTexture(Image modifiedImage)
     {
-        _textureRect.Texture = ImageTexture.CreateFromImage(modifiedImage);
+        _spriteSheetImgProcessor.Texture = ImageTexture.CreateFromImage(modifiedImage);
 
         //-> Update shader params after image update with other C# code effects.
         UpdateBrightnessAndSaturationShader(); // Shader changes always last to ensure we will not get mixed up with other effects
