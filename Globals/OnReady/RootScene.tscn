@@ -4,4 +4,4 @@
 
 [node name="RootScene" type="Node"]
 script = ExtResource("1_j66hm")
-MainScene = "uid://dghyusd0bdjxt"
+MainScene = "uid://ctnmr8c2k85g5"

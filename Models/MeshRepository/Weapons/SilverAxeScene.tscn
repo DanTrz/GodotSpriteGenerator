@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://dqvg7t4lsw2gs"]
 
 [ext_resource type="ArrayMesh" uid="uid://cion0uielq6ue" path="res://Models/MeshRepository/Weapons/MeshsAndMaterials/AxelMesh.res" id="1_5v82u"]
-[ext_resource type="Script" uid="uid://bmo8euegtbowp" path="res://SpriteGenerator/BodyPartMeshInstance3D.cs" id="2_psnfy"]
+[ext_resource type="Script" uid="uid://bmo8euegtbowp" path="res://src/ModelAndMeshes/BodyPartMeshInstance3D.cs" id="2_psnfy"]
 
 [node name="Silver_Axe" type="Node3D"]
 transform = Transform3D(0.962204, 0, 0.272331, 0, 1, 0, -0.272331, 0, 0.962204, 0, 0, 0)

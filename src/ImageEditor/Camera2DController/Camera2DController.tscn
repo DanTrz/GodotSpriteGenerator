@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://ffrwo5xcxd0r"]
 
-[ext_resource type="Script" uid="uid://byf1obb3ugpvy" path="res://SpriteGenerator/Camera2DController.cs" id="1_f0nhn"]
+[ext_resource type="Script" uid="uid://byf1obb3ugpvy" path="res://src/ImageEditor/Camera2DController/Camera2DController.cs" id="1_f0nhn"]
 
 [node name="Camera2DController" type="Camera2D"]
 anchor_mode = 0

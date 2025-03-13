@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://k6hj0j021k6c"]
 
 [ext_resource type="ArrayMesh" uid="uid://cxmfo6f8s2vkp" path="res://Models/MeshRepository/Weapons/MeshsAndMaterials/SwordMesh.res" id="1_acreq"]
-[ext_resource type="Script" uid="uid://bmo8euegtbowp" path="res://SpriteGenerator/BodyPartMeshInstance3D.cs" id="2_acreq"]
+[ext_resource type="Script" uid="uid://bmo8euegtbowp" path="res://src/ModelAndMeshes/BodyPartMeshInstance3D.cs" id="2_acreq"]
 
 [node name="Silver_Sword" type="Node3D"]
 

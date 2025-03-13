@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://breacb0ecgrb6" path="res://Models/MeshRepository/MeshIcons/1_Head_Bald_Icon.png" id="1_ovbif"]
 [ext_resource type="ArrayMesh" uid="uid://cioryr7kv5on5" path="res://Models/MeshRepository/MeshResources/1_Head_Bald.res" id="2_ovbif"]
-[ext_resource type="Script" uid="uid://cmuqvgdb2248c" path="res://SpriteGenerator/ArrayMeshDataObject.cs" id="3_y1q23"]
+[ext_resource type="Script" uid="uid://cmuqvgdb2248c" path="res://src/ModelAndMeshes/ArrayMeshDataObject.cs" id="3_y1q23"]
 
 [resource]
 script = ExtResource("3_y1q23")

@@ -1,7 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://fvboo8n36m28"]
+[gd_scene load_steps=3 format=3 uid="uid://cq7dhe7xeop3w"]
 
-[ext_resource type="ArrayMesh" uid="uid://rpxuessyoojl" path="res://Models/FullModels/BaseModel/BaseModel_OBJ5_BASE_MODEL_006.res" id="1_sk3yf"]
-[ext_resource type="Script" uid="uid://bmo8euegtbowp" path="res://SpriteGenerator/BodyPartMeshInstance3D.cs" id="2_gdjut"]
+[ext_resource type="Script" uid="uid://bmo8euegtbowp" path="res://src/ModelAndMeshes/BodyPartMeshInstance3D.cs" id="2_r2kij"]
 
 [sub_resource type="Skin" id="Skin_ftg4b"]
 resource_name = "Skin"
@@ -83,6 +82,5 @@ bind/24/bone = -1
 bind/24/pose = Transform3D(-0.961101, -0.0838673, -0.263156, -0.263098, -0.0119404, 0.964694, -0.0840487, 0.996405, -0.0105892, -1.41884, -2.35254, -0.879399)
 
 [node name="BodyPartMeshInstance3D" type="MeshInstance3D"]
-mesh = ExtResource("1_sk3yf")
 skin = SubResource("Skin_ftg4b")
-script = ExtResource("2_gdjut")
+script = ExtResource("2_r2kij")

@@ -1,4 +1,3 @@
-
 using System;
 using System.IO;
 using System.Linq;
@@ -12,28 +11,10 @@ public partial class SpriteGenerator : Node
     [Export] public Node3D MainScene3D;
     [Export] public SubViewport _rawViewport;
     [Export] public SubViewportContainer _rawViewportContainer;
-
     [Export] public SubViewport BgRemoverViewport;
     [Export] public SubViewportContainer BgRemoverViewportContainer;
 
     [Export] public MeshInstance3D MeshShaderPixel3D;
-
-
-
-    //private string _saveSpriteFolderPath;
-    //public string SaveSpriteFolderPath;
-    ////public string SaveSpriteFolderPath
-    ////{
-    ////    get
-    ////    {
-    ////        return _saveSpriteFolderPath;
-    ////    }
-    ////    set
-    ////    {
-    ////        _saveSpriteFolderPath = value;
-    ////        _spriteGenFolderPathLineEdit.Text = _saveSpriteFolderPath;
-    ////    }
-    ////}
 
     public static int _spriteResolution = 256;
     [Export] public int frameSkipStep = 4; // Control how frequently frames are captured
@@ -42,11 +23,9 @@ public partial class SpriteGenerator : Node
     [Export(PropertyHint.Range, "1,4,1")] private float _animationPlaybackSpeed = 1.0f;
 
 
-    //SaveConfigBtn
-
-    [Export] public Button _saveConfigBtn;
-    [Export] public OptionButton SavedConfigListOptBtn;
-    [Export] public Button _loadConfigBtn;
+    // [Export] public Button _saveConfigBtn;
+    // [Export] public OptionButton SavedConfigListOptBtn;
+    // [Export] public Button _loadConfigBtn;
 
     [Export] public OptionButton _resolutionOptionBtn;
     [Export] public OptionButton EffectsChoicesOptionBtn;
@@ -64,14 +43,14 @@ public partial class SpriteGenerator : Node
     [Export] public ItemListCheckBox _angleSelectionItemList;
     [Export] public TextureRect _pixelGridTextRect;
     [Export] public CheckButton _showGridCheckButton;
-    [Export] public CheckButton MoveSpriteSheetCheckBtn;
+    // [Export] public CheckButton MoveSpriteSheetCheckBtn;
 
     //Main Settings and Folder Path Variables
-    [Export] public Button _selectFolderPathBtn;
-    [Export] public Button _openFolderPathBtn;
-    [Export] public LineEdit _spriteGenFolderPathLineEdit;
-    [Export] public MarginContainer _settingsMainPanel;
-    [Export] public Button _openSettingPanelBtn;
+    // [Export] public Button _selectFolderPathBtn;
+    // [Export] public Button _openFolderPathBtn;
+    // [Export] public LineEdit _spriteGenFolderPathLineEdit;
+    // [Export] public MarginContainer _settingsMainPanel;
+    // [Export] public Button _openSettingPanelBtn;
 
 
     //[OnReady("%MainTabContainer")] TabContainer _mainTabContainer;
@@ -111,19 +90,15 @@ public partial class SpriteGenerator : Node
     private int spriteSheetCollumnCount = 8;
     private string saveFolder = "Model";
 
-    public bool MoveSpriteSheet = true;
-
-    private Control _lastFocusedControl;
-
     public override void _Ready()
     {
 
         //Connect UI Signals
-        _saveConfigBtn.Pressed += OnSaveConfigBtnPressed;
-        _loadConfigBtn.Pressed += OnLoadConfigBtnPressed;
-        _spriteGenFolderPathLineEdit.TextChanged += (newDir) => GlobalUtil.OnFolderSelected(newDir, _spriteGenFolderPathLineEdit);
-        _selectFolderPathBtn.Pressed += OnSelectFolderPathPressed;
-        _openFolderPathBtn.Pressed += OnOpenFolderPathPressed;
+        // _saveConfigBtn.Pressed += OnSaveConfigBtnPressed;
+        // _loadConfigBtn.Pressed += OnLoadConfigBtnPressed;
+        // _spriteGenFolderPathLineEdit.TextChanged += (newDir) => GlobalUtil.OnFolderSelected(newDir, _spriteGenFolderPathLineEdit);
+        // _selectFolderPathBtn.Pressed += OnSelectFolderPathPressed;
+        // _openFolderPathBtn.Pressed += OnOpenFolderPathPressed;
         _startGenerationBtn.Pressed += OnStartGeneration;
         _resolutionOptionBtn.ItemSelected += OnRenderResolutionChanged;
         EffectLevelOptionBtn.ItemSelected += OnEffectLevelChanged;
@@ -137,8 +112,8 @@ public partial class SpriteGenerator : Node
         //_saveIntervalTimer.Timeout += OnSaveIntervalTimerTimeout;
         _showGridCheckButton.Pressed += OnShowGridCheckButtonPressed;
         //MoveSpriteSheetCheckBtn.Pressed += () => MoveSpriteSheet = MoveSpriteSheetCheckBtn.ButtonPressed;
-        MoveSpriteSheetCheckBtn.Pressed += OnMoveSpriteSheetCheckButtonPressed;
-        _openSettingPanelBtn.Pressed += () => _settingsMainPanel.Visible = !_settingsMainPanel.Visible;
+        // MoveSpriteSheetCheckBtn.Pressed += OnMoveSpriteSheetCheckButtonPressed;
+        // _openSettingPanelBtn.Pressed += () => _settingsMainPanel.Visible = !_settingsMainPanel.Visible;
         //_mainTabContainer.MouseEntered += () => GD.Print("Tab Cointainer Mouse Entered"); //_settingsMainPanel.Visible = false;
 
         //MeshReplacer Signals
@@ -147,8 +122,8 @@ public partial class SpriteGenerator : Node
         WeaponItemMeshOptBtn.ItemSelected += OnWeaponItemMeshOptBtnItemSelected;
 
         //Set Default UI Control Values
-        _settingsMainPanel.Visible = false;
-        _spriteGenFolderPathLineEdit.Text = GlobalUtil.SaveFolderPath;
+        // _settingsMainPanel.Visible = false;
+        // _spriteGenFolderPathLineEdit.Text = GlobalUtil.SaveFolderPath;
         _clearFolderCheckBtn.ButtonPressed = _clearFolderBeforeGeneration;
         _frameStepTextEdit.Text = frameSkipStep.ToString();
         _playBackSpeedLineEdit.Text = _animationPlaybackSpeed.ToString();
@@ -207,7 +182,7 @@ public partial class SpriteGenerator : Node
         _hairColorBtn.Color = Colors.White;
 
         GlobalUtil.SaveFolderPath = ProjectSettings.GlobalizePath(Const.SAVE_GAME_PATH);
-        _spriteGenFolderPathLineEdit.Text = GlobalUtil.SaveFolderPath;
+        // _spriteGenFolderPathLineEdit.Text = GlobalUtil.SaveFolderPath;
 
 
         //Update initial views
@@ -477,46 +452,46 @@ public partial class SpriteGenerator : Node
     }
 
 
-    private void OnOpenFolderPathPressed()
-    {
+    // private void OnOpenFolderPathPressed()
+    // {
 
-        string directory = ProjectSettings.GlobalizePath(_spriteGenFolderPathLineEdit.Text);
-        if (GlobalUtil.HasDirectory(directory, this))
-        {
-            OS.ShellOpen(directory);
-        }
-        else
-        {
-            GD.PrintErr("Directory does not exist: " + directory);
+    //     string directory = ProjectSettings.GlobalizePath(_spriteGenFolderPathLineEdit.Text);
+    //     if (GlobalUtil.HasDirectory(directory, this))
+    //     {
+    //         OS.ShellOpen(directory);
+    //     }
+    //     else
+    //     {
+    //         GD.PrintErr("Directory does not exist: " + directory);
 
-            using Godot.AcceptDialog acceptDialog = new Godot.AcceptDialog
-            {
-                Title = "Error: Directory not Found",
-                DialogText = "Directory does not exist: " + directory
-            };
+    //         using Godot.AcceptDialog acceptDialog = new Godot.AcceptDialog
+    //         {
+    //             Title = "Error: Directory not Found",
+    //             DialogText = "Directory does not exist: " + directory
+    //         };
 
-            AddChild(acceptDialog);
-            acceptDialog.PopupCentered();
-        }
-    }
+    //         AddChild(acceptDialog);
+    //         acceptDialog.PopupCentered();
+    //     }
+    // }
 
-    private void OnSelectFolderPathPressed()
-    {
-        using Godot.FileDialog fileDialog = new Godot.FileDialog
-        {
-            FileMode = FileDialog.FileModeEnum.OpenDir,
-            Access = FileDialog.AccessEnum.Filesystem
-        };
+    // private void OnSelectFolderPathPressed()
+    // {
+    //     using Godot.FileDialog fileDialog = new Godot.FileDialog
+    //     {
+    //         FileMode = FileDialog.FileModeEnum.OpenDir,
+    //         Access = FileDialog.AccessEnum.Filesystem
+    //     };
 
-        AddChild(fileDialog);
+    //     AddChild(fileDialog);
 
-        fileDialog.CurrentDir = GlobalUtil.SaveFolderPath; //Set this after adding Child to Scene
+    //     fileDialog.CurrentDir = GlobalUtil.SaveFolderPath; //Set this after adding Child to Scene
 
-        fileDialog.DirSelected += (newDir) => GlobalUtil.OnFolderSelected(newDir, _spriteGenFolderPathLineEdit);
+    //     fileDialog.DirSelected += (newDir) => GlobalUtil.OnFolderSelected(newDir, _spriteGenFolderPathLineEdit);
 
-        fileDialog.PopupCentered();
+    //     fileDialog.PopupCentered();
 
-    }
+    // }
 
     private void OnRenderResolutionChanged(long itemSelectedIndex)
     {
@@ -692,12 +667,12 @@ public partial class SpriteGenerator : Node
 
     }
 
-    private void OnMoveSpriteSheetCheckButtonPressed()
-    {
-        MoveSpriteSheet = MoveSpriteSheetCheckBtn.ButtonPressed;
-        MoveSpriteSheetCheckBtn.Text = MoveSpriteSheetCheckBtn.ButtonPressed.ToString();
+    // private void OnMoveSpriteSheetCheckButtonPressed()
+    // {
+    //     MoveSpriteSheet = MoveSpriteSheetCheckBtn.ButtonPressed;
+    //     MoveSpriteSheetCheckBtn.Text = MoveSpriteSheetCheckBtn.ButtonPressed.ToString();
 
-    }
+    // }
 
 
     // private void OnPixelEffectPressed()
@@ -836,7 +811,7 @@ public partial class SpriteGenerator : Node
         OnEffectsChoiceItemSelected(EffectsChoicesOptionBtn.Selected);
         //OnPixelEffectPressed();
 
-        _settingsMainPanel.Visible = false;
+        //_settingsMainPanel.Visible = false;
     }
 
 

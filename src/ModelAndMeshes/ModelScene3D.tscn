@@ -1,8 +1,8 @@
 [gd_scene load_steps=9 format=3 uid="uid://iuwovcd804os"]
 
-[ext_resource type="Script" uid="uid://dasxiorjhfw8t" path="res://SpriteGenerator/Model3DMainPivotControl.cs" id="1_4ce3b"]
-[ext_resource type="PackedScene" uid="uid://c00refh5p8c4o" path="res://Models/FullModels/BaseModel/BaseModelScene.tscn" id="2_qo4h8"]
-[ext_resource type="Shader" uid="uid://berumhfcmd50a" path="res://Assets/Shaders/Original_Pixelize3DShader.gdshader" id="3_xukee"]
+[ext_resource type="Script" uid="uid://dasxiorjhfw8t" path="res://src/ModelAndMeshes/Model3DMainPivotControl.cs" id="1_pb3o0"]
+[ext_resource type="PackedScene" uid="uid://c00refh5p8c4o" path="res://Models/FullModels/BaseModel/BaseModelScene.tscn" id="2_hkp8x"]
+[ext_resource type="Shader" uid="uid://berumhfcmd50a" path="res://Assets/Shaders/Original_Pixelize3DShader.gdshader" id="3_cykfy"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_wy6cq"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -20,7 +20,7 @@ glow_enabled = true
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xukee"]
 render_priority = 0
-shader = ExtResource("3_xukee")
+shader = ExtResource("3_cykfy")
 shader_parameter/target_resolution = 512.0
 shader_parameter/colors_per_channel = 128.0
 shader_parameter/outline_strength = 2.0
@@ -31,7 +31,7 @@ material = SubResource("ShaderMaterial_xukee")
 flip_faces = true
 size = Vector2(10, 10)
 
-[node name="MainScene3D" type="Node3D"]
+[node name="ModelScene3D" type="Node3D"]
 
 [node name="MainCamera" type="Camera3D" parent="."]
 unique_name_in_owner = true
@@ -42,9 +42,9 @@ size = 7.0
 
 [node name="Model3DMainPivotControl" type="Node3D" parent="."]
 unique_name_in_owner = true
-script = ExtResource("1_4ce3b")
+script = ExtResource("1_pb3o0")
 
-[node name="BaseModelScene" parent="Model3DMainPivotControl" instance=ExtResource("2_qo4h8")]
+[node name="BaseModelScene" parent="Model3DMainPivotControl" instance=ExtResource("2_hkp8x")]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866025, -0.433013, 0.25, 0.473725, -0.870539, 0.133215, 0.159951, 0.233799, 0.959038, 0.537403, 1.13269, 2.69497)

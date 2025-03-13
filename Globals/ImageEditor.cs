@@ -4,10 +4,10 @@ using System.Linq;
 using Godot;
 
 [Tool]
-public partial class ImageProcessor : TextureRect
+public partial class ImageEditor : PanelContainer
 {
     [ExportToolButton("UpdateShader")] public Callable ClickMeButton => Callable.From(UpdateShaderParameters);
-
+    [Export] public TextureRect ImgTextRect;
     [Export] public bool EnableColorReduction = false;
     [Export] public int NumColors = 16;
     [Export] public bool UseExternalPalette = false;
@@ -17,11 +17,15 @@ public partial class ImageProcessor : TextureRect
     [Export] public bool EnableBrightness = true;
     [Export] public float Brightness = 1.0f;
 
+
+
     private const int MaxPaletteSize = 256;
 
-    private void UpdateShaderParameters()
+    public void UpdateShaderParameters()
     {
-        if (Material is not ShaderMaterial shaderMaterial)
+        Texture currentTexture = ImgTextRect.Texture;
+
+        if (ImgTextRect.Material is not ShaderMaterial shaderMaterial)
         {
             GD.PrintErr("Material is not a ShaderMaterial.");
             return;
@@ -46,7 +50,7 @@ public partial class ImageProcessor : TextureRect
         }
         else
         {
-            if (Texture is Texture2D texture2D)
+            if (currentTexture is Texture2D texture2D)
             {
                 Image image = texture2D.GetImage();
                 if (image.GetSize() == Vector2.Zero)

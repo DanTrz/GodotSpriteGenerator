@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://mjnysgbmwfbp"]
 
-[ext_resource type="Script" uid="uid://bmp7j64xrilhc" path="res://SpriteGenerator/MeshReplacerOptButton.cs" id="1_bgyvs"]
+[ext_resource type="Script" uid="uid://bmp7j64xrilhc" path="res://src/ModelAndMeshes/MeshReplacerOptButton.cs" id="1_bgyvs"]
 
 [node name="MeshReplacerOptButton" type="OptionButton"]
 custom_minimum_size = Vector2(150, 32)

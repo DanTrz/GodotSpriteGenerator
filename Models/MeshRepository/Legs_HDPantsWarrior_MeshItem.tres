@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="ArrayMeshDataObject" load_steps=3 format=3 uid="uid://daka6qbpn0yxq"]
 
 [ext_resource type="ArrayMesh" uid="uid://wrs8sk1eqaay" path="res://Models/MeshRepository/MeshResources/HDLegsArmour.res" id="1_13to0"]
-[ext_resource type="Script" uid="uid://cmuqvgdb2248c" path="res://SpriteGenerator/ArrayMeshDataObject.cs" id="2_01pwk"]
+[ext_resource type="Script" uid="uid://cmuqvgdb2248c" path="res://src/ModelAndMeshes/ArrayMeshDataObject.cs" id="2_01pwk"]
 
 [resource]
 script = ExtResource("2_01pwk")

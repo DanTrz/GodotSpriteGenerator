@@ -3,7 +3,7 @@
 [ext_resource type="ArrayMesh" uid="uid://c4ameyumdw42y" path="res://Models/FullModels/BaseModel/BaseModel_OBJ5_BASE_MODEL_001.res" id="1_igd6e"]
 [ext_resource type="ArrayMesh" uid="uid://cioryr7kv5on5" path="res://Models/MeshRepository/MeshResources/1_Head_Bald.res" id="2_ew3vs"]
 [ext_resource type="ArrayMesh" uid="uid://54540okcybk7" path="res://Models/MeshRepository/MeshResources/1_LegSkin.res" id="2_gqgxj"]
-[ext_resource type="PackedScene" uid="uid://cq7dhe7xeop3w" path="res://SpriteGenerator/BodyPartMeshInstance3D.tscn" id="2_igd6e"]
+[ext_resource type="PackedScene" uid="uid://cq7dhe7xeop3w" path="res://src/ModelAndMeshes/BodyPartMeshInstance3D.tscn" id="2_igd6e"]
 [ext_resource type="ArrayMesh" uid="uid://b1gru2q23rr5f" path="res://Models/MeshRepository/MeshResources/1_Skin.res" id="6_ew3vs"]
 [ext_resource type="ArrayMesh" uid="uid://cmsvy64j8ounq" path="res://Models/MeshRepository/MeshResources/RIGHT_ARM_SKIN.res" id="6_gqgxj"]
 [ext_resource type="ArrayMesh" uid="uid://2c1u8t283yli" path="res://Models/MeshRepository/MeshResources/LEFT_ARM_SKIN.res" id="6_igd6e"]
