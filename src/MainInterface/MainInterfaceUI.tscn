@@ -1,9 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://dghyusd0bdjxt"]
+[gd_scene load_steps=10 format=3 uid="uid://ctnmr8c2k85g5"]
 
-[ext_resource type="Theme" uid="uid://drswssji8tnu3" path="res://Assets/UI/Theme/MainTheme.tres" id="3_30nce"]
-[ext_resource type="PackedScene" uid="uid://wafjadmbwvmh" path="res://src/SpriteGenerator/SpriteGeneratorTabUI.tscn" id="3_mumiu"]
-[ext_resource type="Texture2D" uid="uid://cr55nbf56ybvc" path="res://Assets/UI/Basic UI spritesheet.png" id="5_mumiu"]
-[ext_resource type="LabelSettings" uid="uid://usv7beyw1bj8" path="res://Assets/UI/Theme/Label.tres" id="9_0w5gm"]
+[ext_resource type="Script" uid="uid://dhwtuinpw6wgn" path="res://src/MainInterface/MainInterfaceUI.cs" id="1_kfhly"]
+[ext_resource type="Theme" uid="uid://drswssji8tnu3" path="res://Assets/UI/Theme/MainTheme.tres" id="1_thsxi"]
+[ext_resource type="PackedScene" uid="uid://bn1rbewiias3g" path="res://src/ImageEditor/ImageEditorTabUI.tscn" id="2_kfhly"]
+[ext_resource type="PackedScene" uid="uid://wafjadmbwvmh" path="res://src/SpriteGenerator/SpriteGeneratorTabUI.tscn" id="2_y5307"]
+[ext_resource type="LabelSettings" uid="uid://usv7beyw1bj8" path="res://Assets/UI/Theme/Label.tres" id="3_kfhly"]
+[ext_resource type="Texture2D" uid="uid://cr55nbf56ybvc" path="res://Assets/UI/Basic UI spritesheet.png" id="4_50c6x"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jd2q0"]
 bg_color = Color(0.6, 0.6, 0.6, 0.721569)
@@ -19,10 +21,19 @@ corner_radius_bottom_left = 5
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jd2q0"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0w5gm"]
-atlas = ExtResource("5_mumiu")
+atlas = ExtResource("4_50c6x")
 region = Rect2(258, 112, 13, 16)
 
-[node name="SpriteGenerator" type="CanvasLayer" groups=["save_data"]]
+[node name="MainInterfaceUI" type="CanvasLayer" node_paths=PackedStringArray("_saveConfigBtn", "SavedConfigListOptBtn", "_loadConfigBtn", "_selectFolderPathBtn", "_openFolderPathBtn", "_spriteGenFolderPathLineEdit", "_settingsMainPanel", "_openSettingPanelBtn") groups=["save_data"]]
+script = ExtResource("1_kfhly")
+_saveConfigBtn = NodePath("MainUI/SettingsMainPanel/PanelContainer/SettingsMarginOptionsPanel/PanelContainer/VBoxContainer/SpriteGenSettings/VBoxContainer/SaveConfigSettingsPanel/VboxContainer/SaveConfigBtn")
+SavedConfigListOptBtn = NodePath("MainUI/SettingsMainPanel/PanelContainer/SettingsMarginOptionsPanel/PanelContainer/VBoxContainer/SpriteGenSettings/VBoxContainer/SaveConfigSettingsPanel/VboxContainer/SavedConfigListOptBtn")
+_loadConfigBtn = NodePath("MainUI/SettingsMainPanel/PanelContainer/SettingsMarginOptionsPanel/PanelContainer/VBoxContainer/SpriteGenSettings/VBoxContainer/SaveConfigSettingsPanel/VboxContainer/LoadConfigBtn")
+_selectFolderPathBtn = NodePath("MainUI/SettingsMainPanel/PanelContainer/SettingsMarginOptionsPanel/PanelContainer/VBoxContainer/SpriteGenSettings/VBoxContainer/SaveFolderSettingsPanel/VboxContainer/SelectFolderPathBtn")
+_openFolderPathBtn = NodePath("MainUI/SettingsMainPanel/PanelContainer/SettingsMarginOptionsPanel/PanelContainer/VBoxContainer/SpriteGenSettings/VBoxContainer/SaveFolderSettingsPanel/VboxContainer/OpenFolderPathBtn")
+_spriteGenFolderPathLineEdit = NodePath("MainUI/SettingsMainPanel/PanelContainer/SettingsMarginOptionsPanel/PanelContainer/VBoxContainer/SpriteGenSettings/VBoxContainer/SaveFolderSettingsPanel/VboxContainer/SpriteGenFolderPathLineEdit")
+_settingsMainPanel = NodePath("MainUI/SettingsMainPanel")
+_openSettingPanelBtn = NodePath("MainUI/OpenSettingsPanel/MarginContainer/VboxContainer/OpenSettingPanelBtn")
 
 [node name="MainUI" type="Control" parent="."]
 texture_filter = 2
@@ -35,7 +46,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme = ExtResource("3_30nce")
+theme = ExtResource("1_thsxi")
 
 [node name="MainTabContainer" type="TabContainer" parent="MainUI"]
 unique_name_in_owner = true
@@ -48,8 +59,11 @@ grow_vertical = 2
 current_tab = 0
 all_tabs_in_front = true
 
-[node name="TabSpriteGenManager" parent="MainUI/MainTabContainer" instance=ExtResource("3_mumiu")]
-unique_name_in_owner = true
+[node name="SpriteGeneratorTabUI" parent="MainUI/MainTabContainer" instance=ExtResource("2_y5307")]
+layout_mode = 2
+
+[node name="ImageEditorTabUI" parent="MainUI/MainTabContainer" instance=ExtResource("2_kfhly")]
+visible = false
 layout_mode = 2
 
 [node name="SettingsMainPanel" type="MarginContainer" parent="MainUI"]
@@ -105,7 +119,7 @@ theme_override_constants/separation = 4
 custom_minimum_size = Vector2(50, 20)
 layout_mode = 2
 text = "  Config :"
-label_settings = ExtResource("9_0w5gm")
+label_settings = ExtResource("3_kfhly")
 vertical_alignment = 1
 
 [node name="SavedConfigListOptBtn" type="OptionButton" parent="MainUI/SettingsMainPanel/PanelContainer/SettingsMarginOptionsPanel/PanelContainer/VBoxContainer/SpriteGenSettings/VBoxContainer/SaveConfigSettingsPanel/VboxContainer"]
@@ -139,7 +153,7 @@ theme_override_constants/separation = 4
 custom_minimum_size = Vector2(50, 20)
 layout_mode = 2
 text = "  Save folder :"
-label_settings = ExtResource("9_0w5gm")
+label_settings = ExtResource("3_kfhly")
 vertical_alignment = 1
 
 [node name="SpriteGenFolderPathLineEdit" type="LineEdit" parent="MainUI/SettingsMainPanel/PanelContainer/SettingsMarginOptionsPanel/PanelContainer/VBoxContainer/SpriteGenSettings/VBoxContainer/SaveFolderSettingsPanel/VboxContainer"]
