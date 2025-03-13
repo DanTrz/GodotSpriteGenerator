@@ -7,30 +7,18 @@ using Godot;
 public partial class SpriteGenerator : Node
 {
     [Export] public Button _startGenerationBtn;
-
     [Export] public Node3D MainScene3D;
     [Export] public SubViewport _rawViewport;
     [Export] public SubViewportContainer _rawViewportContainer;
     [Export] public SubViewport BgRemoverViewport;
     [Export] public SubViewportContainer BgRemoverViewportContainer;
-
     [Export] public MeshInstance3D MeshShaderPixel3D;
-
-    public static int _spriteResolution = 256;
     [Export] public int frameSkipStep = 4; // Control how frequently frames are captured
     [Export] public bool _clearFolderBeforeGeneration = true;
-
     [Export(PropertyHint.Range, "1,4,1")] private float _animationPlaybackSpeed = 1.0f;
-
-
-    // [Export] public Button _saveConfigBtn;
-    // [Export] public OptionButton SavedConfigListOptBtn;
-    // [Export] public Button _loadConfigBtn;
-
     [Export] public OptionButton _resolutionOptionBtn;
     [Export] public OptionButton EffectsChoicesOptionBtn;
     [Export] public OptionButton EffectLevelOptionBtn;
-
     [Export] public HSlider Outline3DStrenghtSlider;
     [Export] public ColorPickerButton Outline3DColorPicker;
     [Export] public LineEdit _frameStepTextEdit;
@@ -43,44 +31,17 @@ public partial class SpriteGenerator : Node
     [Export] public ItemListCheckBox _angleSelectionItemList;
     [Export] public TextureRect _pixelGridTextRect;
     [Export] public CheckButton _showGridCheckButton;
-    // [Export] public CheckButton MoveSpriteSheetCheckBtn;
-
-    //Main Settings and Folder Path Variables
-    // [Export] public Button _selectFolderPathBtn;
-    // [Export] public Button _openFolderPathBtn;
-    // [Export] public LineEdit _spriteGenFolderPathLineEdit;
-    // [Export] public MarginContainer _settingsMainPanel;
-    // [Export] public Button _openSettingPanelBtn;
-
-
-    //[OnReady("%MainTabContainer")] TabContainer _mainTabContainer;
-
-
-    //SettingsMarginOptionsPanel
-
-
-    //MeshReplacer Nodes and Variables
     [Export] public PanelContainer _meshReplacerPanelParentNode;
     [Export] public OptionButton _hairMeshOptBtn;
     [Export] public OptionButton WeaponItemMeshOptBtn;
     [Export] public ColorPickerButton _hairColorBtn;
-    //[OnReady("%HeadMeshOptBtn")] private OptionButton _headMeshOptBtn;
-    //[OnReady("%TorsoMeshOptBtn")] private OptionButton _torsoMeshOptBtn;
-
-
-    //[OnReady("%LegsMeshOptBtn")] private OptionButton _legsMeshOptBtn;
-    //[OnReady("%FeetMeshOptBtn")] private OptionButton _feetMeshOptBtn;
-    //[OnReady("%RightArmMeshOptBtn")] private OptionButton _rightArmMeshOptBtn;
-    //[OnReady("%LeftArmMeshOptBtn")] private OptionButton _leftArmMeshOptBtn;
-    //[OnReady("%TorsoItemMeshOptBtn")] private MeshReplacerOptButton _torsoItemMeshOptBtn;
-
-
 
     private Node3D _modelPivotNode;
     private Node3D _characterModelObject;
     private Camera3D _camera;
     private AnimationPlayer _animationPlayer;
 
+    public static int _spriteResolution = 256;
     private readonly int[] allAngles = { 0, 45, 90, 135, 180, 225, 270, 315 };
     private int renderAngle = 0;
     private string currentAnimation;
@@ -92,13 +53,6 @@ public partial class SpriteGenerator : Node
 
     public override void _Ready()
     {
-
-        //Connect UI Signals
-        // _saveConfigBtn.Pressed += OnSaveConfigBtnPressed;
-        // _loadConfigBtn.Pressed += OnLoadConfigBtnPressed;
-        // _spriteGenFolderPathLineEdit.TextChanged += (newDir) => GlobalUtil.OnFolderSelected(newDir, _spriteGenFolderPathLineEdit);
-        // _selectFolderPathBtn.Pressed += OnSelectFolderPathPressed;
-        // _openFolderPathBtn.Pressed += OnOpenFolderPathPressed;
         _startGenerationBtn.Pressed += OnStartGeneration;
         _resolutionOptionBtn.ItemSelected += OnRenderResolutionChanged;
         EffectLevelOptionBtn.ItemSelected += OnEffectLevelChanged;
@@ -109,21 +63,13 @@ public partial class SpriteGenerator : Node
         _playBackSpeedLineEdit.TextChanged += OnPlayBackSpeedChanged;
         _clearFolderCheckBtn.Pressed += OnClearFolderPressed;
         _loadAllAnimationsBtn.Pressed += OnLoadAllAnimationsPressed;
-        //_saveIntervalTimer.Timeout += OnSaveIntervalTimerTimeout;
         _showGridCheckButton.Pressed += OnShowGridCheckButtonPressed;
-        //MoveSpriteSheetCheckBtn.Pressed += () => MoveSpriteSheet = MoveSpriteSheetCheckBtn.ButtonPressed;
-        // MoveSpriteSheetCheckBtn.Pressed += OnMoveSpriteSheetCheckButtonPressed;
-        // _openSettingPanelBtn.Pressed += () => _settingsMainPanel.Visible = !_settingsMainPanel.Visible;
-        //_mainTabContainer.MouseEntered += () => GD.Print("Tab Cointainer Mouse Entered"); //_settingsMainPanel.Visible = false;
-
         //MeshReplacer Signals
         _hairColorBtn.ColorChanged += OnHairColorChanged;
         _hairMeshOptBtn.ItemSelected += OnHairMeshOptBtnItemSelected;
         WeaponItemMeshOptBtn.ItemSelected += OnWeaponItemMeshOptBtnItemSelected;
 
         //Set Default UI Control Values
-        // _settingsMainPanel.Visible = false;
-        // _spriteGenFolderPathLineEdit.Text = GlobalUtil.SaveFolderPath;
         _clearFolderCheckBtn.ButtonPressed = _clearFolderBeforeGeneration;
         _frameStepTextEdit.Text = frameSkipStep.ToString();
         _playBackSpeedLineEdit.Text = _animationPlaybackSpeed.ToString();
@@ -146,15 +92,9 @@ public partial class SpriteGenerator : Node
         EffectLevelOptionBtn.Visible = false;
         Outline3DStrenghtSlider.Value = 0.0f;
 
-
         //Pass the objects from MainScene3D to the SpriteGenerator
         if (MainScene3D != null)
         {
-            //_modelPivotNode = MainScene3D.MainModelNode;
-            //_camera = MainScene3D.MainCamera;
-            //_animationPlayer = MainScene3D.MainAnimationPlayer;
-            //_characterModelObject = MainScene3D.MainCharacterObj;
-
             //Get Reference to Our Object3D within MainScene
             _modelPivotNode = MainScene3D.GetNode<Node3D>("%Model3DMainPivotControl");
             _camera = MainScene3D.GetNode<Camera3D>("%MainCamera");
@@ -170,9 +110,6 @@ public partial class SpriteGenerator : Node
             GD.PrintErr("MainScene3D is null");
         }
 
-        //_animationPlayer.AnimationFinished += OnAnimationFinished;
-
-
         //Mesh Replace Variables and UI
         MeshReplacer.UpdateUIOptionsSceneItemList(_hairMeshOptBtn, Const.HAIR_SCENES_FOLDER_PATH);
         MeshReplacer.UpdateUIOptionsSceneItemList(WeaponItemMeshOptBtn, Const.WEAPON_SCENES_FOLDER_PATH);
@@ -182,75 +119,8 @@ public partial class SpriteGenerator : Node
         _hairColorBtn.Color = Colors.White;
 
         GlobalUtil.SaveFolderPath = ProjectSettings.GlobalizePath(Const.SAVE_GAME_PATH);
-        // _spriteGenFolderPathLineEdit.Text = GlobalUtil.SaveFolderPath;
-
-
         //Update initial views
         UpdateViewPorts();
-
-    }
-
-
-    private async void OnLoadConfigBtnPressed()
-    {
-        using Godot.FileDialog fileDialog = new Godot.FileDialog
-        {
-            FileMode = FileDialog.FileModeEnum.OpenFile,
-            Filters = new string[] { "*.tres ; SaveGame File" },
-            Access = FileDialog.AccessEnum.Filesystem
-        };
-
-        AddChild(fileDialog);
-
-        fileDialog.CurrentDir = ProjectSettings.GlobalizePath(Const.SAVE_GAME_PATH); //Set this after adding Child to Scene
-
-        //fileDialog.DirSelected += (newDir) => GlobalUtil.OnFolderSelected(newDir, _spriteGenFolderPathLineEdit);
-
-        //fileDialog.FileSelected += async (path) => await SaveGameManager.Instance.LoadGameData(path);
-
-        await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
-
-        fileDialog.PopupCentered();
-
-        await ToSignal(fileDialog, FileDialog.SignalName.FileSelected);
-
-        string file = fileDialog.CurrentFile;
-        string fullLoadFilePath = fileDialog.CurrentDir + "/" + file;
-
-        await SaveGameManager.Instance.LoadGameData(fullLoadFilePath);
-
-    }
-
-
-    private async void OnSaveConfigBtnPressed()
-    {
-        using FileDialog fileDialog = new FileDialog
-        {
-            FileMode = FileDialog.FileModeEnum.SaveFile,
-            Filters = new string[] { "*.tres ; SaveGame File" },
-            Access = FileDialog.AccessEnum.Filesystem
-        };
-
-        AddChild(fileDialog); // Add to scene first 
-
-        //string folderCurrentDir = Const.USER_ROOT_FOLDER_PATH; // Ensure it's inside user:// or res://
-        string globalizedSavePath = ProjectSettings.GlobalizePath(Const.SAVE_GAME_PATH);
-
-        if (!GlobalUtil.HasDirectory(globalizedSavePath, this))
-        {
-            GD.Print("Directory does NOT exist: " + globalizedSavePath);
-            globalizedSavePath = "user://"; // Fallback to a safe default
-        }
-
-        fileDialog.CurrentDir = globalizedSavePath; //Set Current Directory at the end after adding Child to Scene otherwise it was not working
-
-        fileDialog.FileSelected += async (path) => await SaveGameManager.Instance.SaveGameData(path);
-
-        await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
-
-        fileDialog.PopupCentered(); // Show the dialog
-
-        //await SaveGameManager.Instance.SaveGameData(saveFileName);
     }
 
     private void OnStartGeneration()
@@ -269,11 +139,7 @@ public partial class SpriteGenerator : Node
 
         if (_clearFolderBeforeGeneration)
             ClearFolder(saveFolder);
-
-
         GenerateSpritesFrameBased();
-
-
     }
 
     private void ClearFolder(string folder)
@@ -451,48 +317,6 @@ public partial class SpriteGenerator : Node
         _pixelGridTextRect.Visible = true;
     }
 
-
-    // private void OnOpenFolderPathPressed()
-    // {
-
-    //     string directory = ProjectSettings.GlobalizePath(_spriteGenFolderPathLineEdit.Text);
-    //     if (GlobalUtil.HasDirectory(directory, this))
-    //     {
-    //         OS.ShellOpen(directory);
-    //     }
-    //     else
-    //     {
-    //         GD.PrintErr("Directory does not exist: " + directory);
-
-    //         using Godot.AcceptDialog acceptDialog = new Godot.AcceptDialog
-    //         {
-    //             Title = "Error: Directory not Found",
-    //             DialogText = "Directory does not exist: " + directory
-    //         };
-
-    //         AddChild(acceptDialog);
-    //         acceptDialog.PopupCentered();
-    //     }
-    // }
-
-    // private void OnSelectFolderPathPressed()
-    // {
-    //     using Godot.FileDialog fileDialog = new Godot.FileDialog
-    //     {
-    //         FileMode = FileDialog.FileModeEnum.OpenDir,
-    //         Access = FileDialog.AccessEnum.Filesystem
-    //     };
-
-    //     AddChild(fileDialog);
-
-    //     fileDialog.CurrentDir = GlobalUtil.SaveFolderPath; //Set this after adding Child to Scene
-
-    //     fileDialog.DirSelected += (newDir) => GlobalUtil.OnFolderSelected(newDir, _spriteGenFolderPathLineEdit);
-
-    //     fileDialog.PopupCentered();
-
-    // }
-
     private void OnRenderResolutionChanged(long itemSelectedIndex)
     {
         switch (itemSelectedIndex)
@@ -541,26 +365,8 @@ public partial class SpriteGenerator : Node
                 //Toon Effect
                 break;
         }
-
-
-
-
         UpdateViewPorts();
-
     }
-
-    // private void ApplyPixelEffect()
-    // {
-
-    //     if (MeshShaderPixel3D.Mesh.SurfaceGetMaterial(0) is ShaderMaterial shaderMaterial)
-    //     {
-    //         shaderMaterial.SetShaderParameter("target_resolution", shaderResolution);
-    //     }
-
-    //     UpdateViewPorts();
-    // }
-
-
 
     private void OnEffectLevelChanged(long itemSelectedIndex)
     {
@@ -598,19 +404,16 @@ public partial class SpriteGenerator : Node
         {
             shaderMaterial.SetShaderParameter("target_resolution", shaderResolution);
         }
-
         UpdateViewPorts();
     }
 
 
     private void OnOutline3DStrenghtChanged(double value)
     {
-
         if (MeshShaderPixel3D.Mesh.SurfaceGetMaterial(0) is ShaderMaterial shaderMaterial)
         {
             shaderMaterial.SetShaderParameter("outline_strength", value);
         }
-
     }
 
     private void OnOutline3DColorChanged(Color color)
@@ -619,7 +422,6 @@ public partial class SpriteGenerator : Node
         {
             shaderMaterial.SetShaderParameter("outline_color", color);
         }
-
     }
 
     private void OnPlayBackSpeedChanged(string newText)
@@ -640,9 +442,6 @@ public partial class SpriteGenerator : Node
         BgRemoverViewport.CallDeferred("set_size", viewPortSize);
         BgRemoverViewportContainer.CallDeferred("set_size", viewPortSize);
 
-        //_viewport.Size = viewPortSize;
-        //_viewportContainer.Size = viewPortSize;
-
     }
     private void OnClearFolderPressed()
     {
@@ -657,7 +456,6 @@ public partial class SpriteGenerator : Node
 
         frameSkipStep = Convert.ToInt32(newText);
         GD.PrintT("Frame Step: " + frameSkipStep);
-
     }
 
     private void OnShowGridCheckButtonPressed()
@@ -667,38 +465,8 @@ public partial class SpriteGenerator : Node
 
     }
 
-    // private void OnMoveSpriteSheetCheckButtonPressed()
-    // {
-    //     MoveSpriteSheet = MoveSpriteSheetCheckBtn.ButtonPressed;
-    //     MoveSpriteSheetCheckBtn.Text = MoveSpriteSheetCheckBtn.ButtonPressed.ToString();
-
-    // }
-
-
-    // private void OnPixelEffectPressed()
-    // {
-    //     _usePixelEffect = _pixelEffectCheckBtn.ButtonPressed;
-    //     _pixelShaderTextRect.Visible = _usePixelEffect;
-
-    //     _pixelEffectCheckBtn.Text = _pixelEffectCheckBtn.ButtonPressed.ToString();
-
-    //     GD.PrintT("Use PixelEffect: " + _usePixelEffect);
-
-
-
-    //     // if (_usePixelEffect)
-    //     // {
-    //     //     _viewport.CallDeferred("set_use_pixel_effect", true);
-    //     // }
-    //     // else
-    //     // {
-    //     //     _viewport.CallDeferred("set_use_pixel_effect", false);
-    // }
-
     private void OnLoadAllAnimationsPressed()
     {
-        //_itemListWithCheckBox
-
         foreach (var animationItem in _animationPlayer.GetAnimationList())
         {
             if (animationItem == "RESET" || animationItem == "TPose") continue;
@@ -711,14 +479,10 @@ public partial class SpriteGenerator : Node
     {
         MeshInstance3D _hairMeshObject = _characterModelObject.GetNode<BoneAttachment3D>("%HairBoneAttach").GetChild(0).GetNode<MeshInstance3D>("%HairMesh");
 
-
         if (_hairMeshObject != null && _hairMeshObject.GetActiveMaterial(0) is StandardMaterial3D material)
         {
             material.AlbedoColor = newColor;
         }
-
-
-
     }
 
     private void OnHairMeshOptBtnItemSelected(long index)
@@ -761,7 +525,6 @@ public partial class SpriteGenerator : Node
 
         string itemSelected = meshReplacerOptButton.GetItemText((int)itemIndex);
         GD.PrintT("Mesh Item Selected: " + itemSelected + " + FromButton: " + meshReplacerOptButton.Name);
-
 
         //Gets the only Skeletion we have in the Model Scene
         Skeleton3D _parentSkeletion = GlobalUtil.GetAllNodesByType<Skeleton3D>(_characterModelObject).FirstOrDefault();
@@ -813,12 +576,4 @@ public partial class SpriteGenerator : Node
 
         //_settingsMainPanel.Visible = false;
     }
-
-
-
-
-
-
-
-
 }

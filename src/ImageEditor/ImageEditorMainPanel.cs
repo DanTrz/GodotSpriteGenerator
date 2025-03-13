@@ -61,14 +61,6 @@ public partial class ImageEditorMainPanel : PanelContainer
             _originalImage = _originalTexture.GetImage();
         }
 
-        // // Get a reference to the ShaderMaterial ---
-        // _shaderMaterial = (ShaderMaterial)_spriteSheetImgProcessor.Material;
-        // if (_shaderMaterial == null)
-        // {
-        //     GD.PrintErr("TextureRect does not have a ShaderMaterial assigned in the editor!");
-        //     return; // Exit if no ShaderMaterial is found to avoid errors
-        // }
-
         //Connect UI Sigansl for most of the effects
         _saturationSlider.ValueChanged += (value) => SetImgProcessorShaderParams();
         _brightnessSlider.ValueChanged += (value) => SetImgProcessorShaderParams();
@@ -168,44 +160,7 @@ public partial class ImageEditorMainPanel : PanelContainer
         _ImgEditor.Brightness = (float)(_brightnessSlider?.Value ?? 0.0f);
 
         _ImgEditor.UpdateShaderParameters();
-
-
-
-        // bool doOutline = _outlineCheckbox?.ButtonPressed ?? false;
-        // int outlineThickness = doOutline ? (int)(_outlineThicknessSlider?.Value ?? 0) : 0;
-        // Color outlineColor = doOutline ? (_outlineColorPicker?.Color ?? Colors.Black) : Colors.Black;
-        // bool doDithering = _ditheringCheckbox?.ButtonPressed ?? false;
-        // float ditheringStrength = doDithering ? (float)(_ditheringSlider?.Value ?? 0.0f) : 0.0f;
-
-        // Apply effects in a separate thread in parallel (Forced via Task.Run)
-        // Task.Run(() => ApplyEffectsAsync(doColorReduction, colorCount, doOutline, outlineThickness,
-        //     outlineColor, doDithering, ditheringStrength));
     }
-
-    // private void QueueApplyEffects()
-    // {
-    //     //Update UI Elements where needed:
-    //     _outlineLabel.Text = _outlineThicknessSlider.Value.ToString("0.0");
-
-    //     // Check if processing is already in progress
-    //     if (IsEffectProcessing) return;
-    //     IsEffectProcessing = true;
-
-    //     // Capture UI state for image processing effects (excluding shader controls
-    //     // This is needed as I don't receive the values from the Signal Connection
-    //     // This is due to choice I made to connect all to the same Method QueueApplyEffects
-    //     bool doColorReduction = _colorReductionCheckbox?.ButtonPressed ?? false;
-    //     int colorCount = doColorReduction ? (int)(_colorCountSpinBox?.Value ?? 0) : 0;
-    //     bool doOutline = _outlineCheckbox?.ButtonPressed ?? false;
-    //     int outlineThickness = doOutline ? (int)(_outlineThicknessSlider?.Value ?? 0) : 0;
-    //     Color outlineColor = doOutline ? (_outlineColorPicker?.Color ?? Colors.Black) : Colors.Black;
-    //     bool doDithering = _ditheringCheckbox?.ButtonPressed ?? false;
-    //     float ditheringStrength = doDithering ? (float)(_ditheringSlider?.Value ?? 0.0f) : 0.0f;
-
-    //     // Apply effects in a separate thread in parallel (Forced via Task.Run)
-    //     Task.Run(() => ApplyEffectsAsync(doColorReduction, colorCount, doOutline, outlineThickness,
-    //         outlineColor, doDithering, ditheringStrength));
-    // }
 
     private async Task ApplyEffectsAsync(bool doColorReduction, int colorCount, bool doOutline,
         int outlineThickness, Color outlineColor, bool doDithering, float ditheringStrength)
@@ -213,20 +168,6 @@ public partial class ImageEditorMainPanel : PanelContainer
 
         //I always start with a copy of the original image, preserving the original for "undo" (to be implemented)
         Image modifiedImage = (Image)_originalImage.Duplicate(); //First code version (working)
-        //Image modifiedImage = (Image)_textureRect.Texture.GetImage();
-        //Image modifiedImage = (Image)_textureRect.Texture.GetImage().Duplicate();//TODO: Find a way to store the last image reduced color without other effects, to use as a enw starting point
-
-        // Apply All effects in sequence, to ensure they are applied in the correct order
-        // Even if only one is modified, I update all to avoid conflicts. 
-        //if (doColorReduction)
-        //{
-        //    //if (colorCount != (int)GetTotalColorCount(modifiedImage))
-        //    //{
-        //    CallDeferred(nameof(SetStatus), "Reducing colors...");
-        //    modifiedImage = await Task.Run(() => ReduceColors(modifiedImage, colorCount));
-        //    CallDeferred(nameof(SetStatus), "Color reduction complete.");
-        //    //}
-        //}
 
         if (doOutline)
         {
