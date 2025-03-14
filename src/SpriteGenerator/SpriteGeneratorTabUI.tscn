@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://wafjadmbwvmh"]
+[gd_scene load_steps=24 format=3 uid="uid://wafjadmbwvmh"]
 
 [ext_resource type="PackedScene" uid="uid://iuwovcd804os" path="res://src/ModelAndMeshes/ModelScene3D.tscn" id="1_m3qwr"]
 [ext_resource type="Script" uid="uid://dj2tgr0hxsbd3" path="res://src/SpriteGenerator/SpriteGenerator.cs" id="1_yym6v"]
@@ -14,8 +14,6 @@
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0w5gm"]
 bg_color = Color(0.345946, 0.345946, 0.345946, 1)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_jd2q0"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_64ieu"]
 render_priority = 0
@@ -221,7 +219,6 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_0w5gm")
 [node name="RawViewportContainer" type="SubViewportContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/RawRenderPanelContainer"]
 unique_name_in_owner = true
 texture_filter = 1
-material = SubResource("ShaderMaterial_jd2q0")
 clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 4
@@ -321,9 +318,11 @@ size_flags_vertical = 4
 
 [node name="ModelPositionManager" parent="SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/ImageOptionsPanel" instance=ExtResource("6_p81t8")]
 unique_name_in_owner = true
+texture_filter = 2
 layout_mode = 2
 
 [node name="OptionsPanelCont" type="PanelContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer"]
+texture_filter = 2
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
@@ -558,7 +557,6 @@ theme_override_font_sizes/font_size = 12
 max_columns = 3
 same_column_width = true
 fixed_column_width = 55
-theme_override_font_sizes/font_size = 12
 
 [node name="FrameSkipHBoxCont" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2"]
 custom_minimum_size = Vector2(0, 32)

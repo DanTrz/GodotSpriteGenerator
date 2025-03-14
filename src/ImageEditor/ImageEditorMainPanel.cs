@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using Godot;
 using Image = Godot.Image;
@@ -22,11 +23,16 @@ public partial class ImageEditorMainPanel : PanelContainer
     [Export] private Button _saveButton;
     [Export] private Label _statusLabel;
 
+    [Export] public CheckButton UseExternalPaletteChkBtn;
+    [Export] public PaletteLoader PaletteLoaderPanel;
+
     // Add toggles for enabling/disabling shader effects
     [Export] private CheckBox _enableSaturationCheckbox;
     [Export] private CheckBox _enableBrightnessCheckbox;
 
     [Export] public Button SelectFileSpriteSheetBtn;
+
+
 
     private Texture2D _originalTexture;
     private Image _originalImage;
@@ -74,6 +80,11 @@ public partial class ImageEditorMainPanel : PanelContainer
 
         _saveButton.Pressed += OnSaveButtonPressed;
         SelectFileSpriteSheetBtn.Pressed += async () => await OnSelectFileSpriteSheetBtnPressed();
+
+
+        UseExternalPaletteChkBtn.Toggled += (pressed) => PaletteLoaderPanel.Visible = UseExternalPaletteChkBtn.ButtonPressed;
+        PaletteLoaderPanel.Visible = false;
+
 
         _statusLabel.Text = "Ready";
 

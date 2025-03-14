@@ -1,0 +1,55 @@
+[gd_scene load_steps=3 format=3 uid="uid://244h3jjjyk25"]
+
+[ext_resource type="Script" uid="uid://0m4e2jg22pby" path="res://src/ImageEditor/PaletteImporter/PaletteLoader.cs" id="1_81li2"]
+[ext_resource type="PackedScene" uid="uid://dyf1xkseg8kn8" path="res://src/ImageEditor/PaletteImporter/PaletteListGrid.tscn" id="1_logbv"]
+
+[node name="PaletteLoader" type="MarginContainer" node_paths=PackedStringArray("LoadExtPaletteBtn", "PaletteListGridContainer")]
+custom_minimum_size = Vector2(0, 32)
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 1
+script = ExtResource("1_81li2")
+LoadExtPaletteBtn = NodePath("PanelContainer/MarginContainer/PaletteOptionsHbOx/LoadExtPaletteBtn")
+PaletteListGridContainer = NodePath("PanelContainer/MarginContainer/PaletteOptionsHbOx/PaletteListPanel/MarginContainer/PaletteListGridContainer")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="PaletteOptionsHbOx" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[node name="LoadExtPaletteBtn" type="Button" parent="PanelContainer/MarginContainer/PaletteOptionsHbOx"]
+custom_minimum_size = Vector2(80, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "  Load External Palette  "
+
+[node name="PaletteListPanel" type="PanelContainer" parent="PanelContainer/MarginContainer/PaletteOptionsHbOx"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/MarginContainer/PaletteOptionsHbOx/PaletteListPanel"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="PaletteListGridContainer" parent="PanelContainer/MarginContainer/PaletteOptionsHbOx/PaletteListPanel/MarginContainer" instance=ExtResource("1_logbv")]
+custom_minimum_size = Vector2(345, 0)
+layout_mode = 2
+theme_override_constants/h_separation = 5
+theme_override_constants/v_separation = 5

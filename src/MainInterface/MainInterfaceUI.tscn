@@ -56,19 +56,20 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-current_tab = 0
+current_tab = 1
 all_tabs_in_front = true
 
-[node name="SpriteGeneratorTabUI" parent="MainUI/MainTabContainer" instance=ExtResource("2_y5307")]
+[node name="SpriteGenerator" parent="MainUI/MainTabContainer" instance=ExtResource("2_y5307")]
+visible = false
 layout_mode = 2
 
-[node name="ImageEditorTabUI" parent="MainUI/MainTabContainer" instance=ExtResource("2_kfhly")]
-visible = false
+[node name="ImageEditor" parent="MainUI/MainTabContainer" instance=ExtResource("2_kfhly")]
 layout_mode = 2
 
 [node name="SettingsMainPanel" type="MarginContainer" parent="MainUI"]
 unique_name_in_owner = true
 visible = false
+texture_filter = 2
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -176,6 +177,7 @@ layout_mode = 2
 text = "Open Folder"
 
 [node name="OpenSettingsPanel" type="PanelContainer" parent="MainUI"]
+texture_filter = 2
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0

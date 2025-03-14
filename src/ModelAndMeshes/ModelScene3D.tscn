@@ -23,8 +23,8 @@ render_priority = 0
 shader = ExtResource("3_cykfy")
 shader_parameter/target_resolution = 512.0
 shader_parameter/colors_per_channel = 128.0
-shader_parameter/outline_strength = 2.0
-shader_parameter/normal_outline_strength = 0.0
+shader_parameter/outline_strength = 1.0
+shader_parameter/normal_outline_strength = 0.5
 
 [sub_resource type="QuadMesh" id="QuadMesh_xukee"]
 material = SubResource("ShaderMaterial_xukee")

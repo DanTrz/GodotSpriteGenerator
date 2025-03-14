@@ -1,9 +1,12 @@
-[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://bljhiwop0h2et"]
+[gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://bljhiwop0h2et"]
 
 [ext_resource type="Texture2D" uid="uid://cr78qca6l41js" path="res://Models/FullModels/BaseModel/UpdatedHead/BaseModel_HEAD_Updated_ColorText.png" id="1_1agqy"]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1agqy"]
+
 [resource]
 resource_name = "HEAD_Updated_Material"
+next_pass = SubResource("ShaderMaterial_1agqy")
 cull_mode = 2
 shading_mode = 0
 diffuse_mode = 3
