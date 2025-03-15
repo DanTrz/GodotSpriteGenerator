@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 SaveGameManager="*res://Globals/SaveGameManager/SaveGameManager.cs"
+GlobalEvents="*res://Globals/GlobalEvents.cs"
 
 [display]
 

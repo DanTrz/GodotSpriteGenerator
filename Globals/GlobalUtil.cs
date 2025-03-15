@@ -1,7 +1,7 @@
-using Godot;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Godot;
 
 public static partial class GlobalUtil
 {
@@ -200,7 +200,9 @@ public static partial class GlobalUtil
             {
                 Color color = image.GetPixel(x, y);
                 // Convert Color to a single ulong for efficient comparison
-                ulong colorValue = ((ulong)(color.R8) << 24) | ((ulong)(color.G8) << 16) | ((ulong)(color.B8) << 8) | (ulong)(color.A8);
+                //ulong colorValue = ((ulong)(color.R8) << 24) | ((ulong)(color.G8) << 16) | ((ulong)(color.B8) << 8) | (ulong)(color.A8);
+
+                ulong colorValue = ((uint)color.R8 << 24) | ((uint)color.G8 << 16) | ((uint)color.B8 << 8) | (uint)color.A8;
                 uniqueColors.Add(colorValue);
             }
         }

@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://244h3jjjyk25"]
+[gd_scene load_steps=4 format=3 uid="uid://244h3jjjyk25"]
 
 [ext_resource type="Script" uid="uid://0m4e2jg22pby" path="res://src/ImageEditor/PaletteImporter/PaletteLoader.cs" id="1_81li2"]
 [ext_resource type="PackedScene" uid="uid://dyf1xkseg8kn8" path="res://src/ImageEditor/PaletteImporter/PaletteListGrid.tscn" id="1_logbv"]
+[ext_resource type="PackedScene" uid="uid://cja16u4jssxrh" path="res://src/ImageEditor/PaletteImporter/PaletteColorBoxItem.tscn" id="3_ykadx"]
 
 [node name="PaletteLoader" type="MarginContainer" node_paths=PackedStringArray("LoadExtPaletteBtn", "PaletteListGridContainer")]
 custom_minimum_size = Vector2(0, 32)
@@ -53,3 +54,4 @@ custom_minimum_size = Vector2(345, 0)
 layout_mode = 2
 theme_override_constants/h_separation = 5
 theme_override_constants/v_separation = 5
+paletteColorItemScene = ExtResource("3_ykadx")

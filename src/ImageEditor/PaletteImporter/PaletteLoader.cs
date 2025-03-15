@@ -12,7 +12,7 @@ public partial class PaletteLoader : MarginContainer
     [Export] public Button LoadExtPaletteBtn;
     [Export] public PaletteListGrid PaletteListGridContainer;
 
-    public List<Color> LoadedPaletteColors;
+    public Godot.Collections.Array<Color> LoadedPaletteColors = new();
 
     private const int MAX_PALETTE_SIZE = 256;
 
@@ -23,20 +23,31 @@ public partial class PaletteLoader : MarginContainer
     public override void _Ready()
     {
         LoadExtPaletteBtn.Pressed += async () => await OnLoadExtPaletteBtnPressed();
+        LoadedPaletteColors.Add(Colors.Black);
+        //
     }
 
     private async Task OnLoadExtPaletteBtnPressed()
     {
         currentHextFileText = "";
+        LoadedPaletteColors.Clear();
         PaletteListGridContainer.ClearGridList();
-        await LoadTextFromHexFile();
+
+        await LoadTextFromHexFile(); // We load the result from this into currentHextFileText;
         LoadedPaletteColors = GetHexFileColors(currentHextFileText);
 
-        //TODO: Complete PaleteLoaders
-        //1.Create a Singal and fire this signal from here with the palette colors (PalleteLoaded)
-        //2. Get this Signal ImageEditorMainPanel.cs 
-        //3. From the ImageEditorMainPanel - We Update the Grid and call the method in the Grid to create the palette slots
-        //4. We Update the Shader Parameters in the ImageEditorMainPanel
+        GlobalEvents.Instance.OnPaletteChanged.Invoke(LoadedPaletteColors);
+        UpdatePaletteListGrid(LoadedPaletteColors);
+
+    }
+
+    public void UpdatePaletteListGrid(Godot.Collections.Array<Color> paletteColors)
+    {
+        PaletteListGridContainer.ClearGridList();
+        foreach (var color in paletteColors)
+        {
+            PaletteListGridContainer.AddGridItem(color);
+        }
     }
 
     private async Task LoadTextFromHexFile()
@@ -75,11 +86,11 @@ public partial class PaletteLoader : MarginContainer
     }
 
 
-    private List<Color> GetHexFileColors(string hexFileText)
+    private Godot.Collections.Array<Color> GetHexFileColors(string hexFileText)
     {
         string[] lines = hexFileText.Split(new string[] { "\r\n", "\n", "\r" }, StringSplitOptions.None);
         int colorCount = lines.Count() - 1;
-        List<Color> paletteColors = new();
+        Godot.Collections.Array<Color> paletteColors = new();
 
         if (colorCount > MAX_PALETTE_SIZE)
         {

@@ -9,8 +9,8 @@ uniform float brightness : hint_range(0.0, 2.0) = 1.0;
 // Color Reduction Controls
 uniform bool enable_color_reduction = true;
 uniform int num_colors : hint_range(2, 256) = 16;
-uniform bool use_external_palette = true;
-uniform vec4 external_palette[256];
+//uniform bool use_external_palette = true;
+uniform vec4 palette[256];
 
 // Helper function for calculating color distance
 float color_distance(vec3 c1, vec3 c2) {
@@ -61,7 +61,6 @@ vec3 hsl_to_rgb(vec3 c) {
     return rgb + m;
 }
 
-
 void fragment() {
     vec4 image_color = texture(TEXTURE, UV);
     vec3 color = image_color.rgb;
@@ -85,14 +84,14 @@ void fragment() {
 
     // --- Color Reduction ---
     if (enable_color_reduction) {
-        vec3 best_match = external_palette[0].rgb;
+        vec3 best_match = palette[0].rgb;
         float min_distance = color_distance(color, best_match);
 
         for (int i = 1; i < num_colors; i++) {
-            float dist = color_distance(color, external_palette[i].rgb);
+            float dist = color_distance(color, palette[i].rgb);
             if (dist < min_distance) {
                 min_distance = dist;
-                best_match = external_palette[i].rgb;
+                best_match = palette[i].rgb;
             }
         }
         color = best_match;

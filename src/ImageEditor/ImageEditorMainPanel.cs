@@ -33,10 +33,14 @@ public partial class ImageEditorMainPanel : PanelContainer
     [Export] public Button SelectFileSpriteSheetBtn;
 
 
-
+    private Godot.Collections.Array<Color> _currentPaletteColors = new();
     private Texture2D _originalTexture;
     private Image _originalImage;
 
+    private bool _isFirstRun = true;
+
+
+    private bool _useExternalPalette = false;
     private bool _isProcessing;
     public bool IsEffectProcessing
     {
@@ -81,18 +85,37 @@ public partial class ImageEditorMainPanel : PanelContainer
         _saveButton.Pressed += OnSaveButtonPressed;
         SelectFileSpriteSheetBtn.Pressed += async () => await OnSelectFileSpriteSheetBtnPressed();
 
+        GlobalEvents.Instance.OnPaletteChanged += OnPaletteChanged;
 
-        UseExternalPaletteChkBtn.Toggled += (pressed) => PaletteLoaderPanel.Visible = UseExternalPaletteChkBtn.ButtonPressed;
+
+        UseExternalPaletteChkBtn.Toggled += OnUseExternalPaletteBtnToggled;
         PaletteLoaderPanel.Visible = false;
 
 
         _statusLabel.Text = "Ready";
 
         UpdateUIElementsOnLoad();
+
+        _isFirstRun = false;
+
         SetImgProcessorShaderParams();
         // Initial shader parameter update
 
     }
+
+    private void OnPaletteChanged(Godot.Collections.Array<Color> list)
+    {
+        GD.Print("Palette changed");
+
+        int colorCount = list.Count;
+        _colorCountSpinBox.Value = list.Count;
+
+        _currentPaletteColors = list;
+        //4. We Update the Shader Parameters in the ImageEditorMainPanel
+
+        SetImgProcessorShaderParams();
+    }
+
 
     private async Task OnSelectFileSpriteSheetBtnPressed()
     {
@@ -130,8 +153,6 @@ public partial class ImageEditorMainPanel : PanelContainer
         _ImgEditor.ImgTextRect.Texture = ImageTexture.CreateFromImage(imgToLoad);
 
     }
-
-
     public void UpdateUIElementsOnLoad()
     {
         if (_ImgEditor.ImgTextRect.Texture != null)
@@ -139,7 +160,8 @@ public partial class ImageEditorMainPanel : PanelContainer
             _originalTexture = _ImgEditor.ImgTextRect.Texture;
             _originalImage = _originalTexture.GetImage();
         }
-
+        _colorCountSpinBox.Value = _ImgEditor.NumColors;
+        _colorCountSpinBox.MaxValue = _ImgEditor.NumColors;
         _brightnessSlider.Value = 1.0f;
         _enableBrightnessCheckbox.ButtonPressed = false;
         _saturationSlider.Value = 1.0f;
@@ -153,25 +175,44 @@ public partial class ImageEditorMainPanel : PanelContainer
         _ditheringCheckbox.ButtonPressed = false;
         _ditheringSlider.Value = 0.0f;
         _colorReductionCheckbox.ButtonPressed = false;
-        _colorCountSpinBox.Value = GlobalUtil.GetTotalColorCount(_originalImage);
-        _colorCountSpinBox.MaxValue = GlobalUtil.GetTotalColorCount(_originalImage);
+
     }
 
     private void SetImgProcessorShaderParams()
     {
+        if (_isFirstRun) return;
         _ImgEditor.EnableColorReduction = _colorReductionCheckbox?.ButtonPressed ?? false;
-        int colorCount = (int)(_colorCountSpinBox?.Value ?? 0);
-        _ImgEditor.NumColors = colorCount;
-        //_spriteSheetImgProcessor.UseExternalPalette = XXXX;
-        //_spriteSheetImgProcessor.ExternalPalette = XXXX;
+        _ImgEditor.NumColors = (int)(_colorCountSpinBox?.Value ?? 0);
+        //int colorCount = (int)(_colorCountSpinBox?.Value ?? 0);
+
+        _useExternalPalette = UseExternalPaletteChkBtn?.ButtonPressed ?? false;
+        _ImgEditor._useExternalPalette = _useExternalPalette;
+        _ImgEditor.ShaderPalette = _currentPaletteColors;
         _ImgEditor.EnableSaturation = _enableSaturationCheckbox?.ButtonPressed ?? false;
         _ImgEditor.Saturation = (float)(_saturationSlider?.Value ?? 0.0f);
 
         _ImgEditor.EnableBrightness = _enableBrightnessCheckbox?.ButtonPressed ?? false;
         _ImgEditor.Brightness = (float)(_brightnessSlider?.Value ?? 0.0f);
 
+        if (!_useExternalPalette)
+        {
+            //List<Color> shaderPalette = _ImgEditor.GetShaderPalette(colorCount);
+            _currentPaletteColors = _ImgEditor.GetOriginalTexturePalette();
+            _ImgEditor.ShaderPalette = _currentPaletteColors;
+            PaletteLoaderPanel.UpdatePaletteListGrid(_currentPaletteColors);
+            PaletteLoaderPanel.Visible = true;
+        }
+
         _ImgEditor.UpdateShaderParameters();
     }
+
+    private void OnUseExternalPaletteBtnToggled(bool toggledOn)
+    {
+        //PaletteLoaderPanel.Visible = UseExternalPaletteChkBtn.ButtonPressed;
+        UseExternalPaletteChkBtn.Text = UseExternalPaletteChkBtn.ButtonPressed.ToString();
+        SetImgProcessorShaderParams();
+    }
+
 
     private async Task ApplyEffectsAsync(bool doColorReduction, int colorCount, bool doOutline,
         int outlineThickness, Color outlineColor, bool doDithering, float ditheringStrength)
@@ -426,7 +467,10 @@ public partial class ImageEditorMainPanel : PanelContainer
 
     }
 
-
+    public override void _ExitTree()
+    {
+        GlobalEvents.Instance.OnPaletteChanged -= OnPaletteChanged;
+    }
 
 
 }
