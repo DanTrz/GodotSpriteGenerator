@@ -20,12 +20,11 @@ config/icon="res://icon.svg"
 
 SaveGameManager="*res://Globals/SaveGameManager/SaveGameManager.cs"
 GlobalEvents="*res://Globals/GlobalEvents.cs"
-ImageSaver="*res://src/ImageEditor/ImageSaver/ImageSaver.tscn"
 
 [display]
 
 window/size/viewport_width=1280
-window/size/viewport_height=900
+window/size/viewport_height=720
 window/stretch/mode="viewport"
 window/stretch/scale_mode="integer"
 

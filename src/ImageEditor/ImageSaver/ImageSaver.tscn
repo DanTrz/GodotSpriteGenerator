@@ -1,29 +1,257 @@
-[gd_scene load_steps=5 format=3 uid="uid://bsq05mec00hgw"]
+[gd_scene load_steps=5 format=3 uid="uid://bik1svukat0ui"]
 
-[ext_resource type="Shader" uid="uid://da6v6o06nagg3" path="res://Assets/Shaders/SimpleColorReduc.gdshader" id="1_6jvx8"]
-[ext_resource type="Script" uid="uid://boh116f41q1xb" path="res://src/ImageEditor/ImageSaver/ImageSaver.cs" id="1_cc5bv"]
-[ext_resource type="Script" uid="uid://xujtboc7ucon" path="res://src/SpriteGenerator/ImgColorReductionTextRect.cs" id="2_cc5bv"]
+[ext_resource type="Shader" uid="uid://c0hrteashhp3d" path="res://Assets/Shaders/SimpleColorReducV3.gdshader" id="2_cc5bv"]
+[ext_resource type="Texture2D" uid="uid://5yojx352m0rc" path="res://Assets/SpriteSheetTemp/A__SwordknifeStabbing_spriteSheet.png" id="3_cc5bv"]
+
+[sub_resource type="CSharpScript" id="CSharpScript_6jvx8"]
+script/source = "using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Godot;
+
+public partial class ImageSaver : Node
+{
+    [Export] private SubViewport _subViewport;
+    [Export] public TextureRect ImgColorReducTextRect;
+    private readonly ConcurrentQueue<Dictionary<string, Image>> _imageQueue = new();
+    private readonly CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
+    private readonly Task _processingTask;
+    // public static ImageSaver Instance { get; private set; }
+
+    //[ExportToolButton(\"UpdateShader\")] public Callable ClickMeButton => Callable.From(LocalUpdateShaderParameters);
+    [Export] public bool EnableColorReduction = true;
+    [Export] public int NumColors = 256;
+    [Export] public bool UseExternalPalette = true;
+    [Export] public Godot.Collections.Array<Color> ShaderPalette = new();
+
+    public override void _Ready()
+    {
+        // Instance = this;
+    }
+
+    //TODO: Add this in the correct place here => await _imgColorReductionTextRect.UpdateShaderParameters();
+
+
+
+    public void AddImgToQueue(string savePath, Image image)
+    {
+        Dictionary<string, Image> imgData = new();
+        imgData[savePath] = image;
+        _imageQueue.Enqueue(imgData);
+
+        GD.Print($\"Image added to queue sucessfully: {Path.GetFileNameWithoutExtension(savePath)}\");
+
+
+    }
+
+    public override async void _Process(double delta)
+    {
+        if (_imageQueue.Count > 0)
+        {
+            //Task.Run(() => ProcessQueue());
+            await ProcessQueue();
+        }
+    }
+
+    private async Task ProcessQueue()
+    {
+        if (_imageQueue.Count > 0)
+        {
+            if (_imageQueue.TryDequeue(out Dictionary<string, Image> imgData))
+            {
+                string savePath = imgData.Keys.First();
+                GD.Print($\"Queue Processing => Getting image from queue: {Path.GetFileNameWithoutExtension(savePath)}\");
+
+                //TODO: Update this Logic for ImageSaaver
+                // From here Call a new method that will 
+                // 1. Apply the Transform Effect and reduce color image (TransformImage)
+                // 1.1 Use the ImgColorReducTextRect to apply the effect
+                // 1.2 Get the Effect Output from the _subViewport (Like doing for ImageEditor SpriteSheet)
+                // 2. Wait for the Transform effect to finish via a signal
+                // 4. Save the PNG them one by one listening to the effect signal finished.
+
+                //await Task.Run(() => TransformImage(savePath, imgData.Values.First())); // Run each save in parallel
+                //await TransformImage(savePath, imgData.Values.First());
+                //await Task.Run(() => SaveAsPng(savePath, imgData.Values.First())); // Run each save in parallel
+                await ProcessAndSaveImage(savePath, imgData.Values.First());
+            }
+        }
+    }
+
+    private async Task ProcessAndSaveImage(string savePath, Image img)
+    {
+        img.Convert(Image.Format.Rgba8); // Ensure correct format
+
+        // Set Viewport size
+        _subViewport.Size = new Vector2I(img.GetWidth(), img.GetHeight());
+        _subViewport.RenderTargetUpdateMode = SubViewport.UpdateMode.Always;
+        _subViewport.RenderTargetClearMode = SubViewport.ClearMode.Always;
+
+        // Apply Image to TextureRect
+        //ImgColorReducTextRect.Texture = ImageTexture.CreateFromImage(img);
+
+        if (ImgColorReducTextRect.Material is not ShaderMaterial shaderMaterial)
+        {
+            GD.PrintErr(\"Material is not a ShaderMaterial.\");
+            return;
+        }
+
+        // Apply Shader
+        // ShaderMaterial shaderMaterial = new ShaderMaterial();
+        // shaderMaterial.Shader = GD.Load<Shader>(\"uid://ctkwviyqcdhd0\"); //\"res://Assets/Shaders/SimpleColorReducV2.gdshader\"
+        // ImgColorReducTextRect.Material = shaderMaterial;
+        shaderMaterial.SetShaderParameter(\"max_colors\", 1);
+
+        // Wait for the shader to be fully applied
+        //await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+        await ToSignal(RenderingServer.Singleton, RenderingServer.SignalName.FramePostDraw);
+        // await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+
+        // Capture the result
+        Image processedImage = _subViewport.GetTexture().GetImage();
+        SaveAsPng(savePath, processedImage);
+    }
+
+    private void SaveAsPng(string savePath, Image img)
+    {
+        GD.Print($\"Queue Processing => Start to save image: {Path.GetFileNameWithoutExtension(savePath)}\");
+        try
+        {
+            string path = $\"{savePath}.png\";
+            img.SavePng(ProjectSettings.GlobalizePath(path));
+            GD.Print($\"Queue Processing => Image saved as PNG: {Path.GetFileNameWithoutExtension(savePath)}\");
+        }
+        catch (Exception ex)
+        {
+            GD.PrintErr($\"Queue Processing => Error processing image {savePath}: {ex.Message}\");
+        }
+    }
+
+
+    //////////////////LEGACY CODE///////////////////////
+    /////////////////////LEGACY CODE///////////////////////
+    /////////////////////LEGACY CODE///////////////////////
+    /////////////////////LEGACY CODE///////////////////////
+    ///   
+    ///
+    ///
+
+    // private async Task TransformImage(string savePath, Image img)
+    // {
+    //     GD.Print($\"Transform Processing => Start transsforming : {Path.GetFileNameWithoutExtension(savePath)}\");
+    //     //1.Apply the Transform Effect and reduce color image(TransformImage)
+    //     ImageTexture imgTexture = ImageTexture.CreateFromImage(img);
+    //     ImgColorReducTextRect.Texture = imgTexture;
+
+    //     if (Instance.ImgColorReducTextRect == null)
+    //     {
+    //         GD.Print(\"ImgColorReducTextRect is null: \"); // CRUCIAL CHECK
+    //     }
+
+    //     //Callable.From(() => Instance.ImgColorReducTextRect.CallDeferredThreadGroup(\"UpdateShaderParameters\")).CallDeferred();
+    //     //Instance.ImgColorReducTextRect.UpdateShaderParameters(); //(\"UpdateShaderParameters\"); //await ImgColorReducTextRect.UpdateShaderParameters();
+    //     await LocalUpdateShaderParameters();
+
+    //     if (ImgColorReducTextRect.Texture == null) return;
+
+    //     // Defer getting the texture and image
+    //     Callable.From(() =>
+    //     {
+    //         Texture2D texture = (Texture2D)_subViewport.GetTexture();
+    //         Image modifiedImage = (Image)texture.GetImage();
+    //         GD.Print($\"Transform Commpleted img : {Path.GetFileNameWithoutExtension(savePath)}\");
+    //         SaveAsPng(savePath, modifiedImage);
+    //     }).CallDeferred();
+
+    //     await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+    // }
+
+    // public async Task LocalUpdateShaderParameters()
+    // {
+    //     GD.PrintT(\"Started Shader Updates \" + \" ColorReductionOn: \" + EnableColorReduction + \" NumColors \" + NumColors + \" ShaderPalette.Count \" + ShaderPalette.Count);
+
+    //     if (ImgColorReducTextRect.Material is not ShaderMaterial shaderMaterial)
+    //     {
+    //         GD.PrintErr(\"Error: UpdateShaderParameters => Material is not a ShaderMaterial.\");
+    //         return;
+    //     }
+
+    //     if (ImgColorReducTextRect.Texture != null)
+    //     {
+    //         GD.Print(\"this.Texture.GetSize(): \", ImgColorReducTextRect.Texture.GetSize());  // See if the texture has valid dimensions
+    //     }
+
+    //     ImageEditor _localImgEditor = new();
+
+    //     GD.Print(\"Calling UpdatedKMeansClustering...\");
+
+    //     //We need to capture some variables to pass into the call_deferred
+    //     Image localImage = ImgColorReducTextRect.Texture.GetImage();
+    //     int localNumColors = NumColors;
+
+    //     //Defer the call to UpdatedKMeansClustering and subsequent shader parameter updates
+    //     Callable.From(async () =>
+    //     {
+    //         await _localImgEditor.UpdatedKMeansClustering(localImage, localNumColors);
+
+    //         GD.Print(\"UpdatedKMeansClustering completed.\");
+    //         await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+
+    //         ShaderPalette = _localImgEditor.ColorListToGodotArray(_localImgEditor.ImgkMeansClusterList);
+
+    //         shaderMaterial.SetShaderParameter(\"enable_color_reduction\", EnableColorReduction);
+    //         shaderMaterial.SetShaderParameter(\"num_colors\", NumColors);
+    //         shaderMaterial.SetShaderParameter(\"palette\", ShaderPalette);
+
+    //         GlobalEvents.Instance.ShaderEffectsCompleted.Invoke(this.Name);
+
+    //     }).CallDeferred();
+
+    //     await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+
+
+    //     GD.PrintT(\"Shader Parameters updated \" + \" ColorReductionOn: \" + EnableColorReduction + \" NumColors \" + NumColors + \" ShaderPalette.Count \" + ShaderPalette.Count);
+
+    // }
+
+    // public void StopProcessing()
+    // {
+    //     _cancellationTokenSource.Cancel();
+    //     _processingTask.Wait(); // Wait for the processing task to finish
+    //     GD.Print(\"Queue Processing => Image saver stopped.\");
+    // }
+}
+"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1y31e"]
-shader = ExtResource("1_6jvx8")
-shader_parameter/enable_color_reduction = true
-shader_parameter/num_colors = 2
-shader_parameter/palette = Array[Color]([Color(0.562252, 0.33212, 0.233525, 1), Color(0.641282, 0.667588, 0.700436, 1)])
+shader = ExtResource("2_cc5bv")
+shader_parameter/levels = 16
+shader_parameter/dither_strength = 0.4
 
 [node name="ImageSaverUI" type="Control" node_paths=PackedStringArray("_subViewport", "ImgColorReducTextRect")]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-script = ExtResource("1_cc5bv")
+script = SubResource("CSharpScript_6jvx8")
 _subViewport = NodePath("ImageSaveViewportContainer/ImageSaverSubViewport")
 ImgColorReducTextRect = NodePath("ImageSaveViewportContainer/ImageSaverSubViewport/ImgColorReductionTextRect")
+EnableColorReduction = null
+NumColors = null
+UseExternalPalette = null
+ShaderPalette = null
 
 [node name="ImageSaveViewportContainer" type="SubViewportContainer" parent="."]
 unique_name_in_owner = true
 texture_filter = 3
 clip_contents = true
 custom_minimum_size = Vector2(512, 512)
+layout_mode = 0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
@@ -39,8 +267,5 @@ render_target_update_mode = 4
 unique_name_in_owner = true
 material = SubResource("ShaderMaterial_1y31e")
 custom_minimum_size = Vector2(512, 512)
-expand_mode = 1
-stretch_mode = 4
-script = ExtResource("2_cc5bv")
-NumColors = 2
-ShaderPalette = Array[Color]([Color(0.562252, 0.33212, 0.233525, 1), Color(0.641282, 0.667588, 0.700436, 1)])
+texture = ExtResource("3_cc5bv")
+stretch_mode = 2

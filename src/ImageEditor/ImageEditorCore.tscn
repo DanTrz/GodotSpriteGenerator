@@ -54,11 +54,7 @@ render_target_update_mode = 4
 [node name="ImageProcessorTextureRect" type="TextureRect" parent="PanelContainer/ViewportContainer/ImgEditorSubViewport"]
 unique_name_in_owner = true
 material = SubResource("ShaderMaterial_e07nq")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_right = 2048.0
+offset_bottom = 3072.0
 texture = ExtResource("4_rt1bl")
-expand_mode = 1
 stretch_mode = 4
