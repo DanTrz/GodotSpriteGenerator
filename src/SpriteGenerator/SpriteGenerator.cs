@@ -259,8 +259,9 @@ public partial class SpriteGenerator : Node
         //Get the Frame and Path and File names
         string currentAnimPosInSec = ((float)_animationPlayer.CurrentAnimationPosition).ToString("0.000");
         string path = $"{saveFolder}/{currentAnimationName}_{"angle_" + angle}_{spriteCount}.png";
+        string globalSavePath = ProjectSettings.GlobalizePath(path);
 
-        GD.PrintT("Adding to Queue : ", spriteCount + "Frame: " + frameIndex + " / FullPath: " + path);
+        GD.PrintT("Adding to Queue item :", spriteCount + "  - FileName: " + Path.GetFileNameWithoutExtension(globalSavePath) + "  / FullPath: " + path);
 
         //Get the Image from the given Frame / From the ViewPort
         Image img = BgRemoverViewport.GetTexture().GetImage();
@@ -281,7 +282,7 @@ public partial class SpriteGenerator : Node
 
 
         //Add Image to PrrocessingQueue
-        ImageSaver.Instance.AddImgToQueue(ProjectSettings.GlobalizePath(path), img);
+        ImageSaver.Instance.AddImgToQueue(globalSavePath, img);
 
         //The Save Logic will now all be handled by the ImageSaver
 

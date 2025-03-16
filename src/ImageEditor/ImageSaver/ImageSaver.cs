@@ -24,10 +24,7 @@ public partial class ImageSaver : Node
 
     //TODO: Add this in the correct place here => await _imgColorReductionTextRect.UpdateShaderParameters();
 
-    // public ImageSaver()
-    // {
-    //     _processingTask = Task.Run(ProcessQueue);
-    // }
+
 
     public void AddImgToQueue(string savePath, Image image)
     {
@@ -35,7 +32,9 @@ public partial class ImageSaver : Node
         imgData[savePath] = image;
         _imageQueue.Enqueue(imgData);
 
-        GD.Print($"Image added to queue sucessfully: {savePath}");
+        GD.Print($"Image added to queue sucessfully: {Path.GetFileNameWithoutExtension(savePath)}");
+
+
     }
 
     public override void _Process(double delta)
@@ -54,7 +53,13 @@ public partial class ImageSaver : Node
             if (_imageQueue.TryDequeue(out Dictionary<string, Image> imgData))
             {
                 string savePath = imgData.Keys.First();
-                GD.Print($"Queue Processing => Getting image from queue: {savePath}");
+                GD.Print($"Queue Processing => Getting image from queue: {Path.GetFileNameWithoutExtension(savePath)}");
+
+                //TODO: Update this Logic for ImageSaaver
+                // From here Call a new method that will 
+                // 1. Apply the Transform Effect and reduce color image
+                // 2. Wait for the Transform effect to finish via a signal
+                // 4. Save the PNG them one by one listening to the effect signal finished.
 
                 await Task.Run(() => SaveAsPng(savePath, imgData.Values.First())); // Run each save in parallel
             }
@@ -65,14 +70,16 @@ public partial class ImageSaver : Node
         }
     }
 
+
+
     private void SaveAsPng(string savePath, Image img)
     {
-        GD.Print($"Queue Processing => Start to save image: {savePath}");
+        GD.Print($"Queue Processing => Start to save image: {Path.GetFileNameWithoutExtension(savePath)}");
         try
         {
             string path = $"{savePath}.png";
             img.SavePng(ProjectSettings.GlobalizePath(path));
-            GD.Print($"Queue Processing => Image saved as PNG: {savePath}");
+            GD.Print($"Queue Processing => Image saved as PNG: {Path.GetFileNameWithoutExtension(savePath)}");
         }
         catch (Exception ex)
         {
