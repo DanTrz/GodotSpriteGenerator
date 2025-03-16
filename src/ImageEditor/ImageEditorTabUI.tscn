@@ -55,6 +55,7 @@ metadata/_tab_index = 1
 layout_mode = 2
 
 [node name="ImageEditorCore" parent="HBoxContainer" instance=ExtResource("2_s1l55")]
+clip_contents = true
 layout_mode = 2
 
 [node name="OptionsContainer" type="PanelContainer" parent="HBoxContainer"]

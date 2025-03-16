@@ -22,6 +22,7 @@ shader_parameter/palette = PackedVector4Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 
 [node name="ImageEditorCore" type="PanelContainer" node_paths=PackedStringArray("ImgTextRect", "ImgEditorSubViewport")]
 texture_filter = 1
+custom_minimum_size = Vector2(512, 512)
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
 localize_numeral_system = false
@@ -34,19 +35,21 @@ Brightness = 2.0
 ImgEditorSubViewport = NodePath("PanelContainer/ViewportContainer/ImgEditorSubViewport")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(800, 500)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_vc4da")
 
 [node name="ViewportContainer" type="SubViewportContainer" parent="PanelContainer"]
 clip_contents = true
 layout_mode = 2
+stretch = true
 
 [node name="ImgEditorSubViewport" type="SubViewport" parent="PanelContainer/ViewportContainer"]
 transparent_bg = true
 handle_input_locally = false
 canvas_item_default_texture_filter = 0
 physics_object_picking = true
-size = Vector2i(900, 600)
+size = Vector2i(800, 512)
 render_target_update_mode = 4
 
 [node name="Camera2DController" parent="PanelContainer/ViewportContainer/ImgEditorSubViewport" instance=ExtResource("1_nwf5k")]
@@ -54,7 +57,42 @@ render_target_update_mode = 4
 [node name="ImageProcessorTextureRect" type="TextureRect" parent="PanelContainer/ViewportContainer/ImgEditorSubViewport"]
 unique_name_in_owner = true
 material = SubResource("ShaderMaterial_e07nq")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_rt1bl")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="HiggenHDCanvasLayer" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="HDPanel" type="PanelContainer" parent="HiggenHDCanvasLayer"]
+custom_minimum_size = Vector2(800, 500)
 offset_right = 2048.0
 offset_bottom = 3072.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_vc4da")
+
+[node name="HDViewportContainer" type="SubViewportContainer" parent="HiggenHDCanvasLayer/HDPanel"]
+clip_contents = true
+layout_mode = 2
+
+[node name="HDSubViewport" type="SubViewport" parent="HiggenHDCanvasLayer/HDPanel/HDViewportContainer"]
+transparent_bg = true
+handle_input_locally = false
+canvas_item_default_texture_filter = 0
+physics_object_picking = true
+size = Vector2i(2048, 3072)
+render_target_update_mode = 0
+
+[node name="HDTextureRect" type="TextureRect" parent="HiggenHDCanvasLayer/HDPanel/HDViewportContainer/HDSubViewport"]
+material = SubResource("ShaderMaterial_e07nq")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("4_rt1bl")
 stretch_mode = 4

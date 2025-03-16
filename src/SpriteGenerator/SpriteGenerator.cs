@@ -61,6 +61,8 @@ public partial class SpriteGenerator : Node
     private string saveFolder = "Model";
 
 
+
+
     public override void _Ready()
     {
         _startGenerationBtn.Pressed += OnStartGeneration;
