@@ -18,6 +18,7 @@ public partial class ImageEditor : PanelContainer
     [Export] public float Saturation = 1.0f;
     [Export] public bool EnableBrightness = true;
     [Export] public float Brightness = 1.0f;
+    [Export] public SubViewport ImgEditorSubViewport;
 
     //[Export] public Godot.Collections.Array<Color> _currentPaletteColors = new(); //public List<Color> _currentPaletteColors = new(); Brightness = 1.0f;
     [Export] public Godot.Collections.Array<Color> ShaderPalette = new();

@@ -229,7 +229,10 @@ public partial class SpriteGenerator : Node
                     //Only capture frames where frameIndex is a multiple of frameStep
                     if (currentFrame % frameSkipStep == 0)
                     {
-                        await SaveFrameAsImgPNG(angle);
+                        //OLDCODE
+                        //await SaveFrameAsImgPNG(angle);
+                        //Replace with Method to add to a Queue
+                        await AddFrameAsImgToQueue(angle);
                     }
 
                     currentTime += frameInterval;
@@ -246,37 +249,59 @@ public partial class SpriteGenerator : Node
 
     }
 
-    private async Task SaveFrameAsImgPNG(int angle)
+    private void AddOriginalImgToQueue(Image img)
     {
+
+    }
+
+    private async Task AddFrameAsImgToQueue(int angle)
+    {
+        //Get the Frame and Path and File names
         string currentAnimPosInSec = ((float)_animationPlayer.CurrentAnimationPosition).ToString("0.000");
+        string path = $"{saveFolder}/{currentAnimationName}_{"angle_" + angle}_{spriteCount}.png";
 
-        GD.PrintT("SavingFile : ", spriteCount + " / AnimSecond: " + currentAnimPosInSec);
+        GD.PrintT("Adding to Queue : ", spriteCount + "Frame: " + frameIndex + " / FullPath: " + path);
 
-        //GD.PrintT("Frame: " + frameIndex, " AnimPosition: " + (float)_animationPlayer.CurrentAnimationPosition);
-        //var img = BgRemoverViewport.GetTexture().GetImage();
+        //Get the Image from the given Frame / From the ViewPort
+        Image img = BgRemoverViewport.GetTexture().GetImage();
+        await ToSignal(RenderingServer.Singleton, RenderingServer.SignalName.FramePostDraw); //Make sure image is updated from Shader
+
+
+
+
 
         /////////////////NEW CODE START - #TODO:Generate separate function / Refacot /////////////
 
         //TODO: Apply Logic to restrict Image Colors to 256 (Max Paltte Size)
-        //_imgColorReductionTextRect.Texture = BgRemoverViewport.GetTexture();
+        //1. Add each image to a list of images (don't save them yet)
+        //2.Run a Task.run to process them as a Queue and them transform their colors.
+        // 3.Wait for the Transform effect to finish via a signal
+        // 4.Save them one by one listening to the effect signal finished.
+        // 5. Method needs to return a new Image
 
-        await _imgColorReductionTextRect.UpdateShaderParameters();
 
-        Image img = (Image)_imgColorReductionTextRect.Texture.GetImage();
+        //Add Image to PrrocessingQueue
+        ImageSaver.Instance.AddImgToQueue(ProjectSettings.GlobalizePath(path), img);
 
-
-        //var img = _imgColorReductionTextRect.Texture.GetImage();
+        //The Save Logic will now all be handled by the ImageSaver
 
 
         /////////////////NEW CODE END/////////////
 
         //img.FlipY();4
-        string path = $"{saveFolder}/{currentAnimationName}_{"angle_" + angle}_{spriteCount}.png";
-        spriteCount++;
 
-        img.SavePng(ProjectSettings.GlobalizePath(path));
+
+        //img.SavePng(ProjectSettings.GlobalizePath(path));
+
+        spriteCount++;
         frameIndex++;
 
+    }
+
+    private Image GetImgWithColorReduction(Image img, SubViewport viewPort)
+    {
+
+        return null;
     }
 
 

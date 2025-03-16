@@ -1,0 +1,46 @@
+[gd_scene load_steps=5 format=3 uid="uid://bsq05mec00hgw"]
+
+[ext_resource type="Shader" uid="uid://da6v6o06nagg3" path="res://Assets/Shaders/SimpleColorReduc.gdshader" id="1_6jvx8"]
+[ext_resource type="Script" uid="uid://boh116f41q1xb" path="res://src/ImageEditor/ImageSaver/ImageSaver.cs" id="1_cc5bv"]
+[ext_resource type="Script" uid="uid://xujtboc7ucon" path="res://src/SpriteGenerator/ImgColorReductionTextRect.cs" id="2_cc5bv"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1y31e"]
+shader = ExtResource("1_6jvx8")
+shader_parameter/enable_color_reduction = true
+shader_parameter/num_colors = 2
+shader_parameter/palette = Array[Color]([Color(0.562252, 0.33212, 0.233525, 1), Color(0.641282, 0.667588, 0.700436, 1)])
+
+[node name="ImageSaverUI" type="Control" node_paths=PackedStringArray("_subViewport", "ImgColorReducTextRect")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_cc5bv")
+_subViewport = NodePath("ImageSaveViewportContainer/ImageSaverSubViewport")
+ImgColorReducTextRect = NodePath("ImageSaveViewportContainer/ImageSaverSubViewport/ImgColorReductionTextRect")
+
+[node name="ImageSaveViewportContainer" type="SubViewportContainer" parent="."]
+unique_name_in_owner = true
+texture_filter = 3
+clip_contents = true
+custom_minimum_size = Vector2(512, 512)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="ImageSaverSubViewport" type="SubViewport" parent="ImageSaveViewportContainer"]
+own_world_3d = true
+transparent_bg = true
+handle_input_locally = false
+canvas_item_default_texture_filter = 0
+physics_object_picking = true
+render_target_update_mode = 4
+
+[node name="ImgColorReductionTextRect" type="TextureRect" parent="ImageSaveViewportContainer/ImageSaverSubViewport"]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_1y31e")
+custom_minimum_size = Vector2(512, 512)
+expand_mode = 1
+stretch_mode = 4
+script = ExtResource("2_cc5bv")
+NumColors = 2
+ShaderPalette = Array[Color]([Color(0.562252, 0.33212, 0.233525, 1), Color(0.641282, 0.667588, 0.700436, 1)])

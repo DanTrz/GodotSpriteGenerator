@@ -33,14 +33,11 @@ public partial class ImageEditorMainPanel : PanelContainer
 
     [Export] public Button LoadExternalImg;
 
-
     private Godot.Collections.Array<Color> _currentPaletteColors = new();
     private Texture2D _originalTexture;
     private Image _originalImage;
 
     private bool _isFirstRun = true;
-
-
     private bool _useExternalPalette = false;
     private bool _isProcessing;
     public bool IsEffectProcessing
@@ -80,10 +77,10 @@ public partial class ImageEditorMainPanel : PanelContainer
         _outlineColorPicker.ColorChanged += (color) => SetImgProcessorShaderParams();
         _enableSaturationCheckbox.Toggled += (pressed) => SetImgProcessorShaderParams();
         _enableBrightnessCheckbox.Toggled += (pressed) => SetImgProcessorShaderParams();
-        _colorCountSpinBox.ValueChanged += (value) => SetImgProcessorShaderParams();
+        _colorCountSpinBox.ValueChanged += OnColorReductionSpinBoxChanged;
         _colorReductionCheckbox.Toggled += (pressed) => SetImgProcessorShaderParams();
 
-        _saveButton.Pressed += OnSaveButtonPressed;
+        _saveButton.Pressed += async () => await OnSaveButtonPressed();
         LoadExternalImg.Pressed += async () => await OnLoadExternalImgBtnPressed();
 
         GlobalEvents.Instance.OnPaletteChanged += OnPaletteChanged;
@@ -106,23 +103,6 @@ public partial class ImageEditorMainPanel : PanelContainer
         // Initial shader parameter update
 
     }
-
-    private void OnEffectsChangesStarted(string fromNode)
-    {
-        GD.PrintT("Run: OnEffectsChangesStarted");
-        _effectStatusLabel.Text = "Processing Image updates....";
-        EffectStatusMainPanel.Visible = true;
-    }
-
-
-    private void OnEffectsChangesEnded(string fromNode, Godot.Collections.Array<Color> list)
-    {
-        GD.PrintT("Run: OnEffectsChangesEnded");
-        _effectStatusLabel.Text = "Effects Applied !!! ";
-        EffectStatusMainPanel.Visible = false;
-        PaletteLoaderPanel.UpdatePaletteListGrid(list);
-    }
-
 
     private void OnPaletteChanged(Godot.Collections.Array<Color> list)
     {
@@ -279,6 +259,37 @@ public partial class ImageEditorMainPanel : PanelContainer
         SetImgProcessorShaderParams();
     }
 
+    private void OnColorReductionSpinBoxChanged(double value)
+    {
+        if (_isFirstRun)
+            return;
+
+        if (_colorReductionCheckbox.ButtonPressed == true)
+        {
+            SetImgProcessorShaderParams();
+
+        }
+    }
+
+
+    private void OnEffectsChangesStarted(string fromNode)
+    {
+        GD.PrintT("Run: OnEffectsChangesStarted");
+        _effectStatusLabel.Text = "Processing Image updates....";
+        EffectStatusMainPanel.Visible = true;
+    }
+
+
+    private void OnEffectsChangesEnded(string fromNode, Godot.Collections.Array<Color> list)
+    {
+        GD.PrintT("Run: OnEffectsChangesEnded");
+        _effectStatusLabel.Text = "Effects Applied !!! ";
+        EffectStatusMainPanel.Visible = false;
+        PaletteLoaderPanel.UpdatePaletteListGrid(list);
+    }
+
+
+
 
     private async Task ApplyEffectsAsync(bool doColorReduction, int colorCount, bool doOutline,
         int outlineThickness, Color outlineColor, bool doDithering, float ditheringStrength)
@@ -429,11 +440,18 @@ public partial class ImageEditorMainPanel : PanelContainer
     }
 
     //Save new Image to folder
-    private void OnSaveButtonPressed()
+    private async Task OnSaveButtonPressed()
     {
+        //LOGIC TO GET MODIFIED IMAGE
         if (_ImgEditor.ImgTextRect.Texture == null) return;
-        Image modifiedImage = (Image)_ImgEditor.ImgTextRect.Texture.GetImage();
+        // Image modifiedImage = (Image)_ImgEditor.ImgTextRect.Texture.GetImage();
 
+        Texture2D texture = (Texture2D)_ImgEditor.ImgEditorSubViewport.GetTexture();
+        Image modifiedImage = (Image)texture.GetImage();
+
+        await ToSignal(RenderingServer.Singleton, RenderingServer.SignalName.FramePostDraw); //Make sure image is updated from Shader
+
+        //OPEN DIALOG TO SAVE TO A PATH
         using FileDialog fileDialog = new FileDialog
         {
             FileMode = FileDialog.FileModeEnum.SaveFile,

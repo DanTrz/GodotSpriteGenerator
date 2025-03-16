@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://wafjadmbwvmh"]
+[gd_scene load_steps=25 format=3 uid="uid://wafjadmbwvmh"]
 
 [ext_resource type="PackedScene" uid="uid://iuwovcd804os" path="res://src/ModelAndMeshes/ModelScene3D.tscn" id="1_m3qwr"]
 [ext_resource type="Script" uid="uid://dj2tgr0hxsbd3" path="res://src/SpriteGenerator/SpriteGenerator.cs" id="1_yym6v"]
@@ -8,11 +8,10 @@
 [ext_resource type="Shader" uid="uid://ch0nfn1xoj6yh" path="res://Assets/Shaders/SubViewPortTransparency.gdshader" id="5_c4u2t"]
 [ext_resource type="PackedScene" uid="uid://dw57ccnr4wvji" path="res://src/ModelAndMeshes/ModelPositionManager.tscn" id="6_p81t8"]
 [ext_resource type="LabelSettings" uid="uid://usv7beyw1bj8" path="res://Assets/UI/Theme/Label.tres" id="7_n1pvc"]
+[ext_resource type="PackedScene" uid="uid://bsq05mec00hgw" path="res://src/ImageEditor/ImageSaver/ImageSaver.tscn" id="8_3bpm1"]
 [ext_resource type="Theme" uid="uid://drswssji8tnu3" path="res://Assets/UI/Theme/MainTheme.tres" id="8_p2ddc"]
 [ext_resource type="PackedScene" uid="uid://de676sb25ueye" path="res://src/UIControls/ItemListCheckBox.tscn" id="9_u5ifw"]
 [ext_resource type="PackedScene" uid="uid://mjnysgbmwfbp" path="res://src/ModelAndMeshes/MeshReplacerOptButton.tscn" id="10_f1ima"]
-[ext_resource type="Shader" uid="uid://da6v6o06nagg3" path="res://Assets/Shaders/SimpleColorReduc.gdshader" id="12_3bpm1"]
-[ext_resource type="Script" uid="uid://xujtboc7ucon" path="res://src/SpriteGenerator/ImgColorReductionTextRect.cs" id="13_brmpw"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0w5gm"]
 bg_color = Color(0.345946, 0.345946, 0.345946, 1)
@@ -154,15 +153,6 @@ shader_parameter/outline_thickness = 1.0
 [sub_resource type="LabelSettings" id="LabelSettings_0w5gm"]
 font_size = 10
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_v7vii"]
-shader = ExtResource("12_3bpm1")
-shader_parameter/enable_color_reduction = true
-shader_parameter/num_colors = 2
-shader_parameter/palette = Array[Color]([Color(0.562252, 0.33212, 0.233525, 1), Color(0.641282, 0.667588, 0.700436, 1)])
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_brmpw"]
-viewport_path = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/BGRemoverRenderPanelContainer/BgRemoverViewportContainer/BgRemoverSubViewport")
-
 [node name="SpriteGeneratorTabUI" type="PanelContainer" node_paths=PackedStringArray("_startGenerationBtn", "MainScene3D", "_rawViewport", "_rawViewportContainer", "BgRemoverViewport", "BgRemoverViewportContainer", "MeshShaderPixel3D", "_resolutionOptionBtn", "EffectsChoicesOptionBtn", "EffectLevelOptionBtn", "Outline3DStrenghtSlider", "Outline3DColorPicker", "_frameStepTextEdit", "_playBackSpeedLineEdit", "_clearFolderCheckBtn", "_pixelShaderTextRect", "_modelPositionManager", "_loadAllAnimationsBtn", "_animSelectionItemList", "_angleSelectionItemList", "_pixelGridTextRect", "_showGridCheckButton", "_meshReplacerPanelParentNode", "_hairMeshOptBtn", "WeaponItemMeshOptBtn", "_hairColorBtn", "_imgColorReductionTextRect") groups=["save_data"]]
 clip_contents = true
 offset_right = 1280.0
@@ -194,7 +184,7 @@ _meshReplacerPanelParentNode = NodePath("SpriteGenerationVBoxContainer/HSplitCon
 _hairMeshOptBtn = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/HairMeshHBoxCont/HairMeshOptBtn")
 WeaponItemMeshOptBtn = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt/WeaponItemMeshHBoxCont2/WeaponItemMeshOptBtn")
 _hairColorBtn = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/HairMeshHBoxCont/MarginContainer/HairColorBtn")
-_imgColorReductionTextRect = NodePath("SpriteGenerationVBoxContainer/ImgColorReductionTextRect")
+_imgColorReductionTextRect = NodePath("")
 metadata/_tab_index = 0
 
 [node name="SpriteGenerationVBoxContainer" type="VBoxContainer" parent="."]
@@ -329,6 +319,10 @@ size_flags_vertical = 4
 unique_name_in_owner = true
 visible = false
 texture_filter = 2
+layout_mode = 2
+
+[node name="ImageSaverUI" parent="SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont" instance=ExtResource("8_3bpm1")]
+custom_minimum_size = Vector2(200, 200)
 layout_mode = 2
 
 [node name="OptionsPanelCont" type="PanelContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer"]
@@ -859,15 +853,3 @@ size_flags_horizontal = 0
 size_flags_vertical = 4
 text = "Start Generation
 "
-
-[node name="ImgColorReductionTextRect" type="TextureRect" parent="SpriteGenerationVBoxContainer"]
-unique_name_in_owner = true
-material = SubResource("ShaderMaterial_v7vii")
-custom_minimum_size = Vector2(0, 200)
-layout_mode = 2
-texture = SubResource("ViewportTexture_brmpw")
-expand_mode = 1
-stretch_mode = 4
-script = ExtResource("13_brmpw")
-NumColors = 2
-ShaderPalette = Array[Color]([Color(0.562252, 0.33212, 0.233525, 1), Color(0.641282, 0.667588, 0.700436, 1)])

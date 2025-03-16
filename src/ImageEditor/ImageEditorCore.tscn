@@ -1,8 +1,8 @@
-[gd_scene load_steps=10 format=4 uid="uid://cnhj6mgja4h5a"]
+[gd_scene load_steps=8 format=4 uid="uid://cnhj6mgja4h5a"]
 
 [ext_resource type="Script" uid="uid://coras8qp0fyli" path="res://Globals/ImageEditor.cs" id="1_116yk"]
 [ext_resource type="PackedScene" uid="uid://ffrwo5xcxd0r" path="res://src/ImageEditor/Camera2DController/Camera2DController.tscn" id="1_nwf5k"]
-[ext_resource type="Shader" uid="uid://da6v6o06nagg3" path="res://Assets/Shaders/SimpleColorReduc.gdshader" id="3_vc4da"]
+[ext_resource type="Shader" uid="uid://dctfobc3rmeym" path="res://Assets/Shaders/ImageEditor.gdshader" id="3_vc4da"]
 [ext_resource type="Texture2D" uid="uid://cae2jelncoq3w" path="res://Assets/SpriteSheetTemp/Anim_Running_spriteSheet.png" id="4_rt1bl"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8pcxw"]
@@ -10,36 +10,38 @@ bg_color = Color(0.359069, 0.359069, 0.359069, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vc4da"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_y7r2c"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e07nq"]
 shader = ExtResource("3_vc4da")
+shader_parameter/enable_saturation = false
+shader_parameter/saturation = 1.0
+shader_parameter/enable_brightness = false
+shader_parameter/brightness = 1.0
 shader_parameter/enable_color_reduction = false
 shader_parameter/num_colors = 16
 shader_parameter/palette = PackedVector4Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vc4da"]
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_vc4da"]
-viewport_path = NodePath("PanelContainer/SpriteSheetViewportContainer/SpriteSheetSubViewport")
-
-[node name="ImageEditorCore" type="PanelContainer" node_paths=PackedStringArray("ImgTextRect")]
+[node name="ImageEditorCore" type="PanelContainer" node_paths=PackedStringArray("ImgTextRect", "ImgEditorSubViewport")]
 texture_filter = 1
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
 localize_numeral_system = false
 theme_override_styles/panel = SubResource("StyleBoxFlat_8pcxw")
 script = ExtResource("1_116yk")
-ImgTextRect = NodePath("PanelContainer/SpriteSheetViewportContainer/SpriteSheetSubViewport/ImageProcessorTextureRect")
+ImgTextRect = NodePath("PanelContainer/ViewportContainer/ImgEditorSubViewport/ImageProcessorTextureRect")
 NumColors = 35
+Saturation = 2.0
+Brightness = 2.0
+ImgEditorSubViewport = NodePath("PanelContainer/ViewportContainer/ImgEditorSubViewport")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_vc4da")
 
-[node name="SpriteSheetViewportContainer" type="SubViewportContainer" parent="PanelContainer"]
+[node name="ViewportContainer" type="SubViewportContainer" parent="PanelContainer"]
 clip_contents = true
 layout_mode = 2
 
-[node name="SpriteSheetSubViewport" type="SubViewport" parent="PanelContainer/SpriteSheetViewportContainer"]
+[node name="ImgEditorSubViewport" type="SubViewport" parent="PanelContainer/ViewportContainer"]
 transparent_bg = true
 handle_input_locally = false
 canvas_item_default_texture_filter = 0
@@ -47,11 +49,11 @@ physics_object_picking = true
 size = Vector2i(900, 600)
 render_target_update_mode = 4
 
-[node name="Camera2DController" parent="PanelContainer/SpriteSheetViewportContainer/SpriteSheetSubViewport" instance=ExtResource("1_nwf5k")]
+[node name="Camera2DController" parent="PanelContainer/ViewportContainer/ImgEditorSubViewport" instance=ExtResource("1_nwf5k")]
 
-[node name="ImageProcessorTextureRect" type="TextureRect" parent="PanelContainer/SpriteSheetViewportContainer/SpriteSheetSubViewport"]
+[node name="ImageProcessorTextureRect" type="TextureRect" parent="PanelContainer/ViewportContainer/ImgEditorSubViewport"]
 unique_name_in_owner = true
-material = SubResource("ShaderMaterial_y7r2c")
+material = SubResource("ShaderMaterial_e07nq")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -60,32 +62,3 @@ grow_vertical = 2
 texture = ExtResource("4_rt1bl")
 expand_mode = 1
 stretch_mode = 4
-
-[node name="PanelContainer2" type="PanelContainer" parent="."]
-visible = false
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_vc4da")
-
-[node name="AAAA" type="SubViewportContainer" parent="PanelContainer2"]
-clip_contents = true
-layout_mode = 2
-
-[node name="BBBB" type="SubViewport" parent="PanelContainer2/AAAA"]
-transparent_bg = true
-handle_input_locally = false
-canvas_item_default_texture_filter = 0
-physics_object_picking = true
-size = Vector2i(900, 600)
-render_target_update_mode = 0
-
-[node name="OutlineGenerator" type="TextureRect" parent="PanelContainer2/AAAA/BBBB"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = SubResource("ViewportTexture_vc4da")
-expand_mode = 1
-stretch_mode = 4
-
-[node name="Camera2DController" parent="PanelContainer2/AAAA/BBBB" instance=ExtResource("1_nwf5k")]
