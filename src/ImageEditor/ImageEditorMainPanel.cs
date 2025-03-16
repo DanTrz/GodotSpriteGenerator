@@ -21,7 +21,8 @@ public partial class ImageEditorMainPanel : PanelContainer
     [Export] private CheckBox _colorReductionCheckbox;
     [Export] private SpinBox _colorCountSpinBox;
     [Export] private Button _saveButton;
-    [Export] private Label _statusLabel;
+    [Export] private Label _effectStatusLabel;
+    [Export] public MarginContainer EffectStatusMainPanel;
 
     [Export] public CheckButton UseExternalPaletteChkBtn;
     [Export] public PaletteLoader PaletteLoaderPanel;
@@ -30,7 +31,7 @@ public partial class ImageEditorMainPanel : PanelContainer
     [Export] private CheckBox _enableSaturationCheckbox;
     [Export] private CheckBox _enableBrightnessCheckbox;
 
-    [Export] public Button SelectFileSpriteSheetBtn;
+    [Export] public Button LoadExternalImg;
 
 
     private Godot.Collections.Array<Color> _currentPaletteColors = new();
@@ -83,16 +84,19 @@ public partial class ImageEditorMainPanel : PanelContainer
         _colorReductionCheckbox.Toggled += (pressed) => SetImgProcessorShaderParams();
 
         _saveButton.Pressed += OnSaveButtonPressed;
-        SelectFileSpriteSheetBtn.Pressed += async () => await OnSelectFileSpriteSheetBtnPressed();
+        LoadExternalImg.Pressed += async () => await OnLoadExternalImgBtnPressed();
 
         GlobalEvents.Instance.OnPaletteChanged += OnPaletteChanged;
+        GlobalEvents.Instance.OnEffectsChangesStarted += OnEffectsChangesStarted;
+        GlobalEvents.Instance.OnEffectsChangesEnded += OnEffectsChangesEnded;
 
 
         UseExternalPaletteChkBtn.Toggled += OnUseExternalPaletteBtnToggled;
         PaletteLoaderPanel.Visible = false;
 
 
-        _statusLabel.Text = "Ready";
+        _effectStatusLabel.Text = "Ready";
+        EffectStatusMainPanel.Visible = false;
 
         UpdateUIElementsOnLoad();
 
@@ -102,6 +106,23 @@ public partial class ImageEditorMainPanel : PanelContainer
         // Initial shader parameter update
 
     }
+
+    private void OnEffectsChangesStarted(string fromNode)
+    {
+        GD.PrintT("Run: OnEffectsChangesStarted");
+        _effectStatusLabel.Text = "Processing Image updates....";
+        EffectStatusMainPanel.Visible = true;
+    }
+
+
+    private void OnEffectsChangesEnded(string fromNode, Godot.Collections.Array<Color> list)
+    {
+        GD.PrintT("Run: OnEffectsChangesEnded");
+        _effectStatusLabel.Text = "Effects Applied !!! ";
+        EffectStatusMainPanel.Visible = false;
+        PaletteLoaderPanel.UpdatePaletteListGrid(list);
+    }
+
 
     private void OnPaletteChanged(Godot.Collections.Array<Color> list)
     {
@@ -117,7 +138,7 @@ public partial class ImageEditorMainPanel : PanelContainer
     }
 
 
-    private async Task OnSelectFileSpriteSheetBtnPressed()
+    private async Task OnLoadExternalImgBtnPressed()
     {
         using Godot.FileDialog fileDialog = new Godot.FileDialog
         {
@@ -146,13 +167,54 @@ public partial class ImageEditorMainPanel : PanelContainer
 
     private async Task LoadTextureFromImgFile(string path)
     {
+        //PREVIOUS CODE START ----------
+        // Image imgToLoad = Image.LoadFromFile(path);
+
+        // await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+
+        // _ImgEditor.ImgTextRect.Texture = ImageTexture.CreateFromImage(imgToLoad);
+        // _ImgEditor.NumColors = _ImgEditor.GetUniqueColorsCount(imgToLoad).Result;
+
+        //PREVIOUS CODE END ----------
+
+
+        //NEW CODE - TRYING TO SET HIGH QUALITY IMPORT TEXTURE AND IMG
         Image imgToLoad = Image.LoadFromFile(path);
 
+        if (imgToLoad.IsCompressed())
+        {
+            // Decompress if necessary (it shouldn't be compressed if it's a PNG/JPG/etc.,
+            imgToLoad.Decompress();
+        }
+
+        if (imgToLoad.GetFormat() != Image.Format.Rgba8)
+        {
+            // Convert to a high-quality format. 
+            imgToLoad.Convert(Image.Format.Rgba8);
+        }
+
+        // Generate mipmaps.  (Do this *before* creating the ImageTexture.)
+        imgToLoad.GenerateMipmaps();
+
+        // Wait for the next process frame to ensure the image is fully processed.
         await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
 
-        _ImgEditor.ImgTextRect.Texture = ImageTexture.CreateFromImage(imgToLoad);
+        // Create the ImageTexture.  Specify that mipmaps are enabled.
+        ImageTexture texture = ImageTexture.CreateFromImage(imgToLoad);
+
+        if (_ImgEditor != null && _ImgEditor.ImgTextRect != null)
+        {
+            _ImgEditor.ImgTextRect.Texture = texture;
+            // Ensure GetUniqueColorsCount is not blocking the main thread.
+            _ImgEditor.NumColors = await Task.Run(() => _ImgEditor.GetUniqueColorsCount(imgToLoad));
+        }
+        else
+        {
+            GD.PrintErr("_ImgEditor or _ImgEditor.ImgTextRect is null!");  // Debugging: Check initialization
+        }
 
     }
+
     public void UpdateUIElementsOnLoad()
     {
         if (_ImgEditor.ImgTextRect.Texture != null)
@@ -160,8 +222,10 @@ public partial class ImageEditorMainPanel : PanelContainer
             _originalTexture = _ImgEditor.ImgTextRect.Texture;
             _originalImage = _originalTexture.GetImage();
         }
+        //_colorCountSpinBox.MaxValue = _ImgEditor.NumColors; //Mathf.Clamp(value, min, max);
+        _colorCountSpinBox.MaxValue = Mathf.Clamp(_ImgEditor.NumColors, 1, _ImgEditor.MAX_PALETTE_SIZE);
+
         _colorCountSpinBox.Value = _ImgEditor.NumColors;
-        _colorCountSpinBox.MaxValue = _ImgEditor.NumColors;
         _brightnessSlider.Value = 1.0f;
         _enableBrightnessCheckbox.ButtonPressed = false;
         _saturationSlider.Value = 1.0f;
@@ -197,13 +261,15 @@ public partial class ImageEditorMainPanel : PanelContainer
         if (!_useExternalPalette)
         {
             //List<Color> shaderPalette = _ImgEditor.GetShaderPalette(colorCount);
+            //TODO: Determine if this is needed #BUG
             _currentPaletteColors = _ImgEditor.GetOriginalTexturePalette();
             _ImgEditor.ShaderPalette = _currentPaletteColors;
-            PaletteLoaderPanel.UpdatePaletteListGrid(_currentPaletteColors);
+
             PaletteLoaderPanel.Visible = true;
         }
 
         _ImgEditor.UpdateShaderParameters();
+        PaletteLoaderPanel.UpdatePaletteListGrid(_currentPaletteColors);
     }
 
     private void OnUseExternalPaletteBtnToggled(bool toggledOn)
@@ -358,7 +424,7 @@ public partial class ImageEditorMainPanel : PanelContainer
     //Update UI Label with current status of effects processing
     private void SetStatus(string text)
     {
-        _statusLabel.Text = text;
+        _effectStatusLabel.Text = text;
         GD.Print(text);
     }
 
@@ -366,7 +432,7 @@ public partial class ImageEditorMainPanel : PanelContainer
     private void OnSaveButtonPressed()
     {
         if (_ImgEditor.ImgTextRect.Texture == null) return;
-        Image modifiedImage = ((ImageTexture)_ImgEditor.ImgTextRect.Texture).GetImage();
+        Image modifiedImage = (Image)_ImgEditor.ImgTextRect.Texture.GetImage();
 
         using FileDialog fileDialog = new FileDialog
         {

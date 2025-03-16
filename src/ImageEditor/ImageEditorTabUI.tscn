@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bn1rbewiias3g"]
+[gd_scene load_steps=10 format=3 uid="uid://bn1rbewiias3g"]
 
 [ext_resource type="Script" uid="uid://cacdskl17dkmj" path="res://src/ImageEditor/ImageEditorMainPanel.cs" id="1_xk0rj"]
 [ext_resource type="PackedScene" uid="uid://cnhj6mgja4h5a" path="res://src/ImageEditor/ImageEditorCore.tscn" id="2_s1l55"]
@@ -11,7 +11,16 @@
 [sub_resource type="LabelSettings" id="LabelSettings_0w5gm"]
 font_size = 10
 
-[node name="ImageEditorTabUI" type="PanelContainer" node_paths=PackedStringArray("_ImgEditor", "_saturationSlider", "_saturationLabel", "_brightnessLabel", "_outlineLabel", "_brightnessSlider", "_outlineCheckbox", "_outlineThicknessSlider", "_outlineColorPicker", "_ditheringCheckbox", "_ditheringSlider", "_colorReductionCheckbox", "_colorCountSpinBox", "_saveButton", "_statusLabel", "UseExternalPaletteChkBtn", "PaletteLoaderPanel", "_enableSaturationCheckbox", "_enableBrightnessCheckbox", "SelectFileSpriteSheetBtn") groups=["save_data"]]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_so0ax"]
+bg_color = Color(0.4, 0.152941, 0.607843, 0.760784)
+
+[sub_resource type="LabelSettings" id="LabelSettings_so0ax"]
+font_size = 18
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+
+[node name="ImageEditorTabUI" type="PanelContainer" node_paths=PackedStringArray("_ImgEditor", "_saturationSlider", "_saturationLabel", "_brightnessLabel", "_outlineLabel", "_brightnessSlider", "_outlineCheckbox", "_outlineThicknessSlider", "_outlineColorPicker", "_ditheringCheckbox", "_ditheringSlider", "_colorReductionCheckbox", "_colorCountSpinBox", "_saveButton", "_effectStatusLabel", "EffectStatusMainPanel", "UseExternalPaletteChkBtn", "PaletteLoaderPanel", "_enableSaturationCheckbox", "_enableBrightnessCheckbox", "LoadExternalImg") groups=["save_data"]]
+texture_filter = 2
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -20,25 +29,26 @@ grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_pyu7k")
 script = ExtResource("1_xk0rj")
 _ImgEditor = NodePath("HBoxContainer/ImageEditorCore")
-_saturationSlider = NodePath("HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/SaturationHBox/SaturationHSlider")
-_saturationLabel = NodePath("HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/SaturationHBox/SaturationLabel")
-_brightnessLabel = NodePath("HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/BrightnessHBox/BrightnessLabel")
-_outlineLabel = NodePath("HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/OutlineHBox/OutlineLabel")
-_brightnessSlider = NodePath("HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/BrightnessHBox/BrightnessHSlider")
-_outlineCheckbox = NodePath("HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/OutlineHBox/OutlineCheckBox")
-_outlineThicknessSlider = NodePath("HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/OutlineHBox/OutlineHSlider")
-_outlineColorPicker = NodePath("HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/OutlineHBox/MarginContainer/OutlineColorPickerBtn")
-_ditheringCheckbox = NodePath("HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/DitheringHBox/DitheringCheckBox")
-_ditheringSlider = NodePath("HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/DitheringHBox/DitheringHSlider")
-_colorReductionCheckbox = NodePath("HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/ColorReductionHBox/ColorReductionCheckBox")
-_colorCountSpinBox = NodePath("HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/ColorReductionHBox/ColorReducSpinBox")
-_saveButton = NodePath("HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SaveButtonPanel/PanelContainer/MarginContainer/SavingHBox/SaveSpriteSheetBtn")
-_statusLabel = NodePath("HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/EffectStatusPanel/PanelContainer/EffectStatusLabel")
-UseExternalPaletteChkBtn = NodePath("HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/PaletteHbOx/MarginContainer/UseExternalPaletteCheckBtn")
-PaletteLoaderPanel = NodePath("HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/PaletteLoader")
-_enableSaturationCheckbox = NodePath("HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/SaturationHBox/SaturationCheckBox")
-_enableBrightnessCheckbox = NodePath("HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/BrightnessHBox/BrightnessCheckBox")
-SelectFileSpriteSheetBtn = NodePath("HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/LoadSpriteSheetPanel/PanelContainer/MarginContainer/VboxContainer/SelectFileSpriteSheetBtn")
+_saturationSlider = NodePath("HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/SaturationHBox/SaturationHSlider")
+_saturationLabel = NodePath("HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/SaturationHBox/SaturationLabel")
+_brightnessLabel = NodePath("HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/BrightnessHBox/BrightnessLabel")
+_outlineLabel = NodePath("HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/OutlineHBox/OutlineLabel")
+_brightnessSlider = NodePath("HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/BrightnessHBox/BrightnessHSlider")
+_outlineCheckbox = NodePath("HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/OutlineHBox/OutlineCheckBox")
+_outlineThicknessSlider = NodePath("HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/OutlineHBox/OutlineHSlider")
+_outlineColorPicker = NodePath("HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/OutlineHBox/MarginContainer/OutlineColorPickerBtn")
+_ditheringCheckbox = NodePath("HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/DitheringHBox/DitheringCheckBox")
+_ditheringSlider = NodePath("HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/DitheringHBox/DitheringHSlider")
+_colorReductionCheckbox = NodePath("HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/ColorReductionHBox/ColorReductionCheckBox")
+_colorCountSpinBox = NodePath("HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/ColorReductionHBox/ColorReducSpinBox")
+_saveButton = NodePath("HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/SaveButtonPanel/PanelContainer/MarginContainer/SavingHBox/SaveSpriteSheetBtn")
+_effectStatusLabel = NodePath("HBoxContainer/OptionsContainer/EffectStatusMarginPanel/EffectStatusMainPanel/MarginContainer/EffectStatusLabel")
+EffectStatusMainPanel = NodePath("HBoxContainer/OptionsContainer/EffectStatusMarginPanel")
+UseExternalPaletteChkBtn = NodePath("HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/PaletteHbOx/MarginContainer/UseExternalPaletteCheckBtn")
+PaletteLoaderPanel = NodePath("HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/PaletteLoader")
+_enableSaturationCheckbox = NodePath("HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/SaturationHBox/SaturationCheckBox")
+_enableBrightnessCheckbox = NodePath("HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/BrightnessHBox/BrightnessCheckBox")
+LoadExternalImg = NodePath("HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/LoadSpriteSheetPanel/PanelContainer/MarginContainer/VboxContainer/LoadExternalImg")
 metadata/_tab_index = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
@@ -52,18 +62,18 @@ texture_filter = 2
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="SpriteSheetMainPanel" type="MarginContainer" parent="HBoxContainer/OptionsContainer"]
+[node name="SpriteSheetMarginPanel" type="MarginContainer" parent="HBoxContainer/OptionsContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 1
 theme_override_constants/margin_top = 1
 theme_override_constants/margin_right = 1
 theme_override_constants/margin_bottom = 1
 
-[node name="SpriteSheetVBoxCont" type="VBoxContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetMainPanel"]
+[node name="SpriteSheetVBoxCont" type="VBoxContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetMarginPanel"]
 custom_minimum_size = Vector2(280, 0)
 layout_mode = 2
 
-[node name="LoadSpriteSheetPanel" type="MarginContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont"]
+[node name="LoadSpriteSheetPanel" type="MarginContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 theme_override_constants/margin_left = 1
@@ -71,11 +81,11 @@ theme_override_constants/margin_top = 1
 theme_override_constants/margin_right = 1
 theme_override_constants/margin_bottom = 1
 
-[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/LoadSpriteSheetPanel"]
+[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/LoadSpriteSheetPanel"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/LoadSpriteSheetPanel/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/LoadSpriteSheetPanel/PanelContainer"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 theme_override_constants/margin_left = 2
@@ -83,24 +93,24 @@ theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = 2
 
-[node name="VboxContainer" type="HBoxContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/LoadSpriteSheetPanel/PanelContainer/MarginContainer"]
+[node name="VboxContainer" type="HBoxContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/LoadSpriteSheetPanel/PanelContainer/MarginContainer"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 theme_override_constants/separation = 4
 
-[node name="Label" type="Label" parent="HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/LoadSpriteSheetPanel/PanelContainer/MarginContainer/VboxContainer"]
+[node name="Label" type="Label" parent="HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/LoadSpriteSheetPanel/PanelContainer/MarginContainer/VboxContainer"]
 custom_minimum_size = Vector2(50, 20)
 layout_mode = 2
 text = "Load Spritesheet"
 label_settings = ExtResource("3_so0ax")
 vertical_alignment = 1
 
-[node name="SelectFileSpriteSheetBtn" type="Button" parent="HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/LoadSpriteSheetPanel/PanelContainer/MarginContainer/VboxContainer"]
+[node name="LoadExternalImg" type="Button" parent="HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/LoadSpriteSheetPanel/PanelContainer/MarginContainer/VboxContainer"]
 custom_minimum_size = Vector2(80, 20)
 layout_mode = 2
 text = "Select File"
 
-[node name="EffectStatusPanel" type="MarginContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont"]
+[node name="SpriteSheetOptions" type="MarginContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 theme_override_constants/margin_left = 1
@@ -108,29 +118,11 @@ theme_override_constants/margin_top = 1
 theme_override_constants/margin_right = 1
 theme_override_constants/margin_bottom = 1
 
-[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/EffectStatusPanel"]
+[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/SpriteSheetOptions"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="EffectStatusLabel" type="Label" parent="HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/EffectStatusPanel/PanelContainer"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 32)
-layout_mode = 2
-text = "EffectStatusLabel progress...."
-
-[node name="SpriteSheetOptions" type="MarginContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont"]
-custom_minimum_size = Vector2(0, 32)
-layout_mode = 2
-theme_override_constants/margin_left = 1
-theme_override_constants/margin_top = 1
-theme_override_constants/margin_right = 1
-theme_override_constants/margin_bottom = 1
-
-[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions"]
-custom_minimum_size = Vector2(0, 32)
-layout_mode = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 theme_override_constants/margin_left = 2
@@ -138,21 +130,21 @@ theme_override_constants/margin_top = 3
 theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="SaturationHBox" type="HBoxContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="SaturationHBox" type="HBoxContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="SaturationCheckBox" type="CheckBox" parent="HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/SaturationHBox"]
+[node name="SaturationCheckBox" type="CheckBox" parent="HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/SaturationHBox"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 text = "Saturation"
 
-[node name="SaturationHSlider" type="HSlider" parent="HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/SaturationHBox"]
+[node name="SaturationHSlider" type="HSlider" parent="HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/SaturationHBox"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(150, 32)
 layout_mode = 2
@@ -161,7 +153,7 @@ step = 0.05
 tick_count = 5
 ticks_on_borders = true
 
-[node name="SaturationLabel" type="Label" parent="HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/SaturationHBox"]
+[node name="SaturationLabel" type="Label" parent="HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/SaturationHBox"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
@@ -169,17 +161,17 @@ text = "00"
 label_settings = SubResource("LabelSettings_0w5gm")
 vertical_alignment = 1
 
-[node name="BrightnessHBox" type="HBoxContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="BrightnessHBox" type="HBoxContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="BrightnessCheckBox" type="CheckBox" parent="HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/BrightnessHBox"]
+[node name="BrightnessCheckBox" type="CheckBox" parent="HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/BrightnessHBox"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 text = "Brightness"
 
-[node name="BrightnessHSlider" type="HSlider" parent="HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/BrightnessHBox"]
+[node name="BrightnessHSlider" type="HSlider" parent="HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/BrightnessHBox"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(150, 32)
 layout_mode = 2
@@ -188,7 +180,7 @@ step = 0.05
 tick_count = 5
 ticks_on_borders = true
 
-[node name="BrightnessLabel" type="Label" parent="HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/BrightnessHBox"]
+[node name="BrightnessLabel" type="Label" parent="HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/BrightnessHBox"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
@@ -196,18 +188,18 @@ text = "00"
 label_settings = SubResource("LabelSettings_0w5gm")
 vertical_alignment = 1
 
-[node name="OutlineHBox" type="HBoxContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="OutlineHBox" type="HBoxContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="OutlineCheckBox" type="CheckBox" parent="HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/OutlineHBox"]
+[node name="OutlineCheckBox" type="CheckBox" parent="HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/OutlineHBox"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 text = "Outline
 "
 
-[node name="OutlineHSlider" type="HSlider" parent="HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/OutlineHBox"]
+[node name="OutlineHSlider" type="HSlider" parent="HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/OutlineHBox"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(150, 32)
 layout_mode = 2
@@ -216,7 +208,7 @@ step = 0.5
 tick_count = 5
 ticks_on_borders = true
 
-[node name="OutlineLabel" type="Label" parent="HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/OutlineHBox"]
+[node name="OutlineLabel" type="Label" parent="HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/OutlineHBox"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
@@ -224,57 +216,57 @@ text = "00"
 label_settings = SubResource("LabelSettings_0w5gm")
 vertical_alignment = 1
 
-[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/OutlineHBox"]
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/OutlineHBox"]
 layout_mode = 2
 theme_override_constants/margin_left = 6
 theme_override_constants/margin_top = 6
 theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 6
 
-[node name="OutlineColorPickerBtn" type="ColorPickerButton" parent="HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/OutlineHBox/MarginContainer"]
+[node name="OutlineColorPickerBtn" type="ColorPickerButton" parent="HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/OutlineHBox/MarginContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
 
-[node name="DitheringHBox" type="HBoxContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="DitheringHBox" type="HBoxContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="DitheringCheckBox" type="CheckBox" parent="HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/DitheringHBox"]
+[node name="DitheringCheckBox" type="CheckBox" parent="HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/DitheringHBox"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 text = "Dithering
 "
 
-[node name="DitheringHSlider" type="HSlider" parent="HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/DitheringHBox"]
+[node name="DitheringHSlider" type="HSlider" parent="HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/DitheringHBox"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(150, 32)
 layout_mode = 2
 tick_count = 5
 ticks_on_borders = true
 
-[node name="ColorReductionHBox" type="HBoxContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="ColorReductionHBox" type="HBoxContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="ColorReductionCheckBox" type="CheckBox" parent="HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/ColorReductionHBox"]
+[node name="ColorReductionCheckBox" type="CheckBox" parent="HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/ColorReductionHBox"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 text = "Reduce Color
 "
 
-[node name="ColorReducSpinBox" type="SpinBox" parent="HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/ColorReductionHBox"]
+[node name="ColorReducSpinBox" type="SpinBox" parent="HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/ColorReductionHBox"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 
-[node name="PaletteHbOx" type="HBoxContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="PaletteHbOx" type="HBoxContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="EffectsLabel" type="Label" parent="HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/PaletteHbOx"]
+[node name="EffectsLabel" type="Label" parent="HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/PaletteHbOx"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 text = "  External Palette"
@@ -283,14 +275,14 @@ vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/PaletteHbOx"]
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/PaletteHbOx"]
 layout_mode = 2
 theme_override_constants/margin_left = 0
 theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 0
 theme_override_constants/margin_bottom = 4
 
-[node name="UseExternalPaletteCheckBtn" type="CheckButton" parent="HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/PaletteHbOx/MarginContainer"]
+[node name="UseExternalPaletteCheckBtn" type="CheckButton" parent="HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/SpriteSheetOptions/PanelContainer/MarginContainer/VBoxContainer/PaletteHbOx/MarginContainer"]
 texture_filter = 2
 clip_contents = true
 custom_minimum_size = Vector2(80, 24)
@@ -300,10 +292,10 @@ focus_mode = 0
 theme = ExtResource("4_s1l55")
 text = "False"
 
-[node name="PaletteLoader" parent="HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont" instance=ExtResource("5_so0ax")]
+[node name="PaletteLoader" parent="HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont" instance=ExtResource("5_so0ax")]
 layout_mode = 2
 
-[node name="SaveButtonPanel" type="MarginContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont"]
+[node name="SaveButtonPanel" type="MarginContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 theme_override_constants/margin_left = 1
@@ -311,11 +303,11 @@ theme_override_constants/margin_top = 1
 theme_override_constants/margin_right = 1
 theme_override_constants/margin_bottom = 1
 
-[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SaveButtonPanel"]
+[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/SaveButtonPanel"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SaveButtonPanel/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/SaveButtonPanel/PanelContainer"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 theme_override_constants/margin_left = 2
@@ -323,11 +315,11 @@ theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = 2
 
-[node name="SavingHBox" type="HBoxContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SaveButtonPanel/PanelContainer/MarginContainer"]
+[node name="SavingHBox" type="HBoxContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/SaveButtonPanel/PanelContainer/MarginContainer"]
 custom_minimum_size = Vector2(350, 32)
 layout_mode = 2
 
-[node name="SaveSpriteSheetBtn" type="Button" parent="HBoxContainer/OptionsContainer/SpriteSheetMainPanel/SpriteSheetVBoxCont/SaveButtonPanel/PanelContainer/MarginContainer/SavingHBox"]
+[node name="SaveSpriteSheetBtn" type="Button" parent="HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/SaveButtonPanel/PanelContainer/MarginContainer/SavingHBox"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
@@ -335,3 +327,27 @@ size_flags_horizontal = 0
 size_flags_vertical = 4
 text = "Save SpriteSheet
 "
+
+[node name="EffectStatusMarginPanel" type="MarginContainer" parent="HBoxContainer/OptionsContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 1
+
+[node name="EffectStatusMainPanel" type="PanelContainer" parent="HBoxContainer/OptionsContainer/EffectStatusMarginPanel"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_so0ax")
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/OptionsContainer/EffectStatusMarginPanel/EffectStatusMainPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+
+[node name="EffectStatusLabel" type="Label" parent="HBoxContainer/OptionsContainer/EffectStatusMarginPanel/EffectStatusMainPanel/MarginContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+text = "EffectStatusLabel progress...."
+label_settings = SubResource("LabelSettings_so0ax")
+horizontal_alignment = 1

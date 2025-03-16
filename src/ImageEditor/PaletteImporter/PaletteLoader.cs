@@ -24,7 +24,6 @@ public partial class PaletteLoader : MarginContainer
     {
         LoadExtPaletteBtn.Pressed += async () => await OnLoadExtPaletteBtnPressed();
         LoadedPaletteColors.Add(Colors.Black);
-        //
     }
 
     private async Task OnLoadExtPaletteBtnPressed()

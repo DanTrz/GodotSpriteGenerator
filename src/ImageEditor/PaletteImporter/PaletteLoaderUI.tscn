@@ -12,7 +12,7 @@ theme_override_constants/margin_right = 1
 theme_override_constants/margin_bottom = 1
 script = ExtResource("1_81li2")
 LoadExtPaletteBtn = NodePath("PanelContainer/MarginContainer/PaletteOptionsHbOx/LoadExtPaletteBtn")
-PaletteListGridContainer = NodePath("PanelContainer/MarginContainer/PaletteOptionsHbOx/PaletteListPanel/MarginContainer/PaletteListGridContainer")
+PaletteListGridContainer = NodePath("PanelContainer/MarginContainer/PaletteOptionsHbOx/PaletteListPanel/MarginContainer/ScrollContainer/MarginContainer/PaletteListGridContainer")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 custom_minimum_size = Vector2(0, 32)
@@ -38,7 +38,7 @@ size_flags_vertical = 4
 text = "  Load External Palette  "
 
 [node name="PaletteListPanel" type="PanelContainer" parent="PanelContainer/MarginContainer/PaletteOptionsHbOx"]
-custom_minimum_size = Vector2(0, 32)
+custom_minimum_size = Vector2(0, 75)
 layout_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer/MarginContainer/PaletteOptionsHbOx/PaletteListPanel"]
@@ -49,8 +49,19 @@ theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = 2
 
-[node name="PaletteListGridContainer" parent="PanelContainer/MarginContainer/PaletteOptionsHbOx/PaletteListPanel/MarginContainer" instance=ExtResource("1_logbv")]
-custom_minimum_size = Vector2(345, 0)
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/MarginContainer/PaletteOptionsHbOx/PaletteListPanel/MarginContainer"]
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/MarginContainer/PaletteOptionsHbOx/PaletteListPanel/MarginContainer/ScrollContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="PaletteListGridContainer" parent="PanelContainer/MarginContainer/PaletteOptionsHbOx/PaletteListPanel/MarginContainer/ScrollContainer/MarginContainer" instance=ExtResource("1_logbv")]
+custom_minimum_size = Vector2(345, 70)
 layout_mode = 2
 theme_override_constants/h_separation = 5
 theme_override_constants/v_separation = 5

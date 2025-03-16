@@ -1,9 +1,65 @@
-[gd_scene load_steps=4 format=3 uid="uid://dyf1xkseg8kn8"]
+[gd_scene load_steps=8 format=3 uid="uid://dyf1xkseg8kn8"]
 
 [ext_resource type="Script" uid="uid://ce1mv4v262abk" path="res://src/ImageEditor/PaletteImporter/PaletteListGrid.cs" id="1_2336g"]
 [ext_resource type="PackedScene" uid="uid://cja16u4jssxrh" path="res://src/ImageEditor/PaletteImporter/PaletteColorBoxItem.tscn" id="2_2aq77"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cthsu"]
+resource_local_to_scene = true
+bg_color = Color(1, 1, 1, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2aq77"]
+resource_local_to_scene = true
+bg_color = Color(1, 1, 1, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pyc0v"]
+resource_local_to_scene = true
+bg_color = Color(1, 1, 1, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3c85b"]
+resource_local_to_scene = true
+bg_color = Color(1, 1, 1, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_exxt5"]
 resource_local_to_scene = true
 bg_color = Color(1, 1, 1, 0)
 border_width_left = 2
@@ -30,16 +86,16 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_cthsu")
 
 [node name="PaletteColorBoxItem2" parent="." instance=ExtResource("2_2aq77")]
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_cthsu")
+theme_override_styles/panel = SubResource("StyleBoxFlat_2aq77")
 
 [node name="PaletteColorBoxItem3" parent="." instance=ExtResource("2_2aq77")]
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_cthsu")
+theme_override_styles/panel = SubResource("StyleBoxFlat_pyc0v")
 
 [node name="PaletteColorBoxItem4" parent="." instance=ExtResource("2_2aq77")]
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_cthsu")
+theme_override_styles/panel = SubResource("StyleBoxFlat_3c85b")
 
 [node name="PaletteColorBoxItem5" parent="." instance=ExtResource("2_2aq77")]
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_cthsu")
+theme_override_styles/panel = SubResource("StyleBoxFlat_exxt5")

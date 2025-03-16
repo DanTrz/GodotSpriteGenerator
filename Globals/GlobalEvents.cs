@@ -8,4 +8,8 @@ public partial class GlobalEvents : Node
     public override void _Ready() { Instance = this; }
 
     public Action<Godot.Collections.Array<Color>> OnPaletteChanged { get; set; }
+
+    public Action<string> OnEffectsChangesStarted { get; set; }
+
+    public Action<string, Godot.Collections.Array<Color>> OnEffectsChangesEnded { get; set; }
 }

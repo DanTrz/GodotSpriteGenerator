@@ -35,6 +35,8 @@ public partial class SpriteGenerator : Node
     [Export] public OptionButton _hairMeshOptBtn;
     [Export] public OptionButton WeaponItemMeshOptBtn;
     [Export] public ColorPickerButton _hairColorBtn;
+    [Export] private ImgColorReductionTextRect _imgColorReductionTextRect;
+
 
     private Node3D _modelPivotNode;
     private Node3D _characterModelObject;
@@ -50,6 +52,7 @@ public partial class SpriteGenerator : Node
     private int spriteCount = 1;
     private int spriteSheetCollumnCount = 8;
     private string saveFolder = "Model";
+
 
     public override void _Ready()
     {
@@ -226,7 +229,7 @@ public partial class SpriteGenerator : Node
                     //Only capture frames where frameIndex is a multiple of frameStep
                     if (currentFrame % frameSkipStep == 0)
                     {
-                        SaveFrameAsImgPNG(angle);
+                        await SaveFrameAsImgPNG(angle);
                     }
 
                     currentTime += frameInterval;
@@ -243,14 +246,29 @@ public partial class SpriteGenerator : Node
 
     }
 
-    private void SaveFrameAsImgPNG(int angle)
+    private async Task SaveFrameAsImgPNG(int angle)
     {
         string currentAnimPosInSec = ((float)_animationPlayer.CurrentAnimationPosition).ToString("0.000");
 
         GD.PrintT("SavingFile : ", spriteCount + " / AnimSecond: " + currentAnimPosInSec);
 
         //GD.PrintT("Frame: " + frameIndex, " AnimPosition: " + (float)_animationPlayer.CurrentAnimationPosition);
-        var img = BgRemoverViewport.GetTexture().GetImage();
+        //var img = BgRemoverViewport.GetTexture().GetImage();
+
+        /////////////////NEW CODE START - #TODO:Generate separate function / Refacot /////////////
+
+        //TODO: Apply Logic to restrict Image Colors to 256 (Max Paltte Size)
+        //_imgColorReductionTextRect.Texture = BgRemoverViewport.GetTexture();
+
+        await _imgColorReductionTextRect.UpdateShaderParameters();
+
+        Image img = (Image)_imgColorReductionTextRect.Texture.GetImage();
+
+
+        //var img = _imgColorReductionTextRect.Texture.GetImage();
+
+
+        /////////////////NEW CODE END/////////////
 
         //img.FlipY();4
         string path = $"{saveFolder}/{currentAnimationName}_{"angle_" + angle}_{spriteCount}.png";
