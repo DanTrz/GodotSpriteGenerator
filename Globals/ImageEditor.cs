@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Godot;
 
-[Tool]
 public partial class ImageEditor : PanelContainer
 {
-    [ExportToolButton("UpdateShader")] public Callable ClickMeButton => Callable.From(UpdateShaderParameters);
+    //[ExportToolButton("UpdateShader")] public Callable ClickMeButton => Callable.From(UpdateShaderParameters);
     [Export] public TextureRect ImgTextRect;
     private Texture2D currentTexture;
     [Export] public bool EnableColorReduction = false;
@@ -23,25 +23,31 @@ public partial class ImageEditor : PanelContainer
     //[Export] public Godot.Collections.Array<Color> _currentPaletteColors = new(); //public List<Color> _currentPaletteColors = new(); Brightness = 1.0f;
     [Export] public Godot.Collections.Array<Color> ShaderPalette = new();
 
+    //HD Section to Saving
+    [Export] public CanvasLayer HDCanvasLayer;
+    [Export] public SubViewportContainer HDSubViewportContainer;
+    [Export] public SubViewport HDSubviewPort;
+    [Export] public TextureRect HDTextureRect;
+    [Export] public TextureRect HDTempBGTextureRect;
+
     public bool _useExternalPalette = false;
 
     public List<Color> ImgkMeansClusterList = new();
+
+    public readonly int MAX_PALETTE_SIZE = 256;
 
 
     public override void _Ready()
     {
         currentTexture = ImgTextRect.Texture;
-        NumColors = GetUniqueColorsCount(currentTexture.GetImage()).Result; // this Updates NumColors variaable
-
-
+        NumColors = GetColorFrequencies(currentTexture.GetImage()).Count();
+        //NumColors = GetUniqueColorsCount(currentTexture.GetImage()).Result; // this Updates NumColors variaable
+        //HDCanvasLayer.Visible = false;
     }
-
-    public readonly int MAX_PALETTE_SIZE = 256;
 
     public void UpdateShaderParameters()
     {
         //Texture currentTexture = ImgTextRect.Texture;
-        GlobalEvents.Instance.OnEffectsChangesStarted.Invoke(this.Name);
 
         if (ImgTextRect.Material is not ShaderMaterial shaderMaterial)
         {
@@ -72,7 +78,7 @@ public partial class ImageEditor : PanelContainer
 
     }
 
-    public Godot.Collections.Array<Color> GetOriginalTexturePalette()
+    public async Task<Godot.Collections.Array<Color>> GetOriginalTexturePalette()
     {
         currentTexture = ImgTextRect.Texture;
 
@@ -95,7 +101,7 @@ public partial class ImageEditor : PanelContainer
                 // GD.Print("Unique Colors after GD Conversion = " + uniqueColorsGodot);
 
                 //CallDeferred("UpdateKMeansClusteringList", image, NumColors);
-                UpdatedKMeansClusteringAsync(image, NumColors);
+                await UpdatedKMeansClusteringAsync(image, NumColors);
 
                 List<Color> originalTexturePalette = ImgkMeansClusterList;
 
@@ -110,31 +116,9 @@ public partial class ImageEditor : PanelContainer
 
     }
 
-    public async Task<int> GetUniqueColorsCount(Image img)
+    public async Task<List<Color>> UpdatedKMeansClusteringAsync(Image image, int colorsK)
     {
-        //List<Color> colorList = KMeansClustering(img, MaxPaletteSize).Result;
-        //Godot.Collections.Array<Color> colorList = CallDeferred("KMeansClustering", img, MaxPaletteSize).As<Godot.Collections.Array<Color>>();
-
-        //     await Task.Run(() =>
-        //    {
-
-        int colorCount = GetColorFrequencies(img).Count();
-
-        GD.Print("GetUniqueColorsCount => Result of unique colors = " + colorCount);
-        return colorCount;
-        //    });
-
-        //     return 0;
-
-    }
-
-
-
-
-
-    public async void UpdatedKMeansClusteringAsync(Image image, int colorsK)
-    {
-        GD.Print("KMeansClustering: Max Colors to check = " + colorsK);
+        GD.Print("KMeansClustering Async: Max Colors to check = " + colorsK);
 
         await Task.Run(() =>
         {
@@ -212,14 +196,18 @@ public partial class ImageEditor : PanelContainer
             }
             ImgkMeansClusterList = centroids;
 
+
         });
 
-        GlobalEvents.Instance.OnEffectsChangesEnded.Invoke(this.Name, ColorListToGodotArray(ImgkMeansClusterList));
+        GD.Print("KMeansClusteringAsync Completed with colors = " + ImgkMeansClusterList.Count);
+        //GlobalEvents.Instance.OnEffectsChangesEnded.Invoke(this.Name, ColorListToGodotArray(ImgkMeansClusterList));
+
+        return ImgkMeansClusterList;
     }
 
-    public void UpdatedKMeansClustering(Image image, int colorsK)
+    public void UpdatedKMeansClusteringSyncronous(Image image, int colorsK)
     {
-        GD.Print("KMeansClustering: Max Colors to check = " + colorsK);
+        GD.Print("KMeansClustering Syncronous: Max Colors to check = " + colorsK);
 
         // await Task.Run(() =>
         // {
@@ -295,6 +283,8 @@ public partial class ImageEditor : PanelContainer
                 break;
             }
         }
+
+        GD.Print("KMeansClustering Completed with colors = " + ImgkMeansClusterList.Count);
         ImgkMeansClusterList = centroids;
 
         // });
@@ -302,7 +292,8 @@ public partial class ImageEditor : PanelContainer
         //GlobalEvents.Instance.OnEffectsChangesEnded.Invoke(this.Name, ColorListToGodotArray(ImgkMeansClusterList));
     }
 
-    public static Dictionary<Color, int> GetColorFrequencies(Image image)
+    //public async IAsyncEnumerable<Color> GetColorFrequencies(Image image)
+    public Dictionary<Color, int> GetColorFrequencies(Image image)
     {
         Dictionary<Color, int> colorFrequencies = new();
 
@@ -320,7 +311,7 @@ public partial class ImageEditor : PanelContainer
                 }
             }
         }
-
+        GD.Print("GetUniqueColorsCount => Result of unique colors = " + colorFrequencies.Count);
         return colorFrequencies;
     }
 

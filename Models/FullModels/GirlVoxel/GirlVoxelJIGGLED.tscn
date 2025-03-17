@@ -1,8 +1,7 @@
-[gd_scene load_steps=12 format=3 uid="uid://bwfpoeg8tf1hw"]
+[gd_scene load_steps=15 format=3 uid="uid://bwfpoeg8tf1hw"]
 
 [ext_resource type="ArrayMesh" uid="uid://dkaloxpe2h2pm" path="res://Models/FullModels/GirlVoxel/GirlVoxelOBJ.res" id="1_5bsys"]
 [ext_resource type="PackedScene" uid="uid://dpa7h0crxxisw" path="res://Models/MeshRepository/Hair/1_HairMale01.tscn" id="3_wkw4n"]
-[ext_resource type="Script" uid="uid://b1ehblsx7n5cr" path="res://addons/jigglebones/jigglebone.gd" id="5_fnq30"]
 [ext_resource type="AnimationLibrary" uid="uid://bcv2d4kf15dyh" path="res://AnimWalk.res" id="6_8b1n2"]
 
 [sub_resource type="Animation" id="Animation_8b1n2"]
@@ -221,6 +220,18 @@ bind/20/pose = Transform3D(1.90735e-06, -100, -4.47035e-06, 1.46031e-06, 3.57628
 bind/21/name = &"LeftHand"
 bind/21/bone = -1
 bind/21/pose = Transform3D(-100, -9.53674e-07, 3.72529e-08, 1.46031e-06, 3.57628e-07, -100, 1.90735e-06, -100, -4.47035e-06, -2.15911, -2.73538, 4.75887)
+
+[sub_resource type="Resource" id="Resource_c77bu"]
+metadata/__load_path__ = "res://addons/jigglebones/jigglebone.gd"
+
+[sub_resource type="Resource" id="Resource_hmjjc"]
+metadata/__load_path__ = "res://addons/jigglebones/jigglebone.gd"
+
+[sub_resource type="Resource" id="Resource_he7jk"]
+metadata/__load_path__ = "res://addons/jigglebones/jigglebone.gd"
+
+[sub_resource type="Resource" id="Resource_j1uac"]
+metadata/__load_path__ = "res://addons/jigglebones/jigglebone.gd"
 
 [sub_resource type="Resource" id="Resource_wkw4n"]
 metadata/__load_path__ = "res://Models/MeshRepository/Head/2_HeadMesh_Original.res"
@@ -501,7 +512,7 @@ skin = SubResource("Skin_o623c")
 [node name="Jigglebone2" type="Node3D" parent="Node3DPivot/GeneralSkeleton"]
 transform = Transform3D(-0.0403022, 0.0710585, 0.0879001, -0.109617, -0.0473313, -0.0119966, 0.0275664, -0.0843234, 0.0808063, 0.410981, -0.619828, 0.040879)
 top_level = true
-script = ExtResource("5_fnq30")
+script = SubResource("Resource_c77bu")
 bone_name = "LeftShoulder"
 stiffness = 0.1
 use_gravity = true
@@ -512,7 +523,7 @@ metadata/_custom_type_script = "uid://b1ehblsx7n5cr"
 [node name="Jigglebone5" type="Node3D" parent="Node3DPivot/GeneralSkeleton"]
 transform = Transform3D(-0.0299551, -0.0475144, -0.106043, 0.102062, 0.0415943, -0.0474678, 0.0555515, -0.102041, 0.0300289, -0.398461, -0.606096, -0.0158878)
 top_level = true
-script = ExtResource("5_fnq30")
+script = SubResource("Resource_hmjjc")
 bone_name = "LeftUpperArm"
 stiffness = 0.1
 use_gravity = true
@@ -523,7 +534,7 @@ metadata/_custom_type_script = "uid://b1ehblsx7n5cr"
 [node name="Jigglebone3" type="Node3D" parent="Node3DPivot/GeneralSkeleton"]
 transform = Transform3D(-0.119299, 0.00866925, -0.00961893, 0.00118323, -0.081468, -0.0880997, -0.0128949, -0.0876801, 0.0809068, -0.459751, -0.561763, -0.121986)
 top_level = true
-script = ExtResource("5_fnq30")
+script = SubResource("Resource_he7jk")
 bone_name = "LeftLowerArm"
 stiffness = 0.1
 use_gravity = true
@@ -534,7 +545,7 @@ metadata/_custom_type_script = "uid://b1ehblsx7n5cr"
 [node name="Jigglebone4" type="Node3D" parent="Node3DPivot/GeneralSkeleton"]
 transform = Transform3D(-0.00369867, 0.060144, -0.103774, 0.0449127, -0.0955753, -0.0569931, -0.111217, -0.0405964, -0.0195644, -0.450867, -0.654575, -0.209644)
 top_level = true
-script = ExtResource("5_fnq30")
+script = SubResource("Resource_j1uac")
 bone_name = "LeftHand"
 stiffness = 0.1
 use_gravity = true

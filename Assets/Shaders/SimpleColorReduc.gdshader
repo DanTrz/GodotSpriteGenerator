@@ -64,7 +64,7 @@ vec3 hsl_to_rgb(vec3 c) {
 void fragment() {
     vec4 image_color = texture(TEXTURE, UV);
     vec3 color = image_color.rgb;
-	
+
     // --- Color Reduction ---
     if (enable_color_reduction) {
         vec3 best_match = palette[0].rgb;

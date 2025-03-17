@@ -86,19 +86,13 @@ public partial class ImageEditorMainPanel : PanelContainer
         GlobalEvents.Instance.OnPaletteChanged += OnPaletteChanged;
         GlobalEvents.Instance.OnEffectsChangesStarted += OnEffectsChangesStarted;
         GlobalEvents.Instance.OnEffectsChangesEnded += OnEffectsChangesEnded;
-
-
         UseExternalPaletteChkBtn.Toggled += OnUseExternalPaletteBtnToggled;
+
         PaletteLoaderPanel.Visible = false;
-
-
         _effectStatusLabel.Text = "Ready";
         EffectStatusMainPanel.Visible = false;
-
         UpdateUIElementsOnLoad();
-
         _isFirstRun = false;
-
         SetImgProcessorShaderParams();
         // Initial shader parameter update
 
@@ -107,13 +101,9 @@ public partial class ImageEditorMainPanel : PanelContainer
     private void OnPaletteChanged(Godot.Collections.Array<Color> list)
     {
         GD.Print("Palette changed");
-
         int colorCount = list.Count;
         _colorCountSpinBox.Value = list.Count;
-
         _currentPaletteColors = list;
-        //4. We Update the Shader Parameters in the ImageEditorMainPanel
-
         SetImgProcessorShaderParams();
     }
 
@@ -127,37 +117,17 @@ public partial class ImageEditorMainPanel : PanelContainer
             Access = FileDialog.AccessEnum.Filesystem
 
         };
-
         AddChild(fileDialog);
-
         fileDialog.CurrentDir = GlobalUtil.SaveFolderPath; //Set this after adding Child to Scene
-
         fileDialog.PopupCentered();
-
         await ToSignal(fileDialog, FileDialog.SignalName.FileSelected);
-
-
         string selectedFiled = fileDialog.CurrentDir + "/" + fileDialog.CurrentFile;
-
         await LoadTextureFromImgFile(selectedFiled);
-
         UpdateUIElementsOnLoad();
-
     }
 
     private async Task LoadTextureFromImgFile(string path)
     {
-        //PREVIOUS CODE START ----------
-        // Image imgToLoad = Image.LoadFromFile(path);
-
-        // await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
-
-        // _ImgEditor.ImgTextRect.Texture = ImageTexture.CreateFromImage(imgToLoad);
-        // _ImgEditor.NumColors = _ImgEditor.GetUniqueColorsCount(imgToLoad).Result;
-
-        //PREVIOUS CODE END ----------
-
-
         //NEW CODE - TRYING TO SET HIGH QUALITY IMPORT TEXTURE AND IMG
         Image imgToLoad = Image.LoadFromFile(path);
 
@@ -182,11 +152,16 @@ public partial class ImageEditorMainPanel : PanelContainer
         // Create the ImageTexture.  Specify that mipmaps are enabled.
         ImageTexture texture = ImageTexture.CreateFromImage(imgToLoad);
 
-        if (_ImgEditor != null && _ImgEditor.ImgTextRect != null)
+        if (_ImgEditor.HDTextureRect != null && _ImgEditor.ImgTextRect != null)
         {
             _ImgEditor.ImgTextRect.Texture = texture;
+            _ImgEditor.HDTextureRect.Texture = texture;
+            _ImgEditor.HDSubviewPort.Size = imgToLoad.GetSize();
             // Ensure GetUniqueColorsCount is not blocking the main thread.
-            _ImgEditor.NumColors = await Task.Run(() => _ImgEditor.GetUniqueColorsCount(imgToLoad));
+            //_ImgEditor.NumColors = _ImgEditor.GetUniqueColorsCount(imgToLoad).Result;
+
+            _ImgEditor.NumColors = Task.Run(() => _ImgEditor.GetColorFrequencies(imgToLoad).Count).Result;
+            //_ImgEditor.NumColors = Task.Run(() => _ImgEditor.GetUniqueColorsCount(imgToLoad)).Result;
         }
         else
         {
@@ -222,9 +197,12 @@ public partial class ImageEditorMainPanel : PanelContainer
 
     }
 
-    private void SetImgProcessorShaderParams()
+    private async void SetImgProcessorShaderParams()
     {
         if (_isFirstRun) return;
+
+        GlobalEvents.Instance.OnEffectsChangesStarted.Invoke(this.Name);
+
         _ImgEditor.EnableColorReduction = _colorReductionCheckbox?.ButtonPressed ?? false;
         _ImgEditor.NumColors = (int)(_colorCountSpinBox?.Value ?? 0);
         //int colorCount = (int)(_colorCountSpinBox?.Value ?? 0);
@@ -240,21 +218,18 @@ public partial class ImageEditorMainPanel : PanelContainer
 
         if (!_useExternalPalette)
         {
-            //List<Color> shaderPalette = _ImgEditor.GetShaderPalette(colorCount);
-            //TODO: Determine if this is needed #BUG
-            _currentPaletteColors = _ImgEditor.GetOriginalTexturePalette();
+            _currentPaletteColors = await _ImgEditor.GetOriginalTexturePalette();
             _ImgEditor.ShaderPalette = _currentPaletteColors;
 
             PaletteLoaderPanel.Visible = true;
         }
-
         _ImgEditor.UpdateShaderParameters();
         PaletteLoaderPanel.UpdatePaletteListGrid(_currentPaletteColors);
+        GlobalEvents.Instance.OnEffectsChangesEnded.Invoke(this.Name, _currentPaletteColors);
     }
 
     private void OnUseExternalPaletteBtnToggled(bool toggledOn)
     {
-        //PaletteLoaderPanel.Visible = UseExternalPaletteChkBtn.ButtonPressed;
         UseExternalPaletteChkBtn.Text = UseExternalPaletteChkBtn.ButtonPressed.ToString();
         SetImgProcessorShaderParams();
     }
@@ -267,7 +242,6 @@ public partial class ImageEditorMainPanel : PanelContainer
         if (_colorReductionCheckbox.ButtonPressed == true)
         {
             SetImgProcessorShaderParams();
-
         }
     }
 
@@ -287,9 +261,6 @@ public partial class ImageEditorMainPanel : PanelContainer
         EffectStatusMainPanel.Visible = false;
         PaletteLoaderPanel.UpdatePaletteListGrid(list);
     }
-
-
-
 
     private async Task ApplyEffectsAsync(bool doColorReduction, int colorCount, bool doOutline,
         int outlineThickness, Color outlineColor, bool doDithering, float ditheringStrength)
@@ -439,17 +410,15 @@ public partial class ImageEditorMainPanel : PanelContainer
         GD.Print(text);
     }
 
-    //Save new Image to folder
     private async Task OnSaveButtonPressed()
     {
         //LOGIC TO GET MODIFIED IMAGE
         if (_ImgEditor.ImgTextRect.Texture == null) return;
-        // Image modifiedImage = (Image)_ImgEditor.ImgTextRect.Texture.GetImage();
 
-        Texture2D texture = (Texture2D)_ImgEditor.ImgEditorSubViewport.GetTexture();
+        await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+        Texture2D texture = (Texture2D)_ImgEditor.HDSubviewPort.GetTexture();
         Image modifiedImage = (Image)texture.GetImage();
-
-        await ToSignal(RenderingServer.Singleton, RenderingServer.SignalName.FramePostDraw); //Make sure image is updated from Shader
+        await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
 
         //OPEN DIALOG TO SAVE TO A PATH
         using FileDialog fileDialog = new FileDialog
@@ -469,15 +438,10 @@ public partial class ImageEditorMainPanel : PanelContainer
             GD.Print("Directory does NOT exist: " + folderCurrentDir);
             globalizedPath = "res://"; // Fallback to a safe default
         }
-
         fileDialog.CurrentDir = globalizedPath; //Set Current Directory at the end after adding Child to Scene otherwise it was not working
-
         fileDialog.FileSelected += (path) => SaveImageToFile(modifiedImage, path);
-
         fileDialog.PopupCentered(); // Show the dialog
-
     }
-
 
     private void OnFileSelected(string path)
     {
