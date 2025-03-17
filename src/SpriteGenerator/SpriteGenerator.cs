@@ -11,6 +11,9 @@ public partial class SpriteGenerator : Node
     [Export] public SubViewport _rawViewport;
     [Export] public SubViewportContainer _rawViewportContainer;
     [Export] public SubViewport BgRemoverViewport;
+    [Export] public SubViewport ImgColorReductionSubViewport;
+
+    [Export] public TextureRect ImgColorReductionTextRect;
     [Export] public SubViewportContainer BgRemoverViewportContainer;
     [Export] public MeshInstance3D MeshShaderPixel3D;
     [Export] public int frameSkipStep = 4; // Control how frequently frames are captured
@@ -20,8 +23,12 @@ public partial class SpriteGenerator : Node
     [Export] public OptionButton EffectsChoicesOptionBtn;
     [Export] public OptionButton EffectLevelOptionBtn;
     [Export] public HSlider Outline3DStrenghtSlider;
+    [Export] public HSlider DitheringStrenghtSlider;
     [Export] public ColorPickerButton Outline3DColorPicker;
     [Export] public LineEdit _frameStepTextEdit;
+
+    [Export] public SpinBox MaxColorPaletteSpinBox;
+
     [Export] public LineEdit _playBackSpeedLineEdit;
     [Export] public CheckButton _clearFolderCheckBtn;
     [Export] public TextureRect _pixelShaderTextRect;
@@ -35,7 +42,6 @@ public partial class SpriteGenerator : Node
     [Export] public OptionButton _hairMeshOptBtn;
     [Export] public OptionButton WeaponItemMeshOptBtn;
     [Export] public ColorPickerButton _hairColorBtn;
-    [Export] private ImgColorReductionTextRect _imgColorReductionTextRect;
 
 
     private Node3D _modelPivotNode;
@@ -44,6 +50,8 @@ public partial class SpriteGenerator : Node
     private AnimationPlayer _animationPlayer;
 
     public static int _spriteResolution = 256;
+
+    private readonly int MaxColorPalette = 20;
     private readonly int[] allAngles = { 0, 45, 90, 135, 180, 225, 270, 315 };
     private int renderAngle = 0;
     private string currentAnimation;
@@ -54,6 +62,8 @@ public partial class SpriteGenerator : Node
     private string saveFolder = "Model";
 
 
+
+
     public override void _Ready()
     {
         _startGenerationBtn.Pressed += OnStartGeneration;
@@ -61,12 +71,14 @@ public partial class SpriteGenerator : Node
         EffectLevelOptionBtn.ItemSelected += OnEffectLevelChanged;
         EffectsChoicesOptionBtn.ItemSelected += OnEffectsChoiceItemSelected;
         Outline3DStrenghtSlider.ValueChanged += OnOutline3DStrenghtChanged;
+        DitheringStrenghtSlider.ValueChanged += OnDitheringStrenghtChanged;
         Outline3DColorPicker.ColorChanged += OnOutline3DColorChanged;
         _frameStepTextEdit.TextChanged += OnFrameStepChanged;
         _playBackSpeedLineEdit.TextChanged += OnPlayBackSpeedChanged;
         _clearFolderCheckBtn.Pressed += OnClearFolderPressed;
         _loadAllAnimationsBtn.Pressed += OnLoadAllAnimationsPressed;
         _showGridCheckButton.Pressed += OnShowGridCheckButtonPressed;
+        MaxColorPaletteSpinBox.ValueChanged += (value) => UpdateColorReductionShader();
         //MeshReplacer Signals
         _hairColorBtn.ColorChanged += OnHairColorChanged;
         _hairMeshOptBtn.ItemSelected += OnHairMeshOptBtnItemSelected;
@@ -94,6 +106,11 @@ public partial class SpriteGenerator : Node
         OnEffectLevelChanged(99);
         EffectLevelOptionBtn.Visible = false;
         Outline3DStrenghtSlider.Value = 0.0f;
+
+        MaxColorPaletteSpinBox.MaxValue = MaxColorPalette;
+        MaxColorPaletteSpinBox.Value = MaxColorPalette;
+        MaxColorPaletteSpinBox.MinValue = 1;
+
 
         //Pass the objects from MainScene3D to the SpriteGenerator
         if (MainScene3D != null)
@@ -229,7 +246,10 @@ public partial class SpriteGenerator : Node
                     //Only capture frames where frameIndex is a multiple of frameStep
                     if (currentFrame % frameSkipStep == 0)
                     {
-                        await SaveFrameAsImgPNG(angle);
+                        //OLDCODE
+                        //await SaveFrameAsImgPNG(angle);
+                        //Replace with Method to add to a Queue
+                        await SaveFrameAsPngImg(angle);
                     }
 
                     currentTime += frameInterval;
@@ -246,37 +266,59 @@ public partial class SpriteGenerator : Node
 
     }
 
-    private async Task SaveFrameAsImgPNG(int angle)
+    private void AddOriginalImgToQueue(Image img)
     {
+
+    }
+
+    private void UpdateColorReductionShader()
+    {
+        if (ImgColorReductionTextRect.Material is not ShaderMaterial shaderMaterial)
+        {
+            GD.PrintErr("Material is not a ShaderMaterial.");
+            return;
+        }
+
+        // Apply Shader
+        shaderMaterial.SetShaderParameter("levels", (int)MaxColorPaletteSpinBox.Value);
+
+        //Levels to colors
+        // 2 levels = 8 colors
+        // 4 levels = 64 colors
+        // 8 levels = 512 colors
+        // 16 levels = 4096 colors
+        // 256 (default 8-bit) levels = 16,777,216 (Full RGB)
+
+
+    }
+
+    private async Task SaveFrameAsPngImg(int angle)
+    {
+        //Get the Frame and Path and File names
         string currentAnimPosInSec = ((float)_animationPlayer.CurrentAnimationPosition).ToString("0.000");
-
-        GD.PrintT("SavingFile : ", spriteCount + " / AnimSecond: " + currentAnimPosInSec);
-
-        //GD.PrintT("Frame: " + frameIndex, " AnimPosition: " + (float)_animationPlayer.CurrentAnimationPosition);
-        //var img = BgRemoverViewport.GetTexture().GetImage();
-
-        /////////////////NEW CODE START - #TODO:Generate separate function / Refacot /////////////
-
-        //TODO: Apply Logic to restrict Image Colors to 256 (Max Paltte Size)
-        //_imgColorReductionTextRect.Texture = BgRemoverViewport.GetTexture();
-
-        await _imgColorReductionTextRect.UpdateShaderParameters();
-
-        Image img = (Image)_imgColorReductionTextRect.Texture.GetImage();
-
-
-        //var img = _imgColorReductionTextRect.Texture.GetImage();
-
-
-        /////////////////NEW CODE END/////////////
-
-        //img.FlipY();4
         string path = $"{saveFolder}/{currentAnimationName}_{"angle_" + angle}_{spriteCount}.png";
-        spriteCount++;
+        string globalSavePath = ProjectSettings.GlobalizePath(path);
 
-        img.SavePng(ProjectSettings.GlobalizePath(path));
+        GD.PrintT("Adding to Queue item :", spriteCount + "  - FileName: " + Path.GetFileNameWithoutExtension(globalSavePath) + "  / FullPath: " + path);
+
+        UpdateColorReductionShader();
+
+        // Wait for the shader to be fully applied
+        await ToSignal(RenderingServer.Singleton, RenderingServer.SignalName.FramePostDraw); //Make sure image is updated from Shader
+
+        //Get the Image from the given Frame / From the ViewPort and SAVE IT
+        Image img = ImgColorReductionSubViewport.GetTexture().GetImage();
+        img.SavePng(globalSavePath);
+
+        spriteCount++;
         frameIndex++;
 
+    }
+
+    private Image GetImgWithColorReduction(Image img, SubViewport viewPort)
+    {
+
+        return null;
     }
 
 
@@ -441,6 +483,16 @@ public partial class SpriteGenerator : Node
             shaderMaterial.SetShaderParameter("outline_color", color);
         }
     }
+
+
+    private void OnDitheringStrenghtChanged(double value)
+    {
+        if (ImgColorReductionTextRect.Material is ShaderMaterial shaderMaterial)
+        {
+            shaderMaterial.SetShaderParameter("dither_strength", value);
+        }
+    }
+
 
     private void OnPlayBackSpeedChanged(string newText)
     {

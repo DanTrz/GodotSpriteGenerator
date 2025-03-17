@@ -1836,7 +1836,6 @@ bone_name = "Head"
 bone_idx = 5
 
 [node name="HairMale01" parent="BaseModel_Armature/GeneralSkeleton/HairBoneAttach" instance=ExtResource("7_ew3vs")]
-visible = false
 
 [node name="WeaponBoneAttach" type="BoneAttachment3D" parent="BaseModel_Armature/GeneralSkeleton"]
 unique_name_in_owner = true
@@ -1845,7 +1844,6 @@ bone_name = "RightHand"
 bone_idx = 14
 
 [node name="Silver_Axe" parent="BaseModel_Armature/GeneralSkeleton/WeaponBoneAttach" instance=ExtResource("10_58l4l")]
-visible = false
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

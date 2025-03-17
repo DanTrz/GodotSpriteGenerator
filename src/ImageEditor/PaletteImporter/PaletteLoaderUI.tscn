@@ -31,11 +31,11 @@ custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
 [node name="LoadExtPaletteBtn" type="Button" parent="PanelContainer/MarginContainer/PaletteOptionsHbOx"]
-custom_minimum_size = Vector2(80, 32)
+custom_minimum_size = Vector2(110, 32)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-text = "  Load External Palette  "
+text = " Load Palette "
 
 [node name="PaletteListPanel" type="PanelContainer" parent="PanelContainer/MarginContainer/PaletteOptionsHbOx"]
 custom_minimum_size = Vector2(0, 75)

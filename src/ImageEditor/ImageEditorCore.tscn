@@ -1,57 +1,70 @@
-[gd_scene load_steps=10 format=4 uid="uid://cnhj6mgja4h5a"]
+[gd_scene load_steps=11 format=4 uid="uid://cnhj6mgja4h5a"]
 
 [ext_resource type="Script" uid="uid://coras8qp0fyli" path="res://Globals/ImageEditor.cs" id="1_116yk"]
 [ext_resource type="PackedScene" uid="uid://ffrwo5xcxd0r" path="res://src/ImageEditor/Camera2DController/Camera2DController.tscn" id="1_nwf5k"]
-[ext_resource type="Shader" uid="uid://da6v6o06nagg3" path="res://Assets/Shaders/SimpleColorReduc.gdshader" id="3_vc4da"]
+[ext_resource type="Shader" uid="uid://bsx38w01mswov" path="res://Assets/Shaders/ImageEditorV2.gdshader" id="3_e07nq"]
 [ext_resource type="Texture2D" uid="uid://cae2jelncoq3w" path="res://Assets/SpriteSheetTemp/Anim_Running_spriteSheet.png" id="4_rt1bl"]
+[ext_resource type="Texture2D" uid="uid://b1hm5e0yfkawq" path="res://Assets/SpriteSheetTemp/B__Running_angle_0_5.png" id="5_e07nq"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8pcxw"]
 bg_color = Color(0.359069, 0.359069, 0.359069, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vc4da"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_y7r2c"]
-shader = ExtResource("3_vc4da")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e07nq"]
+shader = ExtResource("3_e07nq")
+shader_parameter/brightness = 0.0
+shader_parameter/contrast = 1.0
+shader_parameter/saturation = 1.0
 shader_parameter/enable_color_reduction = false
 shader_parameter/num_colors = 16
 shader_parameter/palette = PackedVector4Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vc4da"]
+[sub_resource type="Gradient" id="Gradient_e07nq"]
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_vc4da"]
-viewport_path = NodePath("PanelContainer/SpriteSheetViewportContainer/SpriteSheetSubViewport")
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_c5mtj"]
+gradient = SubResource("Gradient_e07nq")
 
-[node name="ImageEditorCore" type="PanelContainer" node_paths=PackedStringArray("ImgTextRect")]
+[node name="ImageEditorCore" type="PanelContainer" node_paths=PackedStringArray("ImgTextRect", "ImgEditorSubViewport", "HDCanvasLayer", "HDSubViewportContainer", "HDSubviewPort", "HDTextureRect", "HDTempBGTextureRect")]
 texture_filter = 1
+custom_minimum_size = Vector2(512, 512)
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
 localize_numeral_system = false
 theme_override_styles/panel = SubResource("StyleBoxFlat_8pcxw")
 script = ExtResource("1_116yk")
-ImgTextRect = NodePath("PanelContainer/SpriteSheetViewportContainer/SpriteSheetSubViewport/ImageProcessorTextureRect")
-NumColors = 35
+ImgTextRect = NodePath("PanelContainer/ViewportContainer/ImgEditorSubViewport/ImageProcessorTextureRect")
+ImgEditorSubViewport = NodePath("PanelContainer/ViewportContainer/ImgEditorSubViewport")
+HDCanvasLayer = NodePath("HiggenHDCanvasLayer")
+HDSubViewportContainer = NodePath("HiggenHDCanvasLayer/HDPanel/HDViewportContainer")
+HDSubviewPort = NodePath("HiggenHDCanvasLayer/HDPanel/HDViewportContainer/HDSubViewport")
+HDTextureRect = NodePath("HiggenHDCanvasLayer/HDPanel/HDViewportContainer/HDSubViewport/HDTextureRect")
+HDTempBGTextureRect = NodePath("HiggenHDCanvasLayer/HDPanel/HDViewportContainer/HDSubViewport/HDBackground")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(800, 500)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_vc4da")
 
-[node name="SpriteSheetViewportContainer" type="SubViewportContainer" parent="PanelContainer"]
+[node name="ViewportContainer" type="SubViewportContainer" parent="PanelContainer"]
 clip_contents = true
 layout_mode = 2
+stretch = true
 
-[node name="SpriteSheetSubViewport" type="SubViewport" parent="PanelContainer/SpriteSheetViewportContainer"]
+[node name="ImgEditorSubViewport" type="SubViewport" parent="PanelContainer/ViewportContainer"]
 transparent_bg = true
 handle_input_locally = false
 canvas_item_default_texture_filter = 0
 physics_object_picking = true
-size = Vector2i(900, 600)
+size = Vector2i(2, 2)
 render_target_update_mode = 4
 
-[node name="Camera2DController" parent="PanelContainer/SpriteSheetViewportContainer/SpriteSheetSubViewport" instance=ExtResource("1_nwf5k")]
+[node name="Camera2DController" parent="PanelContainer/ViewportContainer/ImgEditorSubViewport" instance=ExtResource("1_nwf5k")]
 
-[node name="ImageProcessorTextureRect" type="TextureRect" parent="PanelContainer/SpriteSheetViewportContainer/SpriteSheetSubViewport"]
+[node name="ImageProcessorTextureRect" type="TextureRect" parent="PanelContainer/ViewportContainer/ImgEditorSubViewport"]
 unique_name_in_owner = true
-material = SubResource("ShaderMaterial_y7r2c")
+material = SubResource("ShaderMaterial_e07nq")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -61,31 +74,47 @@ texture = ExtResource("4_rt1bl")
 expand_mode = 1
 stretch_mode = 4
 
-[node name="PanelContainer2" type="PanelContainer" parent="."]
-visible = false
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_vc4da")
+[node name="HiggenHDCanvasLayer" type="CanvasLayer" parent="."]
+layer = -2
 
-[node name="AAAA" type="SubViewportContainer" parent="PanelContainer2"]
+[node name="HDPanel" type="PanelContainer" parent="HiggenHDCanvasLayer"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -84.0
+offset_right = 512.0
+grow_vertical = 0
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxEmpty_vc4da")
+
+[node name="HDViewportContainer" type="SubViewportContainer" parent="HiggenHDCanvasLayer/HDPanel"]
 clip_contents = true
 layout_mode = 2
 
-[node name="BBBB" type="SubViewport" parent="PanelContainer2/AAAA"]
+[node name="HDSubViewport" type="SubViewport" parent="HiggenHDCanvasLayer/HDPanel/HDViewportContainer"]
 transparent_bg = true
 handle_input_locally = false
 canvas_item_default_texture_filter = 0
 physics_object_picking = true
-size = Vector2i(900, 600)
-render_target_update_mode = 0
+render_target_update_mode = 4
 
-[node name="OutlineGenerator" type="TextureRect" parent="PanelContainer2/AAAA/BBBB"]
+[node name="HDTextureRect" type="TextureRect" parent="HiggenHDCanvasLayer/HDPanel/HDViewportContainer/HDSubViewport"]
+material = SubResource("ShaderMaterial_e07nq")
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("5_e07nq")
+stretch_mode = 4
+
+[node name="HDBackground" type="TextureRect" parent="HiggenHDCanvasLayer/HDPanel/HDViewportContainer/HDSubViewport"]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = SubResource("ViewportTexture_vc4da")
-expand_mode = 1
-stretch_mode = 4
-
-[node name="Camera2DController" parent="PanelContainer2/AAAA/BBBB" instance=ExtResource("1_nwf5k")]
+texture = SubResource("GradientTexture1D_c5mtj")

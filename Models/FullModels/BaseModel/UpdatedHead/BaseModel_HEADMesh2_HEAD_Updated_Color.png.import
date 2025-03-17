@@ -2,17 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://boqlbpw2yu3dp"
-path.s3tc="res://.godot/imported/BaseModel_HEAD_Updated_ColorText.png-616c616716788dd1cde9bb11d72ac4c0.s3tc.ctex"
+uid="uid://cqj1rmnne6e2y"
+path.s3tc="res://.godot/imported/BaseModel_HEADMesh2_HEAD_Updated_Color.png-eceb0106b7b760fcf418dfc53189d2fe.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
+generator_parameters={
+"md5": "30e15034b0451364c6d32a32d5ce001e"
+}
 
 [deps]
 
-source_file="res://Models/FullModels/BaseModel/UpdatedHead/BaseModel_HEAD_Updated_ColorText.png"
-dest_files=["res://.godot/imported/BaseModel_HEAD_Updated_ColorText.png-616c616716788dd1cde9bb11d72ac4c0.s3tc.ctex"]
+source_file="res://Models/FullModels/BaseModel/UpdatedHead/BaseModel_HEADMesh2_HEAD_Updated_Color.png"
+dest_files=["res://.godot/imported/BaseModel_HEADMesh2_HEAD_Updated_Color.png-eceb0106b7b760fcf418dfc53189d2fe.s3tc.ctex"]
 
 [params]
 
