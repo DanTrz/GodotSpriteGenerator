@@ -12,12 +12,17 @@ public partial class ImageEditor : PanelContainer
     private Texture2D currentTexture;
     [Export] public bool EnableColorReduction = false;
     [Export] public int NumColors = 16;
+    [Export] public int MaxNumColors = 256;
+
     //[Export] public bool UseExternalPalette = false;
     //public List<Color> ShaderPalette = new();
     [Export] public bool EnableSaturation = true;
-    [Export] public float Saturation = 1.0f;
+    [Export] public float SaturationValue = 1.0f;
     [Export] public bool EnableBrightness = true;
-    [Export] public float Brightness = 1.0f;
+    [Export] public float BrightnessValue = 0.0f;
+
+    [Export] public bool EnableContrast = true;
+    [Export] public float ConstrastValue = 1.0f;
     [Export] public SubViewport ImgEditorSubViewport;
 
     //[Export] public Godot.Collections.Array<Color> _currentPaletteColors = new(); //public List<Color> _currentPaletteColors = new(); Brightness = 1.0f;
@@ -55,10 +60,10 @@ public partial class ImageEditor : PanelContainer
             return;
         }
 
-        shaderMaterial.SetShaderParameter("enable_saturation", EnableSaturation);
-        shaderMaterial.SetShaderParameter("saturation", Saturation);
-        shaderMaterial.SetShaderParameter("enable_brightness", EnableBrightness);
-        shaderMaterial.SetShaderParameter("brightness", Brightness);
+        shaderMaterial.SetShaderParameter("saturation", SaturationValue);
+        shaderMaterial.SetShaderParameter("brightness", BrightnessValue);
+        shaderMaterial.SetShaderParameter("contrast", ConstrastValue);
+
 
         shaderMaterial.SetShaderParameter("enable_color_reduction", EnableColorReduction);
         shaderMaterial.SetShaderParameter("num_colors", NumColors);

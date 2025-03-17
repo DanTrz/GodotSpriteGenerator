@@ -9,15 +9,17 @@ public partial class ImageEditorMainPanel : PanelContainer
 {
     [Export] private ImageEditor _ImgEditor;
     [Export] private HSlider _saturationSlider;
-    [Export] private Label _saturationLabel;
-    [Export] private Label _brightnessLabel;
+    [Export] private Label _saturationValueLabel;
+    [Export] private Label _brightnessValueLabel;
+    [Export] private Label _contrastValueLabel;
     [Export] private Label _outlineLabel;
     [Export] private HSlider _brightnessSlider;
+    [Export] private HSlider _contrastSlider;
     [Export] private CheckBox _outlineCheckbox;
     [Export] private HSlider _outlineThicknessSlider;
+
+    [Export] private Button _resetImgCorrectionBtn;
     [Export] private ColorPickerButton _outlineColorPicker;
-    [Export] private CheckBox _ditheringCheckbox;
-    [Export] private HSlider _ditheringSlider;
     [Export] private CheckBox _colorReductionCheckbox;
     [Export] private SpinBox _colorCountSpinBox;
     [Export] private Button _saveButton;
@@ -26,10 +28,6 @@ public partial class ImageEditorMainPanel : PanelContainer
 
     [Export] public CheckButton UseExternalPaletteChkBtn;
     [Export] public PaletteLoader PaletteLoaderPanel;
-
-    // Add toggles for enabling/disabling shader effects
-    [Export] private CheckBox _enableSaturationCheckbox;
-    [Export] private CheckBox _enableBrightnessCheckbox;
 
     [Export] public Button LoadExternalImg;
 
@@ -70,15 +68,14 @@ public partial class ImageEditorMainPanel : PanelContainer
         }
 
         //Connect UI Sigansl for most of the effects
-        _saturationSlider.ValueChanged += (value) => SetImgProcessorShaderParams();
-        _brightnessSlider.ValueChanged += (value) => SetImgProcessorShaderParams();
-        _outlineCheckbox.Toggled += (pressed) => SetImgProcessorShaderParams();
-        _outlineThicknessSlider.ValueChanged += (value) => SetImgProcessorShaderParams();
-        _outlineColorPicker.ColorChanged += (color) => SetImgProcessorShaderParams();
-        _enableSaturationCheckbox.Toggled += (pressed) => SetImgProcessorShaderParams();
-        _enableBrightnessCheckbox.Toggled += (pressed) => SetImgProcessorShaderParams();
+        _saturationSlider.ValueChanged += (value) => SetImgEditorValues();
+        _brightnessSlider.ValueChanged += (value) => SetImgEditorValues();
+        _contrastSlider.ValueChanged += (value) => SetImgEditorValues();
+        _outlineCheckbox.Toggled += (pressed) => SetImgEditorValues();
+        _outlineThicknessSlider.ValueChanged += (value) => SetImgEditorValues();
+        _outlineColorPicker.ColorChanged += (color) => SetImgEditorValues();
         _colorCountSpinBox.ValueChanged += OnColorReductionSpinBoxChanged;
-        _colorReductionCheckbox.Toggled += (pressed) => SetImgProcessorShaderParams();
+        _colorReductionCheckbox.Toggled += (pressed) => SetImgEditorValues();
 
         _saveButton.Pressed += async () => await OnSaveButtonPressed();
         LoadExternalImg.Pressed += async () => await OnLoadExternalImgBtnPressed();
@@ -87,16 +84,23 @@ public partial class ImageEditorMainPanel : PanelContainer
         GlobalEvents.Instance.OnEffectsChangesStarted += OnEffectsChangesStarted;
         GlobalEvents.Instance.OnEffectsChangesEnded += OnEffectsChangesEnded;
         UseExternalPaletteChkBtn.Toggled += OnUseExternalPaletteBtnToggled;
+        _resetImgCorrectionBtn.Pressed += OnResetImgCorrectionBtnPressed;
 
         PaletteLoaderPanel.Visible = false;
         _effectStatusLabel.Text = "Ready";
         EffectStatusMainPanel.Visible = false;
         UpdateUIElementsOnLoad();
         _isFirstRun = false;
-        SetImgProcessorShaderParams();
-        // Initial shader parameter update
+        SetImgEditorValues();
+        UpdateViewPortTextures(_originalImage);
 
     }
+
+    private void OnResetImgCorrectionBtnPressed()
+    {
+        UpdateUIElementsOnLoad(true);
+    }
+
 
     private void OnPaletteChanged(Godot.Collections.Array<Color> list)
     {
@@ -104,7 +108,7 @@ public partial class ImageEditorMainPanel : PanelContainer
         int colorCount = list.Count;
         _colorCountSpinBox.Value = list.Count;
         _currentPaletteColors = list;
-        SetImgProcessorShaderParams();
+        SetImgEditorValues();
     }
 
 
@@ -126,7 +130,7 @@ public partial class ImageEditorMainPanel : PanelContainer
         UpdateUIElementsOnLoad();
     }
 
-    private async Task LoadTextureFromImgFile(string path)
+    public async Task LoadTextureFromImgFile(string path)
     {
         //NEW CODE - TRYING TO SET HIGH QUALITY IMPORT TEXTURE AND IMG
         Image imgToLoad = Image.LoadFromFile(path);
@@ -149,18 +153,26 @@ public partial class ImageEditorMainPanel : PanelContainer
         // Wait for the next process frame to ensure the image is fully processed.
         await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
 
-        // Create the ImageTexture.  Specify that mipmaps are enabled.
-        ImageTexture texture = ImageTexture.CreateFromImage(imgToLoad);
+        // Create the ImageTexture and update ViewPorts
+        UpdateViewPortTextures(imgToLoad);
+
+    }
+
+    public void UpdateViewPortTextures(Image imageToLoad)
+    {
+        ImageTexture texture = ImageTexture.CreateFromImage(imageToLoad);
 
         if (_ImgEditor.HDTextureRect != null && _ImgEditor.ImgTextRect != null)
         {
             _ImgEditor.ImgTextRect.Texture = texture;
             _ImgEditor.HDTextureRect.Texture = texture;
-            _ImgEditor.HDSubviewPort.Size = imgToLoad.GetSize();
+            _ImgEditor.HDSubviewPort.Size = imageToLoad.GetSize();
             // Ensure GetUniqueColorsCount is not blocking the main thread.
             //_ImgEditor.NumColors = _ImgEditor.GetUniqueColorsCount(imgToLoad).Result;
 
-            _ImgEditor.NumColors = Task.Run(() => _ImgEditor.GetColorFrequencies(imgToLoad).Count).Result;
+            int colorsCount = Task.Run(() => _ImgEditor.GetColorFrequencies(imageToLoad).Count).Result;
+            _ImgEditor.NumColors = colorsCount;
+            _ImgEditor.MaxNumColors = colorsCount;
             //_ImgEditor.NumColors = Task.Run(() => _ImgEditor.GetUniqueColorsCount(imgToLoad)).Result;
         }
         else
@@ -170,7 +182,7 @@ public partial class ImageEditorMainPanel : PanelContainer
 
     }
 
-    public void UpdateUIElementsOnLoad()
+    public void UpdateUIElementsOnLoad(bool isReset = false)
     {
         if (_ImgEditor.ImgTextRect.Texture != null)
         {
@@ -178,26 +190,30 @@ public partial class ImageEditorMainPanel : PanelContainer
             _originalImage = _originalTexture.GetImage();
         }
         //_colorCountSpinBox.MaxValue = _ImgEditor.NumColors; //Mathf.Clamp(value, min, max);
-        _colorCountSpinBox.MaxValue = Mathf.Clamp(_ImgEditor.NumColors, 1, _ImgEditor.MAX_PALETTE_SIZE);
 
+        _colorCountSpinBox.MaxValue = Mathf.Clamp(_ImgEditor.NumColors, 1, _ImgEditor.MAX_PALETTE_SIZE);
         _colorCountSpinBox.Value = _ImgEditor.NumColors;
-        _brightnessSlider.Value = 1.0f;
-        _enableBrightnessCheckbox.ButtonPressed = false;
+        _brightnessSlider.Value = 0.0f;
+        _brightnessValueLabel.Text = _brightnessSlider.Value.ToString("0.0");
         _saturationSlider.Value = 1.0f;
-        _saturationLabel.Text = _saturationSlider.Value.ToString("0.0");
-        _brightnessLabel.Text = _brightnessSlider.Value.ToString("0.0");
+        _saturationValueLabel.Text = _saturationSlider.Value.ToString("0.0");
+        _contrastSlider.Value = 1.0f;
+        _contrastValueLabel.Text = _contrastSlider.Value.ToString("0.0");
         _outlineLabel.Text = _outlineThicknessSlider.Value.ToString("0.0");
-        _enableSaturationCheckbox.ButtonPressed = false;
         _outlineCheckbox.ButtonPressed = false;
         _outlineThicknessSlider.Value = 0;
         _outlineColorPicker.Color = Colors.Black;
-        _ditheringCheckbox.ButtonPressed = false;
-        _ditheringSlider.Value = 0.0f;
         _colorReductionCheckbox.ButtonPressed = false;
+
+        if (isReset)
+        {
+            _colorCountSpinBox.MaxValue = Mathf.Clamp(_ImgEditor.MaxNumColors, 1, _ImgEditor.MAX_PALETTE_SIZE);
+            _colorCountSpinBox.Value = _ImgEditor.MaxNumColors;
+        }
 
     }
 
-    private async void SetImgProcessorShaderParams()
+    private async void SetImgEditorValues()
     {
         if (_isFirstRun) return;
 
@@ -210,11 +226,13 @@ public partial class ImageEditorMainPanel : PanelContainer
         _useExternalPalette = UseExternalPaletteChkBtn?.ButtonPressed ?? false;
         _ImgEditor._useExternalPalette = _useExternalPalette;
         _ImgEditor.ShaderPalette = _currentPaletteColors;
-        _ImgEditor.EnableSaturation = _enableSaturationCheckbox?.ButtonPressed ?? false;
-        _ImgEditor.Saturation = (float)(_saturationSlider?.Value ?? 0.0f);
-
-        _ImgEditor.EnableBrightness = _enableBrightnessCheckbox?.ButtonPressed ?? false;
-        _ImgEditor.Brightness = (float)(_brightnessSlider?.Value ?? 0.0f);
+        _ImgEditor.SaturationValue = (float)(_saturationSlider?.Value ?? 1.0f);
+        _saturationValueLabel.Text = _saturationSlider.Value.ToString("0.0");
+        _ImgEditor.BrightnessValue = (float)(_brightnessSlider?.Value ?? 0.0f);
+        _brightnessValueLabel.Text = _brightnessSlider.Value.ToString("0.0");
+        // _ImgEditor.EnableContrast = _enableContrastCheckbox?.ButtonPressed ?? false;
+        _ImgEditor.ConstrastValue = (float)(_contrastSlider?.Value ?? 1.0f);
+        _contrastValueLabel.Text = _contrastSlider.Value.ToString("0.0");
 
         if (!_useExternalPalette)
         {
@@ -225,13 +243,14 @@ public partial class ImageEditorMainPanel : PanelContainer
         }
         _ImgEditor.UpdateShaderParameters();
         PaletteLoaderPanel.UpdatePaletteListGrid(_currentPaletteColors);
+
         GlobalEvents.Instance.OnEffectsChangesEnded.Invoke(this.Name, _currentPaletteColors);
     }
 
     private void OnUseExternalPaletteBtnToggled(bool toggledOn)
     {
         UseExternalPaletteChkBtn.Text = UseExternalPaletteChkBtn.ButtonPressed.ToString();
-        SetImgProcessorShaderParams();
+        SetImgEditorValues();
     }
 
     private void OnColorReductionSpinBoxChanged(double value)
@@ -241,7 +260,7 @@ public partial class ImageEditorMainPanel : PanelContainer
 
         if (_colorReductionCheckbox.ButtonPressed == true)
         {
-            SetImgProcessorShaderParams();
+            SetImgEditorValues();
         }
     }
 
@@ -271,16 +290,7 @@ public partial class ImageEditorMainPanel : PanelContainer
 
         if (doOutline)
         {
-            CallDeferred(nameof(SetStatus), "Applying outline...");
             modifiedImage = await Task.Run(() => AddOutline(modifiedImage, outlineThickness, outlineColor));
-            CallDeferred(nameof(SetStatus), "Outline complete.");
-        }
-
-        if (doDithering)
-        {
-            CallDeferred(nameof(SetStatus), "Applying dithering...");
-            modifiedImage = await Task.Run(() => ApplyDithering(modifiedImage, ditheringStrength));
-            CallDeferred(nameof(SetStatus), "Dithering complete.");
         }
 
         // Update the texture *after* other effects have been applied
@@ -328,87 +338,6 @@ public partial class ImageEditorMainPanel : PanelContainer
     }
 
     //TODO: CURRENTLY NOT WORKING - #BUG TO FIX. 
-    private Image ApplyDithering(Image image, float strength)
-    {
-        int width = image.GetWidth();
-        int height = image.GetHeight();
-        byte[] data = image.GetData(); // Get data directly
-
-        // Floyd-Steinberg dithering
-        Parallel.For(0, height, y =>
-        {
-            // Local error buffer, one float per channel (R, G, B, A) per pixel.
-            float[] errorBufferR = new float[width];
-            float[] errorBufferG = new float[width];
-            float[] errorBufferB = new float[width];
-            //float[] errorBufferA = new float[width]; // Alpha is not dithered
-
-            for (int x = 0; x < width; x++)
-            {
-                int index = (y * width + x) * 4;
-
-                // Apply error from the error buffer
-                float oldR = GlobalUtil.ClampFloat(data[index] + errorBufferR[x], 0, 255);
-                float oldG = GlobalUtil.ClampFloat(data[index + 1] + errorBufferG[x], 0, 255);
-                float oldB = GlobalUtil.ClampFloat(data[index + 2] + errorBufferB[x], 0, 255);
-                float oldA = data[index + 3]; // Alpha is unchanged
-                Color oldPixel = new Color(oldR / 255f, oldG / 255f, oldB / 255f, oldA / 255f);
-
-                Color newPixel = GlobalUtil.FindClosestPaletteColor(oldPixel);
-
-                // Directly modify the data array (in-place modification)
-                data[index] = (byte)GlobalUtil.ClampFloat(newPixel.R * 255, 0, 255);
-                data[index + 1] = (byte)GlobalUtil.ClampFloat(newPixel.G * 255, 0, 255);
-                data[index + 2] = (byte)GlobalUtil.ClampFloat(newPixel.B * 255, 0, 255);
-                data[index + 3] = (byte)GlobalUtil.ClampFloat(newPixel.A * 255, 0, 255); // Keep original alpha
-
-
-                // Calculate error *per channel*
-                float errorR = oldR - (newPixel.R * 255f);
-                float errorG = oldG - (newPixel.G * 255f);
-                float errorB = oldB - (newPixel.B * 255f);
-                //float errorA = oldA - (newPixel.A * 255f); // No alpha error
-
-                // Distribute error
-                if (x + 1 < width)
-                {
-                    errorBufferR[x + 1] += errorR * (7.0f / 16.0f) * strength;
-                    errorBufferG[x + 1] += errorG * (7.0f / 16.0f) * strength;
-                    errorBufferB[x + 1] += errorB * (7.0f / 16.0f) * strength;
-                }
-                if (y + 1 < height)
-                {
-                    if (x - 1 >= 0)
-                    {
-                        int nextIndex = ((y + 1) * width + (x - 1)) * 4;
-                        data[nextIndex] = (byte)GlobalUtil.ClampFloat(data[nextIndex] + errorR * (3.0f / 16.0f) * strength, 0, 255);
-                        data[nextIndex + 1] = (byte)GlobalUtil.ClampFloat(data[nextIndex + 1] + errorG * (3.0f / 16.0f) * strength, 0, 255);
-                        data[nextIndex + 2] = (byte)GlobalUtil.ClampFloat(data[nextIndex + 2] + errorB * (3.0f / 16.0f) * strength, 0, 255);
-                    }
-                    if (x + 1 < width)
-                    {
-                        int nextIndex = ((y + 1) * width + (x + 1)) * 4;
-                        data[nextIndex] = (byte)GlobalUtil.ClampFloat(data[nextIndex] + errorR * (1.0f / 16.0f) * strength, 0, 255);
-                        data[nextIndex + 1] = (byte)GlobalUtil.ClampFloat(data[nextIndex + 1] + errorG * (1.0f / 16.0f) * strength, 0, 255);
-                        data[nextIndex + 2] = (byte)GlobalUtil.ClampFloat(data[nextIndex + 2] + errorB * (1.0f / 16.0f) * strength, 0, 255);
-                    }
-                    int nextIndexCenter = ((y + 1) * width + x) * 4;
-                    data[nextIndexCenter] = (byte)GlobalUtil.ClampFloat(data[nextIndexCenter] + errorR * (5.0f / 16.0f) * strength, 0, 255);
-                    data[nextIndexCenter + 1] = (byte)GlobalUtil.ClampFloat(data[nextIndexCenter + 1] + errorG * (5.0f / 16.0f) * strength, 0, 255);
-                    data[nextIndexCenter + 2] = (byte)GlobalUtil.ClampFloat(data[nextIndexCenter + 2] + errorB * (5.0f / 16.0f) * strength, 0, 255);
-                }
-            }
-        });
-
-        return Image.CreateFromData(width, height, false, Image.Format.Rgba8, data);
-    }
-
-    //Update UI Label with current status of effects processing
-    private void SetStatus(string text)
-    {
-        _effectStatusLabel.Text = text;
-        GD.Print(text);
-    }
 
     private async Task OnSaveButtonPressed()
     {
@@ -463,16 +392,13 @@ public partial class ImageEditorMainPanel : PanelContainer
         _ImgEditor.UpdateShaderParameters(); // Shader changes always last to ensure we will not get mixed up with other effects
 
         IsEffectProcessing = false;
-        SetStatus("Ready");
 
     }
 
     public void OnSaveData(SaveGameData newSaveGameData)
     {
         GD.PrintT("Started OnSaveData from:", this.Name);
-        newSaveGameData.SaturationIsOn = _enableSaturationCheckbox.ButtonPressed;
         newSaveGameData.SaturationSliderValue = (float)_saturationSlider.Value;
-        newSaveGameData.BrightnessIsOn = _enableBrightnessCheckbox.ButtonPressed;
         newSaveGameData.BrightnessSliderValue = (float)_brightnessSlider.Value;
         newSaveGameData.OutlineIsOn = _outlineCheckbox.ButtonPressed;
         newSaveGameData.OutlineThicknessSliderValue = (float)_outlineThicknessSlider.Value;
@@ -489,9 +415,7 @@ public partial class ImageEditorMainPanel : PanelContainer
         UpdateUIElementsOnLoad();
         UpdateTexture(_originalImage);
 
-        _enableSaturationCheckbox.ButtonPressed = newLoadData.SaturationIsOn;
         _saturationSlider.Value = newLoadData.SaturationSliderValue;
-        _enableBrightnessCheckbox.ButtonPressed = newLoadData.BrightnessIsOn;
         _brightnessSlider.Value = newLoadData.BrightnessSliderValue;
         _outlineCheckbox.ButtonPressed = newLoadData.OutlineIsOn;
         _outlineThicknessSlider.Value = newLoadData.OutlineThicknessSliderValue;
@@ -499,7 +423,7 @@ public partial class ImageEditorMainPanel : PanelContainer
         _colorReductionCheckbox.ButtonPressed = newLoadData.ColorReductionIsOn;
         _colorCountSpinBox.Value = newLoadData.ColorReductionValue;
 
-        SetImgProcessorShaderParams();
+        SetImgEditorValues();
 
         if (newLoadData.OutlineIsOn)
         {

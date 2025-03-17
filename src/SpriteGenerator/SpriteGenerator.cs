@@ -23,6 +23,7 @@ public partial class SpriteGenerator : Node
     [Export] public OptionButton EffectsChoicesOptionBtn;
     [Export] public OptionButton EffectLevelOptionBtn;
     [Export] public HSlider Outline3DStrenghtSlider;
+    [Export] public HSlider DitheringStrenghtSlider;
     [Export] public ColorPickerButton Outline3DColorPicker;
     [Export] public LineEdit _frameStepTextEdit;
 
@@ -70,6 +71,7 @@ public partial class SpriteGenerator : Node
         EffectLevelOptionBtn.ItemSelected += OnEffectLevelChanged;
         EffectsChoicesOptionBtn.ItemSelected += OnEffectsChoiceItemSelected;
         Outline3DStrenghtSlider.ValueChanged += OnOutline3DStrenghtChanged;
+        DitheringStrenghtSlider.ValueChanged += OnDitheringStrenghtChanged;
         Outline3DColorPicker.ColorChanged += OnOutline3DColorChanged;
         _frameStepTextEdit.TextChanged += OnFrameStepChanged;
         _playBackSpeedLineEdit.TextChanged += OnPlayBackSpeedChanged;
@@ -481,6 +483,16 @@ public partial class SpriteGenerator : Node
             shaderMaterial.SetShaderParameter("outline_color", color);
         }
     }
+
+
+    private void OnDitheringStrenghtChanged(double value)
+    {
+        if (ImgColorReductionTextRect.Material is ShaderMaterial shaderMaterial)
+        {
+            shaderMaterial.SetShaderParameter("dither_strength", value);
+        }
+    }
+
 
     private void OnPlayBackSpeedChanged(string newText)
     {

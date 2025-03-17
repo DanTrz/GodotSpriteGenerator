@@ -33,10 +33,7 @@ public partial class SaveGameData : Resource
 
     //SPRITE SHEET GEN VARIABLES AND CONFIG
 
-    [Export] public bool SaturationIsOn { get; set; }
     [Export] public float SaturationSliderValue { get; set; }
-
-    [Export] public bool BrightnessIsOn { get; set; }
     [Export] public float BrightnessSliderValue { get; set; }
 
     [Export] public bool OutlineIsOn { get; set; }
