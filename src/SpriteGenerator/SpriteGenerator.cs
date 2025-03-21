@@ -6,12 +6,16 @@ using Godot;
 
 public partial class SpriteGenerator : Node
 {
+    [Export] public OptionButton AnimMethodOptionBtn;
+    [Export] public CheckButton GenerateSpriteSheetCheckBtn;
+    // [Export] public Button _startGenerationBtn;
     [Export] public Button _startGenerationBtn;
     [Export] public Node3D MainScene3D;
     [Export] public SubViewport _rawViewport;
     [Export] public SubViewportContainer _rawViewportContainer;
     [Export] public SubViewport BgRemoverViewport;
     [Export] public SubViewport ImgColorReductionSubViewport;
+    [Export] public SubViewportContainer ImgColorReductionSubViewportContainer;
 
     [Export] public TextureRect ImgColorReductionTextRect;
     [Export] public SubViewportContainer BgRemoverViewportContainer;
@@ -21,7 +25,7 @@ public partial class SpriteGenerator : Node
     [Export(PropertyHint.Range, "1,4,1")] private float _animationPlaybackSpeed = 1.0f;
     [Export] public OptionButton _resolutionOptionBtn;
     [Export] public OptionButton EffectsChoicesOptionBtn;
-    [Export] public OptionButton EffectLevelOptionBtn;
+    [Export] public OptionButton PixelationLevelOptionBtn;
     [Export] public HSlider Outline3DStrenghtSlider;
     [Export] public HSlider DitheringStrenghtSlider;
     [Export] public ColorPickerButton Outline3DColorPicker;
@@ -51,7 +55,7 @@ public partial class SpriteGenerator : Node
 
     public static int _spriteResolution = 256;
 
-    private readonly int MaxColorPalette = 20;
+    private readonly int MaxRBGLevelsColorPalette = 20;
     private readonly int[] allAngles = { 0, 45, 90, 135, 180, 225, 270, 315 };
     private int renderAngle = 0;
     private string currentAnimation;
@@ -61,6 +65,9 @@ public partial class SpriteGenerator : Node
     private int spriteSheetCollumnCount = 8;
     private string saveFolder = "Model";
 
+    private bool IsAnimMethod = true;
+    private bool IsGenSpriteSheetOn = true;
+
 
 
 
@@ -68,7 +75,7 @@ public partial class SpriteGenerator : Node
     {
         _startGenerationBtn.Pressed += OnStartGeneration;
         _resolutionOptionBtn.ItemSelected += OnRenderResolutionChanged;
-        EffectLevelOptionBtn.ItemSelected += OnEffectLevelChanged;
+        PixelationLevelOptionBtn.ItemSelected += OnPixelationLevelChanged;
         EffectsChoicesOptionBtn.ItemSelected += OnEffectsChoiceItemSelected;
         Outline3DStrenghtSlider.ValueChanged += OnOutline3DStrenghtChanged;
         DitheringStrenghtSlider.ValueChanged += OnDitheringStrenghtChanged;
@@ -79,6 +86,8 @@ public partial class SpriteGenerator : Node
         _loadAllAnimationsBtn.Pressed += OnLoadAllAnimationsPressed;
         _showGridCheckButton.Pressed += OnShowGridCheckButtonPressed;
         MaxColorPaletteSpinBox.ValueChanged += (value) => UpdateColorReductionShader();
+        AnimMethodOptionBtn.ItemSelected += OnAnimMethodOptionBtnItemSelected;
+        GenerateSpriteSheetCheckBtn.Pressed += OnGenerateSpriteSheetCheckBtnPressed;
         //MeshReplacer Signals
         _hairColorBtn.ColorChanged += OnHairColorChanged;
         _hairMeshOptBtn.ItemSelected += OnHairMeshOptBtnItemSelected;
@@ -97,18 +106,20 @@ public partial class SpriteGenerator : Node
         //Set Default Resolution and Shader Strenght
         _resolutionOptionBtn.Selected = _resolutionOptionBtn.ItemCount - 1; //Select the Last Option
         OnRenderResolutionChanged(_resolutionOptionBtn.Selected);
-        EffectLevelOptionBtn.Selected = EffectLevelOptionBtn.ItemCount - 1; //Last option 
-        OnEffectLevelChanged(EffectLevelOptionBtn.Selected);
+        PixelationLevelOptionBtn.Selected = PixelationLevelOptionBtn.ItemCount - 1; //Last option 
+        OnPixelationLevelChanged(PixelationLevelOptionBtn.Selected);
 
         EffectsChoicesOptionBtn.Selected = 0;
         OnEffectsChoiceItemSelected(EffectsChoicesOptionBtn.Selected);
         MeshShaderPixel3D.Visible = true;
-        OnEffectLevelChanged(99);
-        EffectLevelOptionBtn.Visible = false;
+        OnPixelationLevelChanged(99);
+        PixelationLevelOptionBtn.Visible = false;
         Outline3DStrenghtSlider.Value = 0.0f;
+        AnimMethodOptionBtn.Selected = 0;
+        IsGenSpriteSheetOn = false;
 
-        MaxColorPaletteSpinBox.MaxValue = MaxColorPalette;
-        MaxColorPaletteSpinBox.Value = MaxColorPalette;
+        MaxColorPaletteSpinBox.MaxValue = MaxRBGLevelsColorPalette;
+        MaxColorPaletteSpinBox.Value = MaxRBGLevelsColorPalette;
         MaxColorPaletteSpinBox.MinValue = 1;
 
 
@@ -133,6 +144,7 @@ public partial class SpriteGenerator : Node
         //Mesh Replace Variables and UI
         MeshReplacer.UpdateUIOptionsSceneItemList(_hairMeshOptBtn, Const.HAIR_SCENES_FOLDER_PATH);
         MeshReplacer.UpdateUIOptionsSceneItemList(WeaponItemMeshOptBtn, Const.WEAPON_SCENES_FOLDER_PATH);
+
         LoadAllMeshReplacerBtnAndMeshItemData();
         _hairMeshOptBtn.Selected = 0;
         OnHairMeshOptBtnItemSelected(0);
@@ -147,19 +159,38 @@ public partial class SpriteGenerator : Node
     {
         if (!GlobalUtil.HasDirectory(GlobalUtil.SaveFolderPath, this)) return;
 
+        int[] selectedAngles = _angleSelectionItemList.GetSelectedItems().Select(x => Convert.ToInt32(_angleSelectionItemList.
+        GetItemText(x))).ToArray();
+
+        if (selectedAngles.Length == 0)
+        {
+            GD.PrintErr("No Angles Selected");
+            return;
+        }
+
         spriteCount = 0;
         saveFolder = ProjectSettings.GlobalizePath(GlobalUtil.SaveFolderPath + "/" + _characterModelObject.Name);
-
-        _pixelGridTextRect.Visible = false;
 
         if (!Directory.Exists(ProjectSettings.GlobalizePath(saveFolder)))
             Directory.CreateDirectory(ProjectSettings.GlobalizePath(saveFolder));
 
-        // GD.PrintT("Start Generation");
+
+        GD.PrintT("Start Generation");
 
         if (_clearFolderBeforeGeneration)
             ClearFolder(saveFolder);
-        GenerateSpritesFrameBased();
+
+        _pixelGridTextRect.Visible = false;
+
+        if (IsAnimMethod)
+        {
+            GenerateSpritesAnimPlayerBased(selectedAngles);
+        }
+        else
+        {
+            GenerateSpriteYRotationBased(selectedAngles);
+        }
+
     }
 
     private void ClearFolder(string folder)
@@ -171,11 +202,8 @@ public partial class SpriteGenerator : Node
         }
     }
 
-    private async void GenerateSpritesFrameBased()
+    private async void GenerateSpritesAnimPlayerBased(int[] selectedAngles)
     {
-
-        int[] selectedAngles = _angleSelectionItemList.GetSelectedItems().Select(x => Convert.ToInt32(_angleSelectionItemList.
-        GetItemText(x))).ToArray();
         int[] selectedAnimations = _animSelectionItemList.GetSelectedItems();
 
         if (selectedAngles.Length == 0)
@@ -209,7 +237,8 @@ public partial class SpriteGenerator : Node
             {
                 _modelPivotNode.RotationDegrees = new Vector3(0, angle, 0);
 
-                await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+                //await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+                await ToSignal(RenderingServer.Singleton, RenderingServer.SignalName.FramePostDraw); //Testing
 
                 _animationPlayer.Play(anim);
                 Animation animationResource = _animationPlayer.GetAnimation(anim);
@@ -249,7 +278,10 @@ public partial class SpriteGenerator : Node
                         //OLDCODE
                         //await SaveFrameAsImgPNG(angle);
                         //Replace with Method to add to a Queue
-                        await SaveFrameAsPngImg(angle);
+                        await SaveFrameAsPngImg((
+                            (float)_animationPlayer.CurrentAnimationPosition).ToString("0.000"),
+                            currentAnimationName,
+                            angle);
                     }
 
                     currentTime += frameInterval;
@@ -262,65 +294,48 @@ public partial class SpriteGenerator : Node
         }
 
         await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
-        GenerateSpriteSheet(saveFolder, currentAnimationName + "_spriteSheet", spriteSheetCollumnCount);
 
-    }
-
-    private void AddOriginalImgToQueue(Image img)
-    {
-
-    }
-
-    private void UpdateColorReductionShader()
-    {
-        if (ImgColorReductionTextRect.Material is not ShaderMaterial shaderMaterial)
+        if (IsGenSpriteSheetOn)
         {
-            GD.PrintErr("Material is not a ShaderMaterial.");
-            return;
+            GenerateSpriteSheet(saveFolder, currentAnimationName + "_spriteSheet", spriteSheetCollumnCount);
+        }
+        else
+        {
+            _pixelGridTextRect.Visible = true;
+            _showGridCheckButton.ButtonPressed = true;
         }
 
-        // Apply Shader
-        shaderMaterial.SetShaderParameter("levels", (int)MaxColorPaletteSpinBox.Value);
-
-        //Levels to colors
-        // 2 levels = 8 colors
-        // 4 levels = 64 colors
-        // 8 levels = 512 colors
-        // 16 levels = 4096 colors
-        // 256 (default 8-bit) levels = 16,777,216 (Full RGB)
-
-
     }
 
-    private async Task SaveFrameAsPngImg(int angle)
-    {
-        //Get the Frame and Path and File names
-        string currentAnimPosInSec = ((float)_animationPlayer.CurrentAnimationPosition).ToString("0.000");
-        string path = $"{saveFolder}/{currentAnimationName}_{"angle_" + angle}_{spriteCount}.png";
-        string globalSavePath = ProjectSettings.GlobalizePath(path);
-
-        GD.PrintT("Adding to Queue item :", spriteCount + "  - FileName: " + Path.GetFileNameWithoutExtension(globalSavePath) + "  / FullPath: " + path);
-
-        UpdateColorReductionShader();
-
-        // Wait for the shader to be fully applied
-        await ToSignal(RenderingServer.Singleton, RenderingServer.SignalName.FramePostDraw); //Make sure image is updated from Shader
-
-        //Get the Image from the given Frame / From the ViewPort and SAVE IT
-        Image img = ImgColorReductionSubViewport.GetTexture().GetImage();
-        img.SavePng(globalSavePath);
-
-        spriteCount++;
-        frameIndex++;
-
-    }
-
-    private Image GetImgWithColorReduction(Image img, SubViewport viewPort)
+    private async void GenerateSpriteYRotationBased(int[] selectedAngles)
     {
 
-        return null;
-    }
+        foreach (var angle in selectedAngles)
+        {
+            _modelPivotNode.RotationDegrees = new Vector3(0, angle, 0);
+            _modelPositionManager._posYAxisLineTextEdit.Text = _modelPivotNode.RotationDegrees.Y.ToString("0.0");
 
+            //await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+            await ToSignal(RenderingServer.Singleton, RenderingServer.SignalName.FramePostDraw); //Testin
+
+            await SaveFrameAsPngImg("", _characterModelObject.Name, angle);
+
+            GD.PrintT($"Y.Axis Sprite Generate: {_characterModelObject.Name}, angle: {angle} frames");
+        }
+
+
+        await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+
+        if (IsGenSpriteSheetOn)
+        {
+            GenerateSpriteSheet(saveFolder, _characterModelObject.Name + "_spriteSheet", spriteSheetCollumnCount);
+        }
+        else
+        {
+            _pixelGridTextRect.Visible = true;
+            _showGridCheckButton.ButtonPressed = true;
+        }
+    }
 
     private void GenerateSpriteSheet(string folderPath, string outputFileName, int columns)
     {
@@ -377,6 +392,71 @@ public partial class SpriteGenerator : Node
         _pixelGridTextRect.Visible = true;
     }
 
+    private async Task SaveFrameAsPngImg(string animPosition, string animName, int angle)
+    {
+        //Get the Frame and Path and File names
+        //string currentAnimPosInSec = ((float)_animationPlayer.CurrentAnimationPosition).ToString("0.000");
+        string currentAnimPosInSec = animPosition;
+        string path = $"{saveFolder}/{animName}_{"angle_" + angle}_{spriteCount}.png";
+        string globalSavePath = ProjectSettings.GlobalizePath(path);
+
+        GD.PrintT("Saving PNG :", spriteCount + "  - FileName: " + Path.GetFileNameWithoutExtension(globalSavePath) + "  / FullPath: " + path);
+
+        UpdateColorReductionShader();
+
+        // Wait for the shader to be fully applied
+        await ToSignal(RenderingServer.Singleton, RenderingServer.SignalName.FramePostDraw); //Make sure image is updated from Shader
+
+        //Get the Image from the given Frame / From the ViewPort and SAVE IT
+        Image img = ImgColorReductionSubViewport.GetTexture().GetImage();
+        img.SavePng(globalSavePath);
+
+        spriteCount++;
+        frameIndex++;
+
+    }
+
+    private void OnGenerateSpriteSheetCheckBtnPressed()
+    {
+        GenerateSpriteSheetCheckBtn.Text = GenerateSpriteSheetCheckBtn.ButtonPressed.ToString();
+        IsGenSpriteSheetOn = GenerateSpriteSheetCheckBtn.ButtonPressed;
+        GD.PrintT("Generate Sprite Sheet: " + IsGenSpriteSheetOn);
+    }
+
+    private void UpdateColorReductionShader()
+    {
+        if (ImgColorReductionTextRect.Material is not ShaderMaterial shaderMaterial)
+        {
+            GD.PrintErr("Material is not a ShaderMaterial.");
+            return;
+        }
+
+        // Apply Shader
+        shaderMaterial.SetShaderParameter("levels", (int)MaxColorPaletteSpinBox.Value);
+
+        //Levels to colors
+        // 2 levels = 8 colors
+        // 4 levels = 64 colors
+        // 8 levels = 512 colors
+        // 16 levels = 4096 colors
+        // 256 (default 8-bit) levels = 16,777,216 (Full RGB)
+
+
+    }
+
+    private void OnAnimMethodOptionBtnItemSelected(long index)
+    {
+        if (index == 0)
+        {
+            IsAnimMethod = true;
+        }
+        else
+        {
+            IsAnimMethod = false;
+        }
+
+    }
+
     private void OnRenderResolutionChanged(long itemSelectedIndex)
     {
         switch (itemSelectedIndex)
@@ -396,6 +476,10 @@ public partial class SpriteGenerator : Node
             case 4:
                 _spriteResolution = 512;
                 break;
+                // case 5:
+                //     _spriteResolution = 1024;
+                //     break;
+
         }
         GD.PrintT("Sprite Size/Res: " + _spriteResolution);
 
@@ -409,51 +493,60 @@ public partial class SpriteGenerator : Node
         GD.PrintT("Effect Selected: " + itemSelectedIndex);
         switch (itemSelectedIndex)
         {
+            //TODO: Apply different effects. Create an EffetHandler? Change the materials for the settings
+            //Option 1 -> Unshaaded 
+            //Option 2 -> Toon Shading
             case 0:
-                //No Effect - Turn off MeshInstance3d
+                //No Effect - Turn off PixaltionButton
                 MeshShaderPixel3D.Visible = true;
-                OnEffectLevelChanged(99);
-                EffectLevelOptionBtn.Visible = false;
+                PixelationLevelOptionBtn.Visible = false;
+                OnPixelationLevelChanged(99);//Set the resolution to 512 pixels (Last option)
                 break;
             case 1:
                 //Pixel Effect
                 MeshShaderPixel3D.Visible = true;
-                EffectLevelOptionBtn.Visible = true;
-                OnEffectLevelChanged(EffectLevelOptionBtn.Selected);
+                PixelationLevelOptionBtn.Visible = true;
+                OnPixelationLevelChanged(PixelationLevelOptionBtn.Selected);
+                EffectsHandler.SetEffect(_characterModelObject, Const.EffectShadingType.UNSHADED);//TODO: TESTING ONLY
                 break;
             case 2:
                 //Toon Effect
+                MeshShaderPixel3D.Visible = true;
+                PixelationLevelOptionBtn.Visible = true;
+                OnPixelationLevelChanged(PixelationLevelOptionBtn.Selected);
+
+                EffectsHandler.SetEffect(_characterModelObject, Const.EffectShadingType.TOON);//TODO: TESTING ONLY
                 break;
         }
         UpdateViewPorts();
     }
 
-    private void OnEffectLevelChanged(long itemSelectedIndex)
+    private void OnPixelationLevelChanged(long itemSelectedIndex)
     {
-        int shaderResolution = 0;
+        int pixelShaderResolution = 0;
 
         switch (itemSelectedIndex)
         {
             case 0:
-                shaderResolution = 32;
+                pixelShaderResolution = 32;
                 break;
             case 1:
-                shaderResolution = 64;
+                pixelShaderResolution = 64;
                 break;
             case 2:
-                shaderResolution = 96;
+                pixelShaderResolution = 96;
                 break;
             case 3:
-                shaderResolution = 128;
+                pixelShaderResolution = 128;
                 break;
             case 4:
-                shaderResolution = 192;
+                pixelShaderResolution = 192;
                 break;
             case 5:
-                shaderResolution = 256;
+                pixelShaderResolution = 256;
                 break;
             case 99:
-                shaderResolution = 512;
+                pixelShaderResolution = 512;
                 break;
 
         }
@@ -462,7 +555,7 @@ public partial class SpriteGenerator : Node
 
         if (MeshShaderPixel3D.Mesh.SurfaceGetMaterial(0) is ShaderMaterial shaderMaterial)
         {
-            shaderMaterial.SetShaderParameter("target_resolution", shaderResolution);
+            shaderMaterial.SetShaderParameter("target_resolution", pixelShaderResolution);
         }
         UpdateViewPorts();
     }
@@ -512,6 +605,10 @@ public partial class SpriteGenerator : Node
         BgRemoverViewport.CallDeferred("set_size", viewPortSize);
         BgRemoverViewportContainer.CallDeferred("set_size", viewPortSize);
 
+        ImgColorReductionSubViewport.CallDeferred("set_size", viewPortSize);
+        ImgColorReductionSubViewportContainer.CallDeferred("set_size", viewPortSize);
+
+        //Callable.From(() => ImgColorReductionSubViewport.SetSize(viewPortSize)).CallDeferred();
     }
     private void OnClearFolderPressed()
     {
@@ -583,8 +680,9 @@ public partial class SpriteGenerator : Node
             MeshReplacer.UpdateUIOptionMesheItemList(meshReplacerOptButton, meshReplacerOptButton.BodyPartType);
 
             //Align UI display to the first item
-            meshReplacerOptButton.Selected = 0;
-            OnMeshItemSelected(0, meshReplacerOptButton);
+            //TODO: Uncomment line belows to force the model to load the first item
+            //meshReplacerOptButton.Selected = 0;
+            //OnMeshItemSelected(0, meshReplacerOptButton);
         }
 
     }
@@ -602,6 +700,11 @@ public partial class SpriteGenerator : Node
         var _meshInstanceObject = GlobalUtil.GetAllNodesByType<BodyPartMeshInstance3D>(_characterModelObject).
             Where(x => x.BodyPartType == meshReplacerOptButton.BodyPartType).FirstOrDefault();
 
+        if (_meshInstanceObject == null)
+        {
+            GD.PrintErr("MeshInstance3D not found for BodyPartType: " + meshReplacerOptButton.BodyPartType);
+        }
+
         MeshReplacer.UpdateMeshFromResourceItem(_meshInstanceObject, itemSelected);
     }
 
@@ -614,7 +717,7 @@ public partial class SpriteGenerator : Node
         newSaveGameData.SpriteResolutionOptBtn = _resolutionOptionBtn.Selected;
         newSaveGameData.FrameSkipStep = frameSkipStep;
         //newSaveGameData.ShowPixelEffect = _pixelEffectCheckBtn.ButtonPressed;
-        newSaveGameData.PixelEffectLevel = EffectLevelOptionBtn.Selected;
+        newSaveGameData.PixelEffectLevel = PixelationLevelOptionBtn.Selected;
         newSaveGameData.PlaybackSpeed = _animationPlaybackSpeed;
         newSaveGameData.ShowGrid = _showGridCheckButton.ButtonPressed;
     }
@@ -628,14 +731,14 @@ public partial class SpriteGenerator : Node
         _frameStepTextEdit.Text = frameSkipStep.ToString();
         //_pixelEffectCheckBtn.ButtonPressed = newLoadData.ShowPixelEffect;
         //_pixelEffectCheckBtn.Text = _pixelEffectCheckBtn.ButtonPressed.ToString();
-        EffectLevelOptionBtn.Selected = newLoadData.PixelEffectLevel;
+        PixelationLevelOptionBtn.Selected = newLoadData.PixelEffectLevel;
         _animationPlaybackSpeed = newLoadData.PlaybackSpeed;
         _playBackSpeedLineEdit.Text = _animationPlaybackSpeed.ToString();
         _showGridCheckButton.ButtonPressed = newLoadData.ShowGrid;
 
         UpdateViewPorts();
         OnRenderResolutionChanged(newLoadData.SpriteResolutionOptBtn);
-        OnEffectLevelChanged(newLoadData.PixelEffectLevel);
+        OnPixelationLevelChanged(newLoadData.PixelEffectLevel);
         OnPlayBackSpeedChanged(newLoadData.PlaybackSpeed.ToString());
         OnFrameStepChanged(newLoadData.FrameSkipStep.ToString());
         OnShowGridCheckButtonPressed();

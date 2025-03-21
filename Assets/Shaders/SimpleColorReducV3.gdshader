@@ -1,7 +1,7 @@
 shader_type canvas_item;
 
 uniform int levels : hint_range(1, 32) = 20; //Max 256 (Full RGB)
-uniform float dither_strength : hint_range(0.0, 1.0) = 0.2; // 0.2 to 0.4 are the recommended - Adjustable dither strength
+uniform float dither_strength : hint_range(0.0, 1.0) = 0.0; // 0.2 to 0.4 are the recommended - Adjustable dither strength
 
 void fragment() {
     vec3 color = texture(TEXTURE, UV).rgb;

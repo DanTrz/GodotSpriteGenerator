@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://iuwovcd804os"]
+[gd_scene load_steps=12 format=3 uid="uid://iuwovcd804os"]
 
 [ext_resource type="Script" uid="uid://dasxiorjhfw8t" path="res://src/ModelAndMeshes/Model3DMainPivotControl.cs" id="1_pb3o0"]
-[ext_resource type="PackedScene" uid="uid://c00refh5p8c4o" path="res://Models/FullModels/BaseModel/BaseModelScene.tscn" id="2_hkp8x"]
+[ext_resource type="PackedScene" uid="uid://bvvxjc2oqng0j" path="res://Models/FullModels/BaseModel/LowPoly/BaseModel_LowPolyScene.tscn" id="2_hkp8x"]
 [ext_resource type="Shader" uid="uid://berumhfcmd50a" path="res://Assets/Shaders/Original_Pixelize3DShader.gdshader" id="3_cykfy"]
+[ext_resource type="Shader" uid="uid://c0r1oe0lnimmh" path="res://Assets/Shaders/Outline3DV2.gdshader" id="4_hkp8x"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_wy6cq"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -15,6 +16,7 @@ sky_material = SubResource("ProceduralSkyMaterial_wy6cq")
 background_mode = 1
 background_color = Color(1, 0, 1, 0)
 sky = SubResource("Sky_ote1o")
+ambient_light_source = 3
 tonemap_mode = 2
 glow_enabled = true
 
@@ -31,6 +33,17 @@ material = SubResource("ShaderMaterial_xukee")
 flip_faces = true
 size = Vector2(10, 10)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cykfy"]
+render_priority = 0
+shader = ExtResource("4_hkp8x")
+shader_parameter/shadow_color = Color(0, 0, 0, 1)
+shader_parameter/shadow_thickness = 2.0
+shader_parameter/outline_thickness = 1.2
+
+[sub_resource type="QuadMesh" id="QuadMesh_666by"]
+material = SubResource("ShaderMaterial_cykfy")
+size = Vector2(10, 10)
+
 [node name="ModelScene3D" type="Node3D"]
 
 [node name="MainCamera" type="Camera3D" parent="."]
@@ -44,10 +57,11 @@ size = 7.0
 unique_name_in_owner = true
 script = ExtResource("1_pb3o0")
 
-[node name="BaseModelScene" parent="Model3DMainPivotControl" instance=ExtResource("2_hkp8x")]
+[node name="BaseModel_LowPoly" parent="Model3DMainPivotControl" instance=ExtResource("2_hkp8x")]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866025, -0.433013, 0.25, 0.473725, -0.870539, 0.133215, 0.159951, 0.233799, 0.959038, 0.537403, 1.13269, 2.69497)
+visible = false
 shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -57,3 +71,27 @@ environment = SubResource("Environment_e1sc8")
 visible = false
 extra_cull_margin = 16384.0
 mesh = SubResource("QuadMesh_xukee")
+
+[node name="Outline3DShaderMesh3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.78641, 3.47622)
+visible = false
+extra_cull_margin = 16384.0
+mesh = SubResource("QuadMesh_666by")
+
+[node name="Lights" type="Node3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0.473725, -0.870539, 0.133215, 0.159951, 0.233799, 0.959038, 0.537403, 3.9162, 2.69497)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, -9.31323e-08, 1.49012e-08, 1.15484e-07, 1, -2.98023e-08, -1.49012e-08, 4.47035e-08, 1, 2.50225, -0.315244, -0.340481)
+light_energy = 2.5
+shadow_enabled = true
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, -1.2666e-07, 2.98023e-08, 1.15484e-07, 1, -4.47035e-08, -1.49012e-08, 5.96046e-08, 1, -1.58178, 0.967587, 0.027931)
+light_energy = 1.587
+shadow_enabled = true
+
+[node name="OmniLight3D3" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, -9.68575e-08, 1.49012e-08, 1.15484e-07, 1, -2.98023e-08, -1.49012e-08, 4.47035e-08, 1, -0.873467, 0.78663, -3.67343)
+light_energy = 1.587
+shadow_enabled = true

@@ -1,0 +1,13 @@
+[gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://cj26wl708mgfs"]
+
+[ext_resource type="Texture2D" uid="uid://d02r4gspbltbx" path="res://Models/FullModels/BaseModel/LowPoly/UpdatedHead/HeadLowPoly_Ucupaint BaseModel_LowPoly_Material Color.png" id="1_ojgb5"]
+[ext_resource type="Texture2D" uid="uid://d4maaoxl2nlew" path="res://Models/FullModels/BaseModel/LowPoly/UpdatedHead/HeadLowPoly_BaseModel_LowPoly_PLY-0-LEFT_ARMSet_Color.png" id="2_2jko4"]
+
+[resource]
+resource_name = "BaseModel_LowPoly_Material"
+cull_mode = 2
+diffuse_mode = 3
+specular_mode = 1
+albedo_texture = ExtResource("1_ojgb5")
+emission_enabled = true
+emission_texture = ExtResource("2_2jko4")

@@ -39,11 +39,12 @@ public partial class BodyPartMeshInstance3D : MeshInstance3D
         {
             if (arrayMesh.SurfaceGetMaterial(surfaceIndex) is StandardMaterial3D myMaterial3D)
             {
-                myMaterial3D.ShadingMode = BaseMaterial3D.ShadingModeEnum.Unshaded;
-                myMaterial3D.EmissionEnabled = false;
+                // myMaterial3D.ShadingMode = BaseMaterial3D.ShadingModeEnum.Unshaded;
+                // myMaterial3D.TextureFilter = BaseMaterial3D.TextureFilterEnum.Nearest;
+                // myMaterial3D.EmissionEnabled = false;
 
 
-                arrayMesh.SurfaceSetMaterial(surfaceIndex, myMaterial3D);
+                // arrayMesh.SurfaceSetMaterial(surfaceIndex, myMaterial3D);
             }
         }
     }

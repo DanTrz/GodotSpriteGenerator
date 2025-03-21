@@ -11,6 +11,8 @@ public static class Const
     // Mesh Data
     public enum BodyPartType { HEAD, TORSO, HAIR, LEGS, FEET, LEFT_ARM, RIGHT_ARM, WEAPON };
     public enum MeshType { LOW_POLY, HIGH_POLY };
+
+    public enum EffectShadingType { UNSHADED, TOON };
     public const string HAIR_SCENES_FOLDER_PATH = "res://Models/MeshRepository/Hair/";
     public const string WEAPON_SCENES_FOLDER_PATH = "res://Models/MeshRepository/Weapons/";
     public const string MESH_REPO_FOLDER_PATH = "res://Models/MeshRepository/";

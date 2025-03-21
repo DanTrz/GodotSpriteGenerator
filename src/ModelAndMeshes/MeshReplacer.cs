@@ -39,7 +39,14 @@ public partial class MeshReplacer : Node
 
     public static void UpdateMeshFromResourceItem(MeshInstance3D meshTargetToReplace, string resourceItemName)
     {
+
+        if (meshTargetToReplace == null || meshTargetToReplace.Mesh == null)
+        {
+            GD.PrintErr(meshTargetToReplace.Name + " has no mesh or is null");
+        }
+
         meshTargetToReplace.Mesh = GetMeshItemByName(resourceItemName, arrayMeshDataObjects);
+
     }
 
     public static Mesh GetMeshItemByName(string itemResName, List<ArrayMeshDataObject> resourceMeshList)

@@ -1,0 +1,37 @@
+[remap]
+
+importer="texture"
+type="CompressedTexture2D"
+uid="uid://u4svlwob1l7l"
+path="res://.godot/imported/BaseModel_LowPolyVersion02_BaseModel_LowPoly_PLY-0-LEFT_ARMSet_Color.png-60d71d6bec30ae9bcf7200f7c3bccf89.ctex"
+metadata={
+"vram_texture": false
+}
+generator_parameters={
+"md5": "7919dffed52d36a6a943602a95c8db4c"
+}
+
+[deps]
+
+source_file="res://Models/FullModels/BaseModel/LowPoly/BaseModel_LowPolyVersion02_BaseModel_LowPoly_PLY-0-LEFT_ARMSet_Color.png"
+dest_files=["res://.godot/imported/BaseModel_LowPolyVersion02_BaseModel_LowPoly_PLY-0-LEFT_ARMSet_Color.png-60d71d6bec30ae9bcf7200f7c3bccf89.ctex"]
+
+[params]
+
+compress/mode=0
+compress/high_quality=false
+compress/lossy_quality=0.7
+compress/hdr_compression=1
+compress/normal_map=0
+compress/channel_pack=0
+mipmaps/generate=true
+mipmaps/limit=-1
+roughness/mode=0
+roughness/src_normal=""
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/normal_map_invert_y=false
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=0

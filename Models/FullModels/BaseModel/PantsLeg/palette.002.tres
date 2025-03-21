@@ -7,3 +7,4 @@ resource_name = "palette.002"
 cull_mode = 2
 shading_mode = 0
 albedo_texture = ExtResource("1_xfe1l")
+texture_filter = 0
