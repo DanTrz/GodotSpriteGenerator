@@ -59,6 +59,30 @@ script = ExtResource("1_pb3o0")
 
 [node name="BaseModel_LowPoly" parent="Model3DMainPivotControl" instance=ExtResource("2_hkp8x")]
 
+[node name="Lights" type="Node3D" parent="Model3DMainPivotControl"]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0.473725, -0.870539, 0.133215, 0.159951, 0.233799, 0.959038, 0.537403, 3.9162, 2.69497)
+
+[node name="TopLight" type="OmniLight3D" parent="Model3DMainPivotControl/Lights"]
+transform = Transform3D(1, -5.17815e-07, -1.04308e-07, 1.3411e-07, 1, -1.49012e-08, 2.98023e-08, 1.49012e-08, 1, 1.72828, -0.70223, -0.117055)
+light_energy = 2.0
+shadow_enabled = true
+omni_range = 6.48419
+
+[node name="BottomLight" type="OmniLight3D" parent="Model3DMainPivotControl/Lights"]
+transform = Transform3D(1, -5.06639e-07, -1.3411e-07, 1.3411e-07, 1, -7.45058e-08, 2.98023e-08, 7.45058e-08, 1, -1.94443, 1.17942, -0.86142)
+light_energy = 1.587
+shadow_enabled = true
+
+[node name="BackLight" type="OmniLight3D" parent="Model3DMainPivotControl/Lights"]
+transform = Transform3D(1, -5.47618e-07, -1.3411e-07, 1.78814e-07, 1, -1.49012e-08, 5.96046e-08, 1.49012e-08, 1, -0.216389, -1.10255, -4.66939)
+light_energy = 1.587
+shadow_enabled = true
+
+[node name="BackLight2" type="OmniLight3D" parent="Model3DMainPivotControl/Lights"]
+transform = Transform3D(1, -5.73695e-07, -2.08616e-07, 2.01166e-07, 1, -2.98023e-08, 1.63913e-07, 2.98023e-08, 1, -2.1551, 1.2655, -7.28371)
+light_energy = 1.587
+shadow_enabled = true
+
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866025, -0.433013, 0.25, 0.473725, -0.870539, 0.133215, 0.159951, 0.233799, 0.959038, 0.537403, 1.13269, 2.69497)
 visible = false
@@ -77,21 +101,3 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.78641, 3.47622)
 visible = false
 extra_cull_margin = 16384.0
 mesh = SubResource("QuadMesh_666by")
-
-[node name="Lights" type="Node3D" parent="."]
-transform = Transform3D(-0.866025, -0.433013, 0.25, 0.473725, -0.870539, 0.133215, 0.159951, 0.233799, 0.959038, 0.537403, 3.9162, 2.69497)
-
-[node name="OmniLight3D" type="OmniLight3D" parent="Lights"]
-transform = Transform3D(1, -9.31323e-08, 1.49012e-08, 1.15484e-07, 1, -2.98023e-08, -1.49012e-08, 4.47035e-08, 1, 2.50225, -0.315244, -0.340481)
-light_energy = 2.5
-shadow_enabled = true
-
-[node name="OmniLight3D2" type="OmniLight3D" parent="Lights"]
-transform = Transform3D(1, -1.2666e-07, 2.98023e-08, 1.15484e-07, 1, -4.47035e-08, -1.49012e-08, 5.96046e-08, 1, -1.58178, 0.967587, 0.027931)
-light_energy = 1.587
-shadow_enabled = true
-
-[node name="OmniLight3D3" type="OmniLight3D" parent="Lights"]
-transform = Transform3D(1, -9.68575e-08, 1.49012e-08, 1.15484e-07, 1, -2.98023e-08, -1.49012e-08, 4.47035e-08, 1, -0.873467, 0.78663, -3.67343)
-light_energy = 1.587
-shadow_enabled = true

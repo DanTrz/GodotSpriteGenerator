@@ -3,10 +3,9 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cqj1rmnne6e2y"
-path.s3tc="res://.godot/imported/BaseModel_HEADMesh2_HEAD_Updated_Color.png-eceb0106b7b760fcf418dfc53189d2fe.s3tc.ctex"
+path="res://.godot/imported/BaseModel_HEADMesh2_HEAD_Updated_Color.png-eceb0106b7b760fcf418dfc53189d2fe.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
-"vram_texture": true
+"vram_texture": false
 }
 generator_parameters={
 "md5": "30e15034b0451364c6d32a32d5ce001e"
@@ -15,11 +14,11 @@ generator_parameters={
 [deps]
 
 source_file="res://Models/FullModels/BaseModel/UpdatedHead/BaseModel_HEADMesh2_HEAD_Updated_Color.png"
-dest_files=["res://.godot/imported/BaseModel_HEADMesh2_HEAD_Updated_Color.png-eceb0106b7b760fcf418dfc53189d2fe.s3tc.ctex"]
+dest_files=["res://.godot/imported/BaseModel_HEADMesh2_HEAD_Updated_Color.png-eceb0106b7b760fcf418dfc53189d2fe.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1

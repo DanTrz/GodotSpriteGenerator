@@ -1,6 +1,5 @@
 using Godot;
 
-[Tool]
 [GlobalClass]
 public partial class TransformUiGroup : HBoxContainer
 {

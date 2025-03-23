@@ -87,8 +87,8 @@ bind/24/name = &"mixamorig_RightToe_End"
 bind/24/bone = -1
 bind/24/pose = Transform3D(-0.868283, -0.148656, -0.473271, -0.47776, -0.00620557, 0.878468, -0.133527, 0.988869, -0.0656339, -1.31336, -2.51929, -2.02547)
 
-[sub_resource type="Animation" id="Animation_04wr1"]
-resource_name = "TPOSE"
+[sub_resource type="Animation" id="Animation_f3o3d"]
+length = 0.001
 tracks/0/type = "rotation_3d"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -265,8 +265,8 @@ tracks/24/interp = 1
 tracks/24/loop_wrap = true
 tracks/24/keys = PackedFloat32Array(0, 1, -0.246027, 0.966388, -0.0153737, -0.0729994)
 
-[sub_resource type="Animation" id="Animation_f3o3d"]
-length = 0.001
+[sub_resource type="Animation" id="Animation_04wr1"]
+resource_name = "TPOSE"
 tracks/0/type = "rotation_3d"
 tracks/0/imported = false
 tracks/0/enabled = true

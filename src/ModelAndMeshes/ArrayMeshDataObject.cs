@@ -4,6 +4,7 @@ using Godot;
 public partial class ArrayMeshDataObject : Resource
 {
 
+    [Export] public bool Active = false;
     [Export] public string ItemName;
     [Export] public ArrayMesh MeshItem;
     [Export] public Const.BodyPartType BodyPartType = Const.BodyPartType.HEAD;

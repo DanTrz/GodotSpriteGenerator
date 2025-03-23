@@ -6,6 +6,7 @@
 
 [resource]
 script = ExtResource("3_5rkex")
+Active = true
 ItemName = "Basic Boots"
 MeshItem = ExtResource("2_mv1jd")
 BodyPartType = 4

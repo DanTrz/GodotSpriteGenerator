@@ -1771,6 +1771,14 @@ bones/24/position = Vector3(-0.457389, 0.841011, 0.00594053)
 bones/24/rotation = Quaternion(-0.246027, 0.966388, -0.0153737, -0.0729994)
 bones/24/scale = Vector3(1, 1, 1)
 
+[node name="LEGS" type="MeshInstance3D" parent="LowPoly/GeneralSkeleton"]
+unique_name_in_owner = true
+cast_shadow = 0
+mesh = ExtResource("4_xrc71")
+skin = SubResource("Skin_iit1j")
+script = ExtResource("2_gkkld")
+BodyPartType = 3
+
 [node name="FEET" type="MeshInstance3D" parent="LowPoly/GeneralSkeleton"]
 unique_name_in_owner = true
 cast_shadow = 0
@@ -1793,14 +1801,6 @@ mesh = ExtResource("3_gkkld")
 skin = SubResource("Skin_iit1j")
 script = ExtResource("2_gkkld")
 BodyPartType = 5
-
-[node name="LEGS" type="MeshInstance3D" parent="LowPoly/GeneralSkeleton"]
-unique_name_in_owner = true
-cast_shadow = 0
-mesh = ExtResource("4_xrc71")
-skin = SubResource("Skin_iit1j")
-script = ExtResource("2_gkkld")
-BodyPartType = 3
 
 [node name="RIGHT_ARM" type="MeshInstance3D" parent="LowPoly/GeneralSkeleton"]
 unique_name_in_owner = true

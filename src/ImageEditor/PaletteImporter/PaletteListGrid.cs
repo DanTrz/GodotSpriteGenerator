@@ -3,7 +3,14 @@ using Godot;
 
 public partial class PaletteListGrid : GridContainer
 {
+
     [Export] PackedScene paletteColorItemScene;
+
+    public override void _Ready()
+    {
+        ClearGridList();
+    }
+
     public void ClearGridList()
     {
         foreach (var gridItem in GetChildren())

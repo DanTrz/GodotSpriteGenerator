@@ -6,6 +6,7 @@
 
 [resource]
 script = ExtResource("3_y1q23")
+Active = true
 ItemName = "Head Skin"
 MeshItem = ExtResource("2_ovbif")
 BodyPartType = 0

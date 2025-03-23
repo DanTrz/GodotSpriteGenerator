@@ -10,9 +10,21 @@ public partial class PaletteLoader : MarginContainer
     // PALETTE OPTIONS ITEMS
 
     [Export] public Button LoadExtPaletteBtn;
-    [Export] public PaletteListGrid PaletteListGridContainer;
 
-    public Godot.Collections.Array<Color> LoadedPaletteColors = new();
+    [Export] public Button AddPersistColorsBtn;
+
+    [Export] public Button ClearPersistColorsBtn;
+
+    [Export] public ColorPickerButton PersistColorPickerBtn;
+    [Export] public PaletteListGrid ExtPaletteListGridContainer;
+
+    [Export] public PaletteListGrid PersistColorListGridContainer;
+
+    public Godot.Collections.Array<Color> ExternalPaletteColors = new();
+
+    public List<Color> PersistPaletteColors = new();
+
+    public Godot.Collections.Array<Color> CombinedPaletteColors = new();
 
     private const int MAX_PALETTE_SIZE = 256;
 
@@ -23,29 +35,92 @@ public partial class PaletteLoader : MarginContainer
     public override void _Ready()
     {
         LoadExtPaletteBtn.Pressed += async () => await OnLoadExtPaletteBtnPressed();
-        LoadedPaletteColors.Add(Colors.Black);
+        AddPersistColorsBtn.Pressed += async () => await OnAddPersistColorsBtnPressed();
+        ClearPersistColorsBtn.Pressed += OnClearPersistColorsBtnPressed;
+
+
+        //ExternalPaletteColors.Add(Colors.Black);
+        ExternalPaletteColors.Clear();
+        CombinedPaletteColors.Clear();
+        PersistPaletteColors.Clear();
+
+        //OnClearPersistColorsBtnPressed();
     }
+
+    private void OnClearPersistColorsBtnPressed()
+    {
+        PersistColorListGridContainer.ClearGridList();
+        PersistPaletteColors.Clear();
+        CombinedPaletteColors.Clear();
+
+        CombinedPaletteColors = ExternalPaletteColors;
+
+        Callable.From(() => GlobalEvents.Instance.OnPaletteChanged.Invoke(CombinedPaletteColors)).CallDeferred();
+
+        //GlobalEvents.Instance.OnPaletteChanged.Invoke(CombinedPaletteColors);
+    }
+
+
+    private async Task OnAddPersistColorsBtnPressed()
+    {
+
+        PersistPaletteColors.Add(PersistColorPickerBtn.Color);
+
+        await ToSignal(RenderingServer.Singleton, RenderingServer.SignalName.FramePostDraw);
+
+        //CombinedPaletteColors.Clear();
+        //CombinedPaletteColors = ExternalPaletteColors + PersistPaletteColors;
+
+        //GlobalEvents.Instance.OnPaletteChanged.Invoke(CombinedPaletteColors);
+
+        var godotPalette = GlobalUtil.GetGodotArrayFromList(PersistPaletteColors);
+        UpdatePaletteListGrid(godotPalette, PersistColorListGridContainer);
+
+        //UpdatePaletteListGrid(CombinedPaletteColors, ExtPaletteListGridContainer);
+
+    }
+
 
     private async Task OnLoadExtPaletteBtnPressed()
     {
         currentHextFileText = "";
-        LoadedPaletteColors.Clear();
-        PaletteListGridContainer.ClearGridList();
+        ExternalPaletteColors.Clear();
+        CombinedPaletteColors.Clear();
+
+        ExtPaletteListGridContainer.ClearGridList();
 
         await LoadTextFromHexFile(); // We load the result from this into currentHextFileText;
-        LoadedPaletteColors = GetHexFileColors(currentHextFileText);
+        ExternalPaletteColors = GetHexFileColors(currentHextFileText);
 
-        GlobalEvents.Instance.OnPaletteChanged.Invoke(LoadedPaletteColors);
-        UpdatePaletteListGrid(LoadedPaletteColors);
+        var godotPersistPalette = GlobalUtil.GetGodotArrayFromList(PersistPaletteColors);
+        CombinedPaletteColors = ExternalPaletteColors + godotPersistPalette;
+
+        GD.PrintT("Total Colors = " + CombinedPaletteColors.Count() + " Ext Colors = " + ExternalPaletteColors.Count + " Persist Colors = " + PersistPaletteColors.Count);
+
+        GlobalEvents.Instance.OnPaletteChanged.Invoke(CombinedPaletteColors);
+
+        UpdatePaletteListGrid(ExternalPaletteColors, ExtPaletteListGridContainer);
 
     }
 
-    public void UpdatePaletteListGrid(Godot.Collections.Array<Color> paletteColors)
+    // private void SendPaletteChangedEvent(Godot.Collections.Array<Color> paletteColors)
+    // {
+    //     GlobalEvents.Instance.OnPaletteChanged.Invoke(paletteColors);
+    // }
+
+    public void UpdatePaletteListGrid(Godot.Collections.Array<Color> paletteColors, PaletteListGrid paletteListGrid = null)
     {
-        PaletteListGridContainer.ClearGridList();
+        if (paletteListGrid == null)
+        {
+            paletteListGrid = ExtPaletteListGridContainer;
+            ExternalPaletteColors = paletteColors;
+        }
+
+        paletteListGrid.ClearGridList();
+
         foreach (var color in paletteColors)
         {
-            PaletteListGridContainer.AddGridItem(color);
+            paletteListGrid.AddGridItem(color);
         }
     }
 

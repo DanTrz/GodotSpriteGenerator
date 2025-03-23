@@ -6,6 +6,7 @@
 
 [resource]
 script = ExtResource("3_nsgub")
+Active = false
 ItemName = "Leg Skin"
 MeshItem = ExtResource("2_k2hcj")
 BodyPartType = 3

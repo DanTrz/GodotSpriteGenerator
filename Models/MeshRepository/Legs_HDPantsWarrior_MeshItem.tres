@@ -5,6 +5,7 @@
 
 [resource]
 script = ExtResource("2_01pwk")
+Active = false
 ItemName = "Warrior Legs Piece HD"
 MeshItem = ExtResource("1_13to0")
 BodyPartType = 3

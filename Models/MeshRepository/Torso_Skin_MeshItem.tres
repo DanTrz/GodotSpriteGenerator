@@ -6,6 +6,7 @@
 
 [resource]
 script = ExtResource("3_chc0x")
+Active = true
 ItemName = "Torso Skin"
 MeshItem = ExtResource("2_tgwgv")
 BodyPartType = 1

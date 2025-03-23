@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Godot;
 using Image = Godot.Image;
@@ -86,29 +87,20 @@ public partial class ImageEditorMainPanel : PanelContainer
         UseExternalPaletteChkBtn.Toggled += OnUseExternalPaletteBtnToggled;
         _resetImgCorrectionBtn.Pressed += OnResetImgCorrectionBtnPressed;
 
-        PaletteLoaderPanel.Visible = false;
+        //PaletteLoaderPanel.Visible = false;
         _effectStatusLabel.Text = "Ready";
         EffectStatusMainPanel.Visible = false;
         UpdateUIElementsOnLoad();
         _isFirstRun = false;
-        SetImgEditorValues();
+
         UpdateViewPortTextures(_originalImage);
+        SetImgEditorValues();
 
     }
 
     private void OnResetImgCorrectionBtnPressed()
     {
         UpdateUIElementsOnLoad(true);
-    }
-
-
-    private void OnPaletteChanged(Godot.Collections.Array<Color> list)
-    {
-        GD.Print("Palette changed");
-        int colorCount = list.Count;
-        _colorCountSpinBox.Value = list.Count;
-        _currentPaletteColors = list;
-        SetImgEditorValues();
     }
 
 
@@ -127,7 +119,10 @@ public partial class ImageEditorMainPanel : PanelContainer
         await ToSignal(fileDialog, FileDialog.SignalName.FileSelected);
         string selectedFiled = fileDialog.CurrentDir + "/" + fileDialog.CurrentFile;
         await LoadTextureFromImgFile(selectedFiled);
+
+        SetImgEditorValues();
         UpdateUIElementsOnLoad();
+
     }
 
     public async Task LoadTextureFromImgFile(string path)
@@ -170,10 +165,30 @@ public partial class ImageEditorMainPanel : PanelContainer
             // Ensure GetUniqueColorsCount is not blocking the main thread.
             //_ImgEditor.NumColors = _ImgEditor.GetUniqueColorsCount(imgToLoad).Result;
 
-            int colorsCount = Task.Run(() => _ImgEditor.GetColorFrequencies(imageToLoad).Count).Result;
+
+
+            //var originalColorsList = _ImgEditor.GetColorFrequencies(imageToLoad).Keys.ToList();
+
+            var originalColorsList = _ImgEditor.GetColorFrequencies(imageToLoad);
+            int colorsCount = originalColorsList.Count;
+
+            GD.PrintT("## Loaded IMG -> Original Colors Count = " + colorsCount);
+
+            List<Color> originalColorsListSorted = originalColorsList.OrderByDescending(pair => pair.Value).Select(pair => pair.Key).ToList();
+
+            // int colorsCount = originalColorsList.Count;
+            //int colorsCount = Task.Run(() => _ImgEditor.GetColorFrequencies(imageToLoad).Count).Result;
+
+
             _ImgEditor.NumColors = colorsCount;
+
+            _colorCountSpinBox.MaxValue = colorsCount;
+            _colorCountSpinBox.Value = _ImgEditor.NumColors;
+
+            //These two values below cannot be changed anywhere else ever.. They are always set at the start or at new Img Load only
             _ImgEditor.MaxNumColors = colorsCount;
-            //_ImgEditor.NumColors = Task.Run(() => _ImgEditor.GetUniqueColorsCount(imgToLoad)).Result;
+            _ImgEditor.OriginalNumColors = colorsCount;
+            _ImgEditor.OriginalImgPalette = GlobalUtil.GetGodotArrayFromList(originalColorsListSorted);
         }
         else
         {
@@ -207,8 +222,9 @@ public partial class ImageEditorMainPanel : PanelContainer
 
         if (isReset)
         {
-            _colorCountSpinBox.MaxValue = Mathf.Clamp(_ImgEditor.MaxNumColors, 1, _ImgEditor.MAX_PALETTE_SIZE);
-            _colorCountSpinBox.Value = _ImgEditor.MaxNumColors;
+            _colorCountSpinBox.MaxValue = _ImgEditor.OriginalNumColors;
+            _colorCountSpinBox.Value = _ImgEditor.OriginalNumColors;
+            _ImgEditor.NumColors = _ImgEditor.OriginalNumColors;
         }
 
     }
@@ -219,32 +235,71 @@ public partial class ImageEditorMainPanel : PanelContainer
 
         GlobalEvents.Instance.OnEffectsChangesStarted.Invoke(this.Name);
 
+        //GET UI VALUES AND SET TO THE IMAGE EDITOR
         _ImgEditor.EnableColorReduction = _colorReductionCheckbox?.ButtonPressed ?? false;
-        _ImgEditor.NumColors = (int)(_colorCountSpinBox?.Value ?? 0);
-        //int colorCount = (int)(_colorCountSpinBox?.Value ?? 0);
-
         _useExternalPalette = UseExternalPaletteChkBtn?.ButtonPressed ?? false;
         _ImgEditor._useExternalPalette = _useExternalPalette;
-        _ImgEditor.ShaderPalette = _currentPaletteColors;
         _ImgEditor.SaturationValue = (float)(_saturationSlider?.Value ?? 1.0f);
         _saturationValueLabel.Text = _saturationSlider.Value.ToString("0.0");
         _ImgEditor.BrightnessValue = (float)(_brightnessSlider?.Value ?? 0.0f);
         _brightnessValueLabel.Text = _brightnessSlider.Value.ToString("0.0");
-        // _ImgEditor.EnableContrast = _enableContrastCheckbox?.ButtonPressed ?? false;
         _ImgEditor.ConstrastValue = (float)(_contrastSlider?.Value ?? 1.0f);
         _contrastValueLabel.Text = _contrastSlider.Value.ToString("0.0");
 
+        //SET THE COLOR COUNT FOR IMG EDITOR AND COLOR REDUCTION SPINBOX
+        int totalColors = 0;
+
+        if (_ImgEditor.EnableColorReduction == false)
+        {
+            //If no color reduction, reset image count values to it's original.
+            totalColors = _ImgEditor.OriginalNumColors;
+        }
+        else
+        {
+            //If WE DO HAVE color reduction, we also count the Persistent Colors + whatever is the user input in the spinbox
+            totalColors = PaletteLoaderPanel.PersistPaletteColors.Count + (int)(_colorCountSpinBox?.Value ?? 0);
+        }
+        _colorCountSpinBox.MaxValue = totalColors;
+        //_colorCountSpinBox.Value = totalColors;
+        _ImgEditor.NumColors = totalColors;
+
+
+        //FOR NON_EXTERNAL PALETTE -> APPLY LOGIC TO GET THE PALETTE COLORS FROM ORIGINAL IMAGE + PERSISTENT COLORS
         if (!_useExternalPalette)
         {
-            _currentPaletteColors = await _ImgEditor.GetOriginalTexturePalette();
-            _ImgEditor.ShaderPalette = _currentPaletteColors;
+            int paletteSize = _ImgEditor.NumColors - PaletteLoaderPanel.PersistPaletteColors.Count;
+            if (paletteSize <= 0) paletteSize = _ImgEditor.NumColors;//Safety net code line to not have it as Zero. 
 
-            PaletteLoaderPanel.Visible = true;
+            _currentPaletteColors = await _ImgEditor.GetNewColorPalette(paletteSize);
         }
+        //FOR EXTERNAL PALETTE WE ARE SETTING THIS IN THE PALETTE LOADER PANEL - SEE METHOD OnPaletteChanged();
+
+        //FINAL UPDATE OF THE UI ELEMENTS + SET THE SHADER PARAMETERS and SHADER PALETTE
+        _ImgEditor.ShaderPalette = GlobalUtil.GetGodotArrayFromList(PaletteLoaderPanel.PersistPaletteColors) + _currentPaletteColors;
         _ImgEditor.UpdateShaderParameters();
         PaletteLoaderPanel.UpdatePaletteListGrid(_currentPaletteColors);
 
+        GD.PrintT("SetImgEditorValues -> Total colors = " + _ImgEditor.ShaderPalette.Count
+        + " Persist Colors = " + PaletteLoaderPanel.PersistPaletteColors.Count
+         + " Current Img Colors = " + _currentPaletteColors.Count);
+
         GlobalEvents.Instance.OnEffectsChangesEnded.Invoke(this.Name, _currentPaletteColors);
+    }
+
+    private void OnPaletteChanged(Godot.Collections.Array<Color> list)
+    {
+        GD.Print("Palette changed to # : " + list.Count);
+        //int colorCount = list.Count;
+
+        _ImgEditor.MaxNumColors = list.Count;
+        _ImgEditor.NumColors = list.Count;
+
+        _colorCountSpinBox.MaxValue = list.Count;
+        //_colorCountSpinBox.Value = _ImgEditor.NumColors;
+
+        _currentPaletteColors = list;
+
+        SetImgEditorValues();
     }
 
     private void OnUseExternalPaletteBtnToggled(bool toggledOn)
@@ -264,14 +319,12 @@ public partial class ImageEditorMainPanel : PanelContainer
         }
     }
 
-
     private void OnEffectsChangesStarted(string fromNode)
     {
         GD.PrintT("Run: OnEffectsChangesStarted");
         _effectStatusLabel.Text = "Processing Image updates....";
         EffectStatusMainPanel.Visible = true;
     }
-
 
     private void OnEffectsChangesEnded(string fromNode, Godot.Collections.Array<Color> list)
     {
@@ -281,63 +334,62 @@ public partial class ImageEditorMainPanel : PanelContainer
         PaletteLoaderPanel.UpdatePaletteListGrid(list);
     }
 
-    private async Task ApplyEffectsAsync(bool doColorReduction, int colorCount, bool doOutline,
-        int outlineThickness, Color outlineColor, bool doDithering, float ditheringStrength)
-    {
+    // private async Task ApplyEffectsAsync(bool doColorReduction, int colorCount, bool doOutline,
+    //     int outlineThickness, Color outlineColor, bool doDithering, float ditheringStrength)
+    // {
 
-        //I always start with a copy of the original image, preserving the original for "undo" (to be implemented)
-        Image modifiedImage = (Image)_originalImage.Duplicate(); //First code version (working)
+    //     //I always start with a copy of the original image, preserving the original for "undo" (to be implemented)
+    //     Image modifiedImage = (Image)_originalImage.Duplicate(); //First code version (working)
 
-        if (doOutline)
-        {
-            modifiedImage = await Task.Run(() => AddOutline(modifiedImage, outlineThickness, outlineColor));
-        }
+    //     if (doOutline)
+    //     {
+    //         modifiedImage = await Task.Run(() => AddOutline(modifiedImage, outlineThickness, outlineColor));
+    //     }
 
-        // Update the texture *after* other effects have been applied
-        CallDeferred(nameof(UpdateTexture), modifiedImage);
-    }
+    //     // Update the texture *after* other effects have been applied
+    //     CallDeferred(nameof(UpdateTexture), modifiedImage);
+    // }
 
-    private Image AddOutline(Image image, int thickness, Color color)
-    {
-        int width = image.GetWidth();
-        int height = image.GetHeight();
-        byte[] originalData = image.GetData();
-        byte[] outlinedData = new byte[originalData.Length];
-        Array.Copy(originalData, outlinedData, originalData.Length);
+    // private Image AddOutline(Image image, int thickness, Color color)
+    // {
+    //     int width = image.GetWidth();
+    //     int height = image.GetHeight();
+    //     byte[] originalData = image.GetData();
+    //     byte[] outlinedData = new byte[originalData.Length];
+    //     Array.Copy(originalData, outlinedData, originalData.Length);
 
-        byte outlineR = (byte)(color.R * 255);
-        byte outlineG = (byte)(color.G * 255);
-        byte outlineB = (byte)(color.B * 255);
-        byte outlineA = (byte)(color.A * 255);
+    //     byte outlineR = (byte)(color.R * 255);
+    //     byte outlineG = (byte)(color.G * 255);
+    //     byte outlineB = (byte)(color.B * 255);
+    //     byte outlineA = (byte)(color.A * 255);
 
-        Parallel.For(0, height, y =>
-        {
-            for (int x = 0; x < width; x++)
-            {
-                int originalIndex = (y * width + x) * 4;
-                if (originalData[originalIndex + 3] == 0) continue;
-                for (int oy = Math.Max(0, y - thickness); oy <= Math.Min(height - 1, y + thickness); oy++)
-                {
-                    for (int ox = Math.Max(0, x - thickness); ox <= Math.Min(width - 1, x + thickness); ox++)
-                    {
-                        if (ox == x && oy == y) continue;
-                        int outlinedIndex = (oy * width + ox) * 4;
-                        if (outlinedData[outlinedIndex + 3] == 0)
-                        {
-                            outlinedData[outlinedIndex + 0] = outlineR;
-                            outlinedData[outlinedIndex + 1] = outlineG;
-                            outlinedData[outlinedIndex + 2] = outlineB;
-                            outlinedData[outlinedIndex + 3] = outlineA;
-                        }
-                    }
-                }
-            }
-        });
+    //     Parallel.For(0, height, y =>
+    //     {
+    //         for (int x = 0; x < width; x++)
+    //         {
+    //             int originalIndex = (y * width + x) * 4;
+    //             if (originalData[originalIndex + 3] == 0) continue;
+    //             for (int oy = Math.Max(0, y - thickness); oy <= Math.Min(height - 1, y + thickness); oy++)
+    //             {
+    //                 for (int ox = Math.Max(0, x - thickness); ox <= Math.Min(width - 1, x + thickness); ox++)
+    //                 {
+    //                     if (ox == x && oy == y) continue;
+    //                     int outlinedIndex = (oy * width + ox) * 4;
+    //                     if (outlinedData[outlinedIndex + 3] == 0)
+    //                     {
+    //                         outlinedData[outlinedIndex + 0] = outlineR;
+    //                         outlinedData[outlinedIndex + 1] = outlineG;
+    //                         outlinedData[outlinedIndex + 2] = outlineB;
+    //                         outlinedData[outlinedIndex + 3] = outlineA;
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     });
 
-        return Image.CreateFromData(width, height, false, Image.Format.Rgba8, outlinedData);
-    }
+    //     return Image.CreateFromData(width, height, false, Image.Format.Rgba8, outlinedData);
+    // }
 
-    //TODO: CURRENTLY NOT WORKING - #BUG TO FIX. 
 
     private async Task OnSaveButtonPressed()
     {
@@ -425,17 +477,17 @@ public partial class ImageEditorMainPanel : PanelContainer
 
         SetImgEditorValues();
 
-        if (newLoadData.OutlineIsOn)
-        {
-            await ApplyEffectsAsync(
-                newLoadData.ColorReductionIsOn,
-                (int)newLoadData.ColorReductionValue,
-                newLoadData.OutlineIsOn,
-                (int)newLoadData.OutlineThicknessSliderValue,
-                newLoadData.OutlineColor,
-                false,
-                0);
-        }
+        // if (newLoadData.OutlineIsOn)
+        // {
+        //     await ApplyEffectsAsync(
+        //         newLoadData.ColorReductionIsOn,
+        //         (int)newLoadData.ColorReductionValue,
+        //         newLoadData.OutlineIsOn,
+        //         (int)newLoadData.OutlineThicknessSliderValue,
+        //         newLoadData.OutlineColor,
+        //         false,
+        //         0);
+        // }
 
     }
 

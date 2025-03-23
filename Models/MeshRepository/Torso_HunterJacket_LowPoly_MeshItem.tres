@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ArrayMeshDataObject" load_steps=3 format=3 uid="uid://0mmftbaumy3x"]
+
+[ext_resource type="ArrayMesh" uid="uid://xbp4eaqdiyni" path="res://Models/FullModels/BaseModel/Armour/BaseModel_HunterJacket_HunterJacket_002.res" id="1_pjw1t"]
+[ext_resource type="Script" uid="uid://cmuqvgdb2248c" path="res://src/ModelAndMeshes/ArrayMeshDataObject.cs" id="3_v8vqx"]
+
+[resource]
+script = ExtResource("3_v8vqx")
+Active = true
+ItemName = "Hunter Jacket"
+MeshItem = ExtResource("1_pjw1t")
+BodyPartType = 1
+ItemOrder = 1
+metadata/_custom_type_script = "uid://cmuqvgdb2248c"

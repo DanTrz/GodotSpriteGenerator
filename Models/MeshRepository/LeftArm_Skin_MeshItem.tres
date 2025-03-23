@@ -5,6 +5,7 @@
 
 [resource]
 script = ExtResource("3_ai1sv")
+Active = true
 ItemName = "LeftArm Skin"
 MeshItem = ExtResource("1_88i10")
 BodyPartType = 5

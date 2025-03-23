@@ -11,8 +11,13 @@ public partial class ImageEditor : PanelContainer
     [Export] public TextureRect ImgTextRect;
     private Texture2D currentTexture;
     [Export] public bool EnableColorReduction = false;
-    [Export] public int NumColors = 16;
-    [Export] public int MaxNumColors = 256;
+    [Export] public int NumColors = 16; //Value of the colors applied by the Shader. Usually what's in the SpinBox Color Reduc
+
+    [Export] public int MaxNumColors = 256; // Dynamic max palette size. This value might change if we add Persistent Colors. 
+
+    public int OriginalNumColors = 0; //StaticValue that should NEVER change after loading an image
+    public Godot.Collections.Array<Color> OriginalImgPalette = new();
+
 
     //[Export] public bool UseExternalPalette = false;
     //public List<Color> ShaderPalette = new();
@@ -39,7 +44,7 @@ public partial class ImageEditor : PanelContainer
 
     public List<Color> ImgkMeansClusterList = new();
 
-    public readonly int MAX_PALETTE_SIZE = 256;
+    public readonly int MAX_PALETTE_SIZE = 512;
 
 
     public override void _Ready()
@@ -83,7 +88,15 @@ public partial class ImageEditor : PanelContainer
 
     }
 
-    public async Task<Godot.Collections.Array<Color>> GetOriginalTexturePalette()
+    /// <summary>
+    /// Reads the original image loaded into the main Image TextureRect and returns a unique list of colors.
+    /// Uses the KMeansClustering algorithm to get a new color list that respects the most frequent colors in the original image.
+    /// Optional: you can add a color list to be merged via the "additionalColors" parameter (Only new colors will be added).
+    /// </summary>
+    /// <param name="colorsToGet">The max number of colors to get.</param>
+    /// <param name="additionalColors">Add new colors if they don't exist</param>
+    /// <returns>Returns a new Godot Array with the colors.</returns>
+    public async Task<Godot.Collections.Array<Color>> GetNewColorPalette(int colorsToGet)
     {
         currentTexture = ImgTextRect.Texture;
 
@@ -106,14 +119,26 @@ public partial class ImageEditor : PanelContainer
                 // GD.Print("Unique Colors after GD Conversion = " + uniqueColorsGodot);
 
                 //CallDeferred("UpdateKMeansClusteringList", image, NumColors);
-                await UpdatedKMeansClusteringAsync(image, NumColors);
+                await UpdatedKMeansClusteringAsync(image, colorsToGet);
 
                 List<Color> originalTexturePalette = ImgkMeansClusterList;
 
-                int uniqueColorsGodot = ColorListToGodotArray(originalTexturePalette.Distinct().ToList()).Count();
+
+                // if (additionalColors != null)
+                // {
+                //     List<Color> colorsToAdd = additionalColors.Where(color => !originalTexturePalette.Contains(color)).Distinct().ToList();
+                //     GD.PrintT("Colors to add to palette = " + colorsToAdd.Count);
+
+                //     originalTexturePalette.AddRange(colorsToAdd);
+                //     //originalTexturePalette.AddRange(additionalColors);
+                //     GD.PrintT("Unified Palette = " + originalTexturePalette.Count);
+                // }
+
+                //int uniqueColorsGodot = ColorListToGodotArray(originalTexturePalette.Distinct().ToList()).Count();
                 //GD.Print("Unique Colors after GD Conversion = " + uniqueColorsGodot);
 
-                return ColorListToGodotArray(originalTexturePalette.Distinct().ToList()); //originalTexturePalette;
+                return GlobalUtil.GetGodotArrayFromList(originalTexturePalette.Distinct().ToList());
+
             }
         }
         GD.PrintErr("Cannot get original texture palette. Texture is null or not a Texture2D.");
@@ -121,6 +146,14 @@ public partial class ImageEditor : PanelContainer
 
     }
 
+
+    /// <summary>
+    /// Iterate over the pixels in the image and count the number of times each color appears, up to a maximum of colors = colorsK.
+    /// Works by identifying the color that are more frequently present in the image.
+    /// Useful if we need to get a new color list that respects the most frequent colors in the original image.
+    /// </summary>
+    /// <param name="colorsK">The max number of colors to get.</param>
+    /// <returns>Returns the Colors that are more frequently present in the image, sorted by most frequent to least frequent..</returns>
     public async Task<List<Color>> UpdatedKMeansClusteringAsync(Image image, int colorsK)
     {
         GD.Print("KMeansClustering Async: Max Colors to check = " + colorsK);
@@ -298,6 +331,11 @@ public partial class ImageEditor : PanelContainer
     }
 
     //public async IAsyncEnumerable<Color> GetColorFrequencies(Image image)
+    /// <summary>
+    /// Counts the number of times each color appears in the image and returns a Dictionary with the colors and and number of times they appear. 
+    /// The Keys represent a Unique Color and the Values are a Int that represents the number of times it appears.
+    /// </summary>
+    /// <returns>Returns a Dictionary with the colors. Key = Color, Value = How many times it appears</returns>
     public Dictionary<Color, int> GetColorFrequencies(Image image)
     {
         Dictionary<Color, int> colorFrequencies = new();
@@ -480,16 +518,7 @@ public partial class ImageEditor : PanelContainer
         return palette;
     }
 
-    public Godot.Collections.Array<Color> ColorListToGodotArray(List<Color> colorList)
-    {
-        //1. Convert the colorList to a Godot.Array
-        Godot.Collections.Array<Color> godotArray = new();
-        foreach (Color color in colorList)
-        {
-            godotArray.Add(color);
-        }
-        return godotArray;
-    }
+
 
     // public async void GetOrUpdateTotalColorCount(Image image)
     // {

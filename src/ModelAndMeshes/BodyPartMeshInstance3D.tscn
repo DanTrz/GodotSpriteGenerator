@@ -82,5 +82,6 @@ bind/24/bone = -1
 bind/24/pose = Transform3D(-0.961101, -0.0838673, -0.263156, -0.263098, -0.0119404, 0.964694, -0.0840487, 0.996405, -0.0105892, -1.41884, -2.35254, -0.879399)
 
 [node name="BodyPartMeshInstance3D" type="MeshInstance3D"]
+cast_shadow = 0
 skin = SubResource("Skin_ftg4b")
 script = ExtResource("2_r2kij")

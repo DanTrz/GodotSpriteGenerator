@@ -6,6 +6,7 @@
 
 [resource]
 script = ExtResource("3_ttk7h")
+Active = false
 ItemName = "Gray ArmourPlateMeshItem"
 MeshItem = ExtResource("2_0e5jh")
 BodyPartType = 1

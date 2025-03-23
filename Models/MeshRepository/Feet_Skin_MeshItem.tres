@@ -6,6 +6,7 @@
 
 [resource]
 script = ExtResource("3_tmtq8")
+Active = true
 ItemName = "Feet Skin"
 MeshItem = ExtResource("2_lctqi")
 BodyPartType = 4

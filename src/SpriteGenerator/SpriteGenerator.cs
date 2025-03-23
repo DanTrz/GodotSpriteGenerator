@@ -501,6 +501,9 @@ public partial class SpriteGenerator : Node
                 MeshShaderPixel3D.Visible = true;
                 PixelationLevelOptionBtn.Visible = false;
                 OnPixelationLevelChanged(99);//Set the resolution to 512 pixels (Last option)
+
+                Callable.From(() => EffectsHandler.SetEffect(_characterModelObject, Const.EffectShadingType.STANDARD)).CallDeferred();
+                //EffectsHandler.SetEffect(_characterModelObject, Const.EffectShadingType.STANDARD);//TODO: TESTING ONLY
                 break;
             case 1:
                 //Pixel Effect

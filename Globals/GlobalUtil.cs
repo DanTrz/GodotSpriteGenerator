@@ -246,6 +246,16 @@ public static partial class GlobalUtil
         return foundNodes;
     }
 
+    public static Godot.Collections.Array<Color> GetGodotArrayFromList(List<Color> colorList)
+    {
+        //1. Convert the colorList to a Godot.Array
+        Godot.Collections.Array<Color> godotArray = new();
+        foreach (Color color in colorList)
+        {
+            godotArray.Add(color);
+        }
+        return godotArray;
+    }
 
     public static List<T> GetResourcesByType<T>(string resourceDirPath)
     {

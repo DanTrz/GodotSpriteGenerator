@@ -3,10 +3,9 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://d4maaoxl2nlew"
-path.s3tc="res://.godot/imported/HeadLowPoly_BaseModel_LowPoly_PLY-0-LEFT_ARMSet_Color.png-3a324b3b5a6ade31ce431c956212111c.s3tc.ctex"
+path="res://.godot/imported/HeadLowPoly_BaseModel_LowPoly_PLY-0-LEFT_ARMSet_Color.png-3a324b3b5a6ade31ce431c956212111c.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
-"vram_texture": true
+"vram_texture": false
 }
 generator_parameters={
 "md5": "7919dffed52d36a6a943602a95c8db4c"
@@ -15,11 +14,11 @@ generator_parameters={
 [deps]
 
 source_file="res://Models/FullModels/BaseModel/LowPoly/UpdatedHead/HeadLowPoly_BaseModel_LowPoly_PLY-0-LEFT_ARMSet_Color.png"
-dest_files=["res://.godot/imported/HeadLowPoly_BaseModel_LowPoly_PLY-0-LEFT_ARMSet_Color.png-3a324b3b5a6ade31ce431c956212111c.s3tc.ctex"]
+dest_files=["res://.godot/imported/HeadLowPoly_BaseModel_LowPoly_PLY-0-LEFT_ARMSet_Color.png-3a324b3b5a6ade31ce431c956212111c.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1

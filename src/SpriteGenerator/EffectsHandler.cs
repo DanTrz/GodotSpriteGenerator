@@ -14,8 +14,23 @@ public static class EffectsHandler
     private static bool __emissionEnabled;
     private static float _roughnessValue;
     private static float _rimValue;
+
+    private static void PreparStandardVariables()
+    {
+        //GD.PrintT("Prepare Standard Effect ShadedVariables");
+        _shadingMode = BaseMaterial3D.ShadingModeEnum.PerPixel;
+        _textureFilter = BaseMaterial3D.TextureFilterEnum.Linear;
+        _diffuseMode = BaseMaterial3D.DiffuseModeEnum.Burley;
+        _specularMode = BaseMaterial3D.SpecularModeEnum.SchlickGgx;
+        _transparency = BaseMaterial3D.TransparencyEnum.Disabled;
+        _receiveShadows = true;
+        __emissionEnabled = false;
+        _roughnessValue = 0.0f; //BaseMaterial3D.TextureParam.Roughness; ////0 to 1 float
+        _rimValue = 0.0f; //BaseMaterial3D.TextureParam.Rim;////0 to 1 float
+    }
     private static void PrepareUnshadedVariables()
     {
+
         //GD.PrintT("Prepare UnShaded Effect ShadedVariables");
         _shadingMode = BaseMaterial3D.ShadingModeEnum.Unshaded;
         _textureFilter = BaseMaterial3D.TextureFilterEnum.Nearest;
@@ -24,7 +39,7 @@ public static class EffectsHandler
         _transparency = BaseMaterial3D.TransparencyEnum.Disabled;
         _receiveShadows = false;
         __emissionEnabled = false;
-        _roughnessValue = 0.0f; //BaseMaterial3D.TextureParam.Roughness; ////0 to 1 float
+        _roughnessValue = 1.0f; //BaseMaterial3D.TextureParam.Roughness; ////0 to 1 float
         _rimValue = 0.0f; //BaseMaterial3D.TextureParam.Rim;////0 to 1 float
     }
 
@@ -38,8 +53,8 @@ public static class EffectsHandler
         _transparency = BaseMaterial3D.TransparencyEnum.Disabled;
         _receiveShadows = true;
         __emissionEnabled = false;
-        _roughnessValue = 0.8f; //BaseMaterial3D.TextureParam.Roughness; ////0 to 1 float
-        _rimValue = 0.2f; //BaseMaterial3D.TextureParam.Rim;////0 to 1 float
+        _roughnessValue = 1.0F; //BaseMaterial3D.TextureParam.Roughness; ////0 to 1 float
+        _rimValue = 0.0f; //BaseMaterial3D.TextureParam.Rim;////0 to 1 float
     }
 
     public static void SetEffect(this Node3D node, Const.EffectShadingType effectType)
@@ -50,14 +65,36 @@ public static class EffectsHandler
         {
             switch (effectType)
             {
+                case Const.EffectShadingType.STANDARD:
+                    meshInstance3D.CastShadow = MeshInstance3D.ShadowCastingSetting.Off;
+                    PreparStandardVariables();
+                    break;
+
                 case Const.EffectShadingType.UNSHADED:
                     meshInstance3D.CastShadow = MeshInstance3D.ShadowCastingSetting.Off;
                     PrepareUnshadedVariables();
                     break;
+
                 case Const.EffectShadingType.TOON:
-                    meshInstance3D.CastShadow = MeshInstance3D.ShadowCastingSetting.On;
                     PrepareToonShadedVariables();
                     break;
+            }
+
+            if (meshInstance3D is BodyPartMeshInstance3D bodyMesh)
+            {
+                if (bodyMesh.BodyPartType != Const.BodyPartType.WEAPON)
+                {
+                    meshInstance3D.CastShadow = MeshInstance3D.ShadowCastingSetting.On;
+                }
+                else
+                {
+                    meshInstance3D.CastShadow = MeshInstance3D.ShadowCastingSetting.Off;
+                }
+
+                if (bodyMesh.BodyPartType == Const.BodyPartType.HEAD)
+                {
+                    _receiveShadows = false;
+                }
             }
 
             ApplyEffectsToMesh(meshInstance3D.Mesh);

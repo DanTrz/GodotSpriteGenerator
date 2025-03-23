@@ -10,11 +10,13 @@ public partial class MeshReplacer : Node
 
     public static void UpdateUIOptionMesheItemList(MeshReplacerOptButton itemMeshOptBtn, Const.BodyPartType bodyPart)
     {
-        //GetAllMeshItemRes();
+        //GetAllMeshItem data that are ArrayMeshDataObject type
         arrayMeshDataObjects = GlobalUtil.GetResourcesByType<ArrayMeshDataObject>(Const.MESH_REPO_FOLDER_PATH);
         arrayMeshDataObjects.Sort((a, b) => a.ItemOrder.CompareTo(b.ItemOrder));
 
-        var bodyPartMeshes = arrayMeshDataObjects.Where(mesh => mesh.BodyPartType == itemMeshOptBtn.BodyPartType).ToList();
+        var bodyPartMeshes = arrayMeshDataObjects.Where(
+            mesh => mesh.BodyPartType == itemMeshOptBtn.BodyPartType
+            && mesh.Active == true).ToList();
 
         int itemId = 1;
         foreach (ArrayMeshDataObject item in bodyPartMeshes)
