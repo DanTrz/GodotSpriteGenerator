@@ -157,7 +157,7 @@ public partial class SpriteGenerator : Node
 
     private void OnStartGeneration()
     {
-        if (!GlobalUtil.HasDirectory(GlobalUtil.SaveFolderPath, this)) return;
+        if (!GlobalUtil.HasDirectory(GlobalUtil.SaveFolderPath, this).Result) return;
 
         int[] selectedAngles = _angleSelectionItemList.GetSelectedItems().Select(x => Convert.ToInt32(_angleSelectionItemList.
         GetItemText(x))).ToArray();

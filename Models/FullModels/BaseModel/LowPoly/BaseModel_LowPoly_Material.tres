@@ -1,7 +1,6 @@
-[gd_resource type="StandardMaterial3D" load_steps=5 format=3 uid="uid://b16aew2dfppre"]
+[gd_resource type="StandardMaterial3D" load_steps=4 format=3 uid="uid://b16aew2dfppre"]
 
 [ext_resource type="Texture2D" uid="uid://dyeiyotfjxkoi" path="res://Models/FullModels/BaseModel/LowPoly/BaseModel_LowPolyVersion02_Ucupaint BaseModel_LowPoly_Material Color.png" id="1_iinut"]
-[ext_resource type="Texture2D" uid="uid://u4svlwob1l7l" path="res://Models/FullModels/BaseModel/LowPoly/BaseModel_LowPolyVersion02_BaseModel_LowPoly_PLY-0-LEFT_ARMSet_Color.png" id="1_jkcu7"]
 
 [sub_resource type="Gradient" id="Gradient_iinut"]
 colors = PackedColorArray(1, 0, 0, 1, 1, 1, 1, 1)
@@ -17,7 +16,6 @@ cull_mode = 2
 diffuse_mode = 3
 specular_mode = 1
 albedo_texture = ExtResource("1_iinut")
-emission_texture = ExtResource("1_jkcu7")
 rim_enabled = true
 rim = 0.0
 ao_light_affect = 0.64

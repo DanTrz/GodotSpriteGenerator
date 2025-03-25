@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using Godot;
 
-public static partial class GlobalUtil
+public static class GlobalUtil
 {
 
     // --- Folder Functions ---
@@ -16,7 +17,7 @@ public static partial class GlobalUtil
         set { _saveFolder = value; }
     }
 
-    public static bool HasDirectory(string path, Node sourceNode)
+    public static async Task<bool> HasDirectory(string path, Node sourceNode)
     {
         if (Directory.Exists(path))
         {
@@ -26,17 +27,27 @@ public static partial class GlobalUtil
         {
             GD.PrintErr("Directory does not exist: " + path);
 
-            using Godot.AcceptDialog acceptDialog = new Godot.AcceptDialog
+            await Task.Run(() =>
             {
-                Title = "Error: Directory not Found",
-                DialogText = "Directory does not exist: " + path
-            };
+                ShowErrorDialog("Error: Directory not Found", "Directory does not exist: " + path, sourceNode);
+            });
 
-            sourceNode.AddChild(acceptDialog);
-            acceptDialog.PopupCentered();
 
             return false;
         }
+    }
+
+    public static void ShowErrorDialog(string title, string message, Node parentNode)
+    {
+        using Godot.AcceptDialog acceptDialog = new Godot.AcceptDialog
+        {
+            Title = message,
+            DialogText = message
+        };
+
+        parentNode.AddChild(acceptDialog);
+        acceptDialog.PopupCentered();
+
     }
 
     public static void OnFolderSelected(string dir, LineEdit spriteGenFolderPathLineEdit = null)
@@ -217,6 +228,18 @@ public static partial class GlobalUtil
         return Mathf.Clamp(value, min, max);
     }
 
+    public static Godot.Collections.Array<Color> GetGodotArrayFromList(List<Color> colorList)
+    {
+        //1. Convert the colorList to a Godot.Array
+        Godot.Collections.Array<Color> godotArray = new();
+        foreach (Color color in colorList)
+        {
+            godotArray.Add(color);
+        }
+        return godotArray;
+    }
+
+
     #endregion IMAGE Processing:  Helper Functions
 
 
@@ -244,17 +267,6 @@ public static partial class GlobalUtil
         }
 
         return foundNodes;
-    }
-
-    public static Godot.Collections.Array<Color> GetGodotArrayFromList(List<Color> colorList)
-    {
-        //1. Convert the colorList to a Godot.Array
-        Godot.Collections.Array<Color> godotArray = new();
-        foreach (Color color in colorList)
-        {
-            godotArray.Add(color);
-        }
-        return godotArray;
     }
 
     public static List<T> GetResourcesByType<T>(string resourceDirPath)

@@ -18,9 +18,6 @@ public partial class ImageEditor : PanelContainer
     public int OriginalNumColors = 0; //StaticValue that should NEVER change after loading an image
     public Godot.Collections.Array<Color> OriginalImgPalette = new();
 
-
-    //[Export] public bool UseExternalPalette = false;
-    //public List<Color> ShaderPalette = new();
     [Export] public bool EnableSaturation = true;
     [Export] public float SaturationValue = 1.0f;
     [Export] public bool EnableBrightness = true;
@@ -30,7 +27,6 @@ public partial class ImageEditor : PanelContainer
     [Export] public float ConstrastValue = 1.0f;
     [Export] public SubViewport ImgEditorSubViewport;
 
-    //[Export] public Godot.Collections.Array<Color> _currentPaletteColors = new(); //public List<Color> _currentPaletteColors = new(); Brightness = 1.0f;
     [Export] public Godot.Collections.Array<Color> ShaderPalette = new();
 
     //HD Section to Saving
@@ -51,8 +47,7 @@ public partial class ImageEditor : PanelContainer
     {
         currentTexture = ImgTextRect.Texture;
         NumColors = GetColorFrequencies(currentTexture.GetImage()).Count();
-        //NumColors = GetUniqueColorsCount(currentTexture.GetImage()).Result; // this Updates NumColors variaable
-        //HDCanvasLayer.Visible = false;
+
     }
 
     public void UpdateShaderParameters()
@@ -72,17 +67,8 @@ public partial class ImageEditor : PanelContainer
 
         shaderMaterial.SetShaderParameter("enable_color_reduction", EnableColorReduction);
         shaderMaterial.SetShaderParameter("num_colors", NumColors);
-        //shaderMaterial.SetShaderParameter("use_external_palette", UseExternalPalette);
 
         if (!EnableColorReduction) return;
-
-        // if (!_useExternalPalette)
-        // {
-        //     currentTexture = ImgTextRect.Texture;
-
-        //     //TODO: Determine if this is needed #BUG
-        //     ShaderPalette = GetOriginalTexturePalette();
-        // }
 
         shaderMaterial.SetShaderParameter("palette", ShaderPalette);
 
@@ -113,29 +99,9 @@ public partial class ImageEditor : PanelContainer
             else
             {
 
-                //List<Color> originalTexturePalette = KMeansClustering(image, NumColors).Result;
-                //return ColorListToGodotArray(originalTexturePalette);
-                // int uniqueColorsGodot = ColorListToGodotArray(originalTexturePalette.Distinct().ToList()).Count();
-                // GD.Print("Unique Colors after GD Conversion = " + uniqueColorsGodot);
-
-                //CallDeferred("UpdateKMeansClusteringList", image, NumColors);
                 await UpdatedKMeansClusteringAsync(image, colorsToGet);
 
                 List<Color> originalTexturePalette = ImgkMeansClusterList;
-
-
-                // if (additionalColors != null)
-                // {
-                //     List<Color> colorsToAdd = additionalColors.Where(color => !originalTexturePalette.Contains(color)).Distinct().ToList();
-                //     GD.PrintT("Colors to add to palette = " + colorsToAdd.Count);
-
-                //     originalTexturePalette.AddRange(colorsToAdd);
-                //     //originalTexturePalette.AddRange(additionalColors);
-                //     GD.PrintT("Unified Palette = " + originalTexturePalette.Count);
-                // }
-
-                //int uniqueColorsGodot = ColorListToGodotArray(originalTexturePalette.Distinct().ToList()).Count();
-                //GD.Print("Unique Colors after GD Conversion = " + uniqueColorsGodot);
 
                 return GlobalUtil.GetGodotArrayFromList(originalTexturePalette.Distinct().ToList());
 
@@ -158,6 +124,17 @@ public partial class ImageEditor : PanelContainer
     {
         GD.Print("KMeansClustering Async: Max Colors to check = " + colorsK);
 
+        if (colorsK > MAX_PALETTE_SIZE)
+        {
+            GD.PrintErr("Image has more than supported palette size. Max palette size is " + MAX_PALETTE_SIZE);
+            colorsK = MAX_PALETTE_SIZE;
+
+            // GlobalUtil.ShowErrorDialog("Error: Max Palette Size",
+            // "Image has more than supported palette size. Only " + colorsK + " colors will be used.", this);
+
+            GlobalEvents.Instance.OnForcedPaletteSize.Invoke(colorsK);
+        }
+
         await Task.Run(() =>
         {
             if (image == null || image.GetWidth() == 0 || image.GetHeight() == 0)
@@ -167,6 +144,13 @@ public partial class ImageEditor : PanelContainer
 
             // 1. Get *all* colors (not just unique) and their frequencies.
             Dictionary<Color, int> colorFrequencies = GetColorFrequencies(image);
+
+            if (colorFrequencies.Count > colorsK)
+            {
+                colorFrequencies = colorFrequencies.OrderByDescending(pair => pair.Value).Take(Math.Min(colorsK, colorFrequencies.Count)).ToDictionary(pair => pair.Key, pair => pair.Value);
+
+                GD.PrintT("GetUniqueColorsCount => Forced palette limit to =" + colorsK);
+            }
 
             // 2. Handle cases where the number of unique colors is less than k.
             if (colorFrequencies.Count <= colorsK)
@@ -358,118 +342,6 @@ public partial class ImageEditor : PanelContainer
         return colorFrequencies;
     }
 
-    // private async void UpdateKMeansClusteringList(Image image, int colorsK)
-    // {
-    //     GD.PrintT("KMeansClustering: Started. Max colors= " + colorsK);
-    //     await Task.Run(() =>
-    //     {
-    //         if (image == null || image.GetWidth() == 0 || image.GetHeight() == 0)
-    //         {
-    //             ImgkMeansClusterList = Enumerable.Repeat(Colors.Black, colorsK).ToList();
-    //         }
-
-    //         // 1. Get all colors and their frequencies.
-    //         Dictionary<Color, int> colorFrequencies = GetColorFrequencies(image);
-
-    //         // Dictionary<Color, int> colorFrequencies = new();
-    //         // for (int y = 0; y < image.GetHeight(); y++)
-    //         // {
-    //         //     for (int x = 0; x < image.GetWidth(); x++)
-    //         //     {
-    //         //         Color pixelColor = image.GetPixel(x, y);
-    //         //         if (pixelColor.A > 0) // Consider alpha
-    //         //         {
-    //         //             if (colorFrequencies.ContainsKey(pixelColor))
-    //         //                 colorFrequencies[pixelColor]++;
-    //         //             else
-    //         //                 colorFrequencies[pixelColor] = 1;
-    //         //         }
-    //         //     }
-    //         // }
-
-    //         // 2. If unique colors are less than colorsK, pad the result.
-    //         GD.PrintT("KMeansClustering: Frequencies of unique colors = " + colorFrequencies.Count);
-    //         if (colorFrequencies.Count <= colorsK)
-    //         {
-    //             List<Color> result = colorFrequencies.Keys.ToList();
-    //             while (result.Count < colorsK)
-    //             {
-    //                 result.Add(Colors.Black); // Pad with black
-    //             }
-    //             ImgkMeansClusterList = result;
-    //         }
-
-    //         // 3. Initialization: Use most frequent colors for deterministic behavior.
-    //         List<Color> sortedColors = colorFrequencies
-    //             .OrderByDescending(pair => pair.Value)
-    //             .Select(pair => pair.Key)
-    //             .ToList();
-    //         List<Color> centroids = new();
-    //         centroids.AddRange(sortedColors.Take(colorsK));
-
-    //         // In case additional centroids are needed, fill them deterministically.
-    //         if (centroids.Count < colorsK)
-    //         {
-    //             centroids.AddRange(sortedColors.Skip(centroids.Count).Take(colorsK - centroids.Count));
-    //         }
-
-    //         // 4. K-Means iterations using weighted sums.
-    //         int maxIterations = 16;
-    //         for (int iteration = 0; iteration < maxIterations; iteration++)
-    //         {
-    //             // Initialize accumulators for weighted sums and counts.
-    //             Vector3[] sumColors = new Vector3[colorsK];
-    //             int[] totalWeights = new int[colorsK];
-
-    //             // Assignment: update accumulators instead of creating lists.
-    //             foreach (var kvp in colorFrequencies)
-    //             {
-    //                 Color color = kvp.Key;
-    //                 int frequency = kvp.Value;
-    //                 int nearestIndex = FindNearestCentroidIndex(color, centroids);
-    //                 sumColors[nearestIndex] += new Vector3(color.R, color.G, color.B) * frequency;
-    //                 totalWeights[nearestIndex] += frequency;
-    //             }
-
-    //             bool centroidsChanged = false;
-    //             List<Color> newCentroids = new List<Color>(colorsK);
-
-    //             // Update centroids based on weighted sums.
-    //             for (int i = 0; i < colorsK; i++)
-    //             {
-    //                 Color newCentroid;
-    //                 if (totalWeights[i] > 0)
-    //                 {
-    //                     float r = sumColors[i].X / totalWeights[i];
-    //                     float g = sumColors[i].Y / totalWeights[i];
-    //                     float b = sumColors[i].Z / totalWeights[i];
-    //                     newCentroid = new Color(r, g, b, 1.0f);
-    //                 }
-    //                 else
-    //                 {
-    //                     // If no color was assigned, keep the previous centroid.
-    //                     newCentroid = centroids[i];
-    //                 }
-
-    //                 if (!newCentroid.IsEqualApprox(centroids[i]))
-    //                     centroidsChanged = true;
-
-    //                 newCentroids.Add(newCentroid);
-    //             }
-
-    //             centroids = newCentroids;
-
-    //             if (!centroidsChanged)
-    //                 break;
-    //         }
-    //         ImgkMeansClusterList = centroids;
-
-    //     });
-
-
-    // }
-
-
     private static int FindNearestCentroidIndex(Color color, List<Color> centroids)
     {
         int nearestIndex = 0;
@@ -517,29 +389,5 @@ public partial class ImageEditor : PanelContainer
         }
         return palette;
     }
-
-
-
-    // public async void GetOrUpdateTotalColorCount(Image image)
-    // {
-    //     if (image.IsEmpty())
-    //     {
-    //         NumColors = 0;
-    //     }
-
-    //     HashSet<ulong> uniqueColors = new HashSet<ulong>(); // Use ulong for color comparison
-
-    //     for (int x = 0; x < image.GetWidth(); x++)
-    //     {
-    //         for (int y = 0; y < image.GetHeight(); y++)
-    //         {
-    //             Color color = image.GetPixel(x, y);
-    //             // Convert Color to a single ulong for efficient comparison
-    //             ulong colorValue = ((uint)color.R8 << 24) | ((uint)color.G8 << 16) | ((uint)color.B8 << 8) | (uint)color.A8;
-    //             uniqueColors.Add(colorValue);
-    //         }
-    //     }
-    //     NumColors = uniqueColors.Distinct().ToList().Count;
-    // }
 
 }

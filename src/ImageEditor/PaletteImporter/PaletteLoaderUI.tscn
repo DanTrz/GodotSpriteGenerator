@@ -91,7 +91,7 @@ theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = 2
 
 [node name="ExtPaletteListGridContainer" parent="PanelContainer/VBoxContainer/LoadExtPaletteContainer/PaletteOptionsHbOx/PaletteListPanel/MarginContainer/ScrollContainer/MarginContainer" instance=ExtResource("1_logbv")]
-custom_minimum_size = Vector2(345, 70)
+custom_minimum_size = Vector2(345, 60)
 layout_mode = 2
 theme_override_constants/h_separation = 5
 theme_override_constants/v_separation = 5
@@ -157,7 +157,7 @@ size_flags_vertical = 4
 text = "Clear"
 
 [node name="PaletteListPanel" type="PanelContainer" parent="PanelContainer/VBoxContainer/PersistColorsContainer/PersistentColors"]
-custom_minimum_size = Vector2(0, 75)
+custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer/PersistColorsContainer/PersistentColors/PaletteListPanel"]

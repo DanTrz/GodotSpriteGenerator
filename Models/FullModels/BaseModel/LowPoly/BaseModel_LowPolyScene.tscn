@@ -3,8 +3,8 @@
 [ext_resource type="ArrayMesh" uid="uid://ngvcsk60iqq5" path="res://Models/FullModels/BaseModel/LowPoly/BaseModel_LowPolyVersion02_LowPoly_FEET.res" id="1_hlce3"]
 [ext_resource type="Script" uid="uid://bmo8euegtbowp" path="res://src/ModelAndMeshes/BodyPartMeshInstance3D.cs" id="2_gkkld"]
 [ext_resource type="ArrayMesh" uid="uid://dbktgjgo66ygb" path="res://Models/FullModels/BaseModel/LowPoly/BaseModel_LowPolyVersion02_LowPoly_LEFT_ARM.res" id="3_gkkld"]
-[ext_resource type="ArrayMesh" uid="uid://bhx07dj2tkr8r" path="res://Models/FullModels/BaseModel/LowPoly/UpdatedHead/HeadLowPoly_LowPoly_HEAD.res" id="3_xrc71"]
 [ext_resource type="ArrayMesh" uid="uid://cmstsf0af0ayq" path="res://Models/FullModels/BaseModel/LowPoly/BaseModel_LowPolyVersion02_LowPoly_LEGS.res" id="4_xrc71"]
+[ext_resource type="ArrayMesh" uid="uid://dbcugbupa74m" path="res://Models/FullModels/BaseModel/LowPoly/BaseModel_LowPolyVersion02_LowPoly_HEAD.res" id="5_gkkld"]
 [ext_resource type="ArrayMesh" uid="uid://dkwb46hcbuaq8" path="res://Models/FullModels/BaseModel/LowPoly/BaseModel_LowPolyVersion02_LowPoly_RIGHT_ARM.res" id="5_qwb6k"]
 [ext_resource type="ArrayMesh" uid="uid://bawo38n3tk7fw" path="res://Models/FullModels/BaseModel/LowPoly/BaseModel_LowPolyVersion02_LowPoly_TORSO.res" id="6_8a6l1"]
 [ext_resource type="PackedScene" uid="uid://dpa7h0crxxisw" path="res://Models/MeshRepository/Hair/1_HairMale01.tscn" id="7_gkkld"]
@@ -1599,7 +1599,7 @@ bones/0/name = "Hips"
 bones/0/parent = -1
 bones/0/rest = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.17187e-06, 11.3802, -0.662719)
 bones/0/enabled = true
-bones/0/position = Vector3(-0.077257, 10.2967, 0.0400072)
+bones/0/position = Vector3(0.0161822, 10.4788, 0.0699457)
 bones/0/rotation = Quaternion(1.49012e-07, -8.98517e-07, 3.16693e-05, 1)
 bones/0/scale = Vector3(1, 1, 1)
 bones/1/name = "Spine"
@@ -1779,6 +1779,14 @@ skin = SubResource("Skin_iit1j")
 script = ExtResource("2_gkkld")
 BodyPartType = 3
 
+[node name="TORSO" type="MeshInstance3D" parent="LowPoly/GeneralSkeleton"]
+unique_name_in_owner = true
+cast_shadow = 0
+mesh = ExtResource("6_8a6l1")
+skin = SubResource("Skin_iit1j")
+script = ExtResource("2_gkkld")
+BodyPartType = 1
+
 [node name="FEET" type="MeshInstance3D" parent="LowPoly/GeneralSkeleton"]
 unique_name_in_owner = true
 cast_shadow = 0
@@ -1790,7 +1798,7 @@ BodyPartType = 4
 [node name="HEAD" type="MeshInstance3D" parent="LowPoly/GeneralSkeleton"]
 unique_name_in_owner = true
 cast_shadow = 0
-mesh = ExtResource("3_xrc71")
+mesh = ExtResource("5_gkkld")
 skin = SubResource("Skin_iit1j")
 script = ExtResource("2_gkkld")
 
@@ -1810,17 +1818,9 @@ skin = SubResource("Skin_iit1j")
 script = ExtResource("2_gkkld")
 BodyPartType = 6
 
-[node name="TORSO" type="MeshInstance3D" parent="LowPoly/GeneralSkeleton"]
-unique_name_in_owner = true
-cast_shadow = 0
-mesh = ExtResource("6_8a6l1")
-skin = SubResource("Skin_iit1j")
-script = ExtResource("2_gkkld")
-BodyPartType = 1
-
 [node name="HairBoneAttach" type="BoneAttachment3D" parent="LowPoly/GeneralSkeleton"]
 unique_name_in_owner = true
-transform = Transform3D(1, 4.41937e-13, 4.76348e-11, 5.35673e-13, 1, -5.2154e-08, -4.77485e-11, 5.2154e-08, 1, -0.0773584, 19.7601, 0.104477)
+transform = Transform3D(1, 4.41937e-13, 4.76348e-11, 5.35673e-13, 1, -5.2154e-08, -4.77485e-11, 5.2154e-08, 1, 0.0160808, 19.9422, 0.134416)
 bone_name = "Head"
 bone_idx = 5
 
@@ -1828,7 +1828,8 @@ bone_idx = 5
 
 [node name="WeaponBoneAttach" type="BoneAttachment3D" parent="LowPoly/GeneralSkeleton"]
 unique_name_in_owner = true
-transform = Transform3D(0.0194825, -0.999806, 0.00283969, -0.000126234, -0.00284275, -0.999996, 0.99981, 0.019482, -0.000181556, -11.4202, 17.6978, -0.0802228)
+transform = Transform3D(0.0194825, -0.999806, 0.00283978, -0.000126142, -0.00284287, -0.999996, 0.99981, 0.019482, -0.000181437, -11.3267, 17.8799, -0.0502846)
+visible = false
 bone_name = "RightHand"
 bone_idx = 14
 

@@ -2,19 +2,19 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://u4svlwob1l7l"
-path="res://.godot/imported/BaseModel_LowPolyVersion02_BaseModel_LowPoly_PLY-0-LEFT_ARMSet_Color.png-60d71d6bec30ae9bcf7200f7c3bccf89.ctex"
+uid="uid://c5mbfkh1ilkq2"
+path="res://.godot/imported/BaseModel_HunterJacket_JunterGearOBJ-7-JacketSmall.png-2f73a9b6a639ddc61521c515c85cccae.ctex"
 metadata={
 "vram_texture": false
 }
 generator_parameters={
-"md5": "7919dffed52d36a6a943602a95c8db4c"
+"md5": "85c6958b89dfb23b493cbaa02d74f1c3"
 }
 
 [deps]
 
-source_file="res://Models/FullModels/BaseModel/LowPoly/BaseModel_LowPolyVersion02_BaseModel_LowPoly_PLY-0-LEFT_ARMSet_Color.png"
-dest_files=["res://.godot/imported/BaseModel_LowPolyVersion02_BaseModel_LowPoly_PLY-0-LEFT_ARMSet_Color.png-60d71d6bec30ae9bcf7200f7c3bccf89.ctex"]
+source_file="res://Models/FullModels/BaseModel/LowPoly/Gear/BaseModel_HunterJacket_JunterGearOBJ-7-JacketSmall.png"
+dest_files=["res://.godot/imported/BaseModel_HunterJacket_JunterGearOBJ-7-JacketSmall.png-2f73a9b6a639ddc61521c515c85cccae.ctex"]
 
 [params]
 

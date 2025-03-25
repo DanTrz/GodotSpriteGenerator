@@ -81,7 +81,7 @@ public partial class MainInterfaceUI : Node
         //string folderCurrentDir = Const.USER_ROOT_FOLDER_PATH; // Ensure it's inside user:// or res://
         string globalizedSavePath = ProjectSettings.GlobalizePath(Const.SAVE_GAME_PATH);
 
-        if (!GlobalUtil.HasDirectory(globalizedSavePath, this))
+        if (!GlobalUtil.HasDirectory(globalizedSavePath, this).Result)
         {
             GD.Print("Directory does NOT exist: " + globalizedSavePath);
             globalizedSavePath = "user://"; // Fallback to a safe default
@@ -102,7 +102,7 @@ public partial class MainInterfaceUI : Node
     {
 
         string directory = ProjectSettings.GlobalizePath(_spriteGenFolderPathLineEdit.Text);
-        if (GlobalUtil.HasDirectory(directory, this))
+        if (GlobalUtil.HasDirectory(directory, this).Result)
         {
             OS.ShellOpen(directory);
         }

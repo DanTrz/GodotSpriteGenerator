@@ -56,14 +56,14 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-current_tab = 0
+current_tab = 1
 all_tabs_in_front = true
 
 [node name="SpriteGenerator" parent="MainUI/MainTabContainer" instance=ExtResource("2_y5307")]
+visible = false
 layout_mode = 2
 
 [node name="ImageEditor" parent="MainUI/MainTabContainer" instance=ExtResource("2_kfhly")]
-visible = false
 layout_mode = 2
 
 [node name="SettingsMainPanel" type="MarginContainer" parent="MainUI"]

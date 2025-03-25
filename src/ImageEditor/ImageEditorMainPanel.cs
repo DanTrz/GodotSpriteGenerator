@@ -32,6 +32,8 @@ public partial class ImageEditorMainPanel : PanelContainer
 
     [Export] public Button LoadExternalImg;
 
+    [Export] public Label PaletteSizeMaxValueLbl;
+
     private Godot.Collections.Array<Color> _currentPaletteColors = new();
     private Texture2D _originalTexture;
     private Image _originalImage;
@@ -84,8 +86,10 @@ public partial class ImageEditorMainPanel : PanelContainer
         GlobalEvents.Instance.OnPaletteChanged += OnPaletteChanged;
         GlobalEvents.Instance.OnEffectsChangesStarted += OnEffectsChangesStarted;
         GlobalEvents.Instance.OnEffectsChangesEnded += OnEffectsChangesEnded;
+        GlobalEvents.Instance.OnForcedPaletteSize += (value) => PaletteSizeMaxValueLbl.Text = value.ToString();
         UseExternalPaletteChkBtn.Toggled += OnUseExternalPaletteBtnToggled;
         _resetImgCorrectionBtn.Pressed += OnResetImgCorrectionBtnPressed;
+
 
         //PaletteLoaderPanel.Visible = false;
         _effectStatusLabel.Text = "Ready";
@@ -97,6 +101,8 @@ public partial class ImageEditorMainPanel : PanelContainer
         SetImgEditorValues();
 
     }
+
+
 
     private void OnResetImgCorrectionBtnPressed()
     {
@@ -182,12 +188,14 @@ public partial class ImageEditorMainPanel : PanelContainer
 
             _ImgEditor.NumColors = colorsCount;
 
+            //_colorCountSpinBox.MaxValue = colorsCount;
             _colorCountSpinBox.MaxValue = colorsCount;
             _colorCountSpinBox.Value = _ImgEditor.NumColors;
 
             //These two values below cannot be changed anywhere else ever.. They are always set at the start or at new Img Load only
             _ImgEditor.MaxNumColors = colorsCount;
             _ImgEditor.OriginalNumColors = colorsCount;
+            PaletteSizeMaxValueLbl.Text = colorsCount.ToString();
             _ImgEditor.OriginalImgPalette = GlobalUtil.GetGodotArrayFromList(originalColorsListSorted);
         }
         else
@@ -206,7 +214,7 @@ public partial class ImageEditorMainPanel : PanelContainer
         }
         //_colorCountSpinBox.MaxValue = _ImgEditor.NumColors; //Mathf.Clamp(value, min, max);
 
-        _colorCountSpinBox.MaxValue = Mathf.Clamp(_ImgEditor.NumColors, 1, _ImgEditor.MAX_PALETTE_SIZE);
+        //_colorCountSpinBox.MaxValue = Mathf.Clamp(_ImgEditor.NumColors, 1, _ImgEditor.MAX_PALETTE_SIZE);
         _colorCountSpinBox.Value = _ImgEditor.NumColors;
         _brightnessSlider.Value = 0.0f;
         _brightnessValueLabel.Text = _brightnessSlider.Value.ToString("0.0");
@@ -259,7 +267,7 @@ public partial class ImageEditorMainPanel : PanelContainer
             //If WE DO HAVE color reduction, we also count the Persistent Colors + whatever is the user input in the spinbox
             totalColors = PaletteLoaderPanel.PersistPaletteColors.Count + (int)(_colorCountSpinBox?.Value ?? 0);
         }
-        _colorCountSpinBox.MaxValue = totalColors;
+        //_colorCountSpinBox.MaxValue = totalColors;
         //_colorCountSpinBox.Value = totalColors;
         _ImgEditor.NumColors = totalColors;
 
@@ -279,6 +287,8 @@ public partial class ImageEditorMainPanel : PanelContainer
         _ImgEditor.UpdateShaderParameters();
         PaletteLoaderPanel.UpdatePaletteListGrid(_currentPaletteColors);
 
+
+
         GD.PrintT("SetImgEditorValues -> Total colors = " + _ImgEditor.ShaderPalette.Count
         + " Persist Colors = " + PaletteLoaderPanel.PersistPaletteColors.Count
          + " Current Img Colors = " + _currentPaletteColors.Count);
@@ -294,7 +304,7 @@ public partial class ImageEditorMainPanel : PanelContainer
         _ImgEditor.MaxNumColors = list.Count;
         _ImgEditor.NumColors = list.Count;
 
-        _colorCountSpinBox.MaxValue = list.Count;
+        //_colorCountSpinBox.MaxValue = list.Count;
         //_colorCountSpinBox.Value = _ImgEditor.NumColors;
 
         _currentPaletteColors = list;
@@ -414,7 +424,7 @@ public partial class ImageEditorMainPanel : PanelContainer
         string folderCurrentDir = GlobalUtil.SaveFolderPath; // Ensure it's inside user:// or res://
         string globalizedPath = ProjectSettings.GlobalizePath(folderCurrentDir);
 
-        if (!GlobalUtil.HasDirectory(globalizedPath, this))
+        if (!GlobalUtil.HasDirectory(globalizedPath, this).Result)
         {
             GD.Print("Directory does NOT exist: " + folderCurrentDir);
             globalizedPath = "res://"; // Fallback to a safe default
@@ -460,7 +470,7 @@ public partial class ImageEditorMainPanel : PanelContainer
 
     }
 
-    public async void OnLoadData(SaveGameData newLoadData)
+    public void OnLoadData(SaveGameData newLoadData)
     {
 
         GD.PrintT("Started OnLoadData from:", this.Name);
