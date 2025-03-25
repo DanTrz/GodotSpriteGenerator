@@ -224,7 +224,7 @@ clip_text = true
 
 [node name="Outline2DSliderBox" parent="HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/2dOutlineHBox" instance=ExtResource("4_v6qpd")]
 layout_mode = 2
-max_value = 20.0
+max_value = 10.0
 
 [node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/2dOutlineHBox"]
 layout_mode = 2
@@ -252,7 +252,7 @@ clip_text = true
 
 [node name="Inline2DSliderBox" parent="HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/2dInlineHBox" instance=ExtResource("4_v6qpd")]
 layout_mode = 2
-max_value = 20.0
+max_value = 10.0
 
 [node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/2dInlineHBox"]
 layout_mode = 2

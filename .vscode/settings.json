@@ -186,5 +186,6 @@
   "cSpell.words": [
     "ogqq"
   ],
-  "dotnet.formatting.organizeImportsOnFormat": true
+  "dotnet.formatting.organizeImportsOnFormat": true,
+  "files.autoSave": "onWindowChange"
 }
