@@ -11,7 +11,7 @@
       "request": "launch",
       //"preLaunchTask": "build",
       "preLaunchTask": "dotnet: build",
-      "program": "C:/Local Documents/Development/Godot/Other Godot Versions/Godot_v4.4-stable_mono_win64/Godot_v4.4-stable_mono_win64.exe",
+      "program": "C:/Local Documents/Development/Godot/Godot Versions/Godot_v4.4.1-rc2_mono_win64/Godot_v4.4.1-rc2_mono_win64.exe",
       "args": [
         // "--debug-collisions",
         // "--debug-paths",
@@ -32,7 +32,7 @@
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "dotnet: build",
-      "program": "C:/Local Documents/Development/Godot/Other Godot Versions/Godot_v4.4-stable_mono_win64/Godot_v4.4-stable_mono_win64.exe",
+      "program": "C:/Local Documents/Development/Godot/Godot Versions/Godot_v4.4.1-rc2_mono_win64/Godot_v4.4.1-rc2_mono_win64.exe",
       "args": [
         "${fileDirname}/${fileBasenameNoExtension}.tscn"
       ],
@@ -46,7 +46,7 @@
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "dotnet: build",
-      "program": "C:/Local Documents/Development/Godot/Other Godot Versions/Godot_v4.4-stable_mono_win64/Godot_v4.4-stable_mono_win64.exe",
+      "program": "C:/Local Documents/Development/Godot/Godot Versions/Godot_v4.4.1-rc2_mono_win64/Godot_v4.4.1-rc2_mono_win64.exe",
       "debugServer": 6006,
       "args": [
         "--remote-debug",
