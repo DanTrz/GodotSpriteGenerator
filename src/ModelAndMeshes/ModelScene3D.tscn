@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dasxiorjhfw8t" path="res://src/ModelAndMeshes/Model3DMainPivotControl.cs" id="1_pb3o0"]
 [ext_resource type="PackedScene" uid="uid://bvvxjc2oqng0j" path="res://Models/FullModels/BaseModel/LowPoly/BaseModel_LowPolyScene.tscn" id="2_hkp8x"]
-[ext_resource type="Shader" uid="uid://berumhfcmd50a" path="res://Assets/Shaders/Original_Pixelize3DShader.gdshader" id="3_cykfy"]
+[ext_resource type="Shader" uid="uid://o32y8sg4fot8" path="res://Assets/Shaders/Simplified_Pixelize3DV1.gdshader" id="3_hkp8x"]
 [ext_resource type="Shader" uid="uid://c0r1oe0lnimmh" path="res://Assets/Shaders/Outline3DV2.gdshader" id="4_hkp8x"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_wy6cq"]
@@ -20,16 +20,16 @@ ambient_light_source = 3
 tonemap_mode = 2
 glow_enabled = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_xukee"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_666by"]
 render_priority = 0
-shader = ExtResource("3_cykfy")
+shader = ExtResource("3_hkp8x")
 shader_parameter/target_resolution = 512.0
-shader_parameter/colors_per_channel = 128.0
-shader_parameter/outline_strength = 1.0
-shader_parameter/normal_outline_strength = 0.5
+shader_parameter/outline_strength = 0.0
+shader_parameter/outline_thickness = 1.0
+shader_parameter/outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="QuadMesh" id="QuadMesh_xukee"]
-material = SubResource("ShaderMaterial_xukee")
+material = SubResource("ShaderMaterial_666by")
 flip_faces = true
 size = Vector2(10, 10)
 

@@ -1828,7 +1828,7 @@ bone_idx = 5
 
 [node name="WeaponBoneAttach" type="BoneAttachment3D" parent="LowPoly/GeneralSkeleton"]
 unique_name_in_owner = true
-transform = Transform3D(0.0194825, -0.999806, 0.00283978, -0.000126142, -0.00284287, -0.999996, 0.99981, 0.019482, -0.000181437, -11.3267, 17.8799, -0.0502846)
+transform = Transform3D(0.0194825, -0.999806, 0.00283969, -0.000126234, -0.00284275, -0.999996, 0.99981, 0.019482, -0.000181556, -11.3267, 17.8799, -0.0502843)
 visible = false
 bone_name = "RightHand"
 bone_idx = 14

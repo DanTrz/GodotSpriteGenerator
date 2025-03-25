@@ -239,6 +239,17 @@ public static class GlobalUtil
         return godotArray;
     }
 
+    public static List<Color> GetListFromGodotArray(Godot.Collections.Array<Color> colorList)
+    {
+        //1. Convert the colorList to a Godot.Array
+        List<Color> cSharpList = new();
+        foreach (Color color in colorList)
+        {
+            cSharpList.Add(color);
+        }
+        return cSharpList;
+    }
+
 
     #endregion IMAGE Processing:  Helper Functions
 

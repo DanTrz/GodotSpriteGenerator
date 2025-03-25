@@ -313,7 +313,7 @@ public partial class SpriteGenerator : Node
         foreach (var angle in selectedAngles)
         {
             _modelPivotNode.RotationDegrees = new Vector3(0, angle, 0);
-            _modelPositionManager._posYAxisLineTextEdit.Text = _modelPivotNode.RotationDegrees.Y.ToString("0.0");
+            _modelPositionManager._rotationYAxisLineTextEdit.Text = _modelPivotNode.RotationDegrees.Y.ToString("0.0");
 
             //await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
             await ToSignal(RenderingServer.Singleton, RenderingServer.SignalName.FramePostDraw); //Testin

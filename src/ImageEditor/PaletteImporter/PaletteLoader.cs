@@ -20,6 +20,8 @@ public partial class PaletteLoader : MarginContainer
 
     [Export] public PaletteListGrid PersistColorListGridContainer;
 
+    [Export] public CheckButton UseExternalPaletteCheckBtn;
+
     public Godot.Collections.Array<Color> ExternalPaletteColors = new();
 
     public List<Color> PersistPaletteColors = new();
@@ -36,6 +38,7 @@ public partial class PaletteLoader : MarginContainer
     {
         LoadExtPaletteBtn.Pressed += async () => await OnLoadExtPaletteBtnPressed();
         AddPersistColorsBtn.Pressed += async () => await OnAddPersistColorsBtnPressed();
+        UseExternalPaletteCheckBtn.Pressed += OnUseExternalPaletteCheckBtnPressed;
         ClearPersistColorsBtn.Pressed += OnClearPersistColorsBtnPressed;
 
 
@@ -44,8 +47,17 @@ public partial class PaletteLoader : MarginContainer
         CombinedPaletteColors.Clear();
         PersistPaletteColors.Clear();
 
+        OnUseExternalPaletteCheckBtnPressed();
+
         //OnClearPersistColorsBtnPressed();
     }
+
+    private void OnUseExternalPaletteCheckBtnPressed()
+    {
+        LoadExtPaletteBtn.Visible = UseExternalPaletteCheckBtn.ButtonPressed;
+        UseExternalPaletteCheckBtn.Text = UseExternalPaletteCheckBtn.ButtonPressed.ToString();
+    }
+
 
     private void OnClearPersistColorsBtnPressed()
     {

@@ -9,25 +9,21 @@ using Image = Godot.Image;
 public partial class ImageEditorMainPanel : PanelContainer
 {
     [Export] private ImageEditor _ImgEditor;
-    [Export] private HSlider _saturationSlider;
-    [Export] private Label _saturationValueLabel;
-    [Export] private Label _brightnessValueLabel;
-    [Export] private Label _contrastValueLabel;
-    [Export] private Label _outlineLabel;
-    [Export] private HSlider _brightnessSlider;
-    [Export] private HSlider _contrastSlider;
-    [Export] private CheckBox _outlineCheckbox;
-    [Export] private HSlider _outlineThicknessSlider;
-
+    [Export] private SliderValueBox _saturationSlider;
+    [Export] private SliderValueBox _brightnessSlider;
+    [Export] private SliderValueBox _contrastSlider;
     [Export] private Button _resetImgCorrectionBtn;
-    [Export] private ColorPickerButton _outlineColorPicker;
+    [Export] private SliderValueBox _outline2DSlider;
+    [Export] private ColorPickerButton _outline2DColorPicker;
+    [Export] private SliderValueBox _inline2DSlider;
+    [Export] private ColorPickerButton _inline2DColorPicker;
     [Export] private CheckBox _colorReductionCheckbox;
     [Export] private SpinBox _colorCountSpinBox;
     [Export] private Button _saveButton;
     [Export] private Label _effectStatusLabel;
     [Export] public MarginContainer EffectStatusMainPanel;
 
-    [Export] public CheckButton UseExternalPaletteChkBtn;
+    //[Export] public CheckButton UseExternalPaletteChkBtn;
     [Export] public PaletteLoader PaletteLoaderPanel;
 
     [Export] public Button LoadExternalImg;
@@ -74,9 +70,10 @@ public partial class ImageEditorMainPanel : PanelContainer
         _saturationSlider.ValueChanged += (value) => SetImgEditorValues();
         _brightnessSlider.ValueChanged += (value) => SetImgEditorValues();
         _contrastSlider.ValueChanged += (value) => SetImgEditorValues();
-        _outlineCheckbox.Toggled += (pressed) => SetImgEditorValues();
-        _outlineThicknessSlider.ValueChanged += (value) => SetImgEditorValues();
-        _outlineColorPicker.ColorChanged += (color) => SetImgEditorValues();
+        _outline2DSlider.ValueChanged += (value) => SetImgEditorValues();
+        _inline2DSlider.ValueChanged += (value) => SetImgEditorValues();
+        _outline2DColorPicker.ColorChanged += (color) => SetImgEditorValues();
+        _inline2DColorPicker.ColorChanged += (color) => SetImgEditorValues();
         _colorCountSpinBox.ValueChanged += OnColorReductionSpinBoxChanged;
         _colorReductionCheckbox.Toggled += (pressed) => SetImgEditorValues();
 
@@ -87,7 +84,7 @@ public partial class ImageEditorMainPanel : PanelContainer
         GlobalEvents.Instance.OnEffectsChangesStarted += OnEffectsChangesStarted;
         GlobalEvents.Instance.OnEffectsChangesEnded += OnEffectsChangesEnded;
         GlobalEvents.Instance.OnForcedPaletteSize += (value) => PaletteSizeMaxValueLbl.Text = value.ToString();
-        UseExternalPaletteChkBtn.Toggled += OnUseExternalPaletteBtnToggled;
+        //UseExternalPaletteChkBtn.Toggled += OnUseExternalPaletteBtnToggled;
         _resetImgCorrectionBtn.Pressed += OnResetImgCorrectionBtnPressed;
 
 
@@ -186,11 +183,11 @@ public partial class ImageEditorMainPanel : PanelContainer
             //int colorsCount = Task.Run(() => _ImgEditor.GetColorFrequencies(imageToLoad).Count).Result;
 
 
-            _ImgEditor.NumColors = colorsCount;
+            _ImgEditor.NumColorsLocal = colorsCount;
 
             //_colorCountSpinBox.MaxValue = colorsCount;
             _colorCountSpinBox.MaxValue = colorsCount;
-            _colorCountSpinBox.Value = _ImgEditor.NumColors;
+            _colorCountSpinBox.Value = _ImgEditor.NumColorsLocal;
 
             //These two values below cannot be changed anywhere else ever.. They are always set at the start or at new Img Load only
             _ImgEditor.MaxNumColors = colorsCount;
@@ -215,24 +212,21 @@ public partial class ImageEditorMainPanel : PanelContainer
         //_colorCountSpinBox.MaxValue = _ImgEditor.NumColors; //Mathf.Clamp(value, min, max);
 
         //_colorCountSpinBox.MaxValue = Mathf.Clamp(_ImgEditor.NumColors, 1, _ImgEditor.MAX_PALETTE_SIZE);
-        _colorCountSpinBox.Value = _ImgEditor.NumColors;
+        _colorCountSpinBox.Value = _ImgEditor.NumColorsLocal;
         _brightnessSlider.Value = 0.0f;
-        _brightnessValueLabel.Text = _brightnessSlider.Value.ToString("0.0");
         _saturationSlider.Value = 1.0f;
-        _saturationValueLabel.Text = _saturationSlider.Value.ToString("0.0");
         _contrastSlider.Value = 1.0f;
-        _contrastValueLabel.Text = _contrastSlider.Value.ToString("0.0");
-        _outlineLabel.Text = _outlineThicknessSlider.Value.ToString("0.0");
-        _outlineCheckbox.ButtonPressed = false;
-        _outlineThicknessSlider.Value = 0;
-        _outlineColorPicker.Color = Colors.Black;
+        _outline2DSlider.Value = 0;
+        _inline2DSlider.Value = 0;
+        _outline2DColorPicker.Color = Colors.Black;
+        _inline2DColorPicker.Color = Colors.Black;
         _colorReductionCheckbox.ButtonPressed = false;
 
         if (isReset)
         {
             _colorCountSpinBox.MaxValue = _ImgEditor.OriginalNumColors;
             _colorCountSpinBox.Value = _ImgEditor.OriginalNumColors;
-            _ImgEditor.NumColors = _ImgEditor.OriginalNumColors;
+            _ImgEditor.NumColorsLocal = _ImgEditor.OriginalNumColors;
         }
 
     }
@@ -245,14 +239,16 @@ public partial class ImageEditorMainPanel : PanelContainer
 
         //GET UI VALUES AND SET TO THE IMAGE EDITOR
         _ImgEditor.EnableColorReduction = _colorReductionCheckbox?.ButtonPressed ?? false;
-        _useExternalPalette = UseExternalPaletteChkBtn?.ButtonPressed ?? false;
+        _useExternalPalette = PaletteLoaderPanel.UseExternalPaletteCheckBtn?.ButtonPressed ?? false;
         _ImgEditor._useExternalPalette = _useExternalPalette;
         _ImgEditor.SaturationValue = (float)(_saturationSlider?.Value ?? 1.0f);
-        _saturationValueLabel.Text = _saturationSlider.Value.ToString("0.0");
         _ImgEditor.BrightnessValue = (float)(_brightnessSlider?.Value ?? 0.0f);
-        _brightnessValueLabel.Text = _brightnessSlider.Value.ToString("0.0");
         _ImgEditor.ConstrastValue = (float)(_contrastSlider?.Value ?? 1.0f);
-        _contrastValueLabel.Text = _contrastSlider.Value.ToString("0.0");
+        _ImgEditor.OutlineValue = (float)(_outline2DSlider?.Value ?? 1.0f);
+        _ImgEditor.InlineValue = (float)(_inline2DSlider?.Value ?? 1.0f);
+        _ImgEditor.OutlineColor = _outline2DColorPicker?.Color ?? Colors.Black;
+        _ImgEditor.InlineColor = _inline2DColorPicker?.Color ?? Colors.Black;
+
 
         //SET THE COLOR COUNT FOR IMG EDITOR AND COLOR REDUCTION SPINBOX
         int totalColors = 0;
@@ -269,16 +265,19 @@ public partial class ImageEditorMainPanel : PanelContainer
         }
         //_colorCountSpinBox.MaxValue = totalColors;
         //_colorCountSpinBox.Value = totalColors;
-        _ImgEditor.NumColors = totalColors;
+        _ImgEditor.NumColorsLocal = totalColors;
 
 
         //FOR NON_EXTERNAL PALETTE -> APPLY LOGIC TO GET THE PALETTE COLORS FROM ORIGINAL IMAGE + PERSISTENT COLORS
         if (!_useExternalPalette)
         {
-            int paletteSize = _ImgEditor.NumColors - PaletteLoaderPanel.PersistPaletteColors.Count;
-            if (paletteSize <= 0) paletteSize = _ImgEditor.NumColors;//Safety net code line to not have it as Zero. 
+            int paletteSize = _ImgEditor.NumColorsLocal - PaletteLoaderPanel.PersistPaletteColors.Count;
+            if (paletteSize <= 0) paletteSize = _ImgEditor.NumColorsLocal;//Safety net code line to not have it as Zero. 
+            _ImgEditor.PersistColorCount = PaletteLoaderPanel.PersistPaletteColors.Count;
 
-            _currentPaletteColors = await _ImgEditor.GetNewColorPalette(paletteSize);
+            var tempPalette = await _ImgEditor.GetNewColorPalette(paletteSize);
+            if (tempPalette != null)
+                _currentPaletteColors = tempPalette;
         }
         //FOR EXTERNAL PALETTE WE ARE SETTING THIS IN THE PALETTE LOADER PANEL - SEE METHOD OnPaletteChanged();
 
@@ -302,7 +301,7 @@ public partial class ImageEditorMainPanel : PanelContainer
         //int colorCount = list.Count;
 
         _ImgEditor.MaxNumColors = list.Count;
-        _ImgEditor.NumColors = list.Count;
+        _ImgEditor.NumColorsLocal = list.Count;
 
         //_colorCountSpinBox.MaxValue = list.Count;
         //_colorCountSpinBox.Value = _ImgEditor.NumColors;
@@ -312,11 +311,11 @@ public partial class ImageEditorMainPanel : PanelContainer
         SetImgEditorValues();
     }
 
-    private void OnUseExternalPaletteBtnToggled(bool toggledOn)
-    {
-        UseExternalPaletteChkBtn.Text = UseExternalPaletteChkBtn.ButtonPressed.ToString();
-        SetImgEditorValues();
-    }
+    // private void OnUseExternalPaletteBtnToggled(bool toggledOn)
+    // {
+    //     UseExternalPaletteChkBtn.Text = UseExternalPaletteChkBtn.ButtonPressed.ToString();
+    //     SetImgEditorValues();
+    // }
 
     private void OnColorReductionSpinBoxChanged(double value)
     {
@@ -462,9 +461,8 @@ public partial class ImageEditorMainPanel : PanelContainer
         GD.PrintT("Started OnSaveData from:", this.Name);
         newSaveGameData.SaturationSliderValue = (float)_saturationSlider.Value;
         newSaveGameData.BrightnessSliderValue = (float)_brightnessSlider.Value;
-        newSaveGameData.OutlineIsOn = _outlineCheckbox.ButtonPressed;
-        newSaveGameData.OutlineThicknessSliderValue = (float)_outlineThicknessSlider.Value;
-        newSaveGameData.OutlineColor = _outlineColorPicker.Color;
+        newSaveGameData.OutlineThicknessSliderValue = (float)_outline2DSlider.Value;
+        newSaveGameData.OutlineColor = _outline2DColorPicker.Color;
         newSaveGameData.ColorReductionIsOn = _colorReductionCheckbox.ButtonPressed;
         newSaveGameData.ColorReductionValue = (float)_colorCountSpinBox.Value;
 
@@ -479,9 +477,8 @@ public partial class ImageEditorMainPanel : PanelContainer
 
         _saturationSlider.Value = newLoadData.SaturationSliderValue;
         _brightnessSlider.Value = newLoadData.BrightnessSliderValue;
-        _outlineCheckbox.ButtonPressed = newLoadData.OutlineIsOn;
-        _outlineThicknessSlider.Value = newLoadData.OutlineThicknessSliderValue;
-        _outlineColorPicker.Color = newLoadData.OutlineColor;
+        _outline2DSlider.Value = newLoadData.OutlineThicknessSliderValue;
+        _outline2DColorPicker.Color = newLoadData.OutlineColor;
         _colorReductionCheckbox.ButtonPressed = newLoadData.ColorReductionIsOn;
         _colorCountSpinBox.Value = newLoadData.ColorReductionValue;
 

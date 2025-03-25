@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://dbast2ob2q2mv"]
+
+[ext_resource type="Script" uid="uid://dy7m54oe4ee63" path="res://Assets/UI/SliderValueBox.cs" id="1_gk5pe"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_yhaxr"]
+font_size = 12
+
+[node name="SliderValueBox" type="HSlider"]
+custom_minimum_size = Vector2(150, 32)
+tick_count = 5
+ticks_on_borders = true
+script = ExtResource("1_gk5pe")
+
+[node name="ValueLabel" type="Label" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 32)
+layout_mode = 2
+offset_left = 158.0
+offset_top = 1.0
+offset_right = 278.0
+offset_bottom = 33.0
+text = "00"
+label_settings = SubResource("LabelSettings_yhaxr")
+vertical_alignment = 1
+autowrap_mode = 2
+clip_text = true

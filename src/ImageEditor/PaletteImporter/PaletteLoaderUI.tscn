@@ -1,11 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://244h3jjjyk25"]
+[gd_scene load_steps=7 format=3 uid="uid://244h3jjjyk25"]
 
 [ext_resource type="Script" uid="uid://0m4e2jg22pby" path="res://src/ImageEditor/PaletteImporter/PaletteLoader.cs" id="1_81li2"]
 [ext_resource type="PackedScene" uid="uid://dyf1xkseg8kn8" path="res://src/ImageEditor/PaletteImporter/PaletteListGrid.tscn" id="1_logbv"]
+[ext_resource type="LabelSettings" uid="uid://usv7beyw1bj8" path="res://Assets/UI/Theme/Label.tres" id="2_jkvfd"]
+[ext_resource type="Theme" uid="uid://drswssji8tnu3" path="res://Assets/UI/Theme/MainTheme.tres" id="3_x3awi"]
 [ext_resource type="PackedScene" uid="uid://cja16u4jssxrh" path="res://src/ImageEditor/PaletteImporter/PaletteColorBoxItem.tscn" id="3_ykadx"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_ykadx"]
-font_size = 10
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ykadx"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -18,19 +17,20 @@ corner_radius_top_right = 1
 corner_radius_bottom_right = 1
 corner_radius_bottom_left = 1
 
-[node name="PaletteLoader" type="MarginContainer" node_paths=PackedStringArray("LoadExtPaletteBtn", "AddPersistColorsBtn", "ClearPersistColorsBtn", "PersistColorPickerBtn", "ExtPaletteListGridContainer", "PersistColorListGridContainer")]
+[node name="PaletteLoader" type="MarginContainer" node_paths=PackedStringArray("LoadExtPaletteBtn", "AddPersistColorsBtn", "ClearPersistColorsBtn", "PersistColorPickerBtn", "ExtPaletteListGridContainer", "PersistColorListGridContainer", "UseExternalPaletteCheckBtn")]
 custom_minimum_size = Vector2(0, 32)
 theme_override_constants/margin_left = 1
 theme_override_constants/margin_top = 1
 theme_override_constants/margin_right = 1
 theme_override_constants/margin_bottom = 1
 script = ExtResource("1_81li2")
-LoadExtPaletteBtn = NodePath("PanelContainer/VBoxContainer/LoadExtPaletteContainer/PaletteOptionsHbOx/LoadExtPaletteBtn")
+LoadExtPaletteBtn = NodePath("PanelContainer/VBoxContainer/LoadExtPaletteContainer/PaletteOptionsHbOx/PaletteHbOx/LoadExtPaletteBtn")
 AddPersistColorsBtn = NodePath("PanelContainer/VBoxContainer/PersistColorsContainer/PersistentColors/HBoxContainer/AddPersistColorsBtn")
 ClearPersistColorsBtn = NodePath("PanelContainer/VBoxContainer/PersistColorsContainer/PersistentColors/HBoxContainer/ClearPersistColorsBtn")
 PersistColorPickerBtn = NodePath("PanelContainer/VBoxContainer/PersistColorsContainer/PersistentColors/HBoxContainer/MarginContainer/PanelContainer/PersistColorPickerBtn")
 ExtPaletteListGridContainer = NodePath("PanelContainer/VBoxContainer/LoadExtPaletteContainer/PaletteOptionsHbOx/PaletteListPanel/MarginContainer/ScrollContainer/MarginContainer/ExtPaletteListGridContainer")
 PersistColorListGridContainer = NodePath("PanelContainer/VBoxContainer/PersistColorsContainer/PersistentColors/PaletteListPanel/MarginContainer/ScrollContainer/MarginContainer/PersistColorsListGridContainer")
+UseExternalPaletteCheckBtn = NodePath("PanelContainer/VBoxContainer/LoadExtPaletteContainer/PaletteOptionsHbOx/PaletteHbOx/MarginContainer/UseExternalPaletteCheckBtn")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 custom_minimum_size = Vector2(0, 32)
@@ -51,15 +51,47 @@ theme_override_constants/margin_bottom = 2
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/LoadExtPaletteContainer/PaletteOptionsHbOx"]
-texture_filter = 2
-custom_minimum_size = Vector2(20, 20)
+[node name="Label2" type="Label" parent="PanelContainer/VBoxContainer/LoadExtPaletteContainer/PaletteOptionsHbOx"]
+custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
-text = "Loaded Palette Options"
-label_settings = SubResource("LabelSettings_ykadx")
+text = "Palette Options"
+label_settings = ExtResource("2_jkvfd")
+horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 2
+clip_text = true
 
-[node name="LoadExtPaletteBtn" type="Button" parent="PanelContainer/VBoxContainer/LoadExtPaletteContainer/PaletteOptionsHbOx"]
+[node name="PaletteHbOx" type="HBoxContainer" parent="PanelContainer/VBoxContainer/LoadExtPaletteContainer/PaletteOptionsHbOx"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[node name="EffectsLabel" type="Label" parent="PanelContainer/VBoxContainer/LoadExtPaletteContainer/PaletteOptionsHbOx/PaletteHbOx"]
+custom_minimum_size = Vector2(120, 32)
+layout_mode = 2
+text = "  Use Ext. Palette"
+label_settings = ExtResource("2_jkvfd")
+vertical_alignment = 1
+autowrap_mode = 2
+clip_text = true
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer/LoadExtPaletteContainer/PaletteOptionsHbOx/PaletteHbOx"]
+layout_mode = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 4
+
+[node name="UseExternalPaletteCheckBtn" type="CheckButton" parent="PanelContainer/VBoxContainer/LoadExtPaletteContainer/PaletteOptionsHbOx/PaletteHbOx/MarginContainer"]
+texture_filter = 2
+clip_contents = true
+custom_minimum_size = Vector2(80, 24)
+layout_mode = 2
+size_flags_horizontal = 4
+focus_mode = 0
+theme = ExtResource("3_x3awi")
+text = "False"
+
+[node name="LoadExtPaletteBtn" type="Button" parent="PanelContainer/VBoxContainer/LoadExtPaletteContainer/PaletteOptionsHbOx/PaletteHbOx"]
 texture_filter = 2
 custom_minimum_size = Vector2(110, 32)
 layout_mode = 2
@@ -109,18 +141,19 @@ theme_override_constants/margin_bottom = 2
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/PersistColorsContainer/PersistentColors"]
-unique_name_in_owner = true
-texture_filter = 2
-custom_minimum_size = Vector2(20, 20)
-layout_mode = 2
-text = "Persistent Colors"
-label_settings = SubResource("LabelSettings_ykadx")
-vertical_alignment = 1
-
 [node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer/PersistColorsContainer/PersistentColors"]
 layout_mode = 2
 alignment = 1
+
+[node name="Label2" type="Label" parent="PanelContainer/VBoxContainer/PersistColorsContainer/PersistentColors/HBoxContainer"]
+custom_minimum_size = Vector2(120, 32)
+layout_mode = 2
+text = "Persistent Colors"
+label_settings = ExtResource("2_jkvfd")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+clip_text = true
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer/PersistColorsContainer/PersistentColors/HBoxContainer"]
 texture_filter = 1

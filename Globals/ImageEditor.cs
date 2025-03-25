@@ -11,20 +11,25 @@ public partial class ImageEditor : PanelContainer
     [Export] public TextureRect ImgTextRect;
     private Texture2D currentTexture;
     [Export] public bool EnableColorReduction = false;
-    [Export] public int NumColors = 16; //Value of the colors applied by the Shader. Usually what's in the SpinBox Color Reduc
-
+    [Export] public int NumColorsLocal = 16; //Value of the colors to compare against the NumColorsShaderValue and we will check if Shader needs updating or not
+    [Export] private int NumColorsShaderValue = 16; //Value of the colors applied by the Shader. Usually what's in the SpinBox Color Reduc
     [Export] public int MaxNumColors = 256; // Dynamic max palette size. This value might change if we add Persistent Colors. 
 
     public int OriginalNumColors = 0; //StaticValue that should NEVER change after loading an image
     public Godot.Collections.Array<Color> OriginalImgPalette = new();
-
-    [Export] public bool EnableSaturation = true;
     [Export] public float SaturationValue = 1.0f;
-    [Export] public bool EnableBrightness = true;
     [Export] public float BrightnessValue = 0.0f;
 
-    [Export] public bool EnableContrast = true;
     [Export] public float ConstrastValue = 1.0f;
+
+    [Export] public float OutlineValue = 0.0f;
+
+    [Export] public float InlineValue = 0.0f;
+
+    [Export] public Color OutlineColor = Colors.Black;
+
+    [Export] public Color InlineColor = Colors.Black;
+
     [Export] public SubViewport ImgEditorSubViewport;
 
     [Export] public Godot.Collections.Array<Color> ShaderPalette = new();
@@ -38,6 +43,8 @@ public partial class ImageEditor : PanelContainer
 
     public bool _useExternalPalette = false;
 
+    public int PersistColorCount = 0;
+
     public List<Color> ImgkMeansClusterList = new();
 
     public readonly int MAX_PALETTE_SIZE = 512;
@@ -46,7 +53,7 @@ public partial class ImageEditor : PanelContainer
     public override void _Ready()
     {
         currentTexture = ImgTextRect.Texture;
-        NumColors = GetColorFrequencies(currentTexture.GetImage()).Count();
+        NumColorsLocal = GetColorFrequencies(currentTexture.GetImage()).Count();
 
     }
 
@@ -63,16 +70,48 @@ public partial class ImageEditor : PanelContainer
         shaderMaterial.SetShaderParameter("saturation", SaturationValue);
         shaderMaterial.SetShaderParameter("brightness", BrightnessValue);
         shaderMaterial.SetShaderParameter("contrast", ConstrastValue);
+        shaderMaterial.SetShaderParameter("outline_thickness", OutlineValue);
+        shaderMaterial.SetShaderParameter("inline_thickness", InlineValue);
+        shaderMaterial.SetShaderParameter("outline_color", OutlineColor);
+        shaderMaterial.SetShaderParameter("inline_color", InlineColor);
 
 
         shaderMaterial.SetShaderParameter("enable_color_reduction", EnableColorReduction);
-        shaderMaterial.SetShaderParameter("num_colors", NumColors);
+        shaderMaterial.SetShaderParameter("num_colors", NumColorsLocal);
 
-        if (!EnableColorReduction) return;
+        if (EnableColorReduction)
+        {
+            shaderMaterial.SetShaderParameter("palette", ShaderPalette);
+        }
+        else
+        {
+            shaderMaterial.SetShaderParameter("palette", OriginalImgPalette);
+        }
+    }
 
-        shaderMaterial.SetShaderParameter("palette", ShaderPalette);
+    private bool ShaderColorsNeedsUpdating(int numColorsToCheck)
+    {
+
+        if (ImgTextRect.Material is not ShaderMaterial shaderMaterial)
+        {
+            GD.PrintErr("Material is not a ShaderMaterial. Cannot get Shader value");
+            return false;
+        }
+        var ShaderPaletteLocal = (Godot.Collections.Array<Color>)shaderMaterial.GetShaderParameter("palette");
+        NumColorsShaderValue = ShaderPaletteLocal.Count();
+        //NumColorsShaderValue = (int)shaderMaterial.GetShaderParameter("num_colors");
+
+        if (NumColorsShaderValue != (numColorsToCheck + PersistColorCount))
+        {
+            GD.PrintT("## -- Shader Color need updating");
+            return true;
+        }
+
+        GD.PrintT("## -- Shader Color doesn't need updating");
+        return false;
 
     }
+
 
     /// <summary>
     /// Reads the original image loaded into the main Image TextureRect and returns a unique list of colors.
@@ -84,6 +123,8 @@ public partial class ImageEditor : PanelContainer
     /// <returns>Returns a new Godot Array with the colors.</returns>
     public async Task<Godot.Collections.Array<Color>> GetNewColorPalette(int colorsToGet)
     {
+        if (!ShaderColorsNeedsUpdating(colorsToGet)) return null; //TODO: BUG this is not working and should really do a Palette Color Comparions instead of comparing an Int (Numbers of colors)
+
         currentTexture = ImgTextRect.Texture;
 
         if (currentTexture is Texture2D texture2D)
@@ -101,9 +142,9 @@ public partial class ImageEditor : PanelContainer
 
                 await UpdatedKMeansClusteringAsync(image, colorsToGet);
 
-                List<Color> originalTexturePalette = ImgkMeansClusterList;
+                List<Color> updatedPaletteList = ImgkMeansClusterList;
 
-                return GlobalUtil.GetGodotArrayFromList(originalTexturePalette.Distinct().ToList());
+                return GlobalUtil.GetGodotArrayFromList(updatedPaletteList.Distinct().ToList());
 
             }
         }
