@@ -104,7 +104,7 @@ public static class EffectsHandler
     private static void ApplyEffectsToMesh(Mesh mesh)
     {
         SurfaceTool surfaceTool = new SurfaceTool();
-        ArrayMesh arrayMesh = (ArrayMesh)mesh;
+        Mesh arrayMesh = (Mesh)mesh;
         int surfaceCount = arrayMesh.GetSurfaceCount();
 
         for (int surfaceIndex = 0; surfaceIndex < surfaceCount; surfaceIndex++)

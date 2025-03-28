@@ -1,101 +1,126 @@
 shader_type canvas_item;
 
-// Saturation and Brightness Controls
-uniform bool enable_saturation = false;
-uniform float saturation : hint_range(0.0, 2.0) = 1.0;
-uniform bool enable_brightness = false;
-uniform float brightness : hint_range(0.0, 2.0) = 1.0;
+// Brightness, Contrast, and Saturation Controls (Matrix Method)
+uniform float brightness : hint_range(-1.0, 1.0, 0.01) = 0.0;
+uniform float contrast : hint_range(-5.0, 5.0, 0.01) = 1.0;
+uniform float saturation : hint_range(-5.0, 5.0, 0.01) = 1.0;
 
-// Color Reduction Controls
+// Color Reduction Controls (HSL Method)
 uniform bool enable_color_reduction = true;
-uniform int num_colors : hint_range(2, 256) = 16;
-//uniform bool use_external_palette = true;
+uniform int num_colors : hint_range(2, 512) = 16;
+uniform int new_num_colors : hint_range(2, 512) = 16;
 uniform vec4 palette[256];
+
+// Outline and Inline Controls
+uniform vec4 outline_color : source_color = vec4(0.0, 0.0, 0.0, 1.0);
+uniform float outline_thickness : hint_range(0.0, 20.0, 0.1) = 0.0;
+uniform vec4 inline_color : source_color = vec4(1.0, 1.0, 1.0, 1.0);
+uniform float inline_thickness : hint_range(0.0, 20.0, 0.1) = 0.0;
 
 // Helper function for calculating color distance
 float color_distance(vec3 c1, vec3 c2) {
     return distance(c1, c2);
 }
 
-// Corrected RGB to HSL conversion
-vec3 rgb_to_hsl(vec3 c) {
-    float c_max = max(max(c.r, c.g), c.b);
-    float c_min = min(min(c.r, c.g), c.b);
-    float delta = c_max - c_min;
-
-    float h = 0.0;
-    float s = 0.0;
-    float l = (c_max + c_min) / 2.0;
-
-    if (delta > 0.0) {
-        s = l < 0.5 ? delta / (c_max + c_min) : delta / (2.0 - c_max - c_min);
-
-        if (c.r == c_max)      h = (c.g - c.b) / delta;
-        else if (c.g == c_max) h = (c.b - c.r) / delta + 2.0;
-        else                   h = (c.r - c.g) / delta + 4.0;
-
-        h /= 6.0;
-        if (h < 0.0) h += 1.0;
-    }
-
-    return vec3(h, s, l);
+// Matrix functions for brightness, contrast, and saturation
+mat4 brightness_matrix(float b) {
+    return mat4(
+        vec4(1, 0, 0, 0),
+        vec4(0, 1, 0, 0),
+        vec4(0, 0, 1, 0),
+        vec4(b, b, b, 1)
+    );
 }
-// Corrected HSL to RGB conversion
-vec3 hsl_to_rgb(vec3 c) {
-    float h = c.x;
-    float s = c.y;
-    float l = c.z;
 
-    float chroma = (1.0 - abs(2.0 * l - 1.0)) * s;
-    float x = chroma * (1.0 - abs(mod(h * 6.0, 2.0) - 1.0));
-    float m = l - chroma / 2.0;
+mat4 contrast_matrix(float c) {
+    float t = (1.0 - c) / 2.0;
+    return mat4(
+        vec4(c, 0, 0, 0),
+        vec4(0, c, 0, 0),
+        vec4(0, 0, c, 0),
+        vec4(t, t, t, 1)
+    );
+}
 
-    vec3 rgb;
-    if (h < 1.0 / 6.0)      rgb = vec3(chroma, x, 0.0);
-    else if (h < 2.0 / 6.0) rgb = vec3(x, chroma, 0.0);
-    else if (h < 3.0 / 6.0) rgb = vec3(0.0, chroma, x);
-    else if (h < 4.0 / 6.0) rgb = vec3(0.0, x, chroma);
-    else if (h < 5.0 / 6.0) rgb = vec3(x, 0.0, chroma);
-    else                    rgb = vec3(chroma, 0.0, x);
-
-    return rgb + m;
+mat4 saturation_matrix(float s) {
+    vec3 luminance = vec3(0.3086, 0.6094, 0.0820);
+    float sr = (1.0 - s) * luminance.r;
+    float sg = (1.0 - s) * luminance.g;
+    float sb = (1.0 - s) * luminance.b;
+    return mat4(
+        vec4(sr + s, sr, sr, 0),
+        vec4(sg, sg + s, sg, 0),
+        vec4(sb, sb, sb + s, 0),
+        vec4(0, 0, 0, 1)
+    );
 }
 
 void fragment() {
     vec4 image_color = texture(TEXTURE, UV);
-    vec3 color = image_color.rgb;
+    vec4 color = image_color;
 
-    // --- Saturation and Brightness ---
-    if (enable_saturation || enable_brightness) {
-        vec3 hsl = rgb_to_hsl(color);
-
-        if (enable_saturation) {
-            hsl.y *= saturation;
-            hsl.y = clamp(hsl.y, 0.0, 1.0);
-        }
-
-        if (enable_brightness) {
-            hsl.z *= brightness;
-            hsl.z = clamp(hsl.z, 0.0, 1.0);
-        }
-
-        color = hsl_to_rgb(hsl);
-    }
-
-    // --- Color Reduction ---
+    // Apply color reduction FIRST (HSL Method)
     if (enable_color_reduction) {
         vec3 best_match = palette[0].rgb;
-        float min_distance = color_distance(color, best_match);
+        float min_distance = color_distance(color.rgb, best_match);
 
         for (int i = 1; i < num_colors; i++) {
-            float dist = color_distance(color, palette[i].rgb);
+            float dist = color_distance(color.rgb, palette[i].rgb);
             if (dist < min_distance) {
                 min_distance = dist;
                 best_match = palette[i].rgb;
             }
         }
-        color = best_match;
+        color.rgb = best_match;
     }
 
-    COLOR = vec4(color, image_color.a);
+    // Apply brightness, contrast, and saturation (Matrix Method)
+    mat4 matrix = brightness_matrix(brightness) * contrast_matrix(contrast) * saturation_matrix(saturation);
+    color = matrix * color;
+
+    // Store processed color
+    vec4 final_color = color;
+    vec2 uv = UV;
+    bool has_opaque_neighbor = false;
+    bool has_transparent_neighbor = false;
+
+    // Check for outline separately
+    if (outline_thickness > 0.0 && image_color.a == 0.0) {
+        for (int y = -int(outline_thickness); y <= int(outline_thickness); y++) {
+            for (int x = -int(outline_thickness); x <= int(outline_thickness); x++) {
+                if (x == 0 && y == 0) continue;
+                vec2 neighbor_uv = uv + vec2(float(x), float(y)) * TEXTURE_PIXEL_SIZE;
+                vec4 neighbor_color = texture(TEXTURE, clamp(neighbor_uv, vec2(0.0), vec2(1.0)));
+                if (neighbor_color.a > 0.0) {
+                    has_opaque_neighbor = true;
+                    break;
+                }
+            }
+            if (has_opaque_neighbor) break;
+        }
+        if (has_opaque_neighbor) {
+            final_color = outline_color;
+        }
+    }
+
+    // Check for inline separately
+    if (inline_thickness > 0.0 && image_color.a > 0.0) {
+        for (int y = -int(inline_thickness); y <= int(inline_thickness); y++) {
+            for (int x = -int(inline_thickness); x <= int(inline_thickness); x++) {
+                if (x == 0 && y == 0) continue;
+                vec2 neighbor_uv = uv + vec2(float(x), float(y)) * TEXTURE_PIXEL_SIZE;
+                vec4 neighbor_color = texture(TEXTURE, clamp(neighbor_uv, vec2(0.0), vec2(1.0)));
+                if (neighbor_color.a == 0.0) {
+                    has_transparent_neighbor = true;
+                    break;
+                }
+            }
+            if (has_transparent_neighbor) break;
+        }
+        if (has_transparent_neighbor) {
+            final_color = inline_color;
+        }
+    }
+
+    COLOR = final_color;
 }

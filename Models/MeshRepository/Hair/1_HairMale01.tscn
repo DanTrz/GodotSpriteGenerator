@@ -38,7 +38,7 @@ bind/2/pose = Transform3D(3.46085, 0, 0, 0, 0, -3.46085, 0, 3.46085, 0, -0.06955
 [node name="1_HairMale01" type="Node3D"]
 
 [node name="HairNode" type="Node3D" parent="."]
-transform = Transform3D(-2.7, -4.36877e-15, 2.36042e-07, -9.23996e-08, 2.48453, -1.05693, -2.17205e-07, -1.05693, -2.48453, -0.708, 4.2, 0.439)
+transform = Transform3D(-3, 6.57547e-08, 4.16838e-07, -1.28922e-07, 2.67886, -1.35044, -4.01816e-07, -1.35044, -2.67886, -0.708, 4.2, -0.235798)
 
 [node name="Skeleton3D" type="Skeleton3D" parent="HairNode"]
 bones/0/name = "CenterHair"
@@ -65,5 +65,6 @@ bones/2/scale = Vector3(1, 1, 1)
 
 [node name="HairMesh" type="MeshInstance3D" parent="HairNode/Skeleton3D"]
 unique_name_in_owner = true
+transform = Transform3D(0.950429, -0.12172, -0.286128, 0.12172, 0.992404, -0.0178563, 0.286128, -0.0178563, 0.958025, 0, 0, 0)
 mesh = SubResource("ArrayMesh_34hpu")
 skin = SubResource("Skin_of2ei")

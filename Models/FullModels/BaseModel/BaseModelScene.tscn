@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://dpa7h0crxxisw" path="res://Models/MeshRepository/Hair/1_HairMale01.tscn" id="7_ew3vs"]
 [ext_resource type="ArrayMesh" uid="uid://b1gru2q23rr5f" path="res://Models/MeshRepository/MeshResources/1_Skin.res" id="7_gqgxj"]
 [ext_resource type="PackedScene" uid="uid://dqvg7t4lsw2gs" path="res://Models/MeshRepository/Weapons/SilverAxeScene.tscn" id="10_58l4l"]
-[ext_resource type="Shader" uid="uid://tc2xscs6f05h" path="res://Assets/Shaders/Simplified_Pixelize3DV2Testing.gdshader" id="10_fe036"]
+[ext_resource type="Shader" uid="uid://tc2xscs6f05h" path="res://Assets/Shaders/BackupVersions/Simplified_Pixelize3DV2Testing.gdshader" id="10_fe036"]
 
 [sub_resource type="Animation" id="Animation_ur8ua"]
 resource_name = "Armature|mixamo_com|Layer0"

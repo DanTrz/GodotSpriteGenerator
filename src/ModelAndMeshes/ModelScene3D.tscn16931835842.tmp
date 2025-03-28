@@ -1,9 +1,9 @@
 [gd_scene load_steps=12 format=3 uid="uid://iuwovcd804os"]
 
+[ext_resource type="Script" uid="uid://kk4jnt501pf6" path="res://Assets/CompositorEffects/Compositor.gd" id="1_hkp8x"]
 [ext_resource type="Script" uid="uid://dasxiorjhfw8t" path="res://src/ModelAndMeshes/Model3DMainPivotControl.cs" id="1_pb3o0"]
 [ext_resource type="PackedScene" uid="uid://bvvxjc2oqng0j" path="res://Models/FullModels/BaseModel/LowPoly/BaseModel_LowPolyScene.tscn" id="2_hkp8x"]
-[ext_resource type="Shader" uid="uid://cair4uoxj5lif" path="res://Assets/Shaders/Outline3D.gdshader" id="3_cykfy"]
-[ext_resource type="Shader" uid="uid://o32y8sg4fot8" path="res://Assets/Shaders/Pixelize3D.gdshader" id="3_hkp8x"]
+[ext_resource type="Shader" uid="uid://o32y8sg4fot8" path="res://Assets/Shaders/Simplified_Pixelize3DV1.gdshader" id="3_hkp8x"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_wy6cq"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -20,33 +20,29 @@ ambient_light_source = 3
 tonemap_mode = 2
 glow_enabled = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_cykfy"]
-render_priority = 0
-shader = ExtResource("3_cykfy")
-shader_parameter/outline_intensity = 1.0
-shader_parameter/outline_width = 5.0
-shader_parameter/normal_threshold = 0.1
-shader_parameter/depth_threshold = 0.05
-shader_parameter/depth_artifact_correction_coef = 3.0
-shader_parameter/outline_colorblend_factor = 0.75
-shader_parameter/alpha_threshold = 0.1
-shader_parameter/outline_fallback_color = Color(0, 0, 0, 1)
+[sub_resource type="CompositorEffect" id="CompositorEffect_hkp8x"]
+resource_local_to_scene = false
+resource_name = ""
+enabled = true
+effect_callback_type = 4
+needs_motion_vectors = false
+needs_normal_roughness = false
+script = ExtResource("1_hkp8x")
+metadata/_custom_type_script = "uid://kk4jnt501pf6"
 
-[sub_resource type="QuadMesh" id="QuadMesh_pb3o0"]
-material = SubResource("ShaderMaterial_cykfy")
-flip_faces = true
-size = Vector2(10, 10)
+[sub_resource type="Compositor" id="Compositor_cykfy"]
+compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_hkp8x")])
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_hkp8x"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pb3o0"]
 render_priority = 0
 shader = ExtResource("3_hkp8x")
-shader_parameter/target_resolution = 256.0
-shader_parameter/outline_strength = 0.6
-shader_parameter/outline_thickness = 5.0
+shader_parameter/target_resolution = 512.0
+shader_parameter/outline_strength = 1.0
+shader_parameter/outline_thickness = 1.1
 shader_parameter/outline_color = Color(0, 0, 0, 1)
 
-[sub_resource type="QuadMesh" id="QuadMesh_cykfy"]
-material = SubResource("ShaderMaterial_hkp8x")
+[sub_resource type="QuadMesh" id="QuadMesh_xukee"]
+material = SubResource("ShaderMaterial_pb3o0")
 flip_faces = true
 size = Vector2(10, 10)
 
@@ -97,17 +93,14 @@ shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_e1sc8")
+compositor = SubResource("Compositor_cykfy")
 
-[node name="TEST" type="Node3D" parent="."]
-
-[node name="Outline3DShaderMesh3D" type="MeshInstance3D" parent="TEST"]
-extra_cull_margin = 16384.0
-mesh = SubResource("QuadMesh_pb3o0")
-skeleton = NodePath("../..")
-
-[node name="OriginalPixieelizeGOODVERSION" type="MeshInstance3D" parent="TEST"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.47216)
+[node name="Outline3DShaderMesh3D" type="MeshInstance3D" parent="."]
 visible = false
 extra_cull_margin = 16384.0
-mesh = SubResource("QuadMesh_cykfy")
-skeleton = NodePath("../..")
+mesh = SubResource("QuadMesh_xukee")
+
+[node name="Outline3DShaderMesh3D2" type="MeshInstance3D" parent="."]
+visible = false
+extra_cull_margin = 16384.0
+mesh = SubResource("QuadMesh_xukee")

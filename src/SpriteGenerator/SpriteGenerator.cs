@@ -6,6 +6,9 @@ using Godot;
 
 public partial class SpriteGenerator : Node
 {
+    // [Export] public Button Pixel2DTest;
+    // [Export] public PanelContainer Pixel2DShaderPanel;
+
     [Export] public OptionButton AnimMethodOptionBtn;
     [Export] public CheckButton GenerateSpriteSheetCheckBtn;
     // [Export] public Button _startGenerationBtn;
@@ -19,14 +22,21 @@ public partial class SpriteGenerator : Node
 
     [Export] public TextureRect ImgColorReductionTextRect;
     [Export] public SubViewportContainer BgRemoverViewportContainer;
-    [Export] public MeshInstance3D MeshShaderPixel3D;
+    //[Export] public MeshInstance3D MeshShaderPixel3D;
+
+    [Export] public TextureRect PixelShaderTextRect;
     [Export] public int frameSkipStep = 4; // Control how frequently frames are captured
     [Export] public bool _clearFolderBeforeGeneration = true;
     [Export(PropertyHint.Range, "1,4,1")] private float _animationPlaybackSpeed = 1.0f;
     [Export] public OptionButton _resolutionOptionBtn;
     [Export] public OptionButton EffectsChoicesOptionBtn;
     [Export] public OptionButton PixelationLevelOptionBtn;
-    [Export] public HSlider Outline3DStrenghtSlider;
+    [Export] public SliderValueBox Outline3DValueSlider;
+
+    [Export] public SliderValueBox Outline3DBlendFactorSlider;
+
+
+    [Export] public MeshInstance3D Outline3DShader;
     [Export] public HSlider DitheringStrenghtSlider;
     [Export] public ColorPickerButton Outline3DColorPicker;
     [Export] public LineEdit _frameStepTextEdit;
@@ -55,7 +65,7 @@ public partial class SpriteGenerator : Node
 
     public static int _spriteResolution = 256;
 
-    private readonly int MaxRBGLevelsColorPalette = 20;
+    private readonly int MaxRBGLevelsColorPalette = 24;
     private readonly int[] allAngles = { 0, 45, 90, 135, 180, 225, 270, 315 };
     private int renderAngle = 0;
     private string currentAnimation;
@@ -73,11 +83,14 @@ public partial class SpriteGenerator : Node
 
     public override void _Ready()
     {
+        //Pixel2DTest.Pressed += () => Pixel2DShaderPanel.Visible = !Pixel2DShaderPanel.Visible;
+
         _startGenerationBtn.Pressed += OnStartGeneration;
         _resolutionOptionBtn.ItemSelected += OnRenderResolutionChanged;
         PixelationLevelOptionBtn.ItemSelected += OnPixelationLevelChanged;
         EffectsChoicesOptionBtn.ItemSelected += OnEffectsChoiceItemSelected;
-        Outline3DStrenghtSlider.ValueChanged += OnOutline3DStrenghtChanged;
+        Outline3DValueSlider.ValueChanged += OnOutlineValuesChanged;
+        Outline3DBlendFactorSlider.ValueChanged += OnOutlineValuesChanged;
         DitheringStrenghtSlider.ValueChanged += OnDitheringStrenghtChanged;
         Outline3DColorPicker.ColorChanged += OnOutline3DColorChanged;
         _frameStepTextEdit.TextChanged += OnFrameStepChanged;
@@ -111,10 +124,10 @@ public partial class SpriteGenerator : Node
 
         EffectsChoicesOptionBtn.Selected = 0;
         OnEffectsChoiceItemSelected(EffectsChoicesOptionBtn.Selected);
-        MeshShaderPixel3D.Visible = true;
+        PixelShaderTextRect.Visible = true;
         OnPixelationLevelChanged(99);
         PixelationLevelOptionBtn.Visible = false;
-        Outline3DStrenghtSlider.Value = 0.0f;
+        Outline3DValueSlider.Value = 0.0f;
         AnimMethodOptionBtn.Selected = 0;
         IsGenSpriteSheetOn = false;
 
@@ -498,7 +511,7 @@ public partial class SpriteGenerator : Node
             //Option 2 -> Toon Shading
             case 0:
                 //No Effect - Turn off PixaltionButton
-                MeshShaderPixel3D.Visible = true;
+                PixelShaderTextRect.Visible = true;
                 PixelationLevelOptionBtn.Visible = false;
                 OnPixelationLevelChanged(99);//Set the resolution to 512 pixels (Last option)
 
@@ -507,14 +520,14 @@ public partial class SpriteGenerator : Node
                 break;
             case 1:
                 //Pixel Effect
-                MeshShaderPixel3D.Visible = true;
+                PixelShaderTextRect.Visible = true;
                 PixelationLevelOptionBtn.Visible = true;
                 OnPixelationLevelChanged(PixelationLevelOptionBtn.Selected);
                 EffectsHandler.SetEffect(_characterModelObject, Const.EffectShadingType.UNSHADED);//TODO: TESTING ONLY
                 break;
             case 2:
                 //Toon Effect
-                MeshShaderPixel3D.Visible = true;
+                PixelShaderTextRect.Visible = true;
                 PixelationLevelOptionBtn.Visible = true;
                 OnPixelationLevelChanged(PixelationLevelOptionBtn.Selected);
 
@@ -556,7 +569,13 @@ public partial class SpriteGenerator : Node
 
         GD.PrintT("Effect Pixel Resolution: " + _spriteResolution);
 
-        if (MeshShaderPixel3D.Mesh.SurfaceGetMaterial(0) is ShaderMaterial shaderMaterial)
+        // if (MeshShaderPixel3D.Mesh.SurfaceGetMaterial(0) is ShaderMaterial shaderMaterial)
+        // {
+        //     shaderMaterial.SetShaderParameter("target_resolution", pixelShaderResolution);
+        // }
+
+
+        if (PixelShaderTextRect.Material is ShaderMaterial shaderMaterial)
         {
             shaderMaterial.SetShaderParameter("target_resolution", pixelShaderResolution);
         }
@@ -564,19 +583,20 @@ public partial class SpriteGenerator : Node
     }
 
 
-    private void OnOutline3DStrenghtChanged(double value)
+    private void OnOutlineValuesChanged(double value)
     {
-        if (MeshShaderPixel3D.Mesh.SurfaceGetMaterial(0) is ShaderMaterial shaderMaterial)
+        if (Outline3DShader.Mesh.SurfaceGetMaterial(0) is ShaderMaterial shaderMaterial)
         {
-            shaderMaterial.SetShaderParameter("outline_strength", value);
+            shaderMaterial.SetShaderParameter("outline_width", Outline3DValueSlider.Value);
+            shaderMaterial.SetShaderParameter("outline_colorblend_factor", Outline3DBlendFactorSlider.Value);
         }
     }
 
     private void OnOutline3DColorChanged(Color color)
     {
-        if (MeshShaderPixel3D.Mesh.SurfaceGetMaterial(0) is ShaderMaterial shaderMaterial)
+        if (Outline3DShader.Mesh.SurfaceGetMaterial(0) is ShaderMaterial shaderMaterial)
         {
-            shaderMaterial.SetShaderParameter("outline_color", color);
+            shaderMaterial.SetShaderParameter("outline_fallback_color", color);
         }
     }
 

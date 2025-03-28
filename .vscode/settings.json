@@ -181,7 +181,7 @@
       "source": "PowerShell"
     }
   },
-  "godotTools.editorPath.godot4": "c:\\Local Documents\\Development\\Godot\\Godot Versions\\Godot_v4.4.1-rc2_mono_win64\\Godot_v4.4.1-rc2_mono_win64.exe",
+  "godotTools.editorPath.godot4": "c:\\Local Documents\\Development\\Godot\\Godot Versions\\Godot_v4.4.1-stable_mono_win64\\Godot_v4.4.1-stable_mono_win64.exe",
   "workbench.colorTheme": "Dracula Theme",
   "cSpell.words": [
     "ogqq"

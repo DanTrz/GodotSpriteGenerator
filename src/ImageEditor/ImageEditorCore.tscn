@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://coras8qp0fyli" path="res://Globals/ImageEditor.cs" id="1_116yk"]
 [ext_resource type="PackedScene" uid="uid://ffrwo5xcxd0r" path="res://src/ImageEditor/Camera2DController/Camera2DController.tscn" id="1_nwf5k"]
-[ext_resource type="Shader" uid="uid://bsx38w01mswov" path="res://Assets/Shaders/ImageEditorV2.gdshader" id="3_e07nq"]
+[ext_resource type="Shader" uid="uid://bsx38w01mswov" path="res://Assets/Shaders/ImageEditor.gdshader" id="3_e07nq"]
 [ext_resource type="Texture2D" uid="uid://cae2jelncoq3w" path="res://Assets/SpriteSheetTemp/Anim_Running_spriteSheet.png" id="4_rt1bl"]
 [ext_resource type="Texture2D" uid="uid://b1hm5e0yfkawq" path="res://Assets/SpriteSheetTemp/B__Running_angle_0_5.png" id="5_e07nq"]
 

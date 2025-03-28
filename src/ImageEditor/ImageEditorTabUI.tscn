@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bn1rbewiias3g"]
+[gd_scene load_steps=11 format=3 uid="uid://bn1rbewiias3g"]
 
 [ext_resource type="Script" uid="uid://cacdskl17dkmj" path="res://src/ImageEditor/ImageEditorMainPanel.cs" id="1_xk0rj"]
 [ext_resource type="PackedScene" uid="uid://cnhj6mgja4h5a" path="res://src/ImageEditor/ImageEditorCore.tscn" id="2_s1l55"]
@@ -7,6 +7,9 @@
 [ext_resource type="PackedScene" uid="uid://244h3jjjyk25" path="res://src/ImageEditor/PaletteImporter/PaletteLoaderUI.tscn" id="5_so0ax"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pyu7k"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8pcxw"]
+bg_color = Color(0.359069, 0.359069, 0.359069, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_v6qpd"]
 font_size = 14
@@ -53,6 +56,7 @@ layout_mode = 2
 [node name="ImageEditorCore" parent="HBoxContainer" instance=ExtResource("2_s1l55")]
 clip_contents = true
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_8pcxw")
 
 [node name="OptionsContainer" type="PanelContainer" parent="HBoxContainer"]
 texture_filter = 2

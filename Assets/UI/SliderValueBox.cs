@@ -11,12 +11,12 @@ public partial class SliderValueBox : HSlider
     {
         valueLabel = GetNode<Label>("%ValueLabel");
         this.ValueChanged += UpdateValueLabel;
-        valueLabel.Text = Value.ToString("0.0");
+        valueLabel.Text = Value.ToString("0.00");
     }
 
     private void UpdateValueLabel(double newValue)
     {
-        valueLabel.Text = newValue.ToString("0.0");
+        valueLabel.Text = newValue.ToString("0.00");
     }
 
 }
