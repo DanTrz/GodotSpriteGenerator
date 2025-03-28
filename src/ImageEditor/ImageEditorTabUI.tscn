@@ -229,10 +229,11 @@ clip_text = true
 [node name="Outline2DSliderBox" parent="HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/2dOutlineHBox" instance=ExtResource("4_v6qpd")]
 layout_mode = 2
 max_value = 10.0
+step = 0.25
 
 [node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/2dOutlineHBox"]
 layout_mode = 2
-theme_override_constants/margin_left = 25
+theme_override_constants/margin_left = 35
 theme_override_constants/margin_top = 6
 theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 6
@@ -257,10 +258,11 @@ clip_text = true
 [node name="Inline2DSliderBox" parent="HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/2dInlineHBox" instance=ExtResource("4_v6qpd")]
 layout_mode = 2
 max_value = 10.0
+step = 0.25
 
 [node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/2dInlineHBox"]
 layout_mode = 2
-theme_override_constants/margin_left = 25
+theme_override_constants/margin_left = 35
 theme_override_constants/margin_top = 6
 theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 6

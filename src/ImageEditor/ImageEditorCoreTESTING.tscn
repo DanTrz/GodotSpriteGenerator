@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://ffrwo5xcxd0r" path="res://src/ImageEditor/Camera2DController/Camera2DController.tscn" id="2_peehe"]
 [ext_resource type="Shader" uid="uid://dya8fpkfgghuq" path="res://Assets/Shaders/BackupVersions/Pixelize2D.gdshader" id="2_vhsxp"]
 [ext_resource type="PackedScene" uid="uid://iuwovcd804os" path="res://src/ModelAndMeshes/ModelScene3D.tscn" id="3_vhsxp"]
-[ext_resource type="Shader" uid="uid://o32y8sg4fot8" path="res://Assets/Shaders/Pixelize3D.gdshader" id="5_8uuxq"]
+[ext_resource type="Shader" uid="uid://o32y8sg4fot8" path="res://Assets/Shaders/BackupVersions/Pixelize3D.gdshader" id="5_8uuxq"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8pcxw"]
 bg_color = Color(0.359069, 0.359069, 0.359069, 1)
