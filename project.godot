@@ -38,7 +38,8 @@ GlobalEvents="*res://Globals/GlobalEvents.cs"
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
-window/stretch/mode="viewport"
+window/stretch/mode="canvas_items"
+window/stretch/scale_mode="integer"
 
 [dotnet]
 
@@ -62,5 +63,4 @@ MouseRightClick={
 
 [rendering]
 
-textures/canvas_textures/default_texture_filter=0
 textures/lossless_compression/force_png=true

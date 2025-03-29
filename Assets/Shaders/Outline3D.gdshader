@@ -184,7 +184,7 @@ void fragment() {
 	if (edge_found) {
 		// Darken the edge color
 		vec3 darkened_edge_color = darken_color(edge_color, outline_colorblend_factor);
-		
+
 		// Blend based on outline intensity and edge detection
 		ALBEDO = mix(screen_color_full.rgb, darkened_edge_color, outline_intensity);
 	}

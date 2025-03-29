@@ -1,0 +1,65 @@
+[gd_scene load_steps=7 format=3 uid="uid://cgi1a3jlsq4q7"]
+
+[ext_resource type="Texture2D" uid="uid://bfipg08noudja" path="res://Assets/SpriteSheetTemp/WerewolfBattle.png" id="1_iugyj"]
+[ext_resource type="Shader" uid="uid://bqe6x0jbw5lpm" path="res://Assets/Shaders/SmoothPixel.gdshader" id="1_phb36"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lses7"]
+shader = ExtResource("1_phb36")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_phb36"]
+shader = ExtResource("1_phb36")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c0krh"]
+shader = ExtResource("1_phb36")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_4rcm1"]
+viewport_path = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/ColorReductionRenderPanel/ImgColorReductionViewportContainer/ImgColorReductionSubViewport")
+
+[node name="Node2D" type="Node2D"]
+
+[node name="ShaderSmotthPixel" type="Sprite2D" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_lses7")
+position = Vector2(1152, 61)
+texture = ExtResource("1_iugyj")
+
+[node name="NoShader" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(1152, 61)
+texture = ExtResource("1_iugyj")
+
+[node name="ShaderSmotthPixel2" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_phb36")
+custom_minimum_size = Vector2(512, 512)
+offset_top = -21.0
+offset_right = 2300.0
+offset_bottom = 491.0
+texture = ExtResource("1_iugyj")
+stretch_mode = 2
+
+[node name="NoShader2" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(512, 512)
+offset_left = 2.0
+offset_top = 86.0
+offset_right = 2302.0
+offset_bottom = 598.0
+texture = ExtResource("1_iugyj")
+stretch_mode = 2
+
+[node name="PixelSmotthPanel" type="PanelContainer" parent="."]
+visible = false
+
+[node name="PixelSmoothEffectSprite2D" type="Sprite2D" parent="PixelSmotthPanel"]
+visible = false
+material = SubResource("ShaderMaterial_c0krh")
+position = Vector2(255, 255)
+texture = SubResource("ViewportTexture_4rcm1")
+
+[node name="ColorRect" type="ColorRect" parent="PixelSmotthPanel"]
+visible = false
+custom_minimum_size = Vector2(512, 512)
+layout_mode = 2
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(215, 122)
+zoom = Vector2(3, 3)

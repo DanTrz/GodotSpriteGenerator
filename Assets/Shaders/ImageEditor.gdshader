@@ -1,4 +1,5 @@
 shader_type canvas_item;
+render_mode unshaded;
 
 // Brightness, Contrast, and Saturation Controls (Matrix Method)
 uniform float brightness : hint_range(-1.0, 1.0, 0.01) = 0.0;

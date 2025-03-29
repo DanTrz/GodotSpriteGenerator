@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=4 uid="uid://cnhj6mgja4h5a"]
+[gd_scene load_steps=12 format=4 uid="uid://cnhj6mgja4h5a"]
 
 [ext_resource type="Script" uid="uid://coras8qp0fyli" path="res://Globals/ImageEditor.cs" id="1_116yk"]
 [ext_resource type="PackedScene" uid="uid://ffrwo5xcxd0r" path="res://src/ImageEditor/Camera2DController/Camera2DController.tscn" id="1_nwf5k"]
 [ext_resource type="Shader" uid="uid://bsx38w01mswov" path="res://Assets/Shaders/ImageEditor.gdshader" id="3_e07nq"]
 [ext_resource type="Texture2D" uid="uid://cae2jelncoq3w" path="res://Assets/SpriteSheetTemp/Anim_Running_spriteSheet.png" id="4_rt1bl"]
+[ext_resource type="Shader" uid="uid://bqe6x0jbw5lpm" path="res://Assets/Shaders/SmoothPixel.gdshader" id="5_c5mtj"]
 [ext_resource type="Texture2D" uid="uid://b1hm5e0yfkawq" path="res://Assets/SpriteSheetTemp/B__Running_angle_0_5.png" id="5_e07nq"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8pcxw"]
@@ -25,42 +26,46 @@ shader_parameter/outline_thickness = 0.0
 shader_parameter/inline_color = Color(1, 1, 1, 1)
 shader_parameter/inline_thickness = 0.0
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8ibud"]
+shader = ExtResource("5_c5mtj")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_c5mtj"]
+viewport_path = NodePath("RawImgPanel/ViewportContainer/ImgEditorSubViewport")
+
 [node name="ImageEditorCore" type="PanelContainer" node_paths=PackedStringArray("ImgTextRect", "ImgEditorSubViewport", "HDCanvasLayer", "HDSubViewportContainer", "HDSubviewPort", "HDTextureRect")]
-texture_filter = 1
 custom_minimum_size = Vector2(512, 512)
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
 localize_numeral_system = false
 theme_override_styles/panel = SubResource("StyleBoxFlat_8pcxw")
 script = ExtResource("1_116yk")
-ImgTextRect = NodePath("PanelContainer/ViewportContainer/ImgEditorSubViewport/ImageProcessorTextureRect")
-ImgEditorSubViewport = NodePath("PanelContainer/ViewportContainer/ImgEditorSubViewport")
+ImgTextRect = NodePath("RawImgPanel/ViewportContainer/ImgEditorSubViewport/ImageProcessorTextureRect")
+ImgEditorSubViewport = NodePath("RawImgPanel/ViewportContainer/ImgEditorSubViewport")
 HDCanvasLayer = NodePath("HiggenHDCanvasLayer")
 HDSubViewportContainer = NodePath("HiggenHDCanvasLayer/HDPanel/HDViewportContainer")
 HDSubviewPort = NodePath("HiggenHDCanvasLayer/HDPanel/HDViewportContainer/HDSubViewport")
 HDTextureRect = NodePath("HiggenHDCanvasLayer/HDPanel/HDViewportContainer/HDSubViewport/HDTextureRect")
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
+[node name="RawImgPanel" type="PanelContainer" parent="."]
 custom_minimum_size = Vector2(800, 500)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_vc4da")
 
-[node name="ViewportContainer" type="SubViewportContainer" parent="PanelContainer"]
+[node name="ViewportContainer" type="SubViewportContainer" parent="RawImgPanel"]
 clip_contents = true
 layout_mode = 2
 stretch = true
 
-[node name="ImgEditorSubViewport" type="SubViewport" parent="PanelContainer/ViewportContainer"]
+[node name="ImgEditorSubViewport" type="SubViewport" parent="RawImgPanel/ViewportContainer"]
 transparent_bg = true
 handle_input_locally = false
-canvas_item_default_texture_filter = 0
 physics_object_picking = true
 size = Vector2i(800, 512)
 render_target_update_mode = 4
 
-[node name="Camera2DController" parent="PanelContainer/ViewportContainer/ImgEditorSubViewport" instance=ExtResource("1_nwf5k")]
+[node name="Camera2DController" parent="RawImgPanel/ViewportContainer/ImgEditorSubViewport" instance=ExtResource("1_nwf5k")]
 
-[node name="ImageProcessorTextureRect" type="TextureRect" parent="PanelContainer/ViewportContainer/ImgEditorSubViewport"]
+[node name="ImageProcessorTextureRect" type="TextureRect" parent="RawImgPanel/ViewportContainer/ImgEditorSubViewport"]
 unique_name_in_owner = true
 material = SubResource("ShaderMaterial_e07nq")
 anchors_preset = 15
@@ -71,6 +76,30 @@ grow_vertical = 2
 texture = ExtResource("4_rt1bl")
 expand_mode = 1
 stretch_mode = 4
+
+[node name="PixelSmoothPanel" type="PanelContainer" parent="."]
+visible = false
+custom_minimum_size = Vector2(800, 500)
+layout_mode = 2
+
+[node name="ViewportContainer" type="SubViewportContainer" parent="PixelSmoothPanel"]
+clip_contents = true
+layout_mode = 2
+stretch = true
+
+[node name="PixelSmoothSubViewport" type="SubViewport" parent="PixelSmoothPanel/ViewportContainer"]
+transparent_bg = true
+handle_input_locally = false
+physics_object_picking = true
+size = Vector2i(2, 2)
+render_target_update_mode = 0
+
+[node name="PixelSmoothEffectSprite2D" type="Sprite2D" parent="PixelSmoothPanel/ViewportContainer/PixelSmoothSubViewport"]
+material = SubResource("ShaderMaterial_8ibud")
+position = Vector2(400, 256)
+texture = SubResource("ViewportTexture_c5mtj")
+
+[node name="Camera2DController" parent="PixelSmoothPanel/ViewportContainer/PixelSmoothSubViewport" instance=ExtResource("1_nwf5k")]
 
 [node name="HiggenHDCanvasLayer" type="CanvasLayer" parent="."]
 layer = -2
@@ -92,7 +121,6 @@ layout_mode = 2
 [node name="HDSubViewport" type="SubViewport" parent="HiggenHDCanvasLayer/HDPanel/HDViewportContainer"]
 transparent_bg = true
 handle_input_locally = false
-canvas_item_default_texture_filter = 0
 physics_object_picking = true
 render_target_update_mode = 4
 

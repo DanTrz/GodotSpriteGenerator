@@ -1,24 +1,15 @@
-[gd_scene load_steps=12 format=3 uid="uid://iuwovcd804os"]
+[gd_scene load_steps=10 format=3 uid="uid://iuwovcd804os"]
 
 [ext_resource type="Script" uid="uid://dasxiorjhfw8t" path="res://src/ModelAndMeshes/Model3DMainPivotControl.cs" id="1_pb3o0"]
 [ext_resource type="PackedScene" uid="uid://bvvxjc2oqng0j" path="res://Models/FullModels/BaseModel/LowPoly/BaseModel_LowPolyScene.tscn" id="2_hkp8x"]
 [ext_resource type="Shader" uid="uid://cair4uoxj5lif" path="res://Assets/Shaders/Outline3D.gdshader" id="3_cykfy"]
 [ext_resource type="Shader" uid="uid://o32y8sg4fot8" path="res://Assets/Shaders/BackupVersions/Pixelize3D.gdshader" id="3_hkp8x"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_wy6cq"]
-sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
-ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
-
-[sub_resource type="Sky" id="Sky_ote1o"]
-sky_material = SubResource("ProceduralSkyMaterial_wy6cq")
-
 [sub_resource type="Environment" id="Environment_e1sc8"]
 background_mode = 1
-background_color = Color(1, 0, 1, 0)
-sky = SubResource("Sky_ote1o")
-ambient_light_source = 3
-tonemap_mode = 2
-glow_enabled = true
+background_color = Color(1, 0, 1, 1)
+ambient_light_source = 1
+reflected_light_source = 1
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cykfy"]
 render_priority = 0

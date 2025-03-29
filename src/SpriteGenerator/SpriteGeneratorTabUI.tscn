@@ -1,14 +1,15 @@
-[gd_scene load_steps=30 format=3 uid="uid://wafjadmbwvmh"]
+[gd_scene load_steps=33 format=3 uid="uid://wafjadmbwvmh"]
 
 [ext_resource type="PackedScene" uid="uid://iuwovcd804os" path="res://src/ModelAndMeshes/ModelScene3D.tscn" id="1_m3qwr"]
 [ext_resource type="Script" uid="uid://dj2tgr0hxsbd3" path="res://src/SpriteGenerator/SpriteGenerator.cs" id="1_yym6v"]
 [ext_resource type="Shader" uid="uid://cair4uoxj5lif" path="res://Assets/Shaders/Outline3D.gdshader" id="3_3bpm1"]
-[ext_resource type="Shader" uid="uid://cwbfwv0g6if3e" path="res://Assets/Shaders/TextRecPixelEffect.gdshader" id="3_akhtx"]
+[ext_resource type="Shader" uid="uid://cwbfwv0g6if3e" path="res://Assets/Shaders/TextRecPixelEffect.gdshader" id="4_axlb1"]
 [ext_resource type="Texture2D" uid="uid://b8fnciwttkrvi" path="res://Assets/UI/32PixelGrid_16C_16_R_Total512Pixel.png" id="4_o82kr"]
 [ext_resource type="Shader" uid="uid://ch0nfn1xoj6yh" path="res://Assets/Shaders/SubViewPortTransparency.gdshader" id="5_c4u2t"]
 [ext_resource type="PackedScene" uid="uid://dw57ccnr4wvji" path="res://src/ModelAndMeshes/ModelPositionManager.tscn" id="6_p81t8"]
 [ext_resource type="Shader" uid="uid://c0hrteashhp3d" path="res://Assets/Shaders/ColorReduc.gdshader" id="7_3bpm1"]
 [ext_resource type="LabelSettings" uid="uid://usv7beyw1bj8" path="res://Assets/UI/Theme/Label.tres" id="7_n1pvc"]
+[ext_resource type="Shader" uid="uid://bqe6x0jbw5lpm" path="res://Assets/Shaders/SmoothPixel.gdshader" id="8_axlb1"]
 [ext_resource type="Theme" uid="uid://drswssji8tnu3" path="res://Assets/UI/Theme/MainTheme.tres" id="8_p2ddc"]
 [ext_resource type="PackedScene" uid="uid://de676sb25ueye" path="res://src/UIControls/ItemListCheckBox.tscn" id="9_u5ifw"]
 [ext_resource type="PackedScene" uid="uid://mjnysgbmwfbp" path="res://src/ModelAndMeshes/MeshReplacerOptButton.tscn" id="10_f1ima"]
@@ -39,8 +40,8 @@ flip_faces = true
 size = Vector2(10, 10)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0w5gm"]
-shader = ExtResource("3_akhtx")
-shader_parameter/target_resolution = 512.0
+shader = ExtResource("4_axlb1")
+shader_parameter/target_resolution = 32.0
 
 [sub_resource type="Gradient" id="Gradient_0w5gm"]
 colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 0)
@@ -59,7 +60,7 @@ border_color = Color(1, 1, 1, 1)
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8pcxw"]
 shader = ExtResource("5_c4u2t")
 shader_parameter/transp_color1 = Color(1, 0, 1, 1)
-shader_parameter/tolerance = 0.5
+shader_parameter/tolerance = 0.009
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_rimwo"]
 viewport_path = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/RawRenderPanel/RawViewportContainer/RawSubViewport")
@@ -77,8 +78,17 @@ shader = ExtResource("7_3bpm1")
 shader_parameter/levels = 20
 shader_parameter/dither_strength = 0.0
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_3bpm1"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_v7vii"]
 viewport_path = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/BGRemoverRenderPanel/BgRemoverViewportContainer/BgRemoverSubViewport")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_axlb1"]
+bg_color = Color(0.230315, 0.230315, 0.230315, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_axlb1"]
+shader = ExtResource("8_axlb1")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_axlb1"]
+viewport_path = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/ColorReductionRenderPanel/ImgColorReductionViewportContainer/ImgColorReductionSubViewport")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0w5gm"]
 
@@ -182,10 +192,8 @@ shader_parameter/normal_outline_strength = 1.8
 shader_parameter/outline_color = Color(0, 0, 0, 1)
 shader_parameter/outline_thickness = 1.0
 
-[sub_resource type="LabelSettings" id="LabelSettings_0w5gm"]
-font_size = 10
-
-[node name="SpriteGeneratorTabUI" type="PanelContainer" node_paths=PackedStringArray("AnimMethodOptionBtn", "GenerateSpriteSheetCheckBtn", "_startGenerationBtn", "MainScene3D", "_rawViewport", "_rawViewportContainer", "BgRemoverViewport", "ImgColorReductionSubViewport", "ImgColorReductionSubViewportContainer", "ImgColorReductionTextRect", "BgRemoverViewportContainer", "PixelShaderTextRect", "_resolutionOptionBtn", "EffectsChoicesOptionBtn", "PixelationLevelOptionBtn", "Outline3DValueSlider", "Outline3DBlendFactorSlider", "Outline3DShader", "DitheringStrenghtSlider", "Outline3DColorPicker", "_frameStepTextEdit", "MaxColorPaletteSpinBox", "_playBackSpeedLineEdit", "_clearFolderCheckBtn", "_pixelShaderTextRect", "_modelPositionManager", "_loadAllAnimationsBtn", "_animSelectionItemList", "_angleSelectionItemList", "_pixelGridTextRect", "_showGridCheckButton", "_meshReplacerPanelParentNode", "_hairMeshOptBtn", "WeaponItemMeshOptBtn", "_hairColorBtn") groups=["save_data"]]
+[node name="SpriteGeneratorTabUI" type="PanelContainer" node_paths=PackedStringArray("AnimMethodOptionBtn", "GenerateSpriteSheetCheckBtn", "_startGenerationBtn", "MainScene3D", "_rawViewport", "_rawViewportContainer", "BgRemoverViewport", "ImgColorReductionSubViewport", "ImgColorReductionSubViewportContainer", "PixelSmoothEffectSprite2D", "ImgColorReductionTextRect", "BgRemoverViewportContainer", "PixelShaderTextRect", "SpriteSizeOptionButton", "EffectsChoicesOptionBtn", "PixelationLevelOptionBtn", "Outline3DValueSlider", "Outline3DBlendFactorSlider", "Outline3DShader", "DitheringStrenghtSlider", "Outline3DColorPicker", "_frameStepTextEdit", "MaxColorPaletteSpinBox", "_playBackSpeedLineEdit", "_clearFolderCheckBtn", "_pixelShaderTextRect", "_modelPositionManager", "_loadAllAnimationsBtn", "_animSelectionItemList", "_angleSelectionItemList", "_pixelGridTextRect", "_showGridCheckButton", "_meshReplacerPanelParentNode", "_hairMeshOptBtn", "WeaponItemMeshOptBtn", "_hairColorBtn") groups=["save_data"]]
+texture_filter = 2
 clip_contents = true
 anchors_preset = 15
 anchor_right = 1.0
@@ -202,10 +210,11 @@ _rawViewportContainer = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/
 BgRemoverViewport = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/BGRemoverRenderPanel/BgRemoverViewportContainer/BgRemoverSubViewport")
 ImgColorReductionSubViewport = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/ColorReductionRenderPanel/ImgColorReductionViewportContainer/ImgColorReductionSubViewport")
 ImgColorReductionSubViewportContainer = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/ColorReductionRenderPanel/ImgColorReductionViewportContainer")
+PixelSmoothEffectSprite2D = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/ColorReductionRenderPanel/PixelSmoothEffectPanel/PixelSmoothEffectSprite2D")
 ImgColorReductionTextRect = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/ColorReductionRenderPanel/ImgColorReductionViewportContainer/ImgColorReductionSubViewport/ImgColorReductionTextRect")
 BgRemoverViewportContainer = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/BGRemoverRenderPanel/BgRemoverViewportContainer")
 PixelShaderTextRect = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/RawRenderPanel/RawViewportContainer/RawSubViewport/PixelShaderTextRect")
-_resolutionOptionBtn = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/SpriteResHBoxCont/ResOptionButton")
+SpriteSizeOptionButton = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/SpriteSizeHBoxCont/SpriteSizeOptionButton")
 EffectsChoicesOptionBtn = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/EffectChoicesHBoxCont/EffectChoicesOptionBtn")
 PixelationLevelOptionBtn = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/PixelationLvlHBoxCont/PixelationLevelOptionBtn")
 Outline3DValueSlider = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/Outline3DHBox/Outline3DSliderBox")
@@ -238,12 +247,10 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="RenderImageVBoxCont" type="VBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer"]
-texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="MainRenderPanel" type="PanelContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont"]
-texture_filter = 1
 clip_contents = true
 custom_minimum_size = Vector2(350, 350)
 layout_mode = 2
@@ -251,7 +258,6 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 
 [node name="RawRenderPanel" type="PanelContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel"]
-texture_filter = 1
 custom_minimum_size = Vector2(512, 512)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -260,7 +266,6 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_brmpw")
 
 [node name="RawViewportContainer" type="SubViewportContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/RawRenderPanel"]
 unique_name_in_owner = true
-texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -270,7 +275,6 @@ unique_name_in_owner = true
 own_world_3d = true
 transparent_bg = true
 handle_input_locally = false
-canvas_item_default_texture_filter = 0
 physics_object_picking = true
 render_target_update_mode = 4
 
@@ -286,7 +290,6 @@ skeleton = NodePath("../..")
 
 [node name="PixelShaderTextRect" type="TextureRect" parent="SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/RawRenderPanel/RawViewportContainer/RawSubViewport"]
 unique_name_in_owner = true
-texture_filter = 3
 material = SubResource("ShaderMaterial_0w5gm")
 anchors_preset = 15
 anchor_right = 1.0
@@ -294,11 +297,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("GradientTexture1D_jd2q0")
+expand_mode = 1
 
 [node name="Pixel32GridTextRect" type="TextureRect" parent="SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/RawRenderPanel/RawViewportContainer/RawSubViewport"]
 unique_name_in_owner = true
 visible = false
-texture_filter = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -317,7 +320,6 @@ stretch_mode = 2
 metadata/_edit_use_anchors_ = true
 
 [node name="BGRemoverRenderPanel" type="PanelContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel"]
-texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -325,7 +327,6 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_3bpm1")
 
 [node name="BgRemoverViewportContainer" type="SubViewportContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/BGRemoverRenderPanel"]
 unique_name_in_owner = true
-texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -334,12 +335,10 @@ size_flags_vertical = 4
 own_world_3d = true
 transparent_bg = true
 handle_input_locally = false
-canvas_item_default_texture_filter = 0
 physics_object_picking = true
 render_target_update_mode = 4
 
 [node name="BgRemoverTextureRect" type="TextureRect" parent="SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/BGRemoverRenderPanel/BgRemoverViewportContainer/BgRemoverSubViewport"]
-texture_filter = 1
 material = SubResource("ShaderMaterial_8pcxw")
 anchors_preset = 15
 anchor_right = 1.0
@@ -347,17 +346,15 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("ViewportTexture_rimwo")
-stretch_mode = 2
+stretch_mode = 3
 
 [node name="ColorReductionRenderPanel" type="PanelContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel"]
-texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_styles/panel = SubResource("StyleBoxFlat_0w5gm")
 
 [node name="ImgColorReductionViewportContainer" type="SubViewportContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/ColorReductionRenderPanel"]
-texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -366,16 +363,29 @@ size_flags_vertical = 4
 own_world_3d = true
 transparent_bg = true
 handle_input_locally = false
-canvas_item_default_texture_filter = 0
 physics_object_picking = true
 render_target_update_mode = 4
 
 [node name="ImgColorReductionTextRect" type="TextureRect" parent="SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/ColorReductionRenderPanel/ImgColorReductionViewportContainer/ImgColorReductionSubViewport"]
-texture_filter = 1
 material = SubResource("ShaderMaterial_1y31e")
 custom_minimum_size = Vector2(512, 512)
-texture = SubResource("ViewportTexture_3bpm1")
-stretch_mode = 2
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_v7vii")
+stretch_mode = 3
+
+[node name="PixelSmoothEffectPanel" type="PanelContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/ColorReductionRenderPanel"]
+texture_filter = 2
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_axlb1")
+
+[node name="PixelSmoothEffectSprite2D" type="Sprite2D" parent="SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/ColorReductionRenderPanel/PixelSmoothEffectPanel"]
+material = SubResource("ShaderMaterial_axlb1")
+position = Vector2(256, 256)
+texture = SubResource("ViewportTexture_axlb1")
 
 [node name="ImageOptionsPanel" type="PanelContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont"]
 clip_contents = true
@@ -489,11 +499,11 @@ theme_override_constants/separation = 25
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="SpriteResHBoxCont" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont"]
+[node name="SpriteSizeHBoxCont" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="ResolutionLabel" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/SpriteResHBoxCont"]
+[node name="ResolutionLabel" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/SpriteSizeHBoxCont"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 text = " Sprite Size"
@@ -502,7 +512,7 @@ vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="ResOptionButton" type="OptionButton" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/SpriteResHBoxCont"]
+[node name="SpriteSizeOptionButton" type="OptionButton" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/SpriteSizeHBoxCont"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 32)
 layout_mode = 2
@@ -533,6 +543,40 @@ text = "Clear Folder: "
 unique_name_in_owner = true
 layout_mode = 2
 
+[node name="PixelationLvlHBoxCont" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/PixelationLvlHBoxCont"]
+custom_minimum_size = Vector2(120, 32)
+layout_mode = 2
+text = "Pixelation"
+label_settings = ExtResource("7_n1pvc")
+vertical_alignment = 1
+autowrap_mode = 2
+clip_text = true
+
+[node name="PixelationLevelOptionBtn" type="OptionButton" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/PixelationLvlHBoxCont"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 32)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+clip_text = true
+item_count = 6
+popup/item_0/text = "32 px"
+popup/item_0/id = 0
+popup/item_1/text = "64 px"
+popup/item_1/id = 1
+popup/item_2/text = "128 px"
+popup/item_2/id = 2
+popup/item_3/text = "256 px"
+popup/item_3/id = 3
+popup/item_4/text = "384 px"
+popup/item_4/id = 4
+popup/item_5/text = "512 px"
+popup/item_5/id = 5
+
 [node name="EffectChoicesHBoxCont" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
@@ -559,40 +603,6 @@ popup/item_1/text = "1 - Unshaded"
 popup/item_1/id = 1
 popup/item_2/text = "2 - Toon Shading"
 popup/item_2/id = 2
-
-[node name="PixelationLvlHBoxCont" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont"]
-custom_minimum_size = Vector2(0, 32)
-layout_mode = 2
-
-[node name="Label" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/PixelationLvlHBoxCont"]
-custom_minimum_size = Vector2(120, 32)
-layout_mode = 2
-text = "Pixelation"
-label_settings = ExtResource("7_n1pvc")
-vertical_alignment = 1
-autowrap_mode = 2
-clip_text = true
-
-[node name="PixelationLevelOptionBtn" type="OptionButton" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/PixelationLvlHBoxCont"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(100, 32)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 4
-clip_text = true
-item_count = 6
-popup/item_0/text = "1 - Very High"
-popup/item_0/id = 0
-popup/item_1/text = "2 - High"
-popup/item_1/id = 1
-popup/item_2/text = "3 - Medium"
-popup/item_2/id = 2
-popup/item_3/text = "4 - Low"
-popup/item_3/id = 3
-popup/item_4/text = "5 - Very Low"
-popup/item_4/id = 4
-popup/item_5/text = "6 - Minimal"
-popup/item_5/id = 5
 
 [node name="Outline3DHBox" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont"]
 custom_minimum_size = Vector2(0, 32)
@@ -796,20 +806,11 @@ vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="DitheringHSlider" type="HSlider" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/DitheringHBox"]
-custom_minimum_size = Vector2(150, 32)
+[node name="DitheringHSlider" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/DitheringHBox" instance=ExtResource("11_brmpw")]
 layout_mode = 2
 max_value = 1.0
 step = 0.2
 tick_count = 6
-ticks_on_borders = true
-
-[node name="DitheringValueLabel" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/DitheringHBox"]
-custom_minimum_size = Vector2(20, 20)
-layout_mode = 2
-text = "00"
-label_settings = SubResource("LabelSettings_0w5gm")
-vertical_alignment = 1
 
 [node name="MeshOptions" type="MarginContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer"]
 layout_mode = 2

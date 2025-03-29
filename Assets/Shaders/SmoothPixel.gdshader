@@ -1,11 +1,6 @@
 shader_type canvas_item;
 render_mode unshaded;
 
-uniform sampler2D screen_texture : hint_screen_texture, filter_nearest;
-uniform float target_resolution : hint_range(1.0, 512.0, 1.0) = 512.0;
-//uniform vec2 viewport_size = vec2(512.0, 512.0); // Or dynamically set via C#
-
-
 // Texture must have 'Filter'-flag enabled!
 
 // Automatic smoothing
@@ -28,18 +23,7 @@ vec4 texturePointSmooth(sampler2D smp, vec2 uv, vec2 pixel_size)
 	return textureGrad(smp, uv + uv_dxy_pixels * pixel_size, ddx, ddy);
 }
 
-
-void fragment() {
-	//vec2 uv_pixel = floor(UV * viewport_size / pixel_size) * (pixel_size / viewport_size);
-	 vec2 uv_pixel = floor(UV * target_resolution) / target_resolution;
-	vec4 col = texture(screen_texture, uv_pixel);
-	COLOR = vec4(col.rgb, col.a);
-
-	//COLOR = texturePointSmooth(TEXTURE, UV, TEXTURE_PIXEL_SIZE);
-
+void fragment()
+{
+	COLOR = texturePointSmooth(TEXTURE, UV, TEXTURE_PIXEL_SIZE);
 }
-
-//void fragment()
-//{
-//	COLOR = texturePointSmooth(TEXTURE, UV, TEXTURE_PIXEL_SIZE);
-//}

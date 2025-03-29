@@ -19,6 +19,9 @@ public partial class SpriteGenerator : Node
     [Export] public SubViewport BgRemoverViewport;
     [Export] public SubViewport ImgColorReductionSubViewport;
     [Export] public SubViewportContainer ImgColorReductionSubViewportContainer;
+    // [Export] public SubViewport PixelSmoothEffectSubViewport;
+    // [Export] public SubViewportContainer PixelSmoothEffectViewPortContainer;
+    [Export] public Sprite2D PixelSmoothEffectSprite2D;
 
     [Export] public TextureRect ImgColorReductionTextRect;
     [Export] public SubViewportContainer BgRemoverViewportContainer;
@@ -28,7 +31,7 @@ public partial class SpriteGenerator : Node
     [Export] public int frameSkipStep = 4; // Control how frequently frames are captured
     [Export] public bool _clearFolderBeforeGeneration = true;
     [Export(PropertyHint.Range, "1,4,1")] private float _animationPlaybackSpeed = 1.0f;
-    [Export] public OptionButton _resolutionOptionBtn;
+    [Export] public OptionButton SpriteSizeOptionButton;
     [Export] public OptionButton EffectsChoicesOptionBtn;
     [Export] public OptionButton PixelationLevelOptionBtn;
     [Export] public SliderValueBox Outline3DValueSlider;
@@ -86,7 +89,7 @@ public partial class SpriteGenerator : Node
         //Pixel2DTest.Pressed += () => Pixel2DShaderPanel.Visible = !Pixel2DShaderPanel.Visible;
 
         _startGenerationBtn.Pressed += OnStartGeneration;
-        _resolutionOptionBtn.ItemSelected += OnRenderResolutionChanged;
+        SpriteSizeOptionButton.ItemSelected += OnSpriteSizeChanged;
         PixelationLevelOptionBtn.ItemSelected += OnPixelationLevelChanged;
         EffectsChoicesOptionBtn.ItemSelected += OnEffectsChoiceItemSelected;
         Outline3DValueSlider.ValueChanged += OnOutlineValuesChanged;
@@ -117,16 +120,16 @@ public partial class SpriteGenerator : Node
         _showGridCheckButton.Text = _showGridCheckButton.ButtonPressed.ToString();
 
         //Set Default Resolution and Shader Strenght
-        _resolutionOptionBtn.Selected = _resolutionOptionBtn.ItemCount - 1; //Select the Last Option
-        OnRenderResolutionChanged(_resolutionOptionBtn.Selected);
+        SpriteSizeOptionButton.Selected = SpriteSizeOptionButton.ItemCount - 1; //Select the Last Option
+        OnSpriteSizeChanged(SpriteSizeOptionButton.Selected);
         PixelationLevelOptionBtn.Selected = PixelationLevelOptionBtn.ItemCount - 1; //Last option 
         OnPixelationLevelChanged(PixelationLevelOptionBtn.Selected);
 
         EffectsChoicesOptionBtn.Selected = 0;
         OnEffectsChoiceItemSelected(EffectsChoicesOptionBtn.Selected);
         PixelShaderTextRect.Visible = true;
-        OnPixelationLevelChanged(99);
-        PixelationLevelOptionBtn.Visible = false;
+        OnPixelationLevelChanged(5);
+        PixelationLevelOptionBtn.Visible = true;
         Outline3DValueSlider.Value = 0.0f;
         AnimMethodOptionBtn.Selected = 0;
         IsGenSpriteSheetOn = false;
@@ -470,7 +473,7 @@ public partial class SpriteGenerator : Node
 
     }
 
-    private void OnRenderResolutionChanged(long itemSelectedIndex)
+    private void OnSpriteSizeChanged(long itemSelectedIndex)
     {
         switch (itemSelectedIndex)
         {
@@ -511,24 +514,18 @@ public partial class SpriteGenerator : Node
             //Option 2 -> Toon Shading
             case 0:
                 //No Effect - Turn off PixaltionButton
-                PixelShaderTextRect.Visible = true;
-                PixelationLevelOptionBtn.Visible = false;
-                OnPixelationLevelChanged(99);//Set the resolution to 512 pixels (Last option)
+                OnPixelationLevelChanged(5);//Set the resolution to 512 pixels (Last option)
 
                 Callable.From(() => EffectsHandler.SetEffect(_characterModelObject, Const.EffectShadingType.STANDARD)).CallDeferred();
                 //EffectsHandler.SetEffect(_characterModelObject, Const.EffectShadingType.STANDARD);//TODO: TESTING ONLY
                 break;
             case 1:
                 //Pixel Effect
-                PixelShaderTextRect.Visible = true;
-                PixelationLevelOptionBtn.Visible = true;
                 OnPixelationLevelChanged(PixelationLevelOptionBtn.Selected);
                 EffectsHandler.SetEffect(_characterModelObject, Const.EffectShadingType.UNSHADED);//TODO: TESTING ONLY
                 break;
             case 2:
                 //Toon Effect
-                PixelShaderTextRect.Visible = true;
-                PixelationLevelOptionBtn.Visible = true;
                 OnPixelationLevelChanged(PixelationLevelOptionBtn.Selected);
 
                 EffectsHandler.SetEffect(_characterModelObject, Const.EffectShadingType.TOON);//TODO: TESTING ONLY
@@ -550,20 +547,22 @@ public partial class SpriteGenerator : Node
                 pixelShaderResolution = 64;
                 break;
             case 2:
-                pixelShaderResolution = 96;
-                break;
-            case 3:
                 pixelShaderResolution = 128;
                 break;
-            case 4:
-                pixelShaderResolution = 192;
-                break;
-            case 5:
+            case 3:
                 pixelShaderResolution = 256;
                 break;
-            case 99:
+            case 4:
+                pixelShaderResolution = 384;
+                break;
+            case 5:
                 pixelShaderResolution = 512;
                 break;
+                // case 6:
+                //     pixelShaderResolution = 1024;
+                //     break;
+
+
 
         }
 
@@ -630,6 +629,12 @@ public partial class SpriteGenerator : Node
 
         ImgColorReductionSubViewport.CallDeferred("set_size", viewPortSize);
         ImgColorReductionSubViewportContainer.CallDeferred("set_size", viewPortSize);
+
+        Callable.From(() =>
+            PixelSmoothEffectSprite2D.Position = new Vector2((viewPortSize.X / 2), (viewPortSize.Y / 2))
+            ).CallDeferred();
+
+
 
         //Callable.From(() => ImgColorReductionSubViewport.SetSize(viewPortSize)).CallDeferred();
     }
@@ -737,7 +742,7 @@ public partial class SpriteGenerator : Node
         GD.PrintT("Started OnSaveData from:", this.Name);
         //nodeSaveData.Add(_spriteResolution);
         newSaveGameData.SpriteResolution = _spriteResolution;
-        newSaveGameData.SpriteResolutionOptBtn = _resolutionOptionBtn.Selected;
+        newSaveGameData.SpriteResolutionOptBtn = SpriteSizeOptionButton.Selected;
         newSaveGameData.FrameSkipStep = frameSkipStep;
         //newSaveGameData.ShowPixelEffect = _pixelEffectCheckBtn.ButtonPressed;
         newSaveGameData.PixelEffectLevel = PixelationLevelOptionBtn.Selected;
@@ -749,7 +754,7 @@ public partial class SpriteGenerator : Node
     {
         GD.PrintT("Started OnLoadData from:", this.Name);
         _spriteResolution = newLoadData.SpriteResolution;
-        _resolutionOptionBtn.Selected = newLoadData.SpriteResolutionOptBtn;
+        SpriteSizeOptionButton.Selected = newLoadData.SpriteResolutionOptBtn;
         frameSkipStep = newLoadData.FrameSkipStep;
         _frameStepTextEdit.Text = frameSkipStep.ToString();
         //_pixelEffectCheckBtn.ButtonPressed = newLoadData.ShowPixelEffect;
@@ -760,7 +765,7 @@ public partial class SpriteGenerator : Node
         _showGridCheckButton.ButtonPressed = newLoadData.ShowGrid;
 
         UpdateViewPorts();
-        OnRenderResolutionChanged(newLoadData.SpriteResolutionOptBtn);
+        OnSpriteSizeChanged(newLoadData.SpriteResolutionOptBtn);
         OnPixelationLevelChanged(newLoadData.PixelEffectLevel);
         OnPlayBackSpeedChanged(newLoadData.PlaybackSpeed.ToString());
         OnFrameStepChanged(newLoadData.FrameSkipStep.ToString());
