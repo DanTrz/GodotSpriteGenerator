@@ -7,12 +7,36 @@ public partial class MeshReplacer : Node
     private static int _iconSize = 32;
     public static List<ArrayMeshDataObject> arrayMeshDataObjects;
 
+    public override void _Ready()
+    {
+        LoadAllMeshDataResouces();
+        GlobalEvents.Instance.OnMeshItemColorChanged += UpdateMeshItemColor;
+    }
+
+    private static void LoadAllMeshDataResouces()
+    {
+        //GetAllMeshItem data that are ArrayMeshDataObject type and load to a local list
+        arrayMeshDataObjects = GlobalUtil.GetResourcesByType<ArrayMeshDataObject>(Const.MESH_REPO_FOLDER_PATH);
+        arrayMeshDataObjects.Sort((a, b) => a.ItemOrder.CompareTo(b.ItemOrder));
+    }
+
+    public static void UpdateMeshItemColor(string itemSelectedName, Color newColor)
+    {
+
+        if (GetMeshItemByName(itemSelectedName, arrayMeshDataObjects).SurfaceGetMaterial(0) is StandardMaterial3D material)
+        {
+            material.AlbedoColor = newColor;
+
+        }
+    }
+
 
     public static void UpdateUIOptionMesheItemList(MeshReplacerOptButton itemMeshOptBtn, Const.BodyPartType bodyPart)
     {
-        //GetAllMeshItem data that are ArrayMeshDataObject type
-        arrayMeshDataObjects = GlobalUtil.GetResourcesByType<ArrayMeshDataObject>(Const.MESH_REPO_FOLDER_PATH);
-        arrayMeshDataObjects.Sort((a, b) => a.ItemOrder.CompareTo(b.ItemOrder));
+        if (arrayMeshDataObjects == null)
+        {
+            LoadAllMeshDataResouces();
+        }
 
         var bodyPartMeshes = arrayMeshDataObjects.Where(
             mesh => mesh.BodyPartType == itemMeshOptBtn.BodyPartType
@@ -35,6 +59,12 @@ public partial class MeshReplacer : Node
 
                 itemMeshOptBtn.SetItemIcon(itemIndex, resizedIcon);
             }
+
+            if (item.CanChangeColor)
+            {
+                itemMeshOptBtn.EnableColorPicker(true);
+            }
+
             itemId++;
         }
     }
@@ -51,6 +81,18 @@ public partial class MeshReplacer : Node
 
     }
 
+    // public static void UpdateTargetMesh(MeshInstance3D meshTargetToReplace, Mesh newMeshItem)
+    // {
+
+    //     if (meshTargetToReplace == null || meshTargetToReplace.Mesh == null)
+    //     {
+    //         GD.PrintErr(meshTargetToReplace.Name + " has no mesh or is null");
+    //     }
+
+    //     meshTargetToReplace.Mesh = newMeshItem;
+
+    // }
+
     public static Mesh GetMeshItemByName(string itemResName, List<ArrayMeshDataObject> resourceMeshList)
     {
         var mesh = resourceMeshList.Where(MeshData => MeshData.ItemName == itemResName).Select(mesh => mesh.MeshItem).FirstOrDefault();
@@ -58,6 +100,18 @@ public partial class MeshReplacer : Node
         if (mesh != null)
         {
             return mesh;
+        }
+
+        return null;
+    }
+
+    public static ArrayMeshDataObject GetArrayMeshDataObject(string itemResName)
+    {
+        var meshDataObject = arrayMeshDataObjects.Where(MeshData => MeshData.ItemName == itemResName).FirstOrDefault();
+
+        if (meshDataObject != null)
+        {
+            return meshDataObject;
         }
 
         return null;

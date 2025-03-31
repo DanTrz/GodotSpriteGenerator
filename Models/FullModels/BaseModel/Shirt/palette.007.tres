@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://cau4fof7y2iyf"]
+
+[ext_resource type="Texture2D" uid="uid://dixl052qiuq6p" path="res://Models/FullModels/BaseModel/Shirt/Shirt_LowPolyVoxel_LowPolyVoxel_GearTemplate-8-JacketSmall.png" id="1_v6gge"]
+
+[resource]
+resource_name = "palette.007"
+cull_mode = 2
+albedo_texture = ExtResource("1_v6gge")

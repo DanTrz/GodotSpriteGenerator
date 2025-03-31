@@ -5,7 +5,7 @@
 
 [resource]
 script = ExtResource("3_v8vqx")
-Active = true
+Active = false
 ItemName = "Hunter Jacket"
 MeshItem = ExtResource("1_pjw1t")
 BodyPartType = 1

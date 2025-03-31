@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ArrayMeshDataObject" load_steps=3 format=3 uid="uid://b2y4bhvoyds7v"]
+
+[ext_resource type="ArrayMesh" uid="uid://btkn2mbe0rvlw" path="res://Models/FullModels/BaseModel/Shirt/Shirt_LowPoly.res" id="1_qios7"]
+[ext_resource type="Script" uid="uid://cmuqvgdb2248c" path="res://src/ModelAndMeshes/ArrayMeshDataObject.cs" id="2_30buh"]
+
+[resource]
+script = ExtResource("2_30buh")
+Active = true
+ItemName = "Common Shirt"
+MeshItem = ExtResource("1_qios7")
+BodyPartType = 1
+ItemOrder = 1
+metadata/_custom_type_script = "uid://cmuqvgdb2248c"

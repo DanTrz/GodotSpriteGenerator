@@ -1,9 +1,41 @@
-[gd_scene load_steps=2 format=3 uid="uid://mjnysgbmwfbp"]
+[gd_scene load_steps=3 format=3 uid="uid://mjnysgbmwfbp"]
 
 [ext_resource type="Script" uid="uid://bmp7j64xrilhc" path="res://src/ModelAndMeshes/MeshReplacerOptButton.cs" id="1_bgyvs"]
 
-[node name="MeshReplacerOptButton" type="OptionButton"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5qwhx"]
+bg_color = Color(0.192556, 0.192556, 0.192556, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.71825, 0.51007, 0.946664, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="MeshReplacerOptButton" type="OptionButton" node_paths=PackedStringArray("MeshColorPicker", "MeshColorPickerMarginContainer")]
 custom_minimum_size = Vector2(150, 32)
 clip_text = true
 fit_to_longest_item = false
 script = ExtResource("1_bgyvs")
+MeshColorPicker = NodePath("MeshColorPickerMarginContainer/PanelContainer/MeshColorBtn")
+MeshColorPickerMarginContainer = NodePath("MeshColorPickerMarginContainer")
+
+[node name="MeshColorPickerMarginContainer" type="MarginContainer" parent="."]
+offset_left = 153.0
+offset_right = 185.0
+offset_bottom = 32.0
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="MeshColorPickerMarginContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_5qwhx")
+
+[node name="MeshColorBtn" type="ColorPickerButton" parent="MeshColorPickerMarginContainer/PanelContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(28, 24)
+layout_mode = 2

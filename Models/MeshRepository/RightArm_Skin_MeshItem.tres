@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="ArrayMeshDataObject" load_steps=3 format=3 uid="uid://kcvgfg1bq7oe"]
 
-[ext_resource type="ArrayMesh" uid="uid://cmsvy64j8ounq" path="res://Models/MeshRepository/MeshResources/RIGHT_ARM_SKIN.res" id="1_1aa6i"]
+[ext_resource type="ArrayMesh" uid="uid://dkwb46hcbuaq8" path="res://Models/FullModels/BaseModel/LowPoly/BaseModel_LowPolyVersion02_LowPoly_RIGHT_ARM.res" id="1_1aa6i"]
 [ext_resource type="Script" uid="uid://cmuqvgdb2248c" path="res://src/ModelAndMeshes/ArrayMeshDataObject.cs" id="3_8dm62"]
 
 [resource]

@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://sydm6x5klgcj"]
+
+[ext_resource type="Texture2D" uid="uid://da3ey5oc45uvt" path="res://Models/FullModels/BaseModel/PantsLeg/Pants_LowPolyVoxel_LowPolyVoxel_GearTemplate-7-Pants.png" id="1_7jfcj"]
+
+[resource]
+resource_name = "palette.006"
+cull_mode = 2
+albedo_texture = ExtResource("1_7jfcj")

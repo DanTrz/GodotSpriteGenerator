@@ -6,16 +6,17 @@
 [ext_resource type="PackedScene" uid="uid://db76flu5stvpw" path="res://Assets/UI/BoolCheckButton.tscn" id="3_jkvfd"]
 [ext_resource type="PackedScene" uid="uid://cja16u4jssxrh" path="res://src/ImageEditor/PaletteImporter/PaletteColorBoxItem.tscn" id="3_ykadx"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ykadx"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jkvfd"]
+bg_color = Color(0.192556, 0.192556, 0.192556, 1)
 border_width_left = 1
 border_width_top = 1
 border_width_right = 1
 border_width_bottom = 1
-corner_radius_top_left = 1
-corner_radius_top_right = 1
-corner_radius_bottom_right = 1
-corner_radius_bottom_left = 1
+border_color = Color(0.71825, 0.51007, 0.946664, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
 
 [node name="PaletteLoader" type="MarginContainer" node_paths=PackedStringArray("LoadExtPaletteBtn", "AddPersistColorsBtn", "ClearPersistColorsBtn", "PersistColorPickerBtn", "ExtPaletteListGridContainer", "PersistColorListGridContainer", "UseExternalPaletteCheckBtn")]
 custom_minimum_size = Vector2(0, 32)
@@ -27,7 +28,7 @@ script = ExtResource("1_81li2")
 LoadExtPaletteBtn = NodePath("PanelContainer/VBoxContainer/LoadExtPaletteContainer/PaletteOptionsHbOx/PaletteHbOx/LoadExtPaletteBtn")
 AddPersistColorsBtn = NodePath("PanelContainer/VBoxContainer/PersistColorsContainer/PersistentColors/HBoxContainer/AddPersistColorsBtn")
 ClearPersistColorsBtn = NodePath("PanelContainer/VBoxContainer/PersistColorsContainer/PersistentColors/HBoxContainer/ClearPersistColorsBtn")
-PersistColorPickerBtn = NodePath("PanelContainer/VBoxContainer/PersistColorsContainer/PersistentColors/HBoxContainer/MarginContainer/PanelContainer/PersistColorPickerBtn")
+PersistColorPickerBtn = NodePath("PanelContainer/VBoxContainer/PersistColorsContainer/PersistentColors/HBoxContainer/MarginContainer/PanelContainer2/PersistColorPickerBtn")
 ExtPaletteListGridContainer = NodePath("PanelContainer/VBoxContainer/LoadExtPaletteContainer/PaletteOptionsHbOx/PaletteListPanel/MarginContainer/ScrollContainer/MarginContainer/ExtPaletteListGridContainer")
 PersistColorListGridContainer = NodePath("PanelContainer/VBoxContainer/PersistColorsContainer/PersistentColors/PaletteListPanel/MarginContainer/ScrollContainer/MarginContainer/PersistColorsListGridContainer")
 UseExternalPaletteCheckBtn = NodePath("PanelContainer/VBoxContainer/LoadExtPaletteContainer/PaletteOptionsHbOx/PaletteHbOx/MarginContainer/UseExternalPaletteCheckBtn")
@@ -156,14 +157,12 @@ theme_override_constants/margin_top = 3
 theme_override_constants/margin_right = 0
 theme_override_constants/margin_bottom = 6
 
-[node name="PanelContainer" type="PanelContainer" parent="PanelContainer/VBoxContainer/PersistColorsContainer/PersistentColors/HBoxContainer/MarginContainer"]
-texture_filter = 1
+[node name="PanelContainer2" type="PanelContainer" parent="PanelContainer/VBoxContainer/PersistColorsContainer/PersistentColors/HBoxContainer/MarginContainer"]
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_ykadx")
+theme_override_styles/panel = SubResource("StyleBoxFlat_jkvfd")
 
-[node name="PersistColorPickerBtn" type="ColorPickerButton" parent="PanelContainer/VBoxContainer/PersistColorsContainer/PersistentColors/HBoxContainer/MarginContainer/PanelContainer"]
-texture_filter = 1
-custom_minimum_size = Vector2(22, 22)
+[node name="PersistColorPickerBtn" type="ColorPickerButton" parent="PanelContainer/VBoxContainer/PersistColorsContainer/PersistentColors/HBoxContainer/MarginContainer/PanelContainer2"]
+custom_minimum_size = Vector2(28, 24)
 layout_mode = 2
 
 [node name="AddPersistColorsBtn" type="Button" parent="PanelContainer/VBoxContainer/PersistColorsContainer/PersistentColors/HBoxContainer"]

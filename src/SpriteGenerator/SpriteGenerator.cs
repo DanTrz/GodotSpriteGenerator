@@ -739,21 +739,30 @@ public partial class SpriteGenerator : Node
     private void OnMeshItemSelected(long itemIndex, MeshReplacerOptButton meshReplacerOptButton)
     {
 
-        string itemSelected = meshReplacerOptButton.GetItemText((int)itemIndex);
-        GD.PrintT("Mesh Item Selected: " + itemSelected + " + FromButton: " + meshReplacerOptButton.Name);
+        string itemSelectedName = meshReplacerOptButton.GetItemText((int)itemIndex);
+        GD.PrintT("Mesh Item Selected: " + itemSelectedName + " + FromButton: " + meshReplacerOptButton.Name);
 
-        //Gets the only Skeletion we have in the Model Scene
-        Skeleton3D _parentSkeletion = GlobalUtil.GetAllNodesByType<Skeleton3D>(_characterModelObject).FirstOrDefault();
+        var _targetMeshInstance = GlobalUtil.GetAllNodesByType<BodyPartMeshInstance3D>(_characterModelObject).
+            Where(bodyPartMesh => bodyPartMesh.BodyPartType == meshReplacerOptButton.BodyPartType).FirstOrDefault();
 
-        var _meshInstanceObject = GlobalUtil.GetAllNodesByType<BodyPartMeshInstance3D>(_characterModelObject).
-            Where(x => x.BodyPartType == meshReplacerOptButton.BodyPartType).FirstOrDefault();
-
-        if (_meshInstanceObject == null)
+        if (_targetMeshInstance == null)
         {
             GD.PrintErr("MeshInstance3D not found for BodyPartType: " + meshReplacerOptButton.BodyPartType);
+            return;
         }
 
-        MeshReplacer.UpdateMeshFromResourceItem(_meshInstanceObject, itemSelected);
+        ArrayMeshDataObject meshDataObjtSelected = MeshReplacer.GetArrayMeshDataObject(itemSelectedName);
+
+        if (meshDataObjtSelected.CanChangeColor)
+        {
+            meshReplacerOptButton.EnableColorPicker(true);
+        }
+        else
+        {
+            meshReplacerOptButton.EnableColorPicker(false);
+        }
+
+        MeshReplacer.UpdateMeshFromResourceItem(_targetMeshInstance, itemSelectedName);
     }
 
 

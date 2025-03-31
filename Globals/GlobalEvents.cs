@@ -9,6 +9,10 @@ public partial class GlobalEvents : Node
 
     public Action<Godot.Collections.Array<Color>> OnPaletteChanged { get; set; }
 
+    public Action<string, Color> OnMeshItemColorChanged { get; set; }
+
+    //public static Action<string, Color> OnMeshItemColorChanged2;
+
     // public Func<Godot.Collections.Array<Color>> OnGetTextureFromImgCompleted { get; set; }
 
     public Action<string> OnEffectsChangesStarted { get; set; }
