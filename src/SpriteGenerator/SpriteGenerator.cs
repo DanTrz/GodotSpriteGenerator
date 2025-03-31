@@ -11,9 +11,11 @@ public partial class SpriteGenerator : Node
 
     [Export] public OptionButton AnimMethodOptionBtn;
     [Export] public CheckButton GenerateSpriteSheetCheckBtn;
+    [Export] public CheckButton ShowMeshPanelCheckBtn;
+    [Export] public MarginContainer MeshOptionsMarginCont;
     // [Export] public Button _startGenerationBtn;
     [Export] public Button _startGenerationBtn;
-    [Export] public Node3D MainScene3D;
+    [Export] public Node3D MainModelScene3D;
     [Export] public SubViewport _rawViewport;
     [Export] public SubViewportContainer _rawViewportContainer;
     [Export] public SubViewport BgRemoverViewport;
@@ -82,12 +84,9 @@ public partial class SpriteGenerator : Node
     private bool IsGenSpriteSheetOn = true;
 
 
-
-
     public override void _Ready()
     {
         //Pixel2DTest.Pressed += () => Pixel2DShaderPanel.Visible = !Pixel2DShaderPanel.Visible;
-
         _startGenerationBtn.Pressed += OnStartGeneration;
         SpriteSizeOptionButton.ItemSelected += OnSpriteSizeChanged;
         PixelationLevelOptionBtn.ItemSelected += OnPixelationLevelChanged;
@@ -104,7 +103,7 @@ public partial class SpriteGenerator : Node
         MaxColorPaletteSpinBox.ValueChanged += (value) => UpdateColorReductionShader();
         AnimMethodOptionBtn.ItemSelected += OnAnimMethodOptionBtnItemSelected;
         GenerateSpriteSheetCheckBtn.Pressed += OnGenerateSpriteSheetCheckBtnPressed;
-        //MeshReplacer Signals
+        ShowMeshPanelCheckBtn.Pressed += () => MeshOptionsMarginCont.Visible = !ShowMeshPanelCheckBtn.ButtonPressed;
         _hairColorBtn.ColorChanged += OnHairColorChanged;
         _hairMeshOptBtn.ItemSelected += OnHairMeshOptBtnItemSelected;
         WeaponItemMeshOptBtn.ItemSelected += OnWeaponItemMeshOptBtnItemSelected;
@@ -114,17 +113,13 @@ public partial class SpriteGenerator : Node
         _frameStepTextEdit.Text = frameSkipStep.ToString();
         _playBackSpeedLineEdit.Text = _animationPlaybackSpeed.ToString();
         _angleSelectionItemList.CreateItemsFromList(allAngles.Select(x => x.ToString()).ToArray());
-
-        //Effects and Core Grid Options
         _showGridCheckButton.ButtonPressed = false;
-        _showGridCheckButton.Text = _showGridCheckButton.ButtonPressed.ToString();
 
         //Set Default Resolution and Shader Strenght
         SpriteSizeOptionButton.Selected = SpriteSizeOptionButton.ItemCount - 1; //Select the Last Option
         OnSpriteSizeChanged(SpriteSizeOptionButton.Selected);
         PixelationLevelOptionBtn.Selected = PixelationLevelOptionBtn.ItemCount - 1; //Last option 
         OnPixelationLevelChanged(PixelationLevelOptionBtn.Selected);
-
         EffectsChoicesOptionBtn.Selected = 0;
         OnEffectsChoiceItemSelected(EffectsChoicesOptionBtn.Selected);
         PixelShaderTextRect.Visible = true;
@@ -138,15 +133,23 @@ public partial class SpriteGenerator : Node
         MaxColorPaletteSpinBox.Value = MaxRBGLevelsColorPalette;
         MaxColorPaletteSpinBox.MinValue = 1;
 
+        GlobalUtil.SaveFolderPath = ProjectSettings.GlobalizePath(Const.SAVE_GAME_PATH);
 
-        //Pass the objects from MainScene3D to the SpriteGenerator
-        if (MainScene3D != null)
+        //Load the objects from MainScene3D to the SpriteGenerator script
+        LoadAndPrepareModelNodes();
+        UpdateViewPorts();
+    }
+
+    private void LoadAndPrepareModelNodes()
+    {
+        //LOAD MODEL KEY NODES and RQEUIRED REFERENCES
+        if (MainModelScene3D != null)
         {
-            //Get Reference to Our Object3D within MainScene
-            _modelPivotNode = MainScene3D.GetNode<Node3D>("%Model3DMainPivotControl");
-            _camera = MainScene3D.GetNode<Camera3D>("%MainCamera");
-            _characterModelObject = _modelPivotNode.GetChild<Node3D>(0);
-            _animationPlayer = _characterModelObject.GetNode<AnimationPlayer>("AnimationPlayer");
+            //Get Reference to Our Object3D within MainScene and Load it's key nodes
+            _modelPivotNode = MainModelScene3D.GetNodeOrNull<Node3D>("%Model3DMainPivotControl");
+            _camera = MainModelScene3D.GetNodeOrNull<Camera3D>("%MainCamera");
+            _characterModelObject = _modelPivotNode.GetChildOrNull<Node3D>(0);
+            _animationPlayer = _characterModelObject.GetNodeOrNull<AnimationPlayer>("AnimationPlayer");
 
             //Pass the Model to te PositionManager 
             _modelPositionManager.ModelNode = _modelPivotNode;
@@ -157,18 +160,25 @@ public partial class SpriteGenerator : Node
             GD.PrintErr("MainScene3D is null");
         }
 
-        //Mesh Replace Variables and UI
-        MeshReplacer.UpdateUIOptionsSceneItemList(_hairMeshOptBtn, Const.HAIR_SCENES_FOLDER_PATH);
-        MeshReplacer.UpdateUIOptionsSceneItemList(WeaponItemMeshOptBtn, Const.WEAPON_SCENES_FOLDER_PATH);
+        //LOAD REPLACEABLE PARTS
+        if (ModelHasReplacebleParts())
+        {
+            //Load and add Hair and Weapon Meshes to UI Buttons
+            MeshReplacer.UpdateUIOptionsSceneItemList(_hairMeshOptBtn, Const.HAIR_SCENES_FOLDER_PATH);
+            MeshReplacer.UpdateUIOptionsSceneItemList(WeaponItemMeshOptBtn, Const.WEAPON_SCENES_FOLDER_PATH);
 
-        LoadAllMeshReplacerBtnAndMeshItemData();
-        _hairMeshOptBtn.Selected = 0;
-        OnHairMeshOptBtnItemSelected(0);
-        _hairColorBtn.Color = Colors.White;
+            //Load all MeshReplace Buttons with Model Meshes
+            LoadAllMeshReplacerBtnAndMeshItemData();
 
-        GlobalUtil.SaveFolderPath = ProjectSettings.GlobalizePath(Const.SAVE_GAME_PATH);
-        //Update initial views
-        UpdateViewPorts();
+            //Set default selected values
+            _hairMeshOptBtn.Selected = 0;
+            OnHairMeshOptBtnItemSelected(0);
+            _hairColorBtn.Color = Colors.White;
+        }
+        else
+        {
+            GD.PrintT("Mode has no replaceable parts or is null");
+        }
     }
 
     private void OnStartGeneration()
@@ -434,7 +444,6 @@ public partial class SpriteGenerator : Node
 
     private void OnGenerateSpriteSheetCheckBtnPressed()
     {
-        GenerateSpriteSheetCheckBtn.Text = GenerateSpriteSheetCheckBtn.ButtonPressed.ToString();
         IsGenSpriteSheetOn = GenerateSpriteSheetCheckBtn.ButtonPressed;
         GD.PrintT("Generate Sprite Sheet: " + IsGenSpriteSheetOn);
     }
@@ -656,7 +665,6 @@ public partial class SpriteGenerator : Node
     private void OnShowGridCheckButtonPressed()
     {
         _pixelGridTextRect.Visible = _showGridCheckButton.ButtonPressed;
-        _showGridCheckButton.Text = _showGridCheckButton.ButtonPressed.ToString();
 
     }
 
@@ -698,6 +706,7 @@ public partial class SpriteGenerator : Node
 
     private void LoadAllMeshReplacerBtnAndMeshItemData()
     {
+
         var allMeshReplacerOptButtons = GlobalUtil.GetAllNodesByType<MeshReplacerOptButton>(_meshReplacerPanelParentNode);
         GD.PrintT("Found " + allMeshReplacerOptButtons.Count + " MeshReplacerOptButton");
 
@@ -713,6 +722,17 @@ public partial class SpriteGenerator : Node
             //OnMeshItemSelected(0, meshReplacerOptButton);
         }
 
+    }
+
+    private bool ModelHasReplacebleParts()
+    {
+        //Check if the model has at least one replaceable part
+        if (GlobalUtil.GetAllNodesByType<BodyPartMeshInstance3D>(_characterModelObject).FirstOrDefault() != null)
+        {
+            return true;
+        }
+
+        return false;
     }
 
     //Change the Mesh base based on the MeshReplacaeOpt button selection (Connected signal)
@@ -758,7 +778,6 @@ public partial class SpriteGenerator : Node
         frameSkipStep = newLoadData.FrameSkipStep;
         _frameStepTextEdit.Text = frameSkipStep.ToString();
         //_pixelEffectCheckBtn.ButtonPressed = newLoadData.ShowPixelEffect;
-        //_pixelEffectCheckBtn.Text = _pixelEffectCheckBtn.ButtonPressed.ToString();
         PixelationLevelOptionBtn.Selected = newLoadData.PixelEffectLevel;
         _animationPlaybackSpeed = newLoadData.PlaybackSpeed;
         _playBackSpeedLineEdit.Text = _animationPlaybackSpeed.ToString();

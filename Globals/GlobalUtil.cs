@@ -263,24 +263,24 @@ public static class GlobalUtil
     /// </summary>
     public static List<T> GetAllNodesByType<T>(Node fromParentNode) where T : Node
     {
-        List<T> foundNodes = new List<T>();
+        List<T> nodesFound = new List<T>();
 
         // Check the current node
         if (fromParentNode is T typedNode)
         {
-            foundNodes.Add(typedNode);
+            nodesFound.Add(typedNode);
         }
 
         // Recursively check all children
         foreach (Node child in fromParentNode.GetChildren())
         {
-            foundNodes.AddRange(GetAllNodesByType<T>(child));
+            nodesFound.AddRange(GetAllNodesByType<T>(child));
         }
 
-        return foundNodes;
+        return nodesFound;
     }
 
-    public static List<T> GetResourcesByType<T>(string resourceDirPath)
+    public static List<T> GetResourcesByType<T>(string resourceDirPath) where T : Resource
     {
         var allResourceFiles = ResourceLoader.ListDirectory(resourceDirPath);
         List<T> resourceList = new List<T>();

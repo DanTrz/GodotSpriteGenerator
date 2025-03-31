@@ -10,10 +10,10 @@
 [ext_resource type="Shader" uid="uid://c0hrteashhp3d" path="res://Assets/Shaders/ColorReduc.gdshader" id="7_3bpm1"]
 [ext_resource type="LabelSettings" uid="uid://usv7beyw1bj8" path="res://Assets/UI/Theme/Label.tres" id="7_n1pvc"]
 [ext_resource type="Shader" uid="uid://bqe6x0jbw5lpm" path="res://Assets/Shaders/SmoothPixel.gdshader" id="8_axlb1"]
-[ext_resource type="Theme" uid="uid://drswssji8tnu3" path="res://Assets/UI/Theme/MainTheme.tres" id="8_p2ddc"]
 [ext_resource type="PackedScene" uid="uid://de676sb25ueye" path="res://src/UIControls/ItemListCheckBox.tscn" id="9_u5ifw"]
 [ext_resource type="PackedScene" uid="uid://mjnysgbmwfbp" path="res://src/ModelAndMeshes/MeshReplacerOptButton.tscn" id="10_f1ima"]
 [ext_resource type="PackedScene" uid="uid://dbast2ob2q2mv" path="res://Assets/UI/SliderValueBox.tscn" id="11_brmpw"]
+[ext_resource type="PackedScene" uid="uid://db76flu5stvpw" path="res://Assets/UI/BoolCheckButton.tscn" id="14_v7vii"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_brmpw"]
 border_width_left = 1
@@ -192,7 +192,7 @@ shader_parameter/normal_outline_strength = 1.8
 shader_parameter/outline_color = Color(0, 0, 0, 1)
 shader_parameter/outline_thickness = 1.0
 
-[node name="SpriteGeneratorTabUI" type="PanelContainer" node_paths=PackedStringArray("AnimMethodOptionBtn", "GenerateSpriteSheetCheckBtn", "_startGenerationBtn", "MainScene3D", "_rawViewport", "_rawViewportContainer", "BgRemoverViewport", "ImgColorReductionSubViewport", "ImgColorReductionSubViewportContainer", "PixelSmoothEffectSprite2D", "ImgColorReductionTextRect", "BgRemoverViewportContainer", "PixelShaderTextRect", "SpriteSizeOptionButton", "EffectsChoicesOptionBtn", "PixelationLevelOptionBtn", "Outline3DValueSlider", "Outline3DBlendFactorSlider", "Outline3DShader", "DitheringStrenghtSlider", "Outline3DColorPicker", "_frameStepTextEdit", "MaxColorPaletteSpinBox", "_playBackSpeedLineEdit", "_clearFolderCheckBtn", "_pixelShaderTextRect", "_modelPositionManager", "_loadAllAnimationsBtn", "_animSelectionItemList", "_angleSelectionItemList", "_pixelGridTextRect", "_showGridCheckButton", "_meshReplacerPanelParentNode", "_hairMeshOptBtn", "WeaponItemMeshOptBtn", "_hairColorBtn") groups=["save_data"]]
+[node name="SpriteGeneratorTabUI" type="PanelContainer" node_paths=PackedStringArray("AnimMethodOptionBtn", "GenerateSpriteSheetCheckBtn", "ShowMeshPanelCheckBtn", "MeshOptionsMarginCont", "_startGenerationBtn", "MainModelScene3D", "_rawViewport", "_rawViewportContainer", "BgRemoverViewport", "ImgColorReductionSubViewport", "ImgColorReductionSubViewportContainer", "PixelSmoothEffectSprite2D", "ImgColorReductionTextRect", "BgRemoverViewportContainer", "PixelShaderTextRect", "SpriteSizeOptionButton", "EffectsChoicesOptionBtn", "PixelationLevelOptionBtn", "Outline3DValueSlider", "Outline3DBlendFactorSlider", "Outline3DShader", "DitheringStrenghtSlider", "Outline3DColorPicker", "_frameStepTextEdit", "MaxColorPaletteSpinBox", "_playBackSpeedLineEdit", "_clearFolderCheckBtn", "_pixelShaderTextRect", "_modelPositionManager", "_loadAllAnimationsBtn", "_animSelectionItemList", "_angleSelectionItemList", "_pixelGridTextRect", "_showGridCheckButton", "_meshReplacerPanelParentNode", "_hairMeshOptBtn", "WeaponItemMeshOptBtn", "_hairColorBtn") groups=["save_data"]]
 texture_filter = 2
 clip_contents = true
 anchors_preset = 15
@@ -201,10 +201,12 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_yym6v")
-AnimMethodOptionBtn = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/AnimMethoChoices/AnimMethodLeftPanel/AnimMethodHBoxCont/AnimMethodOptionBtn")
-GenerateSpriteSheetCheckBtn = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/AnimMethoChoices/AnimMethodRightPanel/GenerateSpriteSheetHBoxCont/MarginContainer/GenSpriteSheetCheckButton")
-_startGenerationBtn = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MarginContainer4/FinalGenerationButton/StartGenerationBtn")
-MainScene3D = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/RawRenderPanel/RawViewportContainer/RawSubViewport/Model/ModelScene3D")
+AnimMethodOptionBtn = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/AnimMethoChoices/AnimMethodLeftPanel/AnimMethodHBoxCont/AnimMethodOptionBtn")
+GenerateSpriteSheetCheckBtn = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/AnimMethoChoices/AnimMethodRightPanel/GenerateSpriteSheetHBoxCont/MarginContainer/GenSpriteSheetCheckButton")
+ShowMeshPanelCheckBtn = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/ModelTypeMarginCon/ModelTypePanelCont/HBoxContainer/ShowMeshPanelHBoxCont/MarginContainer/ShowMeshPanelCheckBtn")
+MeshOptionsMarginCont = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MeshOptionsMarginCont")
+_startGenerationBtn = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/StartGenMarginContainer/PanelContainer/FinalGenerationButton/StartGenerationBtn")
+MainModelScene3D = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/RawRenderPanel/RawViewportContainer/RawSubViewport/Model/ModelScene3D")
 _rawViewport = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/RawRenderPanel/RawViewportContainer/RawSubViewport")
 _rawViewportContainer = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/RawRenderPanel/RawViewportContainer")
 BgRemoverViewport = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/BGRemoverRenderPanel/BgRemoverViewportContainer/BgRemoverSubViewport")
@@ -214,29 +216,29 @@ PixelSmoothEffectSprite2D = NodePath("SpriteGenerationVBoxContainer/HSplitContai
 ImgColorReductionTextRect = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/ColorReductionRenderPanel/ImgColorReductionViewportContainer/ImgColorReductionSubViewport/ImgColorReductionTextRect")
 BgRemoverViewportContainer = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/BGRemoverRenderPanel/BgRemoverViewportContainer")
 PixelShaderTextRect = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/RawRenderPanel/RawViewportContainer/RawSubViewport/PixelShaderTextRect")
-SpriteSizeOptionButton = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/SpriteSizeHBoxCont/SpriteSizeOptionButton")
-EffectsChoicesOptionBtn = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/EffectChoicesHBoxCont/EffectChoicesOptionBtn")
-PixelationLevelOptionBtn = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/PixelationLvlHBoxCont/PixelationLevelOptionBtn")
-Outline3DValueSlider = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/Outline3DHBox/Outline3DSliderBox")
-Outline3DBlendFactorSlider = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/Outline3DBlendFactorHBox/OutlineBlendSliderBox")
+SpriteSizeOptionButton = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/SpriteSizeHBoxCont/SpriteSizeOptionButton")
+EffectsChoicesOptionBtn = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/EffectChoicesHBoxCont/EffectChoicesOptionBtn")
+PixelationLevelOptionBtn = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/PixelationLvlHBoxCont/PixelationLevelOptionBtn")
+Outline3DValueSlider = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/Outline3DHBox/Outline3DSliderBox")
+Outline3DBlendFactorSlider = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/Outline3DBlendFactorHBox/OutlineBlendSliderBox")
 Outline3DShader = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/RawRenderPanel/RawViewportContainer/RawSubViewport/Model/Outline3DShader")
-DitheringStrenghtSlider = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/DitheringHBox/DitheringHSlider")
-Outline3DColorPicker = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/Outline3DHBox/MarginContainer/Outline3DColorPickerBtn")
-_frameStepTextEdit = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/FrameSkipHBoxCont/FrameStepTextEdit")
-MaxColorPaletteSpinBox = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/MaxColorPaletteHBox/MaxColorPaletteSpinBox")
-_playBackSpeedLineEdit = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/PlaybackSpeedHBoxCont/PlayBackSpeedLineEdit")
-_clearFolderCheckBtn = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/ClearFolderHBoxCont/ClearFolderCheckBtn")
+DitheringStrenghtSlider = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/DitheringHBox/DitheringHSlider")
+Outline3DColorPicker = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/Outline3DHBox/MarginContainer/Outline3DColorPickerBtn")
+_frameStepTextEdit = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/FrameSkipHBoxCont/FrameStepTextEdit")
+MaxColorPaletteSpinBox = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/MaxColorPaletteHBox/MaxColorPaletteSpinBox")
+_playBackSpeedLineEdit = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/PlaybackSpeedHBoxCont/PlayBackSpeedLineEdit")
+_clearFolderCheckBtn = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/ClearFolderHBoxCont/ClearFolderCheckBtn")
 _pixelShaderTextRect = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/RawRenderPanel/RawViewportContainer/RawSubViewport/PixelShaderTextRect")
 _modelPositionManager = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/ImageOptionsPanel/ModelPositionManager")
-_loadAllAnimationsBtn = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MarginContainer3/AnimSelectPanelCont/MarginContainer/VBoxContainer/HBoxContainer/LoadAllAnimationsBtn")
-_animSelectionItemList = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MarginContainer3/AnimSelectPanelCont/MarginContainer/VBoxContainer/animSelectionItemList")
-_angleSelectionItemList = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/AngleSelectionHBoxCont/angleSelectionItemList")
+_loadAllAnimationsBtn = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/LoadAnimMarginCont/AnimSelectPanelCont/MarginContainer/VBoxContainer/HBoxContainer/LoadAllAnimationsBtn")
+_animSelectionItemList = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/LoadAnimMarginCont/AnimSelectPanelCont/MarginContainer/VBoxContainer/animSelectionItemList")
+_angleSelectionItemList = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/AngleSelectionHBoxCont/angleSelectionItemList")
 _pixelGridTextRect = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/RawRenderPanel/RawViewportContainer/RawSubViewport/Pixel32GridTextRect")
-_showGridCheckButton = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/ShowGridHBoxCont/MarginContainer/ShowGridCheckButton")
-_meshReplacerPanelParentNode = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont")
-_hairMeshOptBtn = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/HairMeshHBoxCont/HairMeshOptBtn")
-WeaponItemMeshOptBtn = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt/WeaponItemMeshHBoxCont2/WeaponItemMeshOptBtn")
-_hairColorBtn = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/HairMeshHBoxCont/MarginContainer/HairColorBtn")
+_showGridCheckButton = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/ShowGridHBoxCont/MarginContainer/ShowGridCheckButton")
+_meshReplacerPanelParentNode = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont")
+_hairMeshOptBtn = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/HairMeshHBoxCont/HairMeshOptBtn")
+WeaponItemMeshOptBtn = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt/WeaponItemMeshHBoxCont2/WeaponItemMeshOptBtn")
+_hairColorBtn = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/HairMeshHBoxCont/MarginContainer/HairColorBtn")
 metadata/_tab_index = 0
 
 [node name="SpriteGenerationVBoxContainer" type="VBoxContainer" parent="."]
@@ -249,6 +251,7 @@ size_flags_vertical = 3
 [node name="RenderImageVBoxCont" type="VBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
 
 [node name="MainRenderPanel" type="PanelContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont"]
 clip_contents = true
@@ -399,43 +402,55 @@ unique_name_in_owner = true
 texture_filter = 2
 layout_mode = 2
 
-[node name="OptionsPanelCont" type="PanelContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer"]
-texture_filter = 2
+[node name="OptionsPanelVBoxCont" type="VBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
+
+[node name="OptionsPanelCont" type="PanelContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont"]
+texture_filter = 2
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxEmpty_0w5gm")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont"]
+[node name="ScrollContainer" type="ScrollContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont"]
+layout_mode = 2
+follow_focus = true
+draw_focus_border = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer"]
 material = SubResource("ShaderMaterial_h87xq")
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
-[node name="MainSpriteOptions" type="MarginContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer"]
+[node name="MainSpriteOptionsMarginCont" type="MarginContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 1
 theme_override_constants/margin_top = 1
 theme_override_constants/margin_right = 1
 theme_override_constants/margin_bottom = 1
 
-[node name="PanelContainer" type="PanelContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions"]
+[node name="PanelContainer" type="PanelContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont"]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer"]
 layout_mode = 2
 
-[node name="AnimMethoChoices" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer"]
+[node name="AnimMethoChoices" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="AnimMethodLeftPanel" type="VBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/AnimMethoChoices"]
+[node name="AnimMethodLeftPanel" type="VBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/AnimMethoChoices"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 10
 
-[node name="AnimMethodHBoxCont" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/AnimMethoChoices/AnimMethodLeftPanel"]
+[node name="AnimMethodHBoxCont" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/AnimMethoChoices/AnimMethodLeftPanel"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="AnimMethodLabel" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/AnimMethoChoices/AnimMethodLeftPanel/AnimMethodHBoxCont"]
+[node name="AnimMethodLabel" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/AnimMethoChoices/AnimMethodLeftPanel/AnimMethodHBoxCont"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 text = "Animation Method"
@@ -444,7 +459,7 @@ vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="AnimMethodOptionBtn" type="OptionButton" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/AnimMethoChoices/AnimMethodLeftPanel/AnimMethodHBoxCont"]
+[node name="AnimMethodOptionBtn" type="OptionButton" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/AnimMethoChoices/AnimMethodLeftPanel/AnimMethodHBoxCont"]
 custom_minimum_size = Vector2(100, 32)
 layout_mode = 2
 size_flags_horizontal = 0
@@ -456,16 +471,16 @@ popup/item_0/id = 0
 popup/item_1/text = "Y.Axis Rotation"
 popup/item_1/id = 1
 
-[node name="AnimMethodRightPanel" type="VBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/AnimMethoChoices"]
+[node name="AnimMethodRightPanel" type="VBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/AnimMethoChoices"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 10
 
-[node name="GenerateSpriteSheetHBoxCont" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/AnimMethoChoices/AnimMethodRightPanel"]
+[node name="GenerateSpriteSheetHBoxCont" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/AnimMethoChoices/AnimMethodRightPanel"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="GenerateSpriteSheetLabel" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/AnimMethoChoices/AnimMethodRightPanel/GenerateSpriteSheetHBoxCont"]
+[node name="GenerateSpriteSheetLabel" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/AnimMethoChoices/AnimMethodRightPanel/GenerateSpriteSheetHBoxCont"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 text = "Create SpriteSheet"
@@ -474,36 +489,29 @@ vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="MarginContainer" type="MarginContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/AnimMethoChoices/AnimMethodRightPanel/GenerateSpriteSheetHBoxCont"]
+[node name="MarginContainer" type="MarginContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/AnimMethoChoices/AnimMethodRightPanel/GenerateSpriteSheetHBoxCont"]
 layout_mode = 2
 theme_override_constants/margin_left = 0
 theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 0
 theme_override_constants/margin_bottom = 4
 
-[node name="GenSpriteSheetCheckButton" type="CheckButton" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/AnimMethoChoices/AnimMethodRightPanel/GenerateSpriteSheetHBoxCont/MarginContainer"]
-texture_filter = 2
-clip_contents = true
-custom_minimum_size = Vector2(80, 24)
+[node name="GenSpriteSheetCheckButton" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/AnimMethoChoices/AnimMethodRightPanel/GenerateSpriteSheetHBoxCont/MarginContainer" instance=ExtResource("14_v7vii")]
 layout_mode = 2
-size_flags_horizontal = 4
-focus_mode = 0
-theme = ExtResource("8_p2ddc")
-text = "False"
 
-[node name="SpriteOptionsVBox" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer"]
+[node name="SpriteOptionsVBox" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="OptionsGroup1VBoxCont" type="VBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox"]
+[node name="OptionsGroup1VBoxCont" type="VBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox"]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="SpriteSizeHBoxCont" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont"]
+[node name="SpriteSizeHBoxCont" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="ResolutionLabel" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/SpriteSizeHBoxCont"]
+[node name="ResolutionLabel" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/SpriteSizeHBoxCont"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 text = " Sprite Size"
@@ -512,7 +520,7 @@ vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="SpriteSizeOptionButton" type="OptionButton" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/SpriteSizeHBoxCont"]
+[node name="SpriteSizeOptionButton" type="OptionButton" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/SpriteSizeHBoxCont"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 32)
 layout_mode = 2
@@ -531,23 +539,23 @@ popup/item_3/id = 3
 popup/item_4/text = "512px"
 popup/item_4/id = 4
 
-[node name="ClearFolderHBoxCont" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont"]
+[node name="ClearFolderHBoxCont" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont"]
 visible = false
 layout_mode = 2
 
-[node name="ClearFolderLabel" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/ClearFolderHBoxCont"]
+[node name="ClearFolderLabel" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/ClearFolderHBoxCont"]
 layout_mode = 2
 text = "Clear Folder: "
 
-[node name="ClearFolderCheckBtn" type="CheckButton" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/ClearFolderHBoxCont"]
+[node name="ClearFolderCheckBtn" type="CheckButton" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/ClearFolderHBoxCont"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="PixelationLvlHBoxCont" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont"]
+[node name="PixelationLvlHBoxCont" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/PixelationLvlHBoxCont"]
+[node name="Label" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/PixelationLvlHBoxCont"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 text = "Pixelation"
@@ -556,7 +564,7 @@ vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="PixelationLevelOptionBtn" type="OptionButton" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/PixelationLvlHBoxCont"]
+[node name="PixelationLevelOptionBtn" type="OptionButton" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/PixelationLvlHBoxCont"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 32)
 layout_mode = 2
@@ -577,11 +585,11 @@ popup/item_4/id = 4
 popup/item_5/text = "512 px"
 popup/item_5/id = 5
 
-[node name="EffectChoicesHBoxCont" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont"]
+[node name="EffectChoicesHBoxCont" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="EffectsLabel" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/EffectChoicesHBoxCont"]
+[node name="EffectsLabel" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/EffectChoicesHBoxCont"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 text = " Effect Choice"
@@ -590,7 +598,7 @@ vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="EffectChoicesOptionBtn" type="OptionButton" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/EffectChoicesHBoxCont"]
+[node name="EffectChoicesOptionBtn" type="OptionButton" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/EffectChoicesHBoxCont"]
 custom_minimum_size = Vector2(100, 32)
 layout_mode = 2
 size_flags_horizontal = 0
@@ -604,11 +612,11 @@ popup/item_1/id = 1
 popup/item_2/text = "2 - Toon Shading"
 popup/item_2/id = 2
 
-[node name="Outline3DHBox" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont"]
+[node name="Outline3DHBox" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="Outline3DLabel" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/Outline3DHBox"]
+[node name="Outline3DLabel" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/Outline3DHBox"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 text = " Outline 3D"
@@ -617,27 +625,27 @@ vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="Outline3DSliderBox" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/Outline3DHBox" instance=ExtResource("11_brmpw")]
+[node name="Outline3DSliderBox" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/Outline3DHBox" instance=ExtResource("11_brmpw")]
 layout_mode = 2
 max_value = 20.0
 value = 5.0
 
-[node name="MarginContainer" type="MarginContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/Outline3DHBox"]
+[node name="MarginContainer" type="MarginContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/Outline3DHBox"]
 layout_mode = 2
 theme_override_constants/margin_left = 25
 theme_override_constants/margin_top = 6
 theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 6
 
-[node name="Outline3DColorPickerBtn" type="ColorPickerButton" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/Outline3DHBox/MarginContainer"]
+[node name="Outline3DColorPickerBtn" type="ColorPickerButton" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/Outline3DHBox/MarginContainer"]
 custom_minimum_size = Vector2(22, 20)
 layout_mode = 2
 
-[node name="Outline3DBlendFactorHBox" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont"]
+[node name="Outline3DBlendFactorHBox" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/Outline3DBlendFactorHBox"]
+[node name="Label" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/Outline3DBlendFactorHBox"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 text = " Outline Blend"
@@ -646,17 +654,17 @@ vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="OutlineBlendSliderBox" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/Outline3DBlendFactorHBox" instance=ExtResource("11_brmpw")]
+[node name="OutlineBlendSliderBox" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/Outline3DBlendFactorHBox" instance=ExtResource("11_brmpw")]
 layout_mode = 2
 max_value = 1.0
 step = 0.01
 value = 0.75
 
-[node name="ShowGridHBoxCont" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont"]
+[node name="ShowGridHBoxCont" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/ShowGridHBoxCont"]
+[node name="Label" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/ShowGridHBoxCont"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 text = " ShowGrid"
@@ -665,32 +673,24 @@ vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="MarginContainer" type="MarginContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/ShowGridHBoxCont"]
+[node name="MarginContainer" type="MarginContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/ShowGridHBoxCont"]
 layout_mode = 2
 theme_override_constants/margin_left = 0
 theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 0
 theme_override_constants/margin_bottom = 4
 
-[node name="ShowGridCheckButton" type="CheckButton" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/ShowGridHBoxCont/MarginContainer"]
-unique_name_in_owner = true
-texture_filter = 2
-clip_contents = true
-custom_minimum_size = Vector2(80, 24)
+[node name="ShowGridCheckButton" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/ShowGridHBoxCont/MarginContainer" instance=ExtResource("14_v7vii")]
 layout_mode = 2
-size_flags_horizontal = 4
-focus_mode = 0
-theme = ExtResource("8_p2ddc")
-text = "False"
 
-[node name="OptionsGroup1VBoxCont2" type="VBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox"]
+[node name="OptionsGroup1VBoxCont2" type="VBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox"]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="AngleSelectionHBoxCont" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2"]
+[node name="AngleSelectionHBoxCont" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/AngleSelectionHBoxCont"]
+[node name="Label" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/AngleSelectionHBoxCont"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 text = " Angles:"
@@ -699,7 +699,7 @@ vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="angleSelectionItemList" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/AngleSelectionHBoxCont" instance=ExtResource("9_u5ifw")]
+[node name="angleSelectionItemList" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/AngleSelectionHBoxCont" instance=ExtResource("9_u5ifw")]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(180, 75)
 layout_mode = 2
@@ -709,11 +709,11 @@ max_columns = 3
 same_column_width = true
 fixed_column_width = 55
 
-[node name="FrameSkipHBoxCont" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2"]
+[node name="FrameSkipHBoxCont" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="FrameStepLabel" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/FrameSkipHBoxCont"]
+[node name="FrameStepLabel" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/FrameSkipHBoxCont"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 text = " Frames Skip"
@@ -722,17 +722,17 @@ vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="FrameStepTextEdit" type="LineEdit" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/FrameSkipHBoxCont"]
+[node name="FrameStepTextEdit" type="LineEdit" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/FrameSkipHBoxCont"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(25, 32)
 layout_mode = 2
 
-[node name="PlaybackSpeedHBoxCont" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2"]
+[node name="PlaybackSpeedHBoxCont" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2"]
 visible = false
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/PlaybackSpeedHBoxCont"]
+[node name="Label" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/PlaybackSpeedHBoxCont"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 text = " Play Speed"
@@ -741,16 +741,16 @@ vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="PlayBackSpeedLineEdit" type="LineEdit" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/PlaybackSpeedHBoxCont"]
+[node name="PlayBackSpeedLineEdit" type="LineEdit" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/PlaybackSpeedHBoxCont"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(25, 32)
 layout_mode = 2
 
-[node name="MoveSpriteSheetHBoxCont" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2"]
+[node name="MoveSpriteSheetHBoxCont" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/MoveSpriteSheetHBoxCont"]
+[node name="Label" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/MoveSpriteSheetHBoxCont"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 text = "Move SpriteSheet"
@@ -759,28 +759,21 @@ vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="MarginContainer" type="MarginContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/MoveSpriteSheetHBoxCont"]
+[node name="MarginContainer" type="MarginContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/MoveSpriteSheetHBoxCont"]
 layout_mode = 2
 theme_override_constants/margin_left = 0
 theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 0
 theme_override_constants/margin_bottom = 4
 
-[node name="MoveSpriteSheetCheckButton" type="CheckButton" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/MoveSpriteSheetHBoxCont/MarginContainer"]
-texture_filter = 2
-clip_contents = true
-custom_minimum_size = Vector2(80, 24)
+[node name="MoveSpriteSheetCheckButton" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/MoveSpriteSheetHBoxCont/MarginContainer" instance=ExtResource("14_v7vii")]
 layout_mode = 2
-size_flags_horizontal = 4
-focus_mode = 0
-theme = ExtResource("8_p2ddc")
-text = "False"
 
-[node name="MaxColorPaletteHBox" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2"]
+[node name="MaxColorPaletteHBox" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/MaxColorPaletteHBox"]
+[node name="Label" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/MaxColorPaletteHBox"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 text = "RGB Levels #"
@@ -789,15 +782,15 @@ vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="MaxColorPaletteSpinBox" type="SpinBox" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/MaxColorPaletteHBox"]
+[node name="MaxColorPaletteSpinBox" type="SpinBox" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/MaxColorPaletteHBox"]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 
-[node name="DitheringHBox" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2"]
+[node name="DitheringHBox" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/DitheringHBox"]
+[node name="Label" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/DitheringHBox"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 text = "Dithering Level"
@@ -806,48 +799,114 @@ vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="DitheringHSlider" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MainSpriteOptions/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/DitheringHBox" instance=ExtResource("11_brmpw")]
+[node name="DitheringHSlider" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/DitheringHBox" instance=ExtResource("11_brmpw")]
 layout_mode = 2
 max_value = 1.0
 step = 0.2
 tick_count = 6
 
-[node name="MeshOptions" type="MarginContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer"]
+[node name="ModelTypeMarginCon" type="MarginContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="ModelTypePanelCont" type="PanelContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/ModelTypeMarginCon"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/ModelTypeMarginCon/ModelTypePanelCont"]
+layout_mode = 2
+
+[node name="ModelTypeVBox" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/ModelTypeMarginCon/ModelTypePanelCont/HBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/ModelTypeMarginCon/ModelTypePanelCont/HBoxContainer/ModelTypeVBox"]
+custom_minimum_size = Vector2(120, 32)
+layout_mode = 2
+text = "Model Type"
+label_settings = ExtResource("7_n1pvc")
+vertical_alignment = 1
+clip_text = true
+
+[node name="ModelTypeOptionButton" type="OptionButton" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/ModelTypeMarginCon/ModelTypePanelCont/HBoxContainer/ModelTypeVBox"]
+custom_minimum_size = Vector2(150, 32)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+clip_text = true
+item_count = 3
+popup/item_0/text = "Voxel LowPoly Model"
+popup/item_0/id = 0
+popup/item_1/text = "Regular Model"
+popup/item_1/id = 1
+popup/item_1/disabled = true
+popup/item_2/text = "Custom Model"
+popup/item_2/id = 2
+popup/item_2/disabled = true
+
+[node name="ShowMeshPanelHBoxCont" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/ModelTypeMarginCon/ModelTypePanelCont/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 2
+
+[node name="Label" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/ModelTypeMarginCon/ModelTypePanelCont/HBoxContainer/ShowMeshPanelHBoxCont"]
+custom_minimum_size = Vector2(120, 32)
+layout_mode = 2
+text = "Hide Mesh Panel"
+label_settings = ExtResource("7_n1pvc")
+vertical_alignment = 1
+autowrap_mode = 2
+clip_text = true
+
+[node name="MarginContainer" type="MarginContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/ModelTypeMarginCon/ModelTypePanelCont/HBoxContainer/ShowMeshPanelHBoxCont"]
+layout_mode = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 4
+
+[node name="ShowMeshPanelCheckBtn" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/ModelTypeMarginCon/ModelTypePanelCont/HBoxContainer/ShowMeshPanelHBoxCont/MarginContainer" instance=ExtResource("14_v7vii")]
+layout_mode = 2
+
+[node name="MeshOptionsMarginCont" type="MarginContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 1
 theme_override_constants/margin_top = 1
 theme_override_constants/margin_right = 1
 theme_override_constants/margin_bottom = 1
 
-[node name="MeshReplacerPanelCont" type="PanelContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions"]
+[node name="MeshReplacerPanelCont" type="PanelContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MeshOptionsMarginCont"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont"]
+[node name="HBoxContainer" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont"]
 layout_mode = 2
 
-[node name="MeshReplacerVboxOpt1" type="VBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer"]
+[node name="MeshReplacerVboxOpt1" type="VBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="ModelTypeHBoxCont" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1"]
+[node name="ModelTypeHBoxCont" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1"]
+visible = false
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="ModelTypeLabel" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/ModelTypeHBoxCont"]
-custom_minimum_size = Vector2(120, 32)
+[node name="ModelTypeLabel" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/ModelTypeHBoxCont"]
+custom_minimum_size = Vector2(200, 32)
 layout_mode = 2
-text = "Model Type temMesh"
+text = "Model Type Options"
 label_settings = ExtResource("7_n1pvc")
 vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="HeadItemMeshHBoxCont" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1"]
+[node name="HeadItemMeshHBoxCont" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="HeadItemMeshLabel" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/HeadItemMeshHBoxCont"]
+[node name="HeadItemMeshLabel" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/HeadItemMeshHBoxCont"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 text = "  Head Mesh"
@@ -856,14 +915,14 @@ vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="HeadItemMeshOptBtn" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/HeadItemMeshHBoxCont" instance=ExtResource("10_f1ima")]
+[node name="HeadItemMeshOptBtn" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/HeadItemMeshHBoxCont" instance=ExtResource("10_f1ima")]
 layout_mode = 2
 
-[node name="HairMeshHBoxCont" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1"]
+[node name="HairMeshHBoxCont" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="HairMeshLabel" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/HairMeshHBoxCont"]
+[node name="HairMeshLabel" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/HairMeshHBoxCont"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 text = "  Hair Mesh"
@@ -872,30 +931,30 @@ vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="HairMeshOptBtn" type="OptionButton" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/HairMeshHBoxCont"]
+[node name="HairMeshOptBtn" type="OptionButton" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/HairMeshHBoxCont"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(150, 32)
 layout_mode = 2
 clip_text = true
 fit_to_longest_item = false
 
-[node name="MarginContainer" type="MarginContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/HairMeshHBoxCont"]
+[node name="MarginContainer" type="MarginContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/HairMeshHBoxCont"]
 layout_mode = 2
 theme_override_constants/margin_left = 6
 theme_override_constants/margin_top = 6
 theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 6
 
-[node name="HairColorBtn" type="ColorPickerButton" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/HairMeshHBoxCont/MarginContainer"]
+[node name="HairColorBtn" type="ColorPickerButton" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/HairMeshHBoxCont/MarginContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
 
-[node name="TorsoItemMeshHBoxCont" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1"]
+[node name="TorsoItemMeshHBoxCont" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="TorsoItemMeshLabel" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/TorsoItemMeshHBoxCont"]
+[node name="TorsoItemMeshLabel" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/TorsoItemMeshHBoxCont"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 text = "  Torso Mesh"
@@ -904,20 +963,16 @@ vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="TorsoItemMeshOptBtn" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/TorsoItemMeshHBoxCont" instance=ExtResource("10_f1ima")]
+[node name="TorsoItemMeshOptBtn" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/TorsoItemMeshHBoxCont" instance=ExtResource("10_f1ima")]
 unique_name_in_owner = true
 layout_mode = 2
 BodyPartType = 1
 
-[node name="MeshReplacerVboxOpt" type="VBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="FeetItemMeshHBoxCont" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt"]
+[node name="FeetItemMeshHBoxCont" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="FeetItemMeshLabel" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt/FeetItemMeshHBoxCont"]
+[node name="FeetItemMeshLabel" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/FeetItemMeshHBoxCont"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 text = "  Feet Mesh"
@@ -926,32 +981,45 @@ vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="FeettemMeshOptBtn" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt/FeetItemMeshHBoxCont" instance=ExtResource("10_f1ima")]
+[node name="FeettemMeshOptBtn" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/FeetItemMeshHBoxCont" instance=ExtResource("10_f1ima")]
 layout_mode = 2
 BodyPartType = 4
 
-[node name="LegsItemMeshHBoxCont" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt"]
-custom_minimum_size = Vector2(0, 32)
+[node name="MeshReplacerVboxOpt" type="VBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/HBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
 
-[node name="LegItemMeshLabel" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt/LegsItemMeshHBoxCont"]
-custom_minimum_size = Vector2(120, 32)
+[node name="ModelTypeLabel" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt"]
+visible = false
+custom_minimum_size = Vector2(200, 32)
 layout_mode = 2
-text = "  Legs Mesh"
 label_settings = ExtResource("7_n1pvc")
 vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="LegItemMeshOptBtn" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt/LegsItemMeshHBoxCont" instance=ExtResource("10_f1ima")]
-layout_mode = 2
-BodyPartType = 3
-
-[node name="RightArmMeshHBoxCont" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt"]
+[node name="LegsItemMeshHBoxCont" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="RightArmMeshLabel" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt/RightArmMeshHBoxCont"]
+[node name="LegItemMeshLabel" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt/LegsItemMeshHBoxCont"]
+custom_minimum_size = Vector2(120, 32)
+layout_mode = 2
+text = "Legs Mesh"
+label_settings = ExtResource("7_n1pvc")
+vertical_alignment = 1
+autowrap_mode = 2
+clip_text = true
+
+[node name="LegItemMeshOptBtn" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt/LegsItemMeshHBoxCont" instance=ExtResource("10_f1ima")]
+layout_mode = 2
+BodyPartType = 3
+
+[node name="RightArmMeshHBoxCont" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[node name="RightArmMeshLabel" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt/RightArmMeshHBoxCont"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 text = "Right Arm Mesh"
@@ -960,15 +1028,15 @@ vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="RightArmMeshMeshOptBtn" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt/RightArmMeshHBoxCont" instance=ExtResource("10_f1ima")]
+[node name="RightArmMeshMeshOptBtn" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt/RightArmMeshHBoxCont" instance=ExtResource("10_f1ima")]
 layout_mode = 2
 BodyPartType = 6
 
-[node name="LeftArmMeshHBoxCont3" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt"]
+[node name="LeftArmMeshHBoxCont3" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="LeftArmMeshLabel" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt/LeftArmMeshHBoxCont3"]
+[node name="LeftArmMeshLabel" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt/LeftArmMeshHBoxCont3"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 text = "Left Arm Mesh
@@ -978,15 +1046,15 @@ vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="LeftArmMeshOptBtn" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt/LeftArmMeshHBoxCont3" instance=ExtResource("10_f1ima")]
+[node name="LeftArmMeshOptBtn" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt/LeftArmMeshHBoxCont3" instance=ExtResource("10_f1ima")]
 layout_mode = 2
 BodyPartType = 5
 
-[node name="WeaponItemMeshHBoxCont2" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt"]
+[node name="WeaponItemMeshHBoxCont2" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="WeaponItemMeshLabel" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt/WeaponItemMeshHBoxCont2"]
+[node name="WeaponItemMeshLabel" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt/WeaponItemMeshHBoxCont2"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 text = "Weapon Mesh"
@@ -995,67 +1063,70 @@ vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="WeaponItemMeshOptBtn" type="OptionButton" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MeshOptions/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt/WeaponItemMeshHBoxCont2"]
+[node name="WeaponItemMeshOptBtn" type="OptionButton" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt/WeaponItemMeshHBoxCont2"]
 custom_minimum_size = Vector2(150, 32)
 layout_mode = 2
 clip_text = true
 fit_to_longest_item = false
 
-[node name="MarginContainer3" type="MarginContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer"]
+[node name="LoadAnimMarginCont" type="MarginContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 2
 theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = 2
 
-[node name="AnimSelectPanelCont" type="PanelContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MarginContainer3"]
+[node name="AnimSelectPanelCont" type="PanelContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/LoadAnimMarginCont"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="MarginContainer" type="MarginContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MarginContainer3/AnimSelectPanelCont"]
+[node name="MarginContainer" type="MarginContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/LoadAnimMarginCont/AnimSelectPanelCont"]
 layout_mode = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="VBoxContainer" type="VBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MarginContainer3/AnimSelectPanelCont/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/LoadAnimMarginCont/AnimSelectPanelCont/MarginContainer"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MarginContainer3/AnimSelectPanelCont/MarginContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/LoadAnimMarginCont/AnimSelectPanelCont/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="LoadAllAnimationsBtn" type="Button" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MarginContainer3/AnimSelectPanelCont/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="LoadAllAnimationsBtn" type="Button" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/LoadAnimMarginCont/AnimSelectPanelCont/MarginContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 text = "Load Animations"
 
-[node name="SelectAllAnimCheckBox" type="CheckBox" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MarginContainer3/AnimSelectPanelCont/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="SelectAllAnimCheckBox" type="CheckBox" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/LoadAnimMarginCont/AnimSelectPanelCont/MarginContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 text = "SelectAll"
 
-[node name="animSelectionItemList" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MarginContainer3/AnimSelectPanelCont/MarginContainer/VBoxContainer" instance=ExtResource("9_u5ifw")]
+[node name="animSelectionItemList" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/LoadAnimMarginCont/AnimSelectPanelCont/MarginContainer/VBoxContainer" instance=ExtResource("9_u5ifw")]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(10, 100)
+custom_minimum_size = Vector2(10, 120)
 layout_mode = 2
 max_columns = 2
 same_column_width = true
 
-[node name="MarginContainer4" type="MarginContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer"]
+[node name="StartGenMarginContainer" type="MarginContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont"]
 layout_mode = 2
 theme_override_constants/margin_left = 2
 theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = 2
 
-[node name="FinalGenerationButton" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MarginContainer4"]
+[node name="PanelContainer" type="PanelContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/StartGenMarginContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MarginContainer4/FinalGenerationButton"]
+[node name="FinalGenerationButton" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/StartGenMarginContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/StartGenMarginContainer/PanelContainer/FinalGenerationButton"]
 custom_minimum_size = Vector2(90, 32)
 layout_mode = 2
 text = "  Final Step : "
@@ -1063,7 +1134,7 @@ label_settings = ExtResource("7_n1pvc")
 vertical_alignment = 1
 clip_text = true
 
-[node name="StartGenerationBtn" type="Button" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelCont/VBoxContainer/MarginContainer4/FinalGenerationButton"]
+[node name="StartGenerationBtn" type="Button" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/StartGenMarginContainer/PanelContainer/FinalGenerationButton"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(20, 32)
 layout_mode = 2

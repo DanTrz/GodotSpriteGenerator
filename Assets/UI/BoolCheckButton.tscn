@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://db76flu5stvpw"]
+
+[ext_resource type="Theme" uid="uid://drswssji8tnu3" path="res://Assets/UI/Theme/MainTheme.tres" id="1_vw066"]
+[ext_resource type="Script" uid="uid://do0h3chfcy0u" path="res://Assets/UI/BoolCheckButton.cs" id="2_fa1c4"]
+
+[node name="BoolCheckButton" type="CheckButton"]
+texture_filter = 2
+clip_contents = true
+custom_minimum_size = Vector2(80, 24)
+size_flags_horizontal = 4
+focus_mode = 0
+theme = ExtResource("1_vw066")
+text = "False"
+script = ExtResource("2_fa1c4")

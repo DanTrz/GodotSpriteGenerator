@@ -41,7 +41,7 @@ material = SubResource("ShaderMaterial_hkp8x")
 flip_faces = true
 size = Vector2(10, 10)
 
-[node name="ModelScene3D" type="Node3D"]
+[node name="MainModelScene3D" type="Node3D"]
 
 [node name="MainCamera" type="Camera3D" parent="."]
 unique_name_in_owner = true
@@ -77,6 +77,16 @@ shadow_enabled = true
 
 [node name="BackLight2" type="OmniLight3D" parent="Model3DMainPivotControl/Lights"]
 transform = Transform3D(1, -5.73695e-07, -2.08616e-07, 2.01166e-07, 1, -2.98023e-08, 1.63913e-07, 2.98023e-08, 1, -2.1551, 1.2655, -7.28371)
+light_energy = 1.587
+shadow_enabled = true
+
+[node name="LeftSideLight" type="OmniLight3D" parent="Model3DMainPivotControl/Lights"]
+transform = Transform3D(1, -6.37025e-07, -3.12924e-07, 2.42144e-07, 1, -2.98023e-08, 2.08616e-07, 2.98023e-08, 1, -2.92216, -0.723938, -2.25413)
+light_energy = 1.587
+shadow_enabled = true
+
+[node name="RightSideLight" type="OmniLight3D" parent="Model3DMainPivotControl/Lights"]
+transform = Transform3D(1, -6.96629e-07, -2.98023e-07, 2.71946e-07, 1, -2.98023e-08, 2.23517e-07, 4.47035e-08, 1, 1.86667, 1.67047, -3.63654)
 light_energy = 1.587
 shadow_enabled = true
 

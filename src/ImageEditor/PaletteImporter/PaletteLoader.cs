@@ -55,7 +55,6 @@ public partial class PaletteLoader : MarginContainer
     private void OnUseExternalPaletteCheckBtnPressed()
     {
         LoadExtPaletteBtn.Visible = UseExternalPaletteCheckBtn.ButtonPressed;
-        UseExternalPaletteCheckBtn.Text = UseExternalPaletteCheckBtn.ButtonPressed.ToString();
     }
 
 
