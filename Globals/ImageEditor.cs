@@ -173,7 +173,7 @@ public partial class ImageEditor : PanelContainer
             // GlobalUtil.ShowErrorDialog("Error: Max Palette Size",
             // "Image has more than supported palette size. Only " + colorsK + " colors will be used.", this);
 
-            GlobalEvents.Instance.OnForcedPaletteSize.Invoke(colorsK);
+            GlobalEvents.Instance.OnForcedPaletteSize?.Invoke(colorsK);
         }
 
         await Task.Run(() =>

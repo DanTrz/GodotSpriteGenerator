@@ -80,7 +80,7 @@ public partial class ImageEditorMainPanel : PanelContainer
         _saveButton.Pressed += async () => await OnSaveButtonPressed();
         LoadExternalImg.Pressed += async () => await OnLoadExternalImgBtnPressed();
 
-        GlobalEvents.Instance.OnPaletteChanged += OnPaletteChanged;
+        GlobalEvents.Instance.OnPaletteChanged += OnPaletteChangedInImageEditor;
         GlobalEvents.Instance.OnEffectsChangesStarted += OnEffectsChangesStarted;
         GlobalEvents.Instance.OnEffectsChangesEnded += OnEffectsChangesEnded;
         GlobalEvents.Instance.OnForcedPaletteSize += (value) => PaletteSizeMaxValueLbl.Text = value.ToString();
@@ -235,7 +235,7 @@ public partial class ImageEditorMainPanel : PanelContainer
     {
         if (_isFirstRun) return;
 
-        GlobalEvents.Instance.OnEffectsChangesStarted.Invoke(this.Name);
+        GlobalEvents.Instance.OnEffectsChangesStarted?.Invoke(this.Name);
 
         //GET UI VALUES AND SET TO THE IMAGE EDITOR
         _ImgEditor.EnableColorReduction = _colorReductionCheckbox?.ButtonPressed ?? false;
@@ -292,10 +292,10 @@ public partial class ImageEditorMainPanel : PanelContainer
         + " Persist Colors = " + PaletteLoaderPanel.PersistPaletteColors.Count
          + " Current Img Colors = " + _currentPaletteColors.Count);
 
-        GlobalEvents.Instance.OnEffectsChangesEnded.Invoke(this.Name, _currentPaletteColors);
+        GlobalEvents.Instance.OnEffectsChangesEnded?.Invoke(this.Name, _currentPaletteColors);
     }
 
-    private void OnPaletteChanged(Godot.Collections.Array<Color> list)
+    private void OnPaletteChangedInImageEditor(Godot.Collections.Array<Color> list)
     {
         GD.Print("Palette changed to # : " + list.Count);
         //int colorCount = list.Count;
@@ -500,7 +500,7 @@ public partial class ImageEditorMainPanel : PanelContainer
 
     public override void _ExitTree()
     {
-        GlobalEvents.Instance.OnPaletteChanged -= OnPaletteChanged;
+        GlobalEvents.Instance.OnPaletteChanged -= OnPaletteChangedInImageEditor;
     }
 
 

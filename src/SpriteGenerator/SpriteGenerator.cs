@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -37,13 +38,17 @@ public partial class SpriteGenerator : Node
     [Export] public OptionButton EffectsChoicesOptionBtn;
     [Export] public OptionButton PixelationLevelOptionBtn;
     [Export] public SliderValueBox Outline3DValueSlider;
-
     [Export] public SliderValueBox Outline3DBlendFactorSlider;
-
-
-    [Export] public MeshInstance3D Outline3DShader;
-    [Export] public HSlider DitheringStrenghtSlider;
+    public MeshInstance3D Outline3DShaderMesh;
     [Export] public ColorPickerButton Outline3DColorPicker;
+
+    MeshInstance3D Depthline3DShaderMesh;
+    [Export] public ColorPickerButton Depthline3DColorPicker;
+    [Export] public SliderValueBox DepthlineThicknessSlider;
+    [Export] public SliderValueBox DepthBlendValueSlider;
+    [Export] public SliderValueBox DepthThresholdSlider;
+
+    [Export] public HSlider DitheringStrenghtSlider;
     [Export] public LineEdit _frameStepTextEdit;
 
     [Export] public SpinBox MaxColorPaletteSpinBox;
@@ -93,8 +98,15 @@ public partial class SpriteGenerator : Node
         EffectsChoicesOptionBtn.ItemSelected += OnEffectsChoiceItemSelected;
         Outline3DValueSlider.ValueChanged += OnOutlineValuesChanged;
         Outline3DBlendFactorSlider.ValueChanged += OnOutlineValuesChanged;
-        DitheringStrenghtSlider.ValueChanged += OnDitheringStrenghtChanged;
         Outline3DColorPicker.ColorChanged += OnOutline3DColorChanged;
+
+        DepthlineThicknessSlider.ValueChanged += OnDepthlineValuesChanged;
+        DepthBlendValueSlider.ValueChanged += OnDepthlineValuesChanged;
+        DepthThresholdSlider.ValueChanged += OnDepthlineValuesChanged;
+        Depthline3DColorPicker.ColorChanged += OnDepthlineColorChanged;
+
+        DitheringStrenghtSlider.ValueChanged += OnDitheringStrenghtChanged;
+
         _frameStepTextEdit.TextChanged += OnFrameStepChanged;
         _playBackSpeedLineEdit.TextChanged += OnPlayBackSpeedChanged;
         _clearFolderCheckBtn.Pressed += OnClearFolderPressed;
@@ -154,6 +166,10 @@ public partial class SpriteGenerator : Node
             //Pass the Model to te PositionManager 
             _modelPositionManager.ModelNode = _modelPivotNode;
             _modelPositionManager.CameraNode = _camera;
+            _modelPositionManager.SetTransformValueToModel(true);
+
+            Outline3DShaderMesh = MainModelScene3D.GetNodeOrNull<MeshInstance3D>("%Outline3DShaderMesh");
+            Depthline3DShaderMesh = MainModelScene3D.GetNodeOrNull<MeshInstance3D>("%Depthline3DShaderMesh");
         }
         else
         {
@@ -524,7 +540,6 @@ public partial class SpriteGenerator : Node
             case 0:
                 //No Effect - Turn off PixaltionButton
                 OnPixelationLevelChanged(5);//Set the resolution to 512 pixels (Last option)
-
                 Callable.From(() => EffectsHandler.SetEffect(_characterModelObject, Const.EffectShadingType.STANDARD)).CallDeferred();
                 //EffectsHandler.SetEffect(_characterModelObject, Const.EffectShadingType.STANDARD);//TODO: TESTING ONLY
                 break;
@@ -536,7 +551,6 @@ public partial class SpriteGenerator : Node
             case 2:
                 //Toon Effect
                 OnPixelationLevelChanged(PixelationLevelOptionBtn.Selected);
-
                 EffectsHandler.SetEffect(_characterModelObject, Const.EffectShadingType.TOON);//TODO: TESTING ONLY
                 break;
         }
@@ -593,7 +607,10 @@ public partial class SpriteGenerator : Node
 
     private void OnOutlineValuesChanged(double value)
     {
-        if (Outline3DShader.Mesh.SurfaceGetMaterial(0) is ShaderMaterial shaderMaterial)
+        Trace.Assert(Outline3DShaderMesh != null, "Outline3DShaderMesh cannot be null");
+        if (Outline3DShaderMesh == null) return;
+
+        if (Outline3DShaderMesh.Mesh.SurfaceGetMaterial(0) is ShaderMaterial shaderMaterial)
         {
             shaderMaterial.SetShaderParameter("outline_width", Outline3DValueSlider.Value);
             shaderMaterial.SetShaderParameter("outline_colorblend_factor", Outline3DBlendFactorSlider.Value);
@@ -602,9 +619,66 @@ public partial class SpriteGenerator : Node
 
     private void OnOutline3DColorChanged(Color color)
     {
-        if (Outline3DShader.Mesh.SurfaceGetMaterial(0) is ShaderMaterial shaderMaterial)
+        Trace.Assert(Outline3DShaderMesh != null, "Outline3DShaderMesh cannot be null");
+        if (Outline3DShaderMesh == null) return;
+
+        if (Outline3DShaderMesh.Mesh.SurfaceGetMaterial(0) is ShaderMaterial shaderMaterial)
         {
             shaderMaterial.SetShaderParameter("outline_fallback_color", color);
+        }
+    }
+
+    private void OnDepthlineValuesChanged(double value)
+    {
+        Trace.Assert(Depthline3DShaderMesh != null, "Depthline3DMesh cannot be null");
+        if (Depthline3DShaderMesh == null) return;
+
+        if (Depthline3DShaderMesh.Mesh.SurfaceGetMaterial(0) is ShaderMaterial shaderMaterial)
+        {
+            shaderMaterial.SetShaderParameter("depthline_thickness", DepthlineThicknessSlider.Value);
+            shaderMaterial.SetShaderParameter("colorblend_factor", DepthBlendValueSlider.Value);
+
+            int depthThresholdValue = (int)DepthThresholdSlider.Value;
+            switch (depthThresholdValue)
+            {
+                case 0:
+                    shaderMaterial.SetShaderParameter("depth_sensitivity", 0);
+                    shaderMaterial.SetShaderParameter("normal_sensitivity", 0);
+                    break;
+                case 1:
+                    shaderMaterial.SetShaderParameter("depth_sensitivity", 1.0);
+                    shaderMaterial.SetShaderParameter("normal_sensitivity", 0.0);
+                    break;
+                case 2:
+                    shaderMaterial.SetShaderParameter("depth_sensitivity", 2.0);
+                    shaderMaterial.SetShaderParameter("normal_sensitivity", 0.0);
+                    break;
+                case 3:
+                    shaderMaterial.SetShaderParameter("depth_sensitivity", 2.0);
+                    shaderMaterial.SetShaderParameter("normal_sensitivity", 0.01);
+                    break;
+                case 4:
+                    shaderMaterial.SetShaderParameter("depth_sensitivity", 3.0);
+                    shaderMaterial.SetShaderParameter("normal_sensitivity", 0.02);
+                    break;
+                case 5:
+                    shaderMaterial.SetShaderParameter("depth_sensitivity", 5.0);
+                    shaderMaterial.SetShaderParameter("normal_sensitivity", 3.0);
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    private void OnDepthlineColorChanged(Color color)
+    {
+        Trace.Assert(Depthline3DShaderMesh != null, "Depthline3DMesh cannot be null");
+        if (Depthline3DShaderMesh == null) return;
+
+        if (Depthline3DShaderMesh.Mesh.SurfaceGetMaterial(0) is ShaderMaterial shaderMaterial)
+        {
+            shaderMaterial.SetShaderParameter("depthline_color", color);
         }
     }
 
@@ -714,28 +788,18 @@ public partial class SpriteGenerator : Node
         {
             //Connecct the signal and load items
             meshReplacerOptButton.ItemSelected += (itemIndex) => OnMeshItemSelected(itemIndex, meshReplacerOptButton);
-            MeshReplacer.UpdateUIOptionMesheItemList(meshReplacerOptButton, meshReplacerOptButton.BodyPartType);
+            MeshReplacer.UpdateUIOptionMesheItemList(meshReplacerOptButton);
 
             //Align UI display to the first item
             //TODO: Uncomment line belows to force the model to load the first item
             //meshReplacerOptButton.Selected = 0;
             //OnMeshItemSelected(0, meshReplacerOptButton);
+
+            OnMeshItemSelected(0, meshReplacerOptButton);
         }
 
     }
 
-    private bool ModelHasReplacebleParts()
-    {
-        //Check if the model has at least one replaceable part
-        if (GlobalUtil.GetAllNodesByType<BodyPartMeshInstance3D>(_characterModelObject).FirstOrDefault() != null)
-        {
-            return true;
-        }
-
-        return false;
-    }
-
-    //Change the Mesh base based on the MeshReplacaeOpt button selection (Connected signal)
     private void OnMeshItemSelected(long itemIndex, MeshReplacerOptButton meshReplacerOptButton)
     {
 
@@ -762,8 +826,26 @@ public partial class SpriteGenerator : Node
             meshReplacerOptButton.EnableColorPicker(false);
         }
 
-        MeshReplacer.UpdateMeshFromResourceItem(_targetMeshInstance, itemSelectedName);
+        //Make sure we will show or hide the Mesh Color button by 
+        MeshReplacer.UpdateMeshFromResourceItem(_targetMeshInstance, itemSelectedName, meshReplacerOptButton.BodyPartType);
+
+        //Make sure the Mesh will have the effect selected in the Effect Choice Option
+        OnEffectsChoiceItemSelected(EffectsChoicesOptionBtn.Selected);
     }
+
+    private bool ModelHasReplacebleParts()
+    {
+        //Check if the model has at least one replaceable part
+        if (GlobalUtil.GetAllNodesByType<BodyPartMeshInstance3D>(_characterModelObject).FirstOrDefault() != null)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    //Change the Mesh base based on the MeshReplacaeOpt button selection (Connected signal)
+
 
 
     public void OnSaveData(SaveGameData newSaveGameData)

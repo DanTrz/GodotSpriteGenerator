@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://b6h6ynl626jaj"]
+
+[ext_resource type="Texture2D" uid="uid://b0kbl6m68hbqc" path="res://Models/FullModels/BaseModel/LowPoly/WhiteCommonParts/WhiteCommonBoots_CommonParts-7-CommonBoots.png" id="1_72pyb"]
+
+[resource]
+resource_name = "CommonBoots_White"
+cull_mode = 2
+albedo_texture = ExtResource("1_72pyb")

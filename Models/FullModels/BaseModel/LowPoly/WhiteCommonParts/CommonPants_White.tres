@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://8kakotr233jp"]
+
+[ext_resource type="Texture2D" uid="uid://bx150uhhkwvwg" path="res://Models/FullModels/BaseModel/LowPoly/WhiteCommonParts/WhiteCommonPants_CommonParts-8-CommonPants.png" id="1_qr1lv"]
+
+[resource]
+resource_name = "CommonPants_White"
+cull_mode = 2
+albedo_texture = ExtResource("1_qr1lv")

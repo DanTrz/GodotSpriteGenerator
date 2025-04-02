@@ -1,17 +1,25 @@
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
-public partial class MeshReplacer : Node
+public static class MeshReplacer
 {
 
     private static int _iconSize = 32;
     public static List<ArrayMeshDataObject> arrayMeshDataObjects;
 
-    public override void _Ready()
+    // public override void _Ready()
+    // {
+    //     LoadAllMeshDataResouces();
+    //     GlobalEvents.Instance.OnMeshItemColorChanged += UpdateMeshItemColor;
+    // }
+
+    //static MeshReplacer() method is a static constructor, which is a special method that's called automatically when the class is first loaded.
+    static MeshReplacer()
     {
         LoadAllMeshDataResouces();
         GlobalEvents.Instance.OnMeshItemColorChanged += UpdateMeshItemColor;
     }
+
 
     private static void LoadAllMeshDataResouces()
     {
@@ -20,18 +28,17 @@ public partial class MeshReplacer : Node
         arrayMeshDataObjects.Sort((a, b) => a.ItemOrder.CompareTo(b.ItemOrder));
     }
 
-    public static void UpdateMeshItemColor(string itemSelectedName, Color newColor)
+    public static void UpdateMeshItemColor(string itemSelectedName, Const.BodyPartType bodyPart, Color newColor)
     {
-
-        if (GetMeshItemByName(itemSelectedName, arrayMeshDataObjects).SurfaceGetMaterial(0) is StandardMaterial3D material)
+        var meshItem = GetMeshItemByNameFromList(itemSelectedName, bodyPart, arrayMeshDataObjects);
+        if (meshItem.SurfaceGetMaterial(0) is StandardMaterial3D material)
         {
             material.AlbedoColor = newColor;
 
         }
     }
 
-
-    public static void UpdateUIOptionMesheItemList(MeshReplacerOptButton itemMeshOptBtn, Const.BodyPartType bodyPart)
+    public static void UpdateUIOptionMesheItemList(MeshReplacerOptButton itemMeshOptBtn)
     {
         if (arrayMeshDataObjects == null)
         {
@@ -69,7 +76,7 @@ public partial class MeshReplacer : Node
         }
     }
 
-    public static void UpdateMeshFromResourceItem(MeshInstance3D meshTargetToReplace, string resourceItemName)
+    public static void UpdateMeshFromResourceItem(MeshInstance3D meshTargetToReplace, string resourceItemName, Const.BodyPartType bodyPartType)
     {
 
         if (meshTargetToReplace == null || meshTargetToReplace.Mesh == null)
@@ -77,7 +84,7 @@ public partial class MeshReplacer : Node
             GD.PrintErr(meshTargetToReplace.Name + " has no mesh or is null");
         }
 
-        meshTargetToReplace.Mesh = GetMeshItemByName(resourceItemName, arrayMeshDataObjects);
+        meshTargetToReplace.Mesh = GetMeshItemByNameFromList(resourceItemName, bodyPartType, arrayMeshDataObjects);
 
     }
 
@@ -93,9 +100,10 @@ public partial class MeshReplacer : Node
 
     // }
 
-    public static Mesh GetMeshItemByName(string itemResName, List<ArrayMeshDataObject> resourceMeshList)
+    public static Mesh GetMeshItemByNameFromList(string itemResName, Const.BodyPartType bodyPartType, List<ArrayMeshDataObject> resourceMeshList)
     {
-        var mesh = resourceMeshList.Where(MeshData => MeshData.ItemName == itemResName).Select(mesh => mesh.MeshItem).FirstOrDefault();
+        var mesh = resourceMeshList.Where(MeshData => MeshData.ItemName == itemResName && MeshData.BodyPartType == bodyPartType).
+        Select(mesh => mesh.MeshItem).FirstOrDefault();
 
         if (mesh != null)
         {

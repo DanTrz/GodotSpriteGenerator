@@ -5,6 +5,27 @@ public partial class ModelPositionManager : Node
 {
 
 
+    // _posXAxisLineTextEdit.Text = ModelNode.Position.X.ToString("0.0");
+    //     _posYAxisLineTextEdit.Text = ModelNode.Position.Y.ToString("0.0");
+    //     _posZAxisLineTextEdit.Text = ModelNode.Position.Z.ToString("0.0");
+
+    //     CamDistancelLineTextEdit.Text = Math.Max(CameraNode.Size, 1.00f).ToString("0.0"); //CameraNode.Size.ToString("0.0");
+    // _camXRotationLineTextEdit.Text = CameraNode.RotationDegrees.X.ToString("0.0");
+
+    //     _rotationXAxisLineTextEdit.Text = ModelNode.Rotation.X.ToString("0.0");
+    //     _rotationYAxisLineTextEdit.Text = ModelNode.Rotation.Y.ToString("0.0");
+    //     _rotationZAxisLineTextEdit.Text = ModelNode.Rotation.Z.ToString("0.0");
+
+    [Export] public float PositionXValue = 0.0f;
+    [Export] public float PositionYValue = -4.0f;
+    [Export] public float PositionZValue = 0.0f;
+    [Export] public float RotationXValue = 0.0f;
+    [Export] public float RotationYValue = 0.0f;
+    [Export] public float RotationZValue = 0.0f;
+
+    [Export] public float CameDistance = 7.5f;
+    [Export] public float CamRotationXValue = -20.0f;
+
     [Export] public LineEdit _camXRotationLineTextEdit;
 
     [Export] public LineEdit CamDistancelLineTextEdit;
@@ -83,13 +104,26 @@ public partial class ModelPositionManager : Node
         }
     }
 
-    private void SetTransformValueToModel()
+    public void SetTransformValueToModel(bool firstLoad = false)
     {
-        ModelNode.Position = new Vector3(float.Parse(_posXAxisLineTextEdit.Text), float.Parse(_posYAxisLineTextEdit.Text), float.Parse(_posZAxisLineTextEdit.Text));
-        ModelNode.Rotation = new Vector3(float.Parse(_rotationXAxisLineTextEdit.Text), float.Parse(_rotationYAxisLineTextEdit.Text), float.Parse(_rotationZAxisLineTextEdit.Text));
-        CameraNode.Size = Math.Max(float.Parse(CamDistancelLineTextEdit.Text), 1.00f);
-        CameraNode.RotationDegrees = new Vector3(float.Parse(_camXRotationLineTextEdit.Text), 0, 0);
+        if (firstLoad)
+        {
+            ModelNode.Position = new Vector3(PositionXValue, PositionYValue, PositionZValue);
+            ModelNode.Rotation = new Vector3(RotationXValue, RotationYValue, RotationZValue);
+            CameraNode.Size = Math.Max(CameDistance, 1.00f);
+            CameraNode.RotationDegrees = new Vector3(CamRotationXValue, 0, 0);
+            LoadTransformValueToUI();
+        }
+        else
+        {
+            ModelNode.Position = new Vector3(float.Parse(_posXAxisLineTextEdit.Text), float.Parse(_posYAxisLineTextEdit.Text), float.Parse(_posZAxisLineTextEdit.Text));
+            ModelNode.Rotation = new Vector3(float.Parse(_rotationXAxisLineTextEdit.Text), float.Parse(_rotationYAxisLineTextEdit.Text), float.Parse(_rotationZAxisLineTextEdit.Text));
+            CameraNode.Size = Math.Max(float.Parse(CamDistancelLineTextEdit.Text), 1.00f);
+            CameraNode.RotationDegrees = new Vector3(float.Parse(_camXRotationLineTextEdit.Text), 0, 0);
+        }
+
     }
+
 
     private void LoadTransformValueToUI()
     {

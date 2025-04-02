@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Godot;
 
@@ -300,6 +301,32 @@ public static class GlobalUtil
         }
 
         return resourceList;
+    }
+
+    public static void PrintActionTargetListeners<T>(Action<T> actionToCheck, string actionName)
+    {
+        var targetList = actionToCheck.GetInvocationList().ToList().Where(action => action.Target != null).Select(action => action.Target).ToList();
+        // string actionName = actionToCheck.Method.Name;
+        // string actionName2 = nameof(actionToCheck);
+        GD.PrintT("## PRINT Action: " + actionName + " => Method connected: " + actionToCheck.Method.Name);
+
+        foreach (var target in targetList)
+        {
+            GD.PrintT("## PRINT Action: " + actionName + " => Listener Target: " + target.ToString());
+
+            if (target is GodotObject godotTarget)
+            {
+                var type = godotTarget.GetType();
+                GD.PrintT("## PRINT Action: " + actionName + " => Listener Godot Type: " + type);
+
+                if (target is Node nodeTarget) // Check if it's a Node or whateverElse
+                {
+                    GD.PrintT("## PRINT Action: " + actionName + " => Listener Node Name: " + nodeTarget.Name);
+                    GD.PrintT("## PRINT Action: " + actionName + " => Listener Node Path: " + nodeTarget.GetPath());
+                }
+            }
+        }
+
     }
 
 

@@ -23,6 +23,7 @@ MeshColorPicker = NodePath("MeshColorPickerMarginContainer/PanelContainer/MeshCo
 MeshColorPickerMarginContainer = NodePath("MeshColorPickerMarginContainer")
 
 [node name="MeshColorPickerMarginContainer" type="MarginContainer" parent="."]
+layout_mode = 0
 offset_left = 153.0
 offset_right = 185.0
 offset_bottom = 32.0

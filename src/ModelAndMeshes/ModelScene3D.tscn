@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://dasxiorjhfw8t" path="res://src/ModelAndMeshes/Model3DMainPivotControl.cs" id="1_pb3o0"]
 [ext_resource type="PackedScene" uid="uid://bvvxjc2oqng0j" path="res://Models/FullModels/BaseModel/LowPoly/BaseModel_LowPolyScene.tscn" id="2_hkp8x"]
 [ext_resource type="Shader" uid="uid://cair4uoxj5lif" path="res://Assets/Shaders/Outline3D.gdshader" id="3_cykfy"]
-[ext_resource type="Shader" uid="uid://o32y8sg4fot8" path="res://Assets/Shaders/BackupVersions/Pixelize3D.gdshader" id="3_hkp8x"]
+[ext_resource type="Shader" uid="uid://im2pcdmdj31a" path="res://Assets/Shaders/DepthInLineWithNormals.gdshader" id="5_cykfy"]
 
 [sub_resource type="Environment" id="Environment_e1sc8"]
 background_mode = 1
@@ -11,35 +11,37 @@ background_color = Color(1, 0, 1, 1)
 ambient_light_source = 1
 reflected_light_source = 1
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_cykfy"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_proug"]
+render_priority = 0
+shader = ExtResource("5_cykfy")
+shader_parameter/depthline_color = Color(0, 0, 0, 1)
+shader_parameter/colorblend_factor = 0.75
+shader_parameter/depthline_thickness = 0.0
+shader_parameter/depth_sensitivity = 0.0
+shader_parameter/normal_sensitivity = 0.0
+shader_parameter/outline_threshold_min = 0.2
+shader_parameter/outline_threshold_max = 0.3
+shader_parameter/foreground_depth_bias = 0.01
+
+[sub_resource type="QuadMesh" id="QuadMesh_sy45m"]
+material = SubResource("ShaderMaterial_proug")
+flip_faces = true
+size = Vector2(100, 100)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hchht"]
 render_priority = 0
 shader = ExtResource("3_cykfy")
 shader_parameter/outline_intensity = 1.0
-shader_parameter/outline_width = 5.0
+shader_parameter/outline_width = 0.0
 shader_parameter/normal_threshold = 0.1
-shader_parameter/depth_threshold = 0.05
-shader_parameter/depth_artifact_correction_coef = 3.0
 shader_parameter/outline_colorblend_factor = 0.75
-shader_parameter/alpha_threshold = 0.1
+shader_parameter/alpha_threshold = 0.3
 shader_parameter/outline_fallback_color = Color(0, 0, 0, 1)
 
-[sub_resource type="QuadMesh" id="QuadMesh_pb3o0"]
-material = SubResource("ShaderMaterial_cykfy")
+[sub_resource type="QuadMesh" id="QuadMesh_uhsoa"]
+material = SubResource("ShaderMaterial_hchht")
 flip_faces = true
-size = Vector2(10, 10)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_hkp8x"]
-render_priority = 0
-shader = ExtResource("3_hkp8x")
-shader_parameter/target_resolution = 256.0
-shader_parameter/outline_strength = 0.6
-shader_parameter/outline_thickness = 5.0
-shader_parameter/outline_color = Color(0, 0, 0, 1)
-
-[sub_resource type="QuadMesh" id="QuadMesh_cykfy"]
-material = SubResource("ShaderMaterial_hkp8x")
-flip_faces = true
-size = Vector2(10, 10)
+size = Vector2(100, 100)
 
 [node name="MainModelScene3D" type="Node3D"]
 
@@ -99,16 +101,18 @@ shadow_enabled = true
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_e1sc8")
 
-[node name="TEST" type="Node3D" parent="."]
+[node name="ShaderMeshes" type="Node3D" parent="."]
+unique_name_in_owner = true
 
-[node name="Outline3DShaderMesh3D" type="MeshInstance3D" parent="TEST"]
+[node name="Depthline3DShaderMesh" type="MeshInstance3D" parent="ShaderMeshes"]
+unique_name_in_owner = true
 extra_cull_margin = 16384.0
-mesh = SubResource("QuadMesh_pb3o0")
+mesh = SubResource("QuadMesh_sy45m")
 skeleton = NodePath("../..")
 
-[node name="OriginalPixieelizeGOODVERSION" type="MeshInstance3D" parent="TEST"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.47216)
-visible = false
+[node name="Outline3DShaderMesh" type="MeshInstance3D" parent="ShaderMeshes"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05866, 0)
 extra_cull_margin = 16384.0
-mesh = SubResource("QuadMesh_cykfy")
+mesh = SubResource("QuadMesh_uhsoa")
 skeleton = NodePath("../..")

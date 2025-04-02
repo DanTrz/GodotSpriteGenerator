@@ -20,13 +20,12 @@ public partial class MeshReplacerOptButton : OptionButton
         string itemSelectedName = this.GetItemText((int)this.Selected);
 
         //TODO: BUG this is not working - Not invoking the signal
-        //BUG - Not invoking the signal
-        GlobalEvents.Instance.OnMeshItemColorChanged.Invoke(itemSelectedName, color);
-        //GlobalEvents.OnMeshItemColorChanged2.Invoke(itemSelectedName, color);
-
-        //r(string itemSelectedName, int itemIndex, Color newColor)
-        // EmitSignal("color_changed", BodyPartType, color);
+        //BUG - Not invoking the signal - This is beauce no Listener Subscriber exist, therefore the Action is NUll.
+        // We need to MAKE SURE an Subcrisbiver exist (E.G, this is not null). This happens because in the MeshReplacer.cs, where I should subscribe to this signal, it's not calling the code to load the subscriber.
+        //By addint ? we are making sure it's not null.
+        GlobalEvents.Instance.OnMeshItemColorChanged?.Invoke(itemSelectedName, BodyPartType, color);
     }
+
 
     public void EnableColorPicker(bool enabled)
     {

@@ -1,6 +1,7 @@
 shader_type spatial;
 render_mode unshaded, fog_disabled;
 
+//DepthLine shader code
 uniform float depthline_strength: hint_range(0.0, 1.0, 0.1) = 0.0;
 uniform float  depthline_thickness: hint_range(0.1, 5.0, 0.1) = 1.0;
 uniform vec4 depthline_color : source_color = vec4(0.0, 0.0, 0.0, 1.0);

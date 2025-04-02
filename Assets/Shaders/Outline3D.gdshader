@@ -10,11 +10,16 @@ uniform sampler2D NORMAL_TEXTURE : hint_normal_roughness_texture, filter_linear_
 uniform float outline_intensity : hint_range(0.0, 1.0, 0.01) = 1.0; // Overall outline strength
 uniform float outline_width : hint_range(0.0, 20.0, 0.5) = 5.0; // Width in pixels
 uniform float normal_threshold : hint_range(0.0, 1.0, 0.01) = 0.1;
-uniform float depth_threshold : hint_range(0.0, 0.5, 0.005) = 0.05;
-uniform float depth_artifact_correction_coef : hint_range(0.0, 10.0, 0.1) = 3.0;
 uniform float outline_colorblend_factor : hint_range(0.0, 1.0, 0.01) = 0.75; // Darkening parameter
-uniform float alpha_threshold : hint_range(0.0, 1.0, 0.01) = 0.1; // Threshold for considering a pixel non-transparent
-uniform vec3 outline_fallback_color : source_color = vec3(0.1, 0.1, 0.1); // Fallback color for outline
+uniform float alpha_threshold : hint_range(0.0, 1.0, 0.01) = 0.3; // Threshold for considering a pixel non-transparent
+uniform vec3 outline_fallback_color : source_color = vec3(0.0, 0.0, 0.0); // Fallback color for outline
+
+//We can make these Uniforms is required.
+//uniform float outline_depth_threshold : hint_range(0.0, 0.5, 0.005) = 0.05;
+//uniform float outline_depth_artifact_correction_coef : hint_range(0.0, 10.0, 0.1) = 3.0;
+const float outline_depth_threshold = 0.05;
+const float outline_depth_artifact_correction_coef = 3.0;
+
 
 // Sobel Kernels (Constants)
 const mat3 sobel_y = mat3(
@@ -142,7 +147,7 @@ void fragment() {
 
 		// Check for edges with intensity tracking
 		bool normal_edge_found = total_normal_edge > normal_threshold;
-		bool depth_edge_found = total_depth_edge > (depth_threshold + angle_factor * depth_artifact_correction_coef);
+		bool depth_edge_found = total_depth_edge > (outline_depth_threshold + angle_factor * outline_depth_artifact_correction_coef);
 
 		if (normal_edge_found || depth_edge_found) {
 			// Search for a valid pixel color in multiple directions

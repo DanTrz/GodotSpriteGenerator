@@ -5,6 +5,11 @@
 [resource]
 render_priority = 0
 shader = ExtResource("1_y7xg0")
-shader_parameter/shadow_color = Color(0, 0, 0, 1)
-shader_parameter/shadow_thickness = 2.0
-shader_parameter/outline_thickness = 1.0
+shader_parameter/target_resolution = 512.0
+shader_parameter/outline_strength = 0.4
+shader_parameter/outline_thickness = 2.5
+shader_parameter/outline_color = Color(1, 0, 0, 1)
+shader_parameter/outerline_strength = 0.8
+shader_parameter/outerline_thickness = 2.0
+shader_parameter/outerline_offset = 1.0
+shader_parameter/outerline_color = Color(1, 1, 1, 1)

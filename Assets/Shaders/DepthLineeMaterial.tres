@@ -1,0 +1,15 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://cegpk0wq7lx3h"]
+
+[ext_resource type="Shader" uid="uid://im2pcdmdj31a" path="res://Assets/Shaders/DepthInLineWithNormals.gdshader" id="1_lg5cq"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_lg5cq")
+shader_parameter/depthline_color = Color(0, 0, 0, 0.631373)
+shader_parameter/colorblend_factor = 1.0
+shader_parameter/depthline_thickness = 5.013
+shader_parameter/depth_sensitivity = 500.0
+shader_parameter/normal_sensitivity = 2.19
+shader_parameter/outline_threshold_min = 0.2
+shader_parameter/outline_threshold_max = 0.3
+shader_parameter/foreground_depth_bias = 0.01

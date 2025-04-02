@@ -66,7 +66,7 @@ public partial class PaletteLoader : MarginContainer
 
         CombinedPaletteColors = ExternalPaletteColors;
 
-        Callable.From(() => GlobalEvents.Instance.OnPaletteChanged.Invoke(CombinedPaletteColors)).CallDeferred();
+        Callable.From(() => GlobalEvents.Instance.OnPaletteChanged?.Invoke(CombinedPaletteColors)).CallDeferred();
 
         //GlobalEvents.Instance.OnPaletteChanged.Invoke(CombinedPaletteColors);
     }
@@ -106,9 +106,8 @@ public partial class PaletteLoader : MarginContainer
         var godotPersistPalette = GlobalUtil.GetGodotArrayFromList(PersistPaletteColors);
         CombinedPaletteColors = ExternalPaletteColors + godotPersistPalette;
 
-        GD.PrintT("Total Colors = " + CombinedPaletteColors.Count() + " Ext Colors = " + ExternalPaletteColors.Count + " Persist Colors = " + PersistPaletteColors.Count);
-
-        GlobalEvents.Instance.OnPaletteChanged.Invoke(CombinedPaletteColors);
+        GlobalUtil.PrintActionTargetListeners(GlobalEvents.Instance.OnPaletteChanged, "Global OnPaletteChanged");
+        GlobalEvents.Instance.OnPaletteChanged?.Invoke(CombinedPaletteColors);
 
         UpdatePaletteListGrid(ExternalPaletteColors, ExtPaletteListGridContainer);
 

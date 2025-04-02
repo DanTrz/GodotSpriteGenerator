@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ArrayMeshDataObject" load_steps=3 format=3 uid="uid://cva6jia3iev8n"]
+
+[ext_resource type="ArrayMesh" uid="uid://c0garc7dfdik3" path="res://Models/FullModels/BaseModel/LowPoly/WhiteCommonParts/WhiteCommonShirt_CommonShirt.res" id="1_o16ux"]
+[ext_resource type="Script" uid="uid://cmuqvgdb2248c" path="res://src/ModelAndMeshes/ArrayMeshDataObject.cs" id="2_2rsys"]
+
+[resource]
+script = ExtResource("2_2rsys")
+Active = true
+ItemName = "Common Shirt White"
+MeshItem = ExtResource("1_o16ux")
+BodyPartType = 1
+MeshType = 0
+ItemOrder = 1
+CanChangeColor = true
+metadata/_custom_type_script = "uid://cmuqvgdb2248c"

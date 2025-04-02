@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ArrayMeshDataObject" load_steps=3 format=3 uid="uid://v25iltapbnwa"]
+
+[ext_resource type="ArrayMesh" uid="uid://5v0esfhrjjhv" path="res://Models/FullModels/BaseModel/Feet/Boots_LowPoly.res" id="1_6uj4c"]
+[ext_resource type="Script" uid="uid://cmuqvgdb2248c" path="res://src/ModelAndMeshes/ArrayMeshDataObject.cs" id="2_7w076"]
+
+[resource]
+script = ExtResource("2_7w076")
+Active = true
+ItemName = "Common Boots Color"
+MeshItem = ExtResource("1_6uj4c")
+BodyPartType = 4
+MeshType = 0
+ItemOrder = 1
+CanChangeColor = false
+metadata/_custom_type_script = "uid://cmuqvgdb2248c"

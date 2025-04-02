@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://bvvxjc2oqng0j"]
+[gd_scene load_steps=19 format=3 uid="uid://bvvxjc2oqng0j"]
 
 [ext_resource type="ArrayMesh" uid="uid://ngvcsk60iqq5" path="res://Models/FullModels/BaseModel/LowPoly/BaseModel_LowPolyVersion02_LowPoly_FEET.res" id="1_hlce3"]
 [ext_resource type="Script" uid="uid://bmo8euegtbowp" path="res://src/ModelAndMeshes/BodyPartMeshInstance3D.cs" id="2_gkkld"]
@@ -9,7 +9,6 @@
 [ext_resource type="ArrayMesh" uid="uid://bawo38n3tk7fw" path="res://Models/FullModels/BaseModel/LowPoly/BaseModel_LowPolyVersion02_LowPoly_TORSO.res" id="6_8a6l1"]
 [ext_resource type="PackedScene" uid="uid://dpa7h0crxxisw" path="res://Models/MeshRepository/Hair/1_HairMale01.tscn" id="7_gkkld"]
 [ext_resource type="PackedScene" uid="uid://dqvg7t4lsw2gs" path="res://Models/MeshRepository/Weapons/SilverAxeScene.tscn" id="8_xrc71"]
-[ext_resource type="Shader" uid="uid://cair4uoxj5lif" path="res://Assets/Shaders/Outline3D.gdshader" id="10_xrc71"]
 
 [sub_resource type="Skin" id="Skin_iit1j"]
 resource_name = "Skin"
@@ -1588,23 +1587,6 @@ _data = {
 &"Running": SubResource("Animation_ew3vs")
 }
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_qwb6k"]
-render_priority = 0
-shader = ExtResource("10_xrc71")
-shader_parameter/outline_intensity = 0.5
-shader_parameter/outline_width = 2.0
-shader_parameter/normal_threshold = 0.1
-shader_parameter/depth_threshold = 0.05
-shader_parameter/depth_artifact_correction_coef = 3.0
-shader_parameter/outline_colorblend_factor = 0.75
-shader_parameter/alpha_threshold = 0.1
-shader_parameter/outline_fallback_color = Color(0.1, 0.1, 0.1, 1)
-
-[sub_resource type="QuadMesh" id="QuadMesh_8a6l1"]
-material = SubResource("ShaderMaterial_qwb6k")
-flip_faces = true
-size = Vector2(10, 10)
-
 [node name="BaseModel_LowPoly" type="Node3D"]
 
 [node name="LowPoly" type="Node3D" parent="."]
@@ -1846,7 +1828,7 @@ bone_idx = 5
 
 [node name="WeaponBoneAttach" type="BoneAttachment3D" parent="LowPoly/GeneralSkeleton"]
 unique_name_in_owner = true
-transform = Transform3D(0.0194825, -0.999806, 0.00283969, -0.000126234, -0.00284275, -0.999996, 0.99981, 0.019482, -0.000181556, -11.4202, 17.6978, -0.0802227)
+transform = Transform3D(0.0194825, -0.999806, 0.00283978, -0.000126142, -0.00284287, -0.999996, 0.99981, 0.019482, -0.000181437, -11.4202, 17.6978, -0.080223)
 bone_name = "RightHand"
 bone_idx = 14
 
@@ -1858,12 +1840,3 @@ libraries = {
 &"A.": SubResource("AnimationLibrary_xrc71"),
 &"B.": SubResource("AnimationLibrary_qwb6k")
 }
-
-[node name="TEST" type="Node3D" parent="."]
-visible = false
-
-[node name="Outline3DShaderMesh3D2" type="MeshInstance3D" parent="TEST"]
-visible = false
-extra_cull_margin = 16384.0
-mesh = SubResource("QuadMesh_8a6l1")
-skeleton = NodePath("../..")
