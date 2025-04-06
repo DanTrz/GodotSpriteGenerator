@@ -186,7 +186,7 @@ corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
-[node name="SpriteGeneratorTabUI" type="PanelContainer" node_paths=PackedStringArray("AnimMethodOptionBtn", "GenerateSpriteSheetCheckBtn", "ShowMeshPanelCheckBtn", "MeshOptionsMarginCont", "_startGenerationBtn", "MainModelScene3D", "_rawViewport", "_rawViewportContainer", "BgRemoverViewport", "ImgColorReductionSubViewport", "ImgColorReductionSubViewportContainer", "PixelSmoothEffectSprite2D", "ImgColorReductionTextRect", "BgRemoverViewportContainer", "PixelShaderTextRect", "SpriteSizeOptionButton", "EffectsChoicesOptionBtn", "PixelationLevelOptionBtn", "Outline3DValueSlider", "Outline3DBlendFactorSlider", "Outline3DColorPicker", "Depthline3DColorPicker", "DepthlineThicknessSlider", "DepthBlendValueSlider", "DepthThresholdSlider", "DitheringStrenghtSlider", "_frameStepTextEdit", "MaxColorPaletteSpinBox", "_playBackSpeedLineEdit", "_clearFolderCheckBtn", "_pixelShaderTextRect", "_modelPositionManager", "_loadAllAnimationsBtn", "_animSelectionItemList", "_angleSelectionItemList", "_pixelGridTextRect", "_showGridCheckButton", "_meshReplacerPanelParentNode", "_hairMeshOptBtn", "WeaponItemMeshOptBtn", "_hairColorBtn") groups=["save_data"]]
+[node name="SpriteGeneratorTabUI" type="PanelContainer" node_paths=PackedStringArray("AnimMethodOptionBtn", "GenerateSpriteSheetCheckBtn", "ShowMeshPanelCheckBtn", "MeshOptionsMarginCont", "_startGenerationBtn", "MainModelScene3D", "_rawViewport", "_rawViewportContainer", "BgRemoverViewport", "ImgColorReductionSubViewport", "ImgColorReductionSubViewportContainer", "PixelSmoothEffectSprite2D", "ImgColorReductionTextRect", "BgRemoverViewportContainer", "PixelShaderTextRect", "SpriteSizeOptionButton", "EffectsChoicesOptionBtn", "PixelationLevelOptionBtn", "Outline3DValueSlider", "Outline3DBlendFactorSlider", "Outline3DColorPicker", "Depthline3DColorPicker", "DepthlineThicknessSlider", "DepthBlendValueSlider", "DepthThresholdSlider", "DitheringStrenghtSlider", "_frameStepTextEdit", "EnableHairMeshCheckBtn", "MaxColorPaletteSpinBox", "_playBackSpeedLineEdit", "_clearFolderCheckBtn", "_pixelShaderTextRect", "_modelPositionManager", "_loadAllAnimationsBtn", "_animSelectionItemList", "_angleSelectionItemList", "_pixelGridTextRect", "_showGridCheckButton", "_meshReplacerPanelParentNode", "_hairMeshOptBtn", "WeaponItemMeshOptBtn", "_hairColorBtn") groups=["save_data"]]
 texture_filter = 2
 clip_contents = true
 anchors_preset = 15
@@ -222,6 +222,7 @@ DepthBlendValueSlider = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/
 DepthThresholdSlider = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/DepthLineThresholdHBox/DepthLineThresholdSliderBox")
 DitheringStrenghtSlider = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/DitheringHBox/DitheringHSlider")
 _frameStepTextEdit = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/FrameSkipHBoxCont/FrameStepTextEdit")
+EnableHairMeshCheckBtn = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/HairMeshHBoxCont/MarginContainer2/EnableHairMeshCheckBtn")
 MaxColorPaletteSpinBox = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/MaxColorPaletteHBox/MaxColorPaletteSpinBox")
 _playBackSpeedLineEdit = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/PlaybackSpeedHBoxCont/PlayBackSpeedLineEdit")
 _clearFolderCheckBtn = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont/ClearFolderHBoxCont/ClearFolderCheckBtn")
@@ -1020,6 +1021,16 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_v7vii")
 custom_minimum_size = Vector2(24, 24)
 layout_mode = 2
 
+[node name="MarginContainer2" type="MarginContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/HairMeshHBoxCont"]
+layout_mode = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 4
+
+[node name="EnableHairMeshCheckBtn" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/HairMeshHBoxCont/MarginContainer2" instance=ExtResource("14_v7vii")]
+layout_mode = 2
+
 [node name="TorsoItemMeshHBoxCont" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
@@ -1178,7 +1189,7 @@ text = "SelectAll"
 
 [node name="animSelectionItemList" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/LoadAnimMarginCont/AnimSelectPanelCont/MarginContainer/VBoxContainer" instance=ExtResource("9_u5ifw")]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(10, 120)
+custom_minimum_size = Vector2(10, 170)
 layout_mode = 2
 max_columns = 2
 same_column_width = true

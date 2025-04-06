@@ -1,8 +1,0 @@
-[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://pcr0gcbhu6jb"]
-
-[ext_resource type="Texture2D" uid="uid://b6uyhccbc45lb" path="res://Models/FullModels/HRWarriorMeshs/BootsArmourMesh_Image_0.png" id="1_du171"]
-
-[resource]
-resource_name = "BootsMaterial"
-shading_mode = 0
-albedo_texture = ExtResource("1_du171")

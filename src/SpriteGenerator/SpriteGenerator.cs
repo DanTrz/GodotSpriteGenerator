@@ -51,6 +51,8 @@ public partial class SpriteGenerator : Node
     [Export] public HSlider DitheringStrenghtSlider;
     [Export] public LineEdit _frameStepTextEdit;
 
+    [Export] public CheckButton EnableHairMeshCheckBtn;
+
     [Export] public SpinBox MaxColorPaletteSpinBox;
 
     [Export] public LineEdit _playBackSpeedLineEdit;
@@ -107,6 +109,7 @@ public partial class SpriteGenerator : Node
 
         DitheringStrenghtSlider.ValueChanged += OnDitheringStrenghtChanged;
 
+        EnableHairMeshCheckBtn.Pressed += OnEnableHairMeshCheckBtnPressed;
         _frameStepTextEdit.TextChanged += OnFrameStepChanged;
         _playBackSpeedLineEdit.TextChanged += OnPlayBackSpeedChanged;
         _clearFolderCheckBtn.Pressed += OnClearFolderPressed;
@@ -151,6 +154,17 @@ public partial class SpriteGenerator : Node
         LoadAndPrepareModelNodes();
         UpdateViewPorts();
     }
+
+    private void OnEnableHairMeshCheckBtnPressed()
+    {
+        var hairBoneNode = _characterModelObject.GetNodeOrNull<BoneAttachment3D>("%HairBoneAttach");
+        if (hairBoneNode != null)
+        {
+
+            hairBoneNode.Visible = EnableHairMeshCheckBtn.ButtonPressed;
+        }
+    }
+
 
     private void LoadAndPrepareModelNodes()
     {
