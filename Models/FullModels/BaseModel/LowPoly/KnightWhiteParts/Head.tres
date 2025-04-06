@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://p67y3p8w8tcg"]
+
+[ext_resource type="Texture2D" uid="uid://x0v4iaf3lae1" path="res://Models/FullModels/BaseModel/LowPoly/KnightWhiteParts/Knight_Head_KnightHD_V2-1-KNIGHT_HEAD.png" id="1_ew7ow"]
+
+[resource]
+resource_name = "Head"
+cull_mode = 2
+albedo_texture = ExtResource("1_ew7ow")

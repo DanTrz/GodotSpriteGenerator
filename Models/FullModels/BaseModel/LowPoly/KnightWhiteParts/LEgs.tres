@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://dcfnkxg01vb24"]
+
+[ext_resource type="Texture2D" uid="uid://csrqyrii01g7b" path="res://Models/FullModels/BaseModel/LowPoly/KnightWhiteParts/Knight_Legs_KnightHD_V2-4-KNIGHT_LEGS.png" id="1_nqp5v"]
+
+[resource]
+resource_name = "LEgs"
+cull_mode = 2
+albedo_texture = ExtResource("1_nqp5v")

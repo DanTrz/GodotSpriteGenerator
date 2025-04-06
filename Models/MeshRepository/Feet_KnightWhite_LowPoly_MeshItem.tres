@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ArrayMeshDataObject" load_steps=3 format=3 uid="uid://d01mfsfixdbu7"]
+
+[ext_resource type="ArrayMesh" uid="uid://b7h0s0tg02fnp" path="res://Models/FullModels/BaseModel/LowPoly/KnightWhiteParts/KnighetBoots.tres" id="1_ctkry"]
+[ext_resource type="Script" uid="uid://cmuqvgdb2248c" path="res://src/ModelAndMeshes/ArrayMeshDataObject.cs" id="2_bng87"]
+
+[resource]
+script = ExtResource("2_bng87")
+Active = true
+ItemName = "Knight Boots"
+MeshItem = ExtResource("1_ctkry")
+BodyPartType = 4
+MeshType = 0
+ItemOrder = 1
+CanChangeColor = true
+metadata/_custom_type_script = "uid://cmuqvgdb2248c"

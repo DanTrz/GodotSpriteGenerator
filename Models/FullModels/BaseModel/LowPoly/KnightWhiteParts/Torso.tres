@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://mwskpmiq3qdn"]
+
+[ext_resource type="Texture2D" uid="uid://d17i0qgysr88c" path="res://Models/FullModels/BaseModel/LowPoly/KnightWhiteParts/Knight_Chest_KnightHD_V2-11-KNIGHT_TORSO.png" id="1_5tbyb"]
+
+[resource]
+resource_name = "Torso"
+cull_mode = 2
+albedo_texture = ExtResource("1_5tbyb")

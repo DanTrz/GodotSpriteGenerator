@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ArrayMeshDataObject" load_steps=3 format=3 uid="uid://bxcjqpuk7f8bc"]
+
+[ext_resource type="ArrayMesh" uid="uid://ch58qpbre35wj" path="res://Models/FullModels/BaseModel/LowPoly/KnightWhiteParts/KnighetChest.tres" id="1_np4lj"]
+[ext_resource type="Script" uid="uid://cmuqvgdb2248c" path="res://src/ModelAndMeshes/ArrayMeshDataObject.cs" id="2_jfl3k"]
+
+[resource]
+script = ExtResource("2_jfl3k")
+Active = true
+ItemName = "Knight Chest Armour"
+MeshItem = ExtResource("1_np4lj")
+BodyPartType = 1
+MeshType = 0
+ItemOrder = 1
+CanChangeColor = true
+metadata/_custom_type_script = "uid://cmuqvgdb2248c"

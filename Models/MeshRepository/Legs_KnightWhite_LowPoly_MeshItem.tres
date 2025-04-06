@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ArrayMeshDataObject" load_steps=3 format=3 uid="uid://c47ih4qededk"]
+
+[ext_resource type="ArrayMesh" uid="uid://b2hwtp5f22bd0" path="res://Models/FullModels/BaseModel/LowPoly/KnightWhiteParts/KnightLegs.tres" id="1_cxtnu"]
+[ext_resource type="Script" uid="uid://cmuqvgdb2248c" path="res://src/ModelAndMeshes/ArrayMeshDataObject.cs" id="2_rwrpy"]
+
+[resource]
+script = ExtResource("2_rwrpy")
+Active = true
+ItemName = "Knight Leg Armour"
+MeshItem = ExtResource("1_cxtnu")
+BodyPartType = 3
+MeshType = 0
+ItemOrder = 1
+CanChangeColor = true
+metadata/_custom_type_script = "uid://cmuqvgdb2248c"

@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://qcet6gjbhqi2"]
+
+[ext_resource type="Texture2D" uid="uid://cdl2j1uukda2k" path="res://Models/FullModels/BaseModel/LowPoly/KnightWhiteParts/Knight_RightArm_KnightHD_V2-0-KNIGHT_RIGHT_ARM.png" id="1_br6us"]
+
+[resource]
+resource_name = "RightArm"
+cull_mode = 2
+albedo_texture = ExtResource("1_br6us")

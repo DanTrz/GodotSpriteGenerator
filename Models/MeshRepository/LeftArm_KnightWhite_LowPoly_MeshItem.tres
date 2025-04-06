@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ArrayMeshDataObject" load_steps=3 format=3 uid="uid://c35jaljprx3c7"]
+
+[ext_resource type="ArrayMesh" uid="uid://dd4r5bsfkamtg" path="res://Models/FullModels/BaseModel/LowPoly/KnightWhiteParts/KnightLeftArm.tres" id="1_ngy02"]
+[ext_resource type="Script" uid="uid://cmuqvgdb2248c" path="res://src/ModelAndMeshes/ArrayMeshDataObject.cs" id="2_6lar4"]
+
+[resource]
+script = ExtResource("2_6lar4")
+Active = true
+ItemName = "LeftArm Armour"
+MeshItem = ExtResource("1_ngy02")
+BodyPartType = 5
+MeshType = 0
+ItemOrder = 1
+CanChangeColor = true
+metadata/_custom_type_script = "uid://cmuqvgdb2248c"
