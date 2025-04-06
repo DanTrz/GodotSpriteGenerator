@@ -61,6 +61,14 @@ Key options in this tab are:
 * Persit Colors => You can add Colors that won't be affected the color reduction or by the External palette. These colors will aways stay present in the model.
 * External Palette => If you set the External Palette Options to True, You can load an external palette file to change the colors of the model. This works with Palette HEX files.
 
+## Adding your Own models
+![Custom Model Scene](https://github.com/user-attachments/assets/f8d20b06-143a-4dfb-826e-f901cda485d4)
+
+* Open the Scene "ModelScene3D.tscn". 
+* Add your 3D model as child of the Node "Model3DPivot_AddYourModelHere"
+* In the built in Example, my model scene is called BaseModel_LowPoly. you need to repalce this scene with your own 3D model Scene.
+* Tweak the model size, scale and position to make sure it feets the Camera in this scene. 
+
 
 
 
