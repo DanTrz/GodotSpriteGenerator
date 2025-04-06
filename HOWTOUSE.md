@@ -4,7 +4,11 @@ There are two main tabs in the SpriteGenerator:
 2. Image Editor Tab => To apply Color Reduction and to tweak image Saturation, Brightness, Outline etc
 3. There is a built-in Low-Poly Voxel model with replaceble parts for you to play with and create placeholder NPCs of quick prototyping.
 
-
+Some known bugs or issues include:
+* Entire save configuration is broken and will be fixed in the next update
+* Performance is not great if your model is too complex or with too many colors (in case of Color Reduction)
+* Some UI elements are just placeholders for now.
+* Sprites and SpriteSheets need to be manually loaded into the Image Editor (They don't transfer from the Sprite Generator Tab yet)
 
 ## Tab 1: SpriteGenerator
 ![SpriteGenTab](https://github.com/user-attachments/assets/658b807c-5b46-4f35-bb30-21739340dc82)
