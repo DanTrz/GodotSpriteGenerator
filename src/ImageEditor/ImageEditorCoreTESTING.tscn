@@ -1,10 +1,8 @@
-[gd_scene load_steps=14 format=3 uid="uid://b86bdt7tfvdnw"]
+[gd_scene load_steps=12 format=3 uid="uid://b86bdt7tfvdnw"]
 
 [ext_resource type="Script" uid="uid://coras8qp0fyli" path="res://src/ImageEditor/ImageEditor.cs" id="1_8uuxq"]
 [ext_resource type="PackedScene" uid="uid://ffrwo5xcxd0r" path="res://src/ImageEditor/Camera2DController/Camera2DController.tscn" id="2_peehe"]
-[ext_resource type="Shader" uid="uid://dya8fpkfgghuq" path="res://Assets/Shaders/BackupVersions/Pixelize2D.gdshader" id="2_vhsxp"]
 [ext_resource type="PackedScene" uid="uid://iuwovcd804os" path="res://src/ModelAndMeshes/ModelScene3D.tscn" id="3_vhsxp"]
-[ext_resource type="Shader" uid="uid://o32y8sg4fot8" path="res://Assets/Shaders/BackupVersions/Pixelize3D.gdshader" id="5_8uuxq"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8pcxw"]
 bg_color = Color(0.359069, 0.359069, 0.359069, 1)
@@ -15,19 +13,10 @@ bg_color = Color(0.359069, 0.359069, 0.359069, 1)
 load_path = "res://.godot/imported/Anim_Running_spriteSheet.png-73fd3f465a067e15d64d6a6cdbcb365e.ctex"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_matpn"]
-shader = ExtResource("2_vhsxp")
-shader_parameter/pixel_size_pixels = 107.0
-shader_parameter/viewport_size = Vector2(800, 512)
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_vhsxp"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8uuxq"]
-render_priority = 0
-shader = ExtResource("5_8uuxq")
-shader_parameter/target_resolution = 64.0
-shader_parameter/outline_strength = 0.0
-shader_parameter/outline_thickness = 1.0
-shader_parameter/outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="QuadMesh" id="QuadMesh_8oh3n"]
 material = SubResource("ShaderMaterial_8uuxq")

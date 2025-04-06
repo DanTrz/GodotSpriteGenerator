@@ -9,5 +9,7 @@ Active = true
 ItemName = "LeftArm Skin"
 MeshItem = ExtResource("1_88i10")
 BodyPartType = 5
+MeshType = 0
 ItemOrder = 0
+CanChangeColor = false
 metadata/_custom_type_script = "uid://cmuqvgdb2248c"

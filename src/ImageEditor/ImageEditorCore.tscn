@@ -1,11 +1,10 @@
-[gd_scene load_steps=12 format=4 uid="uid://cnhj6mgja4h5a"]
+[gd_scene load_steps=11 format=4 uid="uid://cnhj6mgja4h5a"]
 
 [ext_resource type="Script" uid="uid://coras8qp0fyli" path="res://src/ImageEditor/ImageEditor.cs" id="1_116yk"]
 [ext_resource type="PackedScene" uid="uid://ffrwo5xcxd0r" path="res://src/ImageEditor/Camera2DController/Camera2DController.tscn" id="1_nwf5k"]
 [ext_resource type="Shader" uid="uid://bsx38w01mswov" path="res://Assets/Shaders/ImageEditor.gdshader" id="3_e07nq"]
 [ext_resource type="Texture2D" uid="uid://cae2jelncoq3w" path="res://Assets/SpriteSheetTemp/Anim_Running_spriteSheet.png" id="4_rt1bl"]
 [ext_resource type="Shader" uid="uid://bqe6x0jbw5lpm" path="res://Assets/Shaders/SmoothPixel.gdshader" id="5_c5mtj"]
-[ext_resource type="Texture2D" uid="uid://b1hm5e0yfkawq" path="res://Assets/SpriteSheetTemp/B__Running_angle_0_5.png" id="5_e07nq"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8pcxw"]
 bg_color = Color(0.359069, 0.359069, 0.359069, 1)
@@ -60,7 +59,7 @@ stretch = true
 transparent_bg = true
 handle_input_locally = false
 physics_object_picking = true
-size = Vector2i(800, 512)
+size = Vector2i(2, 2)
 render_target_update_mode = 4
 
 [node name="Camera2DController" parent="RawImgPanel/ViewportContainer/ImgEditorSubViewport" instance=ExtResource("1_nwf5k")]
@@ -136,5 +135,5 @@ offset_top = -512.0
 offset_right = 248.0
 grow_horizontal = 2
 grow_vertical = 0
-texture = ExtResource("5_e07nq")
+texture = ExtResource("4_rt1bl")
 stretch_mode = 4

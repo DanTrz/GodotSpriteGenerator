@@ -1,7 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://bik1svukat0ui"]
 
 [ext_resource type="Shader" uid="uid://c0hrteashhp3d" path="res://Assets/Shaders/ColorReduc.gdshader" id="2_cc5bv"]
-[ext_resource type="Texture2D" uid="uid://5yojx352m0rc" path="res://Assets/SpriteSheetTemp/A__SwordknifeStabbing_spriteSheet.png" id="3_cc5bv"]
 
 [sub_resource type="CSharpScript" id="CSharpScript_6jvx8"]
 script/source = "using System;
@@ -233,6 +232,9 @@ shader = ExtResource("2_cc5bv")
 shader_parameter/levels = 16
 shader_parameter/dither_strength = 0.4
 
+[sub_resource type="Resource" id="Resource_vefox"]
+metadata/__load_path__ = "res://Assets/SpriteSheetTemp/A__SwordknifeStabbing_spriteSheet.png"
+
 [node name="ImageSaverUI" type="Control" node_paths=PackedStringArray("_subViewport", "ImgColorReducTextRect")]
 layout_mode = 3
 anchors_preset = 0
@@ -267,5 +269,5 @@ render_target_update_mode = 4
 unique_name_in_owner = true
 material = SubResource("ShaderMaterial_1y31e")
 custom_minimum_size = Vector2(512, 512)
-texture = ExtResource("3_cc5bv")
+texture = SubResource("Resource_vefox")
 stretch_mode = 2

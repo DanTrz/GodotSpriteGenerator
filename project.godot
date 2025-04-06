@@ -24,7 +24,7 @@ resources_spreadsheet_view/freeze_first_column=true
 [application]
 
 config/name="SpriteGenerator"
-run/main_scene="uid://5ps0rlhwhjoe"
+run/main_scene="uid://ctnmr8c2k85g5"
 config/features=PackedStringArray("4.4", "C#", "Forward Plus")
 run/max_fps=90
 config/icon="res://icon.svg"

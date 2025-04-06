@@ -14,7 +14,7 @@ uniform float colorblend_factor : hint_range(0.0, 1.0) = 0.75;
 uniform float depthline_thickness : hint_range(0.0, 10.0) = 0.0;
 
 // Sensitivity Controls
-uniform float depth_sensitivity : hint_range(0.0, 10.0) = 0.0; 
+uniform float depth_sensitivity : hint_range(0.0, 10.0) = 0.0;
 uniform float normal_sensitivity : hint_range(0.0, 5.0) = 0.00;
 uniform float outline_threshold_min : hint_range(0.0, 1.0) = 0.2;
 uniform float outline_threshold_max : hint_range(0.0, 1.0) = 0.3;

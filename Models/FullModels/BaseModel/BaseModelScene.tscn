@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://c00refh5p8c4o"]
+[gd_scene load_steps=19 format=3 uid="uid://c00refh5p8c4o"]
 
 [ext_resource type="ArrayMesh" uid="uid://bagec68lb6dbw" path="res://Models/MeshRepository/MeshResources/2_Base_Pants.res" id="2_73xxv"]
 [ext_resource type="PackedScene" uid="uid://cq7dhe7xeop3w" path="res://src/ModelAndMeshes/BodyPartMeshInstance3D.tscn" id="2_igd6e"]
@@ -9,7 +9,6 @@
 [ext_resource type="PackedScene" uid="uid://dpa7h0crxxisw" path="res://Models/MeshRepository/Hair/1_HairMale01.tscn" id="7_ew3vs"]
 [ext_resource type="ArrayMesh" uid="uid://b1gru2q23rr5f" path="res://Models/MeshRepository/MeshResources/1_Skin.res" id="7_gqgxj"]
 [ext_resource type="PackedScene" uid="uid://dqvg7t4lsw2gs" path="res://Models/MeshRepository/Weapons/SilverAxeScene.tscn" id="10_58l4l"]
-[ext_resource type="Shader" uid="uid://tc2xscs6f05h" path="res://Assets/Shaders/BackupVersions/Simplified_Pixelize3DV2Testing.gdshader" id="10_fe036"]
 
 [sub_resource type="Animation" id="Animation_ur8ua"]
 resource_name = "Armature|mixamo_com|Layer0"
@@ -1612,12 +1611,6 @@ _data = {
 }
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_58l4l"]
-render_priority = 0
-shader = ExtResource("10_fe036")
-shader_parameter/target_resolution = 512.0
-shader_parameter/outline_thickness = 1.0
-shader_parameter/normal_threshold = 0.95
-shader_parameter/outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="QuadMesh" id="QuadMesh_gc5ao"]
 material = SubResource("ShaderMaterial_58l4l")

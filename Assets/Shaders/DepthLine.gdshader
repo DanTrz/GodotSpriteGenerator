@@ -31,7 +31,7 @@ void fragment() {
     //vec2 pixel_size = vec2(1.0 / target_resolution, 1.0 / target_resolution); // Corrected: Construct a vec2
 	vec2 pixel_size = vec2(1.0) / VIEWPORT_SIZE;
 	vec2 uv = SCREEN_UV;
-	
+
 	vec2 uvs[5] = {
         uv,
         uv + vec2(0.0, pixel_size.y), // Up
