@@ -62,7 +62,7 @@ Key options in this tab are:
 * External Palette => If you set the External Palette Options to True, You can load an external palette file to change the colors of the model. This works with Palette HEX files.
 
 ## Adding your Own models
-![Custom Model Scene](https://github.com/user-attachments/assets/f8d20b06-143a-4dfb-826e-f901cda485d4)
+![customModelScene](https://github.com/user-attachments/assets/425879ce-b70e-4663-9900-e7dc94237c84)
 
 * Open the Scene "ModelScene3D.tscn". 
 * Add your 3D model as child of the Node "Model3DPivot_AddYourModelHere"
