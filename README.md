@@ -1,4 +1,5 @@
-![Logo](/doc/docs/images/terrain3d.jpg)
+
+![SpriteGenerator](https://github.com/user-attachments/assets/28b5ebec-5d2f-451a-add4-8b469e5f9aae)
 
 # SpriteGenerator
 A simple 2D Sprite and SpriteSheet Generator from 3D models and Image Editor to tweak visuals of your sprites and SpriteSheets.
