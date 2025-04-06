@@ -4,7 +4,11 @@ There are two main tabs in the SpriteGenerator:
 2. Image Editor Tab => To apply Color Reduction and to tweak image Saturation, Brightness, Outline etc
 3. There is a built-in Low-Poly Voxel model with replaceble parts for you to play with and create placeholder NPCs of quick prototyping.
 
-
+Some known bugs or issues include:
+* Entire save configuration is broken and will be fixed in the next update
+* Performance is not great if your model is too complex or with too many colors (in case of Color Reduction)
+* Some UI elements are just placeholders for now.
+* Sprites and SpriteSheets need to be manually loaded into the Image Editor (They don't transfer from the Sprite Generator Tab yet)
 
 ## Tab 1: SpriteGenerator
 ![SpriteGenTab](https://github.com/user-attachments/assets/658b807c-5b46-4f35-bb30-21739340dc82)
@@ -60,6 +64,15 @@ Key options in this tab are:
 * <-- Palette and Persist Color Options-->
 * Persit Colors => You can add Colors that won't be affected the color reduction or by the External palette. These colors will aways stay present in the model.
 * External Palette => If you set the External Palette Options to True, You can load an external palette file to change the colors of the model. This works with Palette HEX files.
+
+## Adding your Own models
+![customModelScene](https://github.com/user-attachments/assets/425879ce-b70e-4663-9900-e7dc94237c84)
+
+* Open the Scene "ModelScene3D.tscn". 
+* Add your 3D model as child of the Node "Model3DPivot_AddYourModelHere"
+* In the built in Example, my model scene is called BaseModel_LowPoly. you need to repalce this scene with your own 3D model Scene.
+* Tweak the model size, scale and position to make sure it feets the Camera in this scene.
+* Don't add more than one Node as Child of "Model3DPivot_AddYourModelHere". If you want to edit your custom scene 3D do that in a separate branch scene. 
 
 
 
