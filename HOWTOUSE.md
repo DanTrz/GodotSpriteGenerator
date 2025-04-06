@@ -21,7 +21,7 @@ Imports heightmaps from [HTerrain](https://github.com/Zylann/godot_heightmap_plu
 
 ## Getting Started
 
-1. Read the [Installation & Upgrades](https://terrain3d.readthedocs.io/en/stable/docs/installation.html) instructions.
+1. Read the [How to Use](https://terrain3d.readthedocs.io/en/stable/docs/installation.html) instructions.
 
 2. For support, read [Getting Help](https://terrain3d.readthedocs.io/en/stable/docs/getting_help.html) and join our [Discord server](https://tokisan.com/discord).
 
