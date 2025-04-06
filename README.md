@@ -2,6 +2,8 @@
  ![SpriteGenerator](https://github.com/user-attachments/assets/4db9db9c-7972-490a-9583-1815905c846a)
 # SpriteGenerator
 A simple 2D Sprite and SpriteSheet Generator from 3D models and Image Editor to tweak visuals of your sprites and SpriteSheets.
+This was created primarily for myself and tailored for my personal project needs. Therefore, this is very much specific to what I needed and wanted a simple, "pixel-like" look and feel for Low-Poly Models. 
+Feel free to contribute, use or tweak it. This is very much under heavy development and it's not a finished product. I would say this is definetly something like an "Aplha" stage, but the key features are there and working. 
 
 
 ## Features
@@ -14,6 +16,7 @@ A simple 2D Sprite and SpriteSheet Generator from 3D models and Image Editor to 
 * Allow Replaceble parts (To tweak and add armour or replace parts of your model with Gear or Weapon, etc) 
 * Includes usual Sprite and Spritesheet effects like Inline, Outline, Color Reduction and others
 * You can load external Palettes to change the colors of your Sprites and SpriteSheets
+* (WORK IN PROGRESS) In the coming days I will also add the Executable files to run as Standalone App in case you don't want to run in Godot Editor. 
 
 ## Getting Started
 
