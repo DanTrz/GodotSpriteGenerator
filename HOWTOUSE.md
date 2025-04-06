@@ -14,29 +14,13 @@ A simple 2D Sprite and SpriteSheet Generator from 3D models and Image Editor to 
 * Allow Replaceble parts (To tweak and add armour or replace parts of your model with Gear or Weapon, etc) 
 * Includes usual Sprite and Spritesheet effects like Inline, Outline, Color Reduction and others
 
-
-
-Imports heightmaps from [HTerrain](https://github.com/Zylann/godot_heightmap_plugin/), Gaea, World Creator, World Machine, Unity, Unreal and any tool that can export a heightmap. See [heightmaps](https://terrain3d.readthedocs.io/en/stable/docs/heightmaps.html)
-
-
 ## Getting Started
 
-1. Read the [How to Use](https://terrain3d.readthedocs.io/en/stable/docs/installation.html) instructions.
+1. Read the [How to Use](https://github.com/DanTrz/GodotSpriteGenerator/blob/main/HOWTOUSE.md) instructions.
 
-2. For support, read [Getting Help](https://terrain3d.readthedocs.io/en/stable/docs/getting_help.html) and join our [Discord server](https://tokisan.com/discord).
+2. Youtube video (WORK IN PROGRESS) [tutorial videos](https://).
 
-3. Watch the [tutorial videos](https://terrain3d.readthedocs.io/en/stable/docs/tutorial_videos.html).
-
-
-## Credit
-Developed for the Godot community by:
-
-|||
-|--|--|
-| **Cory Petkovsek, Tokisan Games** | [<img src="https://github.com/dmhendricks/signature-social-icons/blob/master/icons/round-flat-filled/35px/twitter.png?raw=true" width="24"/>](https://twitter.com/TokisanGames) [<img src="https://github.com/dmhendricks/signature-social-icons/blob/master/icons/round-flat-filled/35px/github.png?raw=true" width="24"/>](https://github.com/TokisanGames) [<img src="https://github.com/dmhendricks/signature-social-icons/blob/master/icons/round-flat-filled/35px/www.png?raw=true" width="24"/>](https://tokisan.com/) [<img src="https://github.com/dmhendricks/signature-social-icons/blob/master/icons/round-flat-filled/35px/discord.png?raw=true" width="24"/>](https://tokisan.com/discord) [<img src="https://github.com/dmhendricks/signature-social-icons/blob/master/icons/round-flat-filled/35px/youtube.png?raw=true" width="24"/>](https://www.youtube.com/@TokisanGames)|
-| **Roope Palmroos, Outobugi Games** | [<img src="https://github.com/dmhendricks/signature-social-icons/blob/master/icons/round-flat-filled/35px/twitter.png?raw=true" width="24"/>](https://twitter.com/outobugi) [<img src="https://github.com/dmhendricks/signature-social-icons/blob/master/icons/round-flat-filled/35px/github.png?raw=true" width="24"/>](https://github.com/outobugi) [<img src="https://github.com/dmhendricks/signature-social-icons/blob/master/icons/round-flat-filled/35px/www.png?raw=true" width="24"/>](https://outobugi.com/) [<img src="https://github.com/dmhendricks/signature-social-icons/blob/master/icons/round-flat-filled/35px/youtube.png?raw=true" width="24"/>](https://www.youtube.com/@outobugi)|
-
-And other contributors displayed on the right of the github page and in [AUTHORS.md](https://terrain3d.readthedocs.io/en/stable/docs/authors.html).
+3. Any questions: Find me on Discord dantz4213
 
 
 ## Contributing
