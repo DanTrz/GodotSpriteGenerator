@@ -1,6 +1,5 @@
 
-![SpriteGenerator](https://github.com/user-attachments/assets/28b5ebec-5d2f-451a-add4-8b469e5f9aae)
-
+ ![SpriteGenerator](https://github.com/user-attachments/assets/4db9db9c-7972-490a-9583-1815905c846a)
 # SpriteGenerator
 A simple 2D Sprite and SpriteSheet Generator from 3D models and Image Editor to tweak visuals of your sprites and SpriteSheets.
 
