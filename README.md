@@ -13,6 +13,7 @@ A simple 2D Sprite and SpriteSheet Generator from 3D models and Image Editor to 
 * Multiple options to tweak the Sprite Size, Resolution and Effects (Sprite size up to 512px)
 * Allow Replaceble parts (To tweak and add armour or replace parts of your model with Gear or Weapon, etc) 
 * Includes usual Sprite and Spritesheet effects like Inline, Outline, Color Reduction and others
+* You can load external Palettes to change the colors of your Sprites and SpriteSheets
 
 ## Getting Started
 

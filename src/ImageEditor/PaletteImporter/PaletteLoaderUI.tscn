@@ -40,19 +40,7 @@ layout_mode = 2
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
 layout_mode = 2
 
-[node name="LoadExtPaletteContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 32)
-layout_mode = 2
-theme_override_constants/margin_left = 2
-theme_override_constants/margin_top = 2
-theme_override_constants/margin_right = 2
-theme_override_constants/margin_bottom = 2
-
-[node name="PaletteOptionsHbOx" type="VBoxContainer" parent="PanelContainer/VBoxContainer/LoadExtPaletteContainer"]
-custom_minimum_size = Vector2(0, 32)
-layout_mode = 2
-
-[node name="Label2" type="Label" parent="PanelContainer/VBoxContainer/LoadExtPaletteContainer/PaletteOptionsHbOx"]
+[node name="Label2" type="Label" parent="PanelContainer/VBoxContainer"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 text = "Palette Options"
@@ -61,67 +49,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
-
-[node name="PaletteHbOx" type="HBoxContainer" parent="PanelContainer/VBoxContainer/LoadExtPaletteContainer/PaletteOptionsHbOx"]
-custom_minimum_size = Vector2(0, 32)
-layout_mode = 2
-
-[node name="EffectsLabel" type="Label" parent="PanelContainer/VBoxContainer/LoadExtPaletteContainer/PaletteOptionsHbOx/PaletteHbOx"]
-custom_minimum_size = Vector2(100, 32)
-layout_mode = 2
-text = "External Palette"
-label_settings = ExtResource("2_jkvfd")
-vertical_alignment = 1
-autowrap_mode = 2
-clip_text = true
-
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer/LoadExtPaletteContainer/PaletteOptionsHbOx/PaletteHbOx"]
-layout_mode = 2
-theme_override_constants/margin_left = 0
-theme_override_constants/margin_top = 4
-theme_override_constants/margin_right = 0
-theme_override_constants/margin_bottom = 4
-
-[node name="UseExternalPaletteCheckBtn" parent="PanelContainer/VBoxContainer/LoadExtPaletteContainer/PaletteOptionsHbOx/PaletteHbOx/MarginContainer" instance=ExtResource("3_jkvfd")]
-layout_mode = 2
-
-[node name="LoadExtPaletteBtn" type="Button" parent="PanelContainer/VBoxContainer/LoadExtPaletteContainer/PaletteOptionsHbOx/PaletteHbOx"]
-texture_filter = 2
-custom_minimum_size = Vector2(100, 32)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-text = "Load Ext."
-
-[node name="PaletteListPanel" type="PanelContainer" parent="PanelContainer/VBoxContainer/LoadExtPaletteContainer/PaletteOptionsHbOx"]
-custom_minimum_size = Vector2(0, 75)
-layout_mode = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer/LoadExtPaletteContainer/PaletteOptionsHbOx/PaletteListPanel"]
-custom_minimum_size = Vector2(0, 32)
-layout_mode = 2
-theme_override_constants/margin_left = 2
-theme_override_constants/margin_top = 2
-theme_override_constants/margin_right = 2
-theme_override_constants/margin_bottom = 2
-
-[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/VBoxContainer/LoadExtPaletteContainer/PaletteOptionsHbOx/PaletteListPanel/MarginContainer"]
-layout_mode = 2
-horizontal_scroll_mode = 0
-
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer/LoadExtPaletteContainer/PaletteOptionsHbOx/PaletteListPanel/MarginContainer/ScrollContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 2
-theme_override_constants/margin_top = 2
-theme_override_constants/margin_right = 2
-theme_override_constants/margin_bottom = 2
-
-[node name="ExtPaletteListGridContainer" parent="PanelContainer/VBoxContainer/LoadExtPaletteContainer/PaletteOptionsHbOx/PaletteListPanel/MarginContainer/ScrollContainer/MarginContainer" instance=ExtResource("1_logbv")]
-custom_minimum_size = Vector2(300, 60)
-layout_mode = 2
-theme_override_constants/h_separation = 5
-theme_override_constants/v_separation = 5
-paletteColorItemScene = ExtResource("3_ykadx")
 
 [node name="PersistColorsContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 32)
@@ -206,6 +133,79 @@ theme_override_constants/margin_bottom = 2
 
 [node name="PersistColorsListGridContainer" parent="PanelContainer/VBoxContainer/PersistColorsContainer/PersistentColors/PaletteListPanel/MarginContainer/ScrollContainer/MarginContainer" instance=ExtResource("1_logbv")]
 custom_minimum_size = Vector2(300, 50)
+layout_mode = 2
+theme_override_constants/h_separation = 5
+theme_override_constants/v_separation = 5
+paletteColorItemScene = ExtResource("3_ykadx")
+
+[node name="LoadExtPaletteContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="PaletteOptionsHbOx" type="VBoxContainer" parent="PanelContainer/VBoxContainer/LoadExtPaletteContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[node name="PaletteHbOx" type="HBoxContainer" parent="PanelContainer/VBoxContainer/LoadExtPaletteContainer/PaletteOptionsHbOx"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[node name="EffectsLabel" type="Label" parent="PanelContainer/VBoxContainer/LoadExtPaletteContainer/PaletteOptionsHbOx/PaletteHbOx"]
+custom_minimum_size = Vector2(100, 32)
+layout_mode = 2
+text = "External Palette"
+label_settings = ExtResource("2_jkvfd")
+vertical_alignment = 1
+autowrap_mode = 2
+clip_text = true
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer/LoadExtPaletteContainer/PaletteOptionsHbOx/PaletteHbOx"]
+layout_mode = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 4
+
+[node name="UseExternalPaletteCheckBtn" parent="PanelContainer/VBoxContainer/LoadExtPaletteContainer/PaletteOptionsHbOx/PaletteHbOx/MarginContainer" instance=ExtResource("3_jkvfd")]
+layout_mode = 2
+
+[node name="LoadExtPaletteBtn" type="Button" parent="PanelContainer/VBoxContainer/LoadExtPaletteContainer/PaletteOptionsHbOx/PaletteHbOx"]
+texture_filter = 2
+custom_minimum_size = Vector2(100, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Load Ext."
+
+[node name="PaletteListPanel" type="PanelContainer" parent="PanelContainer/VBoxContainer/LoadExtPaletteContainer/PaletteOptionsHbOx"]
+custom_minimum_size = Vector2(0, 75)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer/LoadExtPaletteContainer/PaletteOptionsHbOx/PaletteListPanel"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/VBoxContainer/LoadExtPaletteContainer/PaletteOptionsHbOx/PaletteListPanel/MarginContainer"]
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer/LoadExtPaletteContainer/PaletteOptionsHbOx/PaletteListPanel/MarginContainer/ScrollContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="ExtPaletteListGridContainer" parent="PanelContainer/VBoxContainer/LoadExtPaletteContainer/PaletteOptionsHbOx/PaletteListPanel/MarginContainer/ScrollContainer/MarginContainer" instance=ExtResource("1_logbv")]
+custom_minimum_size = Vector2(300, 60)
 layout_mode = 2
 theme_override_constants/h_separation = 5
 theme_override_constants/v_separation = 5
