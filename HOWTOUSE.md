@@ -11,7 +11,8 @@ There are two main tabs in the SpriteGenerator:
 * You can access the folder location from the Main Settings Tab (Uper right corner)
 
 Key options in this tab are:
-<--Key Settings-->
+
+* <--Key Settings-->
 * Create SpriteSheet = True/False
 * Create Sprite = True/False
 * Sprite Size = 64x64/128x128/256x256/384x384/512x512 (These are the actual size of the images, not the resolution)
@@ -31,13 +32,13 @@ Key options in this tab are:
 * ShowGrid = Shows a Grid in front of your model
 * Animation Method = Define if you want to Generate sprites based on Animation Player Animations or if you want to generate a static sprite (That will simple rotate the model in the Y Axis)
 
-<--Mesh / Parts Replacer-->
+* <--Mesh / Parts Replacer-->
 * There is one built in model included in the Project that includes replaceable parts
 * In the future, the idea is that you will be able to upload your own models with replaceable parts
 * For now, only the built in model works with replaceable parts, but feel free to tweak it and leverage the code.
 * You can edit the model, change the weapon, clothes, color of some parts, etc. 
 
-<--Load Animation-->
+* <--Load Animation-->
 * Allows to choose from a long list of pre-defined animations (Some are from Mixamo, some are from My own work in Blender)
 
 
@@ -46,15 +47,15 @@ Key options in this tab are:
 * Currently you need to Load the Sprite or Sprite Sheet via the "Load file" button. Future versions will automaticaly load the file from the SpriteGenerator Tab
 
 Key options in this tab are:
-<--Image Correction Options-->
+* <--Image Correction Options-->
 * Saturation, Brightness, Contrast => These are self-explanatory. You can use the slider to adjust them.
 * 2D Outline -> this is another option to add Outline (Not the 3D one, it has pros and cons, try both)
 * 2D Inline -> This will add a thin line to the image
 
-<--Color Reduction Options-->
+* <--Color Reduction Options-->
 * Allows to reduce the number of colors in the image. You can set the number of colors to reduce to.
 
-<-- Palette and Persist Color Options-->
+* <-- Palette and Persist Color Options-->
 * Persit Colors => You can add Colors that won't be affected the color reduction or by the External palette. These colors will aways stay present in the model.
 * External Palette => If you set the External Palette Options to True, You can load an external palette file to change the colors of the model. This works with Palette HEX files.
 
