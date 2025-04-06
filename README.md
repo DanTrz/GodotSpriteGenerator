@@ -30,6 +30,7 @@ Feel free to contribute, use or tweak it. This is very much under heavy developm
 
 ## Future Roadmap and ToDos
 This is not a finished project, but there are some things that I would like to add in the future.
+- [ ] Allow to save configuration and load presets (Current Save Functionality is broken)
 - [ ] Allow import of external models (Simplify the process via an Importer Button)
 - [ ] Copy sprites and sprite sheets from Sprite Generator to Image Editor
 - [ ] Tweak the logic for Color Reduction 
