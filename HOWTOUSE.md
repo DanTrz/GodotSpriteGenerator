@@ -67,7 +67,8 @@ Key options in this tab are:
 * Open the Scene "ModelScene3D.tscn". 
 * Add your 3D model as child of the Node "Model3DPivot_AddYourModelHere"
 * In the built in Example, my model scene is called BaseModel_LowPoly. you need to repalce this scene with your own 3D model Scene.
-* Tweak the model size, scale and position to make sure it feets the Camera in this scene. 
+* Tweak the model size, scale and position to make sure it feets the Camera in this scene.
+* Don't add more than one Node as Child of "Model3DPivot_AddYourModelHere". If you want to edit your custom scene 3D do that in a separate branch scene. 
 
 
 
