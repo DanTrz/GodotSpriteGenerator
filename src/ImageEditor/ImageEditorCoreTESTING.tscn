@@ -1,6 +1,6 @@
 [gd_scene load_steps=14 format=3 uid="uid://b86bdt7tfvdnw"]
 
-[ext_resource type="Script" uid="uid://coras8qp0fyli" path="res://Globals/ImageEditor.cs" id="1_8uuxq"]
+[ext_resource type="Script" uid="uid://coras8qp0fyli" path="res://src/ImageEditor/ImageEditor.cs" id="1_8uuxq"]
 [ext_resource type="PackedScene" uid="uid://ffrwo5xcxd0r" path="res://src/ImageEditor/Camera2DController/Camera2DController.tscn" id="2_peehe"]
 [ext_resource type="Shader" uid="uid://dya8fpkfgghuq" path="res://Assets/Shaders/BackupVersions/Pixelize2D.gdshader" id="2_vhsxp"]
 [ext_resource type="PackedScene" uid="uid://iuwovcd804os" path="res://src/ModelAndMeshes/ModelScene3D.tscn" id="3_vhsxp"]

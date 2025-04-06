@@ -172,7 +172,7 @@ public partial class SpriteGenerator : Node
         if (MainModelScene3D != null)
         {
             //Get Reference to Our Object3D within MainScene and Load it's key nodes
-            _modelPivotNode = MainModelScene3D.GetNodeOrNull<Node3D>("%Model3DMainPivotControl");
+            _modelPivotNode = MainModelScene3D.GetNodeOrNull<Node3D>("%Model3DPivot_AddYourModelHere");
             _camera = MainModelScene3D.GetNodeOrNull<Camera3D>("%MainCamera");
             _characterModelObject = _modelPivotNode.GetChildOrNull<Node3D>(0);
             _animationPlayer = _characterModelObject.GetNodeOrNull<AnimationPlayer>("AnimationPlayer");
