@@ -1,5 +1,3 @@
-![Logo](/doc/docs/images/terrain3d.jpg)
-
 # SpriteGenerator
 A simple 2D Sprite and SpriteSheet Generator from 3D models and Image Editor to tweak visuals of your sprites and SpriteSheets.
 
@@ -23,12 +21,12 @@ A simple 2D Sprite and SpriteSheet Generator from 3D models and Image Editor to 
 3. Any questions: Find me on Discord dantz4213
 
 
-## Contributing
-
-Please see [CONTRIBUTING.md](https://github.com/TokisanGames/Terrain3D/blob/main/CONTRIBUTING.md) if you would like to help make Terrain3D the best terrain system for Godot.
+## Contributing and usage rights
+* This is a Open project, feel free to contribute, download, fork, etc.
+* Please see [CONTRIBUTING.md](https://github.com/DanTrz/GodotSpriteGenerator/blob/main/CONTRIBUTING.md)
 
 
 ## License
 
-This addon has been released under the [MIT License](https://github.com/TokisanGames/Terrain3D/blob/main/LICENSE.txt).
+This has been released under the [MIT License](https://).
 
