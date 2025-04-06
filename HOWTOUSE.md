@@ -2,6 +2,8 @@
 There are two main tabs in the SpriteGenerator:
 1. SpriteGenerator Tab => To generate Sprites and SpriteSheets
 2. Image Editor Tab => To apply Color Reduction and to tweak image Saturation, Brightness, Outline etc
+3. There is a built-in Low-Poly Voxel model with replaceble parts for you to play with and create placeholder NPCs of quick prototyping.
+
 
 
 ## Tab 1: SpriteGenerator
