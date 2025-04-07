@@ -1,8 +1,0 @@
-[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://dlm7geapacky5"]
-
-[ext_resource type="Texture2D" uid="uid://bg5yunnb72tfs" path="res://Models/FullModels/BaseModel/LowPoly/Gear/BaseModel_HunterTrousers_JunterGearOBJ-6-PANTS.png" id="1_8vqev"]
-
-[resource]
-resource_name = "PantsMaterial"
-cull_mode = 2
-albedo_texture = ExtResource("1_8vqev")
