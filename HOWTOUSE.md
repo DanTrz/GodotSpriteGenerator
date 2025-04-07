@@ -1,6 +1,6 @@
 # Installation options
-Option 1 - Get the executable from [GitHub Releases](https://github.com/DanTrz/GodotSpriteGenerator/releases) 
-Option 2 - Run the Project in Godot Version 4.4+ (Use .Net version)
+* Option 1 - Get the executable from [GitHub Releases](https://github.com/DanTrz/GodotSpriteGenerator/releases) 
+* Option 2 - Run the Project in Godot Version 4.4+ (Use .Net version)
 
 # SpriteGenerator Overview
 There are two main tabs in the SpriteGenerator:
