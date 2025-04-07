@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://iuwovcd804os"]
 
 [ext_resource type="Script" uid="uid://dasxiorjhfw8t" path="res://src/ModelAndMeshes/Model3DMainPivotControl.cs" id="1_pb3o0"]
-[ext_resource type="PackedScene" uid="uid://bvvxjc2oqng0j" path="res://Models/FullModels/BaseModel/LowPoly/BaseModel_LowPolyScene.tscn" id="2_hkp8x"]
+[ext_resource type="PackedScene" uid="uid://c1c2k76x0pauf" path="res://Models/FullModels/godot_plush/godot_plush.tscn" id="2_hkp8x"]
 [ext_resource type="Shader" uid="uid://cair4uoxj5lif" path="res://Assets/Shaders/Outline3D.gdshader" id="3_cykfy"]
 [ext_resource type="Shader" uid="uid://im2pcdmdj31a" path="res://Assets/Shaders/DepthInLineWithNormals.gdshader" id="5_cykfy"]
 
@@ -56,11 +56,10 @@ size = 7.0
 unique_name_in_owner = true
 script = ExtResource("1_pb3o0")
 
-[node name="BaseModel_LowPoly" parent="Model3DPivot_AddYourModelHere" instance=ExtResource("2_hkp8x")]
+[node name="GodotPlush" parent="Model3DPivot_AddYourModelHere" instance=ExtResource("2_hkp8x")]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866025, -0.433013, 0.25, 0.473725, -0.870539, 0.133215, 0.159951, 0.233799, 0.959038, 0.537403, 1.13269, 5.59787)
-visible = false
 light_energy = 0.1
 shadow_enabled = true
 

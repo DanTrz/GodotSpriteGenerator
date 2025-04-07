@@ -1,0 +1,36 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://c5wtc0g862by6"]
+
+[sub_resource type="Shader" id="Shader_y3jrg"]
+code = "shader_type spatial;
+
+uniform sampler2D albedo_texture : source_color, repeat_disable;
+uniform sampler2D normal_texture : hint_normal, repeat_disable;
+uniform vec2 uv_offset = vec2(0.0);
+
+float fresnel(float amount, vec3 normal, vec3 view)
+{
+	return pow((1.0 - clamp(dot(normalize(normal), normalize(view)), 0.0, 1.0 )), amount);
+}
+
+void fragment() {
+	ALBEDO = texture(albedo_texture, UV + uv_offset).rgb;
+	NORMAL_MAP = texture(normal_texture, UV + uv_offset).xyz;
+	EMISSION = mix(vec3(1.0), ALBEDO, 0.75) * clamp(smoothstep(0.6, 0.7, fresnel(1.0, NORMAL, VIEW)) * NORMAL.y, 0.0, 1.0) * 2.0;
+	ROUGHNESS = 0.7;
+	SPECULAR = 0.8;
+}
+"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_6y2g8"]
+load_path = "res://.godot/imported/godot_plush_albedo.png-96742818811bff734c7cb889128cd3f1.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_0wok7"]
+load_path = "res://.godot/imported/godot_plush_normal.png-7065328ea38a7e8167bb6bbcc83734c6.ctex"
+
+[resource]
+resource_local_to_scene = true
+render_priority = 0
+shader = SubResource("Shader_y3jrg")
+shader_parameter/albedo_texture = SubResource("CompressedTexture2D_6y2g8")
+shader_parameter/normal_texture = SubResource("CompressedTexture2D_0wok7")
+shader_parameter/uv_offset = Vector2(0, 0)

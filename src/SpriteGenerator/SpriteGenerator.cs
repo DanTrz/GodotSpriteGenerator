@@ -51,6 +51,8 @@ public partial class SpriteGenerator : Node
     [Export] public HSlider DitheringStrenghtSlider;
     [Export] public LineEdit _frameStepTextEdit;
 
+
+    [Export] public OptionButton ModelTypeOptionButton;
     [Export] public CheckButton EnableHairMeshCheckBtn;
 
     [Export] public SpinBox MaxColorPaletteSpinBox;
@@ -123,6 +125,8 @@ public partial class SpriteGenerator : Node
         _hairMeshOptBtn.ItemSelected += OnHairMeshOptBtnItemSelected;
         WeaponItemMeshOptBtn.ItemSelected += OnWeaponItemMeshOptBtnItemSelected;
 
+        ModelTypeOptionButton.ItemSelected += OnModelSelectedReloadModel;
+
         //Set Default UI Control Values
         _clearFolderCheckBtn.ButtonPressed = _clearFolderBeforeGeneration;
         _frameStepTextEdit.Text = frameSkipStep.ToString();
@@ -155,16 +159,6 @@ public partial class SpriteGenerator : Node
         UpdateViewPorts();
     }
 
-    private void OnEnableHairMeshCheckBtnPressed()
-    {
-        var hairBoneNode = _characterModelObject.GetNodeOrNull<BoneAttachment3D>("%HairBoneAttach");
-        if (hairBoneNode != null)
-        {
-
-            hairBoneNode.Visible = EnableHairMeshCheckBtn.ButtonPressed;
-        }
-    }
-
 
     private void LoadAndPrepareModelNodes()
     {
@@ -176,6 +170,11 @@ public partial class SpriteGenerator : Node
             _camera = MainModelScene3D.GetNodeOrNull<Camera3D>("%MainCamera");
             _characterModelObject = _modelPivotNode.GetChildOrNull<Node3D>(0);
             _animationPlayer = _characterModelObject.GetNodeOrNull<AnimationPlayer>("AnimationPlayer");
+
+            if (_animationPlayer == null)
+            {
+                _animationPlayer = _characterModelObject.GetNodeOrNull<AnimationPlayer>("%AnimationPlayer");
+            }
 
             //Pass the Model to te PositionManager 
             _modelPositionManager.ModelNode = _modelPivotNode;
@@ -194,11 +193,13 @@ public partial class SpriteGenerator : Node
         if (ModelHasReplacebleParts())
         {
             //Load and add Hair and Weapon Meshes to UI Buttons
+            _hairMeshOptBtn.Disabled = false;
             MeshReplacer.UpdateUIOptionsSceneItemList(_hairMeshOptBtn, Const.HAIR_SCENES_FOLDER_PATH);
+            WeaponItemMeshOptBtn.Disabled = false;
             MeshReplacer.UpdateUIOptionsSceneItemList(WeaponItemMeshOptBtn, Const.WEAPON_SCENES_FOLDER_PATH);
 
             //Load all MeshReplace Buttons with Model Meshes
-            LoadAllMeshReplacerBtnAndMeshItemData();
+            LoadAllMeshReplacerButtons();
 
             //Set default selected values
             _hairMeshOptBtn.Selected = 0;
@@ -207,6 +208,7 @@ public partial class SpriteGenerator : Node
         }
         else
         {
+            ClearAllMeshReplacerButtons();
             GD.PrintT("Mode has no replaceable parts or is null");
         }
     }
@@ -542,6 +544,49 @@ public partial class SpriteGenerator : Node
     }
 
 
+    private void OnModelSelectedReloadModel(long itemSelected)
+    {
+        switch (itemSelected)
+        {
+            case 0: //Voxel LowPoly Model
+                LoadModel(Const.LOW_POLY_MODEL_SCENE_PATH);
+                break;
+            case 1: //Godot Plush (Example)
+                LoadModel(Const.GODOT_PLUSH_MODEL_SCENE_PATH);
+                break;
+            case 2: //Custom model //TODO: Not implemented yet Custom Model import
+                break;
+        }
+    }
+    private void LoadModel(string modelScenePath)
+    {
+        PackedScene newModelScene = GD.Load<PackedScene>(modelScenePath);
+        var newModelInstance = newModelScene.Instantiate<Node3D>();
+        var loadedModelScene = _modelPivotNode.GetChild(0);
+
+        if (loadedModelScene != null)
+        {
+            _modelPivotNode.RemoveChild(loadedModelScene);
+            loadedModelScene.QueueFree();
+        }
+
+        _modelPivotNode.AddChild(newModelInstance);
+
+        LoadAndPrepareModelNodes();
+    }
+
+
+    private void OnEnableHairMeshCheckBtnPressed()
+    {
+        var hairBoneNode = _characterModelObject.GetNodeOrNull<BoneAttachment3D>("%HairBoneAttach");
+        if (hairBoneNode != null)
+        {
+
+            hairBoneNode.Visible = EnableHairMeshCheckBtn.ButtonPressed;
+        }
+    }
+
+
     private void OnEffectsChoiceItemSelected(long itemSelectedIndex)
     {
 
@@ -621,7 +666,7 @@ public partial class SpriteGenerator : Node
 
     private void OnOutlineValuesChanged(double value)
     {
-        Trace.Assert(Outline3DShaderMesh != null, "Outline3DShaderMesh cannot be null");
+        //Trace.Assert(Outline3DShaderMesh != null, "Outline3DShaderMesh cannot be null");
         if (Outline3DShaderMesh == null) return;
 
         if (Outline3DShaderMesh.Mesh.SurfaceGetMaterial(0) is ShaderMaterial shaderMaterial)
@@ -758,6 +803,8 @@ public partial class SpriteGenerator : Node
 
     private void OnLoadAllAnimationsPressed()
     {
+        _animSelectionItemList.Clear();
+
         foreach (var animationItem in _animationPlayer.GetAnimationList())
         {
             if (animationItem == "RESET" || animationItem == "TPose") continue;
@@ -792,7 +839,7 @@ public partial class SpriteGenerator : Node
     }
 
 
-    private void LoadAllMeshReplacerBtnAndMeshItemData()
+    private void LoadAllMeshReplacerButtons()
     {
 
         var allMeshReplacerOptButtons = GlobalUtil.GetAllNodesByType<MeshReplacerOptButton>(_meshReplacerPanelParentNode);
@@ -803,6 +850,7 @@ public partial class SpriteGenerator : Node
             //Connecct the signal and load items
             meshReplacerOptButton.ItemSelected += (itemIndex) => OnMeshItemSelected(itemIndex, meshReplacerOptButton);
             MeshReplacer.UpdateUIOptionMesheItemList(meshReplacerOptButton);
+            meshReplacerOptButton.Disabled = false;
 
             //Align UI display to the first item
             //TODO: Uncomment line belows to force the model to load the first item
@@ -812,6 +860,22 @@ public partial class SpriteGenerator : Node
             OnMeshItemSelected(0, meshReplacerOptButton);
         }
 
+    }
+
+    private void ClearAllMeshReplacerButtons()
+    {
+        var allMeshReplacerOptButtons = GlobalUtil.GetAllNodesByType<MeshReplacerOptButton>(_meshReplacerPanelParentNode);
+        GD.PrintT("Found " + allMeshReplacerOptButtons.Count + " MeshReplacerOptButton");
+
+        foreach (var meshReplacerOptButton in allMeshReplacerOptButtons)
+        {
+            meshReplacerOptButton.Clear();
+            meshReplacerOptButton.Disabled = true;
+        }
+        _hairMeshOptBtn.Clear();
+        _hairMeshOptBtn.Disabled = true;
+        WeaponItemMeshOptBtn.Clear();
+        WeaponItemMeshOptBtn.Disabled = true;
     }
 
     private void OnMeshItemSelected(long itemIndex, MeshReplacerOptButton meshReplacerOptButton)

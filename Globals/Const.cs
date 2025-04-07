@@ -18,6 +18,10 @@ public static class Const
     public const string MESH_REPO_FOLDER_PATH = "res://Models/MeshRepository/";
     public const string SPRITESHEET_TEMP_FOLDER_PATH = "res://Assets/SpriteSheetTemp/";
 
+    public const string LOW_POLY_MODEL_SCENE_PATH = "res://Models/FullModels/BaseModel/LowPoly/BaseModel_LowPolyScene.tscn";
+
+    public const string GODOT_PLUSH_MODEL_SCENE_PATH = "res://Models/FullModels/godot_plush/godot_plush.tscn";
+
     //Transform Data
     public enum TransformType { CAMERA_ZOOM, SCALE, POSITION, ROTATION };
     public enum TransformAxis { X, Y, Z };

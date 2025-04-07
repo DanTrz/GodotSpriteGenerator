@@ -23,11 +23,11 @@ resources_spreadsheet_view/freeze_first_column=true
 
 [application]
 
-config/name="SpriteGenerator"
+config/name="Godot Sprite Generator"
 run/main_scene="uid://ctnmr8c2k85g5"
 config/features=PackedStringArray("4.4", "C#", "Forward Plus")
 run/max_fps=90
-config/icon="res://icon.svg"
+config/icon="uid://rsd8akk828s2"
 
 [autoload]
 

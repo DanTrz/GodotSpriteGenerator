@@ -165,6 +165,7 @@ public partial class ImageEditorMainPanel : PanelContainer
             _ImgEditor.ImgTextRect.Texture = texture;
             _ImgEditor.HDTextureRect.Texture = texture;
             _ImgEditor.HDSubviewPort.Size = imageToLoad.GetSize();
+            //_ImgEditor.HDTextureRect.Size = imageToLoad.GetSize();
             // Ensure GetUniqueColorsCount is not blocking the main thread.
             //_ImgEditor.NumColors = _ImgEditor.GetUniqueColorsCount(imgToLoad).Result;
 
@@ -408,6 +409,7 @@ public partial class ImageEditorMainPanel : PanelContainer
         await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
         Texture2D texture = (Texture2D)_ImgEditor.HDSubviewPort.GetTexture();
         Image modifiedImage = (Image)texture.GetImage();
+        GD.Print("Image prepared size:" + modifiedImage.GetSize());
         await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
 
         //OPEN DIALOG TO SAVE TO A PATH

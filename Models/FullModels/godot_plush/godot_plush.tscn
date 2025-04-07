@@ -1,0 +1,62 @@
+[gd_scene load_steps=6 format=3 uid="uid://c1c2k76x0pauf"]
+
+[ext_resource type="PackedScene" uid="uid://bmt0ac3fvxqof" path="res://Models/FullModels/godot_plush/godot_plush_model.glb" id="1_5u2r4"]
+[ext_resource type="ArrayMesh" uid="uid://pfss2htxsh2u" path="res://Models/FullModels/godot_plush/Godot_Plush_mesh.tres" id="3_h46ko"]
+[ext_resource type="Material" uid="uid://buh6uaww5rtsq" path="res://Models/FullModels/godot_plush/material/godot_plush_mat.tres" id="4_kywao"]
+[ext_resource type="Material" uid="uid://do62mm8gsoljm" path="res://Models/FullModels/godot_plush/material/GodotPlush_shader_material.tres" id="5_v3ae5"]
+[ext_resource type="Material" uid="uid://c5wtc0g862by6" path="res://Models/FullModels/godot_plush/material/GodotPlush2_shader_material.tres" id="6_hlegh"]
+
+[node name="GodotPlush" instance=ExtResource("1_5u2r4")]
+
+[node name="Rig" parent="." index="0"]
+transform = Transform3D(2, 0, 0, 0, 1.96786, 0.357089, 0, -0.357089, 1.96786, 0, 0, 0)
+
+[node name="Skeleton3D" parent="Rig" index="0"]
+bones/0/rotation = Quaternion(0.995134, -0.00486597, -0.0695866, -0.0695866)
+bones/1/position = Vector3(-5.14159e-10, 0, 3.10714e-17)
+bones/1/rotation = Quaternion(1, -3.06509e-10, 8.94386e-09, 1.2049e-08)
+bones/2/rotation = Quaternion(0.000542655, -0.0428616, 0.540813, -0.84005)
+bones/3/rotation = Quaternion(0.237215, 1.5005e-07, -1.23395e-08, 0.971457)
+bones/5/rotation = Quaternion(-0.00054268, -0.0428615, 0.540813, 0.84005)
+bones/6/rotation = Quaternion(0.119222, -2.02844e-07, 3.27682e-08, 0.992868)
+bones/8/rotation = Quaternion(-0.26097, -0.00625246, -0.091285, 0.961001)
+bones/9/position = Vector3(-3.33083e-08, 0.153684, -1.23515e-08)
+bones/9/rotation = Quaternion(0.123899, -0.214617, 0.0274412, 0.968419)
+bones/10/position = Vector3(-3.4176e-09, 0.207547, -5.71803e-09)
+bones/10/rotation = Quaternion(-0.458251, -5.05235e-05, 8.52508e-05, 0.888823)
+bones/11/position = Vector3(-7.28638e-09, 0.251236, -2.03372e-08)
+bones/11/rotation = Quaternion(-0.000106263, 0.932428, -0.361356, 4.76573e-05)
+bones/12/rotation = Quaternion(-0.260995, 0.00597631, 0.0912485, 0.960999)
+bones/13/position = Vector3(-1.63072e-08, 0.153684, -3.30356e-09)
+bones/13/rotation = Quaternion(0.485043, 0.187894, -0.107585, 0.847263)
+bones/14/position = Vector3(1.86051e-09, 0.207547, -3.29986e-08)
+bones/14/rotation = Quaternion(-0.458251, 0.000165632, -2.59477e-05, 0.888823)
+bones/15/position = Vector3(-5.61806e-09, 0.251236, -3.5407e-08)
+bones/15/rotation = Quaternion(-1.85061e-05, 0.932428, -0.361356, 0.000274284)
+
+[node name="GodotPlushMesh" parent="Rig/Skeleton3D" index="0"]
+unique_name_in_owner = true
+mesh = ExtResource("3_h46ko")
+surface_material_override/0 = ExtResource("4_kywao")
+surface_material_override/1 = ExtResource("5_v3ae5")
+surface_material_override/2 = ExtResource("6_hlegh")
+
+[node name="AnimationPlayer" parent="." index="1"]
+unique_name_in_owner = true
+
+[node name="Lights" type="Node3D" parent="." index="2"]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0.473725, -0.870539, 0.133215, 0.159951, 0.233799, 0.959038, 0.537403, 3.9162, 2.69497)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Lights" index="0"]
+transform = Transform3D(1, -5.43892e-07, -2.5332e-07, 1.49012e-07, 1, 0, 1.93715e-07, 0, 1, -0.575535, 2.10936, 0.283271)
+light_energy = 2.0
+light_size = 2.0
+
+[node name="OmniLight3D3" type="OmniLight3D" parent="Lights" index="1"]
+transform = Transform3D(1, -5.43892e-07, -2.23517e-07, 1.30385e-07, 1, 0, 1.3411e-07, 0, 1, -0.308549, 0.553329, -1.48698)
+
+[node name="OmniLight3D4" type="OmniLight3D" parent="Lights" index="2"]
+transform = Transform3D(1, -5.47618e-07, -2.23517e-07, 1.37836e-07, 1, 0, 1.49012e-07, 1.49012e-08, 1, -0.773867, -0.126822, -4.27695)
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="Lights" index="3"]
+transform = Transform3D(1, -5.43892e-07, -2.23517e-07, 1.30385e-07, 1, 0, 1.3411e-07, 0, 1, -1.76282, 1.82298, -4.32562)
