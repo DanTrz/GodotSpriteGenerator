@@ -46,5 +46,9 @@ This is not a finished project, but there are some things that I would like to a
 
 
 ## License
-
 This has been released under the [MIT License](https://).
+
+
+## Credits
+* Godot Plush Character: https://github.com/gtibo/Godot-Plush-Character
+* Shader for Pixelization was based on: https://github.com/DevPoodle/yt-example-projects/tree/main/3d_pixel_art_effect
