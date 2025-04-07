@@ -18,7 +18,6 @@ Feel free to contribute, use or tweak it. This is very much under heavy developm
 * You can load external Palettes to change the colors of your Sprites and SpriteSheets
 * Comes with a Prebuilt model and dozens of animations for you to use
 * You can add your own models with your own animations (from blender or any other software). 
-* (WORK IN PROGRESS) In the coming days I will also add the Executable files to run as Standalone App in case you don't want to run in Godot Editor. 
 
 ## Getting Started
 
