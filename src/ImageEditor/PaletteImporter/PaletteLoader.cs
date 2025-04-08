@@ -84,7 +84,7 @@ public partial class PaletteLoader : MarginContainer
 
         //GlobalEvents.Instance.OnPaletteChanged.Invoke(CombinedPaletteColors);
 
-        var godotPalette = GlobalUtil.GetGodotArrayFromList(PersistPaletteColors);
+        var godotPalette = GlobalUtil.GetGodotArrayFromColorList(PersistPaletteColors);
         UpdatePaletteListGrid(godotPalette, PersistColorListGridContainer);
 
         //UpdatePaletteListGrid(CombinedPaletteColors, ExtPaletteListGridContainer);
@@ -103,7 +103,7 @@ public partial class PaletteLoader : MarginContainer
         await LoadTextFromHexFile(); // We load the result from this into currentHextFileText;
         ExternalPaletteColors = GetHexFileColors(currentHextFileText);
 
-        var godotPersistPalette = GlobalUtil.GetGodotArrayFromList(PersistPaletteColors);
+        var godotPersistPalette = GlobalUtil.GetGodotArrayFromColorList(PersistPaletteColors);
         CombinedPaletteColors = ExternalPaletteColors + godotPersistPalette;
 
         GlobalUtil.PrintActionTargetListeners(GlobalEvents.Instance.OnPaletteChanged, "Global OnPaletteChanged");

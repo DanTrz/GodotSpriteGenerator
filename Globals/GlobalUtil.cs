@@ -229,13 +229,24 @@ public static class GlobalUtil
         return Mathf.Clamp(value, min, max);
     }
 
-    public static Godot.Collections.Array<Color> GetGodotArrayFromList(List<Color> colorList)
+    public static Godot.Collections.Array<Color> GetGodotArrayFromColorList(List<Color> colorList)
     {
         //1. Convert the colorList to a Godot.Array
         Godot.Collections.Array<Color> godotArray = new();
         foreach (Color color in colorList)
         {
             godotArray.Add(color);
+        }
+        return godotArray;
+    }
+
+    public static Godot.Collections.Array GetGodotArrayFromGenericList<T>(List<T> genericList)
+    {
+        //1. Convert the colorList to a Godot.Array
+        Godot.Collections.Array godotArray = new();
+        foreach (var item in genericList)
+        {
+            godotArray.Add(item as GodotObject);
         }
         return godotArray;
     }

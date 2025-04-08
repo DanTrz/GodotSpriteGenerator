@@ -26,17 +26,17 @@ public partial class ModelPositionManager : Node
     [Export] public float CameDistance = 7.5f;
     [Export] public float CamRotationXValue = -20.0f;
 
-    [Export] public LineEdit _camXRotationLineTextEdit;
+    [Export] public LineEdit CamXRotationLineTextEdit;
 
     [Export] public LineEdit CamDistancelLineTextEdit;
 
-    [Export] public LineEdit _posXAxisLineTextEdit;
-    [Export] public LineEdit _posYAxisLineTextEdit;
-    [Export] public LineEdit _posZAxisLineTextEdit;
+    [Export] public LineEdit PosXAxisLineTextEdit;
+    [Export] public LineEdit PosYAxisLineTextEdit;
+    [Export] public LineEdit PosZAxisLineTextEdit;
 
-    [Export] public LineEdit _rotationXAxisLineTextEdit;
-    [Export] public LineEdit _rotationYAxisLineTextEdit;
-    [Export] public LineEdit _rotationZAxisLineTextEdit;
+    [Export] public LineEdit RotationXAxisLineTextEdit;
+    [Export] public LineEdit RotationYAxisLineTextEdit;
+    [Export] public LineEdit RotationZAxisLineTextEdit;
 
     public Node3D ModelNode;
     public Camera3D CameraNode;
@@ -116,10 +116,10 @@ public partial class ModelPositionManager : Node
         }
         else
         {
-            ModelNode.Position = new Vector3(float.Parse(_posXAxisLineTextEdit.Text), float.Parse(_posYAxisLineTextEdit.Text), float.Parse(_posZAxisLineTextEdit.Text));
-            ModelNode.Rotation = new Vector3(float.Parse(_rotationXAxisLineTextEdit.Text), float.Parse(_rotationYAxisLineTextEdit.Text), float.Parse(_rotationZAxisLineTextEdit.Text));
+            ModelNode.Position = new Vector3(float.Parse(PosXAxisLineTextEdit.Text), float.Parse(PosYAxisLineTextEdit.Text), float.Parse(PosZAxisLineTextEdit.Text));
+            ModelNode.Rotation = new Vector3(float.Parse(RotationXAxisLineTextEdit.Text), float.Parse(RotationYAxisLineTextEdit.Text), float.Parse(RotationZAxisLineTextEdit.Text));
             CameraNode.Size = Math.Max(float.Parse(CamDistancelLineTextEdit.Text), 1.00f);
-            CameraNode.RotationDegrees = new Vector3(float.Parse(_camXRotationLineTextEdit.Text), 0, 0);
+            CameraNode.RotationDegrees = new Vector3(float.Parse(CamXRotationLineTextEdit.Text), 0, 0);
         }
 
     }
@@ -127,31 +127,31 @@ public partial class ModelPositionManager : Node
 
     private void LoadTransformValueToUI()
     {
-        if (_posXAxisLineTextEdit == null || CamDistancelLineTextEdit == null) return;
+        if (PosXAxisLineTextEdit == null || CamDistancelLineTextEdit == null) return;
 
-        _posXAxisLineTextEdit.Text = ModelNode.Position.X.ToString("0.0");
-        _posYAxisLineTextEdit.Text = ModelNode.Position.Y.ToString("0.0");
-        _posZAxisLineTextEdit.Text = ModelNode.Position.Z.ToString("0.0");
+        PosXAxisLineTextEdit.Text = ModelNode.Position.X.ToString("0.0");
+        PosYAxisLineTextEdit.Text = ModelNode.Position.Y.ToString("0.0");
+        PosZAxisLineTextEdit.Text = ModelNode.Position.Z.ToString("0.0");
 
         CamDistancelLineTextEdit.Text = Math.Max(CameraNode.Size, 1.00f).ToString("0.0"); //CameraNode.Size.ToString("0.0");
-        _camXRotationLineTextEdit.Text = CameraNode.RotationDegrees.X.ToString("0.0");
+        CamXRotationLineTextEdit.Text = CameraNode.RotationDegrees.X.ToString("0.0");
 
-        _rotationXAxisLineTextEdit.Text = ModelNode.Rotation.X.ToString("0.0");
-        _rotationYAxisLineTextEdit.Text = ModelNode.Rotation.Y.ToString("0.0");
-        _rotationZAxisLineTextEdit.Text = ModelNode.Rotation.Z.ToString("0.0");
+        RotationXAxisLineTextEdit.Text = ModelNode.Rotation.X.ToString("0.0");
+        RotationYAxisLineTextEdit.Text = ModelNode.Rotation.Y.ToString("0.0");
+        RotationZAxisLineTextEdit.Text = ModelNode.Rotation.Z.ToString("0.0");
     }
 
     public void OnSaveData(SaveGameData newSaveGameData)
     {
         GD.PrintT("Started OnSaveData from:", this.Name);
         newSaveGameData.CameraDistance = float.Parse(CamDistancelLineTextEdit.Text);
-        newSaveGameData.CameraRotation = float.Parse(_camXRotationLineTextEdit.Text);
-        newSaveGameData.ModelPositionXAxis = float.Parse(_posXAxisLineTextEdit.Text);
-        newSaveGameData.ModelPositionYAxis = float.Parse(_posYAxisLineTextEdit.Text);
-        newSaveGameData.ModelPositionZAxis = float.Parse(_posZAxisLineTextEdit.Text);
-        newSaveGameData.ModelRotationXAxis = float.Parse(_rotationXAxisLineTextEdit.Text);
-        newSaveGameData.ModelRotationYAxis = float.Parse(_rotationYAxisLineTextEdit.Text);
-        newSaveGameData.ModelRotationZAxis = float.Parse(_rotationZAxisLineTextEdit.Text);
+        newSaveGameData.CameraRotation = float.Parse(CamXRotationLineTextEdit.Text);
+        newSaveGameData.ModelPositionXAxis = float.Parse(PosXAxisLineTextEdit.Text);
+        newSaveGameData.ModelPositionYAxis = float.Parse(PosYAxisLineTextEdit.Text);
+        newSaveGameData.ModelPositionZAxis = float.Parse(PosZAxisLineTextEdit.Text);
+        newSaveGameData.ModelRotationXAxis = float.Parse(RotationXAxisLineTextEdit.Text);
+        newSaveGameData.ModelRotationYAxis = float.Parse(RotationYAxisLineTextEdit.Text);
+        newSaveGameData.ModelRotationZAxis = float.Parse(RotationZAxisLineTextEdit.Text);
 
 
 
@@ -171,13 +171,13 @@ public partial class ModelPositionManager : Node
     {
         GD.PrintT("Started OnLoadData from:", this.Name);
         CamDistancelLineTextEdit.Text = newLoadData.CameraDistance.ToString();
-        _camXRotationLineTextEdit.Text = newLoadData.CameraRotation.ToString();
-        _posXAxisLineTextEdit.Text = newLoadData.ModelPositionXAxis.ToString();
-        _posYAxisLineTextEdit.Text = newLoadData.ModelPositionYAxis.ToString();
-        _posZAxisLineTextEdit.Text = newLoadData.ModelPositionZAxis.ToString();
-        _rotationXAxisLineTextEdit.Text = newLoadData.ModelRotationXAxis.ToString();
-        _rotationYAxisLineTextEdit.Text = newLoadData.ModelRotationYAxis.ToString();
-        _rotationZAxisLineTextEdit.Text = newLoadData.ModelRotationZAxis.ToString();
+        CamXRotationLineTextEdit.Text = newLoadData.CameraRotation.ToString();
+        PosXAxisLineTextEdit.Text = newLoadData.ModelPositionXAxis.ToString();
+        PosYAxisLineTextEdit.Text = newLoadData.ModelPositionYAxis.ToString();
+        PosZAxisLineTextEdit.Text = newLoadData.ModelPositionZAxis.ToString();
+        RotationXAxisLineTextEdit.Text = newLoadData.ModelRotationXAxis.ToString();
+        RotationYAxisLineTextEdit.Text = newLoadData.ModelRotationYAxis.ToString();
+        RotationZAxisLineTextEdit.Text = newLoadData.ModelRotationZAxis.ToString();
         SetTransformValueToModel();
     }
 

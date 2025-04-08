@@ -33,7 +33,7 @@ shader = ExtResource("5_c5mtj")
 [sub_resource type="ViewportTexture" id="ViewportTexture_c5mtj"]
 viewport_path = NodePath("RawImgPanel/ViewportContainer/ImgEditorSubViewport")
 
-[node name="ImageEditorCore" type="PanelContainer" node_paths=PackedStringArray("ImgTextRect", "ImgEditorSubViewport", "HDCanvasLayer", "HDSubViewportContainer", "HDSubviewPort", "HDTextureRect")]
+[node name="ImageEditorCore" type="PanelContainer" node_paths=PackedStringArray("ImgTextRect", "ImgEditorSubViewport", "HDCanvasLayer", "HDSubViewportContainer", "HDSubviewPort", "HDTextureRect", "HDTempBGTextureRect")]
 custom_minimum_size = Vector2(512, 512)
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
@@ -46,6 +46,7 @@ HDCanvasLayer = NodePath("HiggenHDCanvasLayer")
 HDSubViewportContainer = NodePath("HiggenHDCanvasLayer/HDPanel/HDViewportContainer")
 HDSubviewPort = NodePath("HiggenHDCanvasLayer/HDPanel/HDViewportContainer/HDSubViewport")
 HDTextureRect = NodePath("HiggenHDCanvasLayer/HDPanel/HDViewportContainer/HDSubViewport/HDTextureRect")
+HDTempBGTextureRect = NodePath("HiggenHDCanvasLayer/HDPanel/HDViewportContainer/HDSubViewport/HDTextureRect")
 
 [node name="RawImgPanel" type="PanelContainer" parent="."]
 custom_minimum_size = Vector2(800, 500)
@@ -61,7 +62,7 @@ stretch = true
 transparent_bg = true
 handle_input_locally = false
 physics_object_picking = true
-size = Vector2i(2, 2)
+size = Vector2i(800, 512)
 render_target_update_mode = 4
 
 [node name="Camera2DController" parent="RawImgPanel/ViewportContainer/ImgEditorSubViewport" instance=ExtResource("1_nwf5k")]

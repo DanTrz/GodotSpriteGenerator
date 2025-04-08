@@ -144,7 +144,7 @@ public partial class ImageEditor : PanelContainer
 
                 List<Color> updatedPaletteList = ImgkMeansClusterList;
 
-                return GlobalUtil.GetGodotArrayFromList(updatedPaletteList.Distinct().ToList());
+                return GlobalUtil.GetGodotArrayFromColorList(updatedPaletteList.Distinct().ToList());
 
             }
         }

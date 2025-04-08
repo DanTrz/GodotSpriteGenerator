@@ -16,9 +16,9 @@ public partial class SpriteGenerator : Node
     [Export] public CheckButton ShowMeshPanelCheckBtn;
     [Export] public MarginContainer MeshOptionsMarginCont;
     // [Export] public Button _startGenerationBtn;
-    [Export] public Button _startGenerationBtn;
+    [Export] public Button StartGenerationBtn;
     [Export] public Node3D MainModelScene3D;
-    [Export] public SubViewport _rawViewport;
+    [Export] public SubViewport RawViewport;
     [Export] public SubViewportContainer _rawViewportContainer;
     [Export] public SubViewport BgRemoverViewport;
     [Export] public SubViewport ImgColorReductionSubViewport;
@@ -32,8 +32,8 @@ public partial class SpriteGenerator : Node
     //[Export] public MeshInstance3D MeshShaderPixel3D;
 
     [Export] public TextureRect PixelShaderTextRect;
-    [Export] public int frameSkipStep = 4; // Control how frequently frames are captured
-    [Export] public bool _clearFolderBeforeGeneration = true;
+    [Export] public int FrameSkipStep = 4; // Control how frequently frames are captured
+    [Export] public bool ClearFolderBeforeGeneration = true;
     [Export(PropertyHint.Range, "1,4,1")] private float _animationPlaybackSpeed = 1.0f;
     [Export] public OptionButton SpriteSizeOptionButton;
     [Export] public OptionButton EffectsChoicesOptionBtn;
@@ -50,7 +50,7 @@ public partial class SpriteGenerator : Node
     [Export] public SliderValueBox DepthThresholdSlider;
 
     [Export] public HSlider DitheringStrenghtSlider;
-    [Export] public LineEdit _frameStepTextEdit;
+    [Export] public LineEdit FrameStepTextEdit;
 
 
     [Export] public OptionButton ModelTypeOptionButton;
@@ -58,19 +58,19 @@ public partial class SpriteGenerator : Node
 
     [Export] public SpinBox MaxColorPaletteSpinBox;
 
-    [Export] public LineEdit _playBackSpeedLineEdit;
-    [Export] public CheckButton _clearFolderCheckBtn;
+    [Export] public LineEdit PlayBackSpeedLineEdit;
+    [Export] public CheckButton ClearFolderCheckBtn;
     [Export] public TextureRect _pixelShaderTextRect;
-    [Export] public ModelPositionManager _modelPositionManager;
-    [Export] public Button _loadAllAnimationsBtn;
-    [Export] public ItemListCheckBox _animSelectionItemList;
-    [Export] public ItemListCheckBox _angleSelectionItemList;
-    [Export] public TextureRect _pixelGridTextRect;
-    [Export] public CheckButton _showGridCheckButton;
-    [Export] public PanelContainer _meshReplacerPanelParentNode;
-    [Export] public OptionButton _hairMeshOptBtn;
+    [Export] public ModelPositionManager ModelPositionManager;
+    [Export] public Button LoadAllAnimationsBtn;
+    [Export] public ItemListCheckBox AnimSelectionItemList;
+    [Export] public ItemListCheckBox AngleSelectionItemList;
+    [Export] public TextureRect PixelGridTextRect;
+    [Export] public CheckButton ShowGridCheckButton;
+    [Export] public PanelContainer MeshReplacerPanelParentNode;
+    [Export] public OptionButton HairMeshOptBtn;
     [Export] public OptionButton WeaponItemMeshOptBtn;
-    [Export] public ColorPickerButton _hairColorBtn;
+    [Export] public ColorPickerButton HairColorBtn;
 
 
     private Node3D _modelPivotNode;
@@ -78,7 +78,10 @@ public partial class SpriteGenerator : Node
     private Camera3D _camera;
     private AnimationPlayer _animationPlayer;
 
-    public static int _spriteResolution = 256;
+    public int SpriteSize = 256;
+    public int PixelResolution = 256;
+
+    public int[] SelectedAngles;
 
     private readonly int MaxRBGLevelsColorPalette = 24;
     private readonly int[] allAngles = { 0, 45, 90, 135, 180, 225, 270, 315 };
@@ -97,7 +100,7 @@ public partial class SpriteGenerator : Node
     public override void _Ready()
     {
         //Pixel2DTest.Pressed += () => Pixel2DShaderPanel.Visible = !Pixel2DShaderPanel.Visible;
-        _startGenerationBtn.Pressed += OnStartGeneration;
+        StartGenerationBtn.Pressed += OnStartGeneration;
         SpriteSizeOptionButton.ItemSelected += OnSpriteSizeChanged;
         PixelationLevelOptionBtn.ItemSelected += OnPixelationLevelChanged;
         EffectsChoicesOptionBtn.ItemSelected += OnEffectsChoiceItemSelected;
@@ -113,27 +116,27 @@ public partial class SpriteGenerator : Node
         DitheringStrenghtSlider.ValueChanged += OnDitheringStrenghtChanged;
 
         EnableHairMeshCheckBtn.Pressed += OnEnableHairMeshCheckBtnPressed;
-        _frameStepTextEdit.TextChanged += OnFrameStepChanged;
-        _playBackSpeedLineEdit.TextChanged += OnPlayBackSpeedChanged;
-        _clearFolderCheckBtn.Pressed += OnClearFolderPressed;
-        _loadAllAnimationsBtn.Pressed += OnLoadAllAnimationsPressed;
-        _showGridCheckButton.Pressed += OnShowGridCheckButtonPressed;
+        FrameStepTextEdit.TextChanged += OnFrameStepChanged;
+        PlayBackSpeedLineEdit.TextChanged += OnPlayBackSpeedChanged;
+        ClearFolderCheckBtn.Pressed += OnClearFolderPressed;
+        LoadAllAnimationsBtn.Pressed += OnLoadAllAnimationsPressed;
+        ShowGridCheckButton.Pressed += OnShowGridCheckButtonPressed;
         MaxColorPaletteSpinBox.ValueChanged += (value) => UpdateColorReductionShader();
         AnimMethodOptionBtn.ItemSelected += OnAnimMethodOptionBtnItemSelected;
         GenerateSpriteSheetCheckBtn.Pressed += OnGenerateSpriteSheetCheckBtnPressed;
         ShowMeshPanelCheckBtn.Pressed += () => MeshOptionsMarginCont.Visible = !ShowMeshPanelCheckBtn.ButtonPressed;
-        _hairColorBtn.ColorChanged += OnHairColorChanged;
-        _hairMeshOptBtn.ItemSelected += OnHairMeshOptBtnItemSelected;
+        HairColorBtn.ColorChanged += OnHairColorChanged;
+        HairMeshOptBtn.ItemSelected += OnHairMeshOptBtnItemSelected;
         WeaponItemMeshOptBtn.ItemSelected += OnWeaponItemMeshOptBtnItemSelected;
 
         ModelTypeOptionButton.ItemSelected += OnModelSelectedReloadModel;
 
         //Set Default UI Control Values
-        _clearFolderCheckBtn.ButtonPressed = _clearFolderBeforeGeneration;
-        _frameStepTextEdit.Text = frameSkipStep.ToString();
-        _playBackSpeedLineEdit.Text = _animationPlaybackSpeed.ToString();
-        _angleSelectionItemList.CreateItemsFromList(allAngles.Select(x => x.ToString()).ToArray());
-        _showGridCheckButton.ButtonPressed = false;
+        ClearFolderCheckBtn.ButtonPressed = ClearFolderBeforeGeneration;
+        FrameStepTextEdit.Text = FrameSkipStep.ToString();
+        PlayBackSpeedLineEdit.Text = _animationPlaybackSpeed.ToString();
+        AngleSelectionItemList.CreateItemsFromList(allAngles.Select(x => x.ToString()).ToArray());
+        ShowGridCheckButton.ButtonPressed = false;
 
         //Set Default Resolution and Shader Strenght
         SpriteSizeOptionButton.Selected = SpriteSizeOptionButton.ItemCount - 1; //Select the Last Option
@@ -155,7 +158,10 @@ public partial class SpriteGenerator : Node
 
         GlobalUtil.SaveFolderPath = ProjectSettings.GlobalizePath(Const.SAVE_GAME_PATH);
 
+
+
         //Load the objects from MainScene3D to the SpriteGenerator script
+        LoadAllAngles();
         LoadAndPrepareModelNodes();
         UpdateViewPorts();
     }
@@ -178,9 +184,9 @@ public partial class SpriteGenerator : Node
             }
 
             //Pass the Model to te PositionManager 
-            _modelPositionManager.ModelNode = _modelPivotNode;
-            _modelPositionManager.CameraNode = _camera;
-            _modelPositionManager.SetTransformValueToModel(true);
+            ModelPositionManager.ModelNode = _modelPivotNode;
+            ModelPositionManager.CameraNode = _camera;
+            ModelPositionManager.SetTransformValueToModel(true);
 
             Outline3DShaderMesh = MainModelScene3D.GetNodeOrNull<MeshInstance3D>("%Outline3DShaderMesh");
             Depthline3DShaderMesh = MainModelScene3D.GetNodeOrNull<MeshInstance3D>("%Depthline3DShaderMesh");
@@ -194,8 +200,8 @@ public partial class SpriteGenerator : Node
         if (ModelHasReplacebleParts())
         {
             //Load and add Hair and Weapon Meshes to UI Buttons
-            _hairMeshOptBtn.Disabled = false;
-            MeshReplacer.UpdateUIOptionsSceneItemList(_hairMeshOptBtn, Const.HAIR_SCENES_FOLDER_PATH);
+            HairMeshOptBtn.Disabled = false;
+            MeshReplacer.UpdateUIOptionsSceneItemList(HairMeshOptBtn, Const.HAIR_SCENES_FOLDER_PATH);
             WeaponItemMeshOptBtn.Disabled = false;
             MeshReplacer.UpdateUIOptionsSceneItemList(WeaponItemMeshOptBtn, Const.WEAPON_SCENES_FOLDER_PATH);
 
@@ -203,9 +209,9 @@ public partial class SpriteGenerator : Node
             LoadAllMeshReplacerButtons();
 
             //Set default selected values
-            _hairMeshOptBtn.Selected = 0;
+            HairMeshOptBtn.Selected = 0;
             OnHairMeshOptBtnItemSelected(0);
-            _hairColorBtn.Color = Colors.White;
+            HairColorBtn.Color = Colors.White;
         }
         else
         {
@@ -218,10 +224,12 @@ public partial class SpriteGenerator : Node
     {
         if (!GlobalUtil.HasDirectory(GlobalUtil.SaveFolderPath, this).Result) return;
 
-        int[] selectedAngles = _angleSelectionItemList.GetSelectedItems().Select(x => Convert.ToInt32(_angleSelectionItemList.
+        SelectedAngles = AngleSelectionItemList.GetSelectedItems().Select(x => Convert.ToInt32(AngleSelectionItemList.
         GetItemText(x))).ToArray();
 
-        if (selectedAngles.Length == 0)
+        // SelectedAngles = GlobalUtil.GetGodotArrayFromGenericList<int>(_angleSelectionItemList.GetSelectedItems().ToList());
+
+        if (SelectedAngles.Length == 0)
         {
             GD.PrintErr("No Angles Selected");
             return;
@@ -236,18 +244,18 @@ public partial class SpriteGenerator : Node
 
         GD.PrintT("Start Generation");
 
-        if (_clearFolderBeforeGeneration)
+        if (ClearFolderBeforeGeneration)
             ClearFolder(saveFolder);
 
-        _pixelGridTextRect.Visible = false;
+        PixelGridTextRect.Visible = false;
 
         if (IsAnimMethod)
         {
-            GenerateSpritesAnimPlayerBased(selectedAngles);
+            GenerateSpritesAnimPlayerBased(SelectedAngles);
         }
         else
         {
-            GenerateSpriteYRotationBased(selectedAngles);
+            GenerateSpriteYRotationBased(SelectedAngles);
         }
 
     }
@@ -263,7 +271,7 @@ public partial class SpriteGenerator : Node
 
     private async void GenerateSpritesAnimPlayerBased(int[] selectedAngles)
     {
-        int[] selectedAnimations = _animSelectionItemList.GetSelectedItems();
+        int[] selectedAnimations = AnimSelectionItemList.GetSelectedItems();
 
         if (selectedAngles.Length == 0)
         {
@@ -283,9 +291,9 @@ public partial class SpriteGenerator : Node
 
         _modelPivotNode.RotationDegrees = new Vector3(0, 0, 0);
 
-        foreach (var selectedAnimItem in _animSelectionItemList.GetSelectedItems())
+        foreach (var selectedAnimItem in AnimSelectionItemList.GetSelectedItems())
         {
-            string anim = _animSelectionItemList.GetItemText(selectedAnimItem);
+            string anim = AnimSelectionItemList.GetItemText(selectedAnimItem);
 
             if (anim == "RESET" || anim == "TPose") continue;
 
@@ -303,11 +311,11 @@ public partial class SpriteGenerator : Node
                 Animation animationResource = _animationPlayer.GetAnimation(anim);
 
                 float frameCount = (int)Math.Round((animationResource.Length / animationResource.Step), MidpointRounding.AwayFromZero); // Number of frames in the animation
-                int framesToRender = (int)Math.Round((frameCount / frameSkipStep), MidpointRounding.AwayFromZero);
+                int framesToRender = (int)Math.Round((frameCount / FrameSkipStep), MidpointRounding.AwayFromZero);
 
                 //(int)Math.Round(value, MidpointRounding.AwayFromZero);
 
-                GD.PrintT($"FrameBASEDv2 FLOAT = animFrames: {(animationResource.Length / animationResource.Step):0.00}, will render: {(frameCount / frameSkipStep):0.00} frames");
+                GD.PrintT($"FrameBASEDv2 FLOAT = animFrames: {(animationResource.Length / animationResource.Step):0.00}, will render: {(frameCount / FrameSkipStep):0.00} frames");
 
                 GD.PrintT($"FrameBASEDv2 INT = animFrames: {frameCount:0.00}, will render: {framesToRender:0.00} frames");
 
@@ -332,7 +340,7 @@ public partial class SpriteGenerator : Node
                     //GD.PrintT("AnimSeek to: " + currentTime);
 
                     //Only capture frames where frameIndex is a multiple of frameStep
-                    if (currentFrame % frameSkipStep == 0)
+                    if (currentFrame % FrameSkipStep == 0)
                     {
                         //OLDCODE
                         //await SaveFrameAsImgPNG(angle);
@@ -360,8 +368,8 @@ public partial class SpriteGenerator : Node
         }
         else
         {
-            _pixelGridTextRect.Visible = true;
-            _showGridCheckButton.ButtonPressed = true;
+            PixelGridTextRect.Visible = true;
+            ShowGridCheckButton.ButtonPressed = true;
         }
 
     }
@@ -372,7 +380,7 @@ public partial class SpriteGenerator : Node
         foreach (var angle in selectedAngles)
         {
             _modelPivotNode.RotationDegrees = new Vector3(0, angle, 0);
-            _modelPositionManager._rotationYAxisLineTextEdit.Text = _modelPivotNode.RotationDegrees.Y.ToString("0.0");
+            ModelPositionManager.RotationYAxisLineTextEdit.Text = _modelPivotNode.RotationDegrees.Y.ToString("0.0");
 
             //await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
             await ToSignal(RenderingServer.Singleton, RenderingServer.SignalName.FramePostDraw); //Testin
@@ -391,8 +399,8 @@ public partial class SpriteGenerator : Node
         }
         else
         {
-            _pixelGridTextRect.Visible = true;
-            _showGridCheckButton.ButtonPressed = true;
+            PixelGridTextRect.Visible = true;
+            ShowGridCheckButton.ButtonPressed = true;
         }
     }
 
@@ -454,7 +462,7 @@ public partial class SpriteGenerator : Node
 
         GD.Print("Sprite sheet saved: " + outputPath);
 
-        _pixelGridTextRect.Visible = true;
+        PixelGridTextRect.Visible = true;
     }
 
     private async Task SaveFrameAsPngImg(string animPosition, string animName, int angle)
@@ -526,26 +534,26 @@ public partial class SpriteGenerator : Node
         switch (itemSelectedIndex)
         {
             case 0:
-                _spriteResolution = 64;
+                SpriteSize = 64;
                 break;
             case 1:
-                _spriteResolution = 128;
+                SpriteSize = 128;
                 break;
             case 2:
-                _spriteResolution = 256;
+                SpriteSize = 256;
                 break;
             case 3:
-                _spriteResolution = 384;
+                SpriteSize = 384;
                 break;
             case 4:
-                _spriteResolution = 512;
+                SpriteSize = 512;
                 break;
                 // case 5:
                 //     _spriteResolution = 1024;
                 //     break;
 
         }
-        GD.PrintT("Sprite Size/Res: " + _spriteResolution);
+        GD.PrintT("Sprite Size/Res: " + SpriteSize);
 
         UpdateViewPorts();
     }
@@ -625,27 +633,26 @@ public partial class SpriteGenerator : Node
 
     private void OnPixelationLevelChanged(long itemSelectedIndex)
     {
-        int pixelShaderResolution = 0;
 
         switch (itemSelectedIndex)
         {
             case 0:
-                pixelShaderResolution = 32;
+                PixelResolution = 32;
                 break;
             case 1:
-                pixelShaderResolution = 64;
+                PixelResolution = 64;
                 break;
             case 2:
-                pixelShaderResolution = 128;
+                PixelResolution = 128;
                 break;
             case 3:
-                pixelShaderResolution = 256;
+                PixelResolution = 256;
                 break;
             case 4:
-                pixelShaderResolution = 384;
+                PixelResolution = 384;
                 break;
             case 5:
-                pixelShaderResolution = 512;
+                PixelResolution = 512;
                 break;
                 // case 6:
                 //     pixelShaderResolution = 1024;
@@ -655,7 +662,7 @@ public partial class SpriteGenerator : Node
 
         }
 
-        GD.PrintT("Effect Pixel Resolution: " + _spriteResolution);
+        GD.PrintT("Effect Pixel Resolution: " + SpriteSize);
 
         // if (MeshShaderPixel3D.Mesh.SurfaceGetMaterial(0) is ShaderMaterial shaderMaterial)
         // {
@@ -665,7 +672,7 @@ public partial class SpriteGenerator : Node
 
         if (PixelShaderTextRect.Material is ShaderMaterial shaderMaterial)
         {
-            shaderMaterial.SetShaderParameter("target_resolution", pixelShaderResolution);
+            shaderMaterial.SetShaderParameter("target_resolution", PixelResolution);
         }
         UpdateViewPorts();
     }
@@ -769,8 +776,8 @@ public partial class SpriteGenerator : Node
 
     private void UpdateViewPorts()
     {
-        Vector2I viewPortSize = new Vector2I(_spriteResolution, _spriteResolution);
-        _rawViewport.CallDeferred("set_size", viewPortSize);
+        Vector2I viewPortSize = new Vector2I(SpriteSize, SpriteSize);
+        RawViewport.CallDeferred("set_size", viewPortSize);
         _rawViewportContainer.CallDeferred("set_size", viewPortSize);
 
         BgRemoverViewport.CallDeferred("set_size", viewPortSize);
@@ -789,8 +796,8 @@ public partial class SpriteGenerator : Node
     }
     private void OnClearFolderPressed()
     {
-        _clearFolderBeforeGeneration = _clearFolderCheckBtn.ButtonPressed;
-        GD.PrintT("Clear Folder: " + _clearFolderBeforeGeneration);
+        ClearFolderBeforeGeneration = ClearFolderCheckBtn.ButtonPressed;
+        GD.PrintT("Clear Folder: " + ClearFolderBeforeGeneration);
     }
 
 
@@ -798,24 +805,24 @@ public partial class SpriteGenerator : Node
     {
         if (string.IsNullOrEmpty(newText)) return;
 
-        frameSkipStep = Convert.ToInt32(newText);
-        GD.PrintT("Frame Step: " + frameSkipStep);
+        FrameSkipStep = Convert.ToInt32(newText);
+        GD.PrintT("Frame Step: " + FrameSkipStep);
     }
 
     private void OnShowGridCheckButtonPressed()
     {
-        _pixelGridTextRect.Visible = _showGridCheckButton.ButtonPressed;
+        PixelGridTextRect.Visible = ShowGridCheckButton.ButtonPressed;
 
     }
 
     private void OnLoadAllAnimationsPressed()
     {
-        _animSelectionItemList.Clear();
+        AnimSelectionItemList.Clear();
 
         foreach (var animationItem in _animationPlayer.GetAnimationList())
         {
             if (animationItem == "RESET" || animationItem == "TPose") continue;
-            _animSelectionItemList.AddItem(animationItem, _animSelectionItemList.ICON_UNSELECTED, true);
+            AnimSelectionItemList.AddItem(animationItem, AnimSelectionItemList.ICON_UNSELECTED, true);
 
         }
     }
@@ -833,7 +840,7 @@ public partial class SpriteGenerator : Node
     private void OnHairMeshOptBtnItemSelected(long index)
     {
         BoneAttachment3D _hairBoneAttachNode = _characterModelObject.GetNode<BoneAttachment3D>("%HairBoneAttach");
-        string itemSelected = _hairMeshOptBtn.GetItemText((int)index);
+        string itemSelected = HairMeshOptBtn.GetItemText((int)index);
         MeshReplacer.UpdateMeshScene(_hairBoneAttachNode, Const.HAIR_SCENES_FOLDER_PATH + itemSelected + ".tscn");
     }
 
@@ -849,7 +856,7 @@ public partial class SpriteGenerator : Node
     private void LoadAllMeshReplacerButtons()
     {
 
-        var allMeshReplacerOptButtons = GlobalUtil.GetAllNodesByType<MeshReplacerOptButton>(_meshReplacerPanelParentNode);
+        var allMeshReplacerOptButtons = GlobalUtil.GetAllNodesByType<MeshReplacerOptButton>(MeshReplacerPanelParentNode);
         GD.PrintT("Found " + allMeshReplacerOptButtons.Count + " MeshReplacerOptButton");
 
         foreach (var meshReplacerOptButton in allMeshReplacerOptButtons)
@@ -871,7 +878,7 @@ public partial class SpriteGenerator : Node
 
     private void ClearAllMeshReplacerButtons()
     {
-        var allMeshReplacerOptButtons = GlobalUtil.GetAllNodesByType<MeshReplacerOptButton>(_meshReplacerPanelParentNode);
+        var allMeshReplacerOptButtons = GlobalUtil.GetAllNodesByType<MeshReplacerOptButton>(MeshReplacerPanelParentNode);
         GD.PrintT("Found " + allMeshReplacerOptButtons.Count + " MeshReplacerOptButton");
 
         foreach (var meshReplacerOptButton in allMeshReplacerOptButtons)
@@ -879,8 +886,8 @@ public partial class SpriteGenerator : Node
             meshReplacerOptButton.Clear();
             meshReplacerOptButton.Disabled = true;
         }
-        _hairMeshOptBtn.Clear();
-        _hairMeshOptBtn.Disabled = true;
+        HairMeshOptBtn.Clear();
+        HairMeshOptBtn.Disabled = true;
         WeaponItemMeshOptBtn.Clear();
         WeaponItemMeshOptBtn.Disabled = true;
     }
@@ -931,45 +938,50 @@ public partial class SpriteGenerator : Node
 
     //Change the Mesh base based on the MeshReplacaeOpt button selection (Connected signal)
 
+    public void LoadAllAngles(int[] selectedAngleIndex = null)
+    {
+        AngleSelectionItemList.Clear();
 
+        foreach (int angle in allAngles)
+        {
+            AngleSelectionItemList.AddItem(angle.ToString(), AngleSelectionItemList.ICON_UNSELECTED, true);
+        }
+
+        if (selectedAngleIndex == null) return;
+
+        foreach (int selectedAngle in selectedAngleIndex)
+        {
+            AngleSelectionItemList.Select(selectedAngle);
+            AngleSelectionItemList.SetItemIcon(selectedAngle, AngleSelectionItemList.ICON_SELECTED);
+        }
+    }
 
     public void OnSaveData(SaveGameData newSaveGameData)
     {
         GD.PrintT("Started OnSaveData from:", this.Name);
         //nodeSaveData.Add(_spriteResolution);
-        newSaveGameData.SpriteResolution = _spriteResolution;
-        newSaveGameData.SpriteResolutionOptBtn = SpriteSizeOptionButton.Selected;
-        newSaveGameData.FrameSkipStep = frameSkipStep;
-        //newSaveGameData.ShowPixelEffect = _pixelEffectCheckBtn.ButtonPressed;
-        newSaveGameData.PixelEffectLevel = PixelationLevelOptionBtn.Selected;
-        newSaveGameData.PlaybackSpeed = _animationPlaybackSpeed;
-        newSaveGameData.ShowGrid = _showGridCheckButton.ButtonPressed;
+        // newSaveGameData.SpriteSize = SpriteSize;
+        // newSaveGameData.EffectOptionSelected = SpriteSizeOptionButton.Selected;
+        // newSaveGameData.FrameSkipStep = frameSkipStep;
+        // //newSaveGameData.ShowPixelEffect = _pixelEffectCheckBtn.ButtonPressed;
+        // newSaveGameData.PixelResolution = PixelationLevelOptionBtn.Selected;
+        // newSaveGameData.PlaybackSpeed = _animationPlaybackSpeed;
+        // newSaveGameData.ShowGrid = _showGridCheckButton.ButtonPressed;
     }
 
     public void OnLoadData(SaveGameData newLoadData)
     {
         GD.PrintT("Started OnLoadData from:", this.Name);
-        _spriteResolution = newLoadData.SpriteResolution;
-        SpriteSizeOptionButton.Selected = newLoadData.SpriteResolutionOptBtn;
-        frameSkipStep = newLoadData.FrameSkipStep;
-        _frameStepTextEdit.Text = frameSkipStep.ToString();
-        //_pixelEffectCheckBtn.ButtonPressed = newLoadData.ShowPixelEffect;
-        PixelationLevelOptionBtn.Selected = newLoadData.PixelEffectLevel;
-        _animationPlaybackSpeed = newLoadData.PlaybackSpeed;
-        _playBackSpeedLineEdit.Text = _animationPlaybackSpeed.ToString();
-        _showGridCheckButton.ButtonPressed = newLoadData.ShowGrid;
+
 
         UpdateViewPorts();
-        OnSpriteSizeChanged(newLoadData.SpriteResolutionOptBtn);
-        OnPixelationLevelChanged(newLoadData.PixelEffectLevel);
-        OnPlayBackSpeedChanged(newLoadData.PlaybackSpeed.ToString());
+        //OnPlayBackSpeedChanged(newLoadData.PlaybackSpeed.ToString());
         OnFrameStepChanged(newLoadData.FrameSkipStep.ToString());
         OnShowGridCheckButtonPressed();
-
-        //EffectsChoicesOptionBtn.Selected = newLoadData.EffectsChoicesOptionBtn;
         OnEffectsChoiceItemSelected(EffectsChoicesOptionBtn.Selected);
-        //OnPixelEffectPressed();
+        OnPixelationLevelChanged(newLoadData.PixelResolutionButtonSelected);
+        OnSpriteSizeChanged(newLoadData.SpriteSizeOptionButtonSelected);
 
-        //_settingsMainPanel.Visible = false;
+        ModelPositionManager.SetTransformValueToModel();
     }
 }

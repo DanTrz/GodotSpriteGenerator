@@ -34,7 +34,7 @@ region = Rect2(243, 36, 10, 9)
 atlas = SubResource("CompressedTexture2D_mumiu")
 region = Rect2(243, 52, 10, 9)
 
-[node name="ModelPositionManager" type="PanelContainer" node_paths=PackedStringArray("_camXRotationLineTextEdit", "CamDistancelLineTextEdit", "_posXAxisLineTextEdit", "_posYAxisLineTextEdit", "_posZAxisLineTextEdit", "_rotationXAxisLineTextEdit", "_rotationYAxisLineTextEdit", "_rotationZAxisLineTextEdit") groups=["save_data"]]
+[node name="ModelPositionManager" type="PanelContainer" node_paths=PackedStringArray("CamXRotationLineTextEdit", "CamDistancelLineTextEdit", "PosXAxisLineTextEdit", "PosYAxisLineTextEdit", "PosZAxisLineTextEdit", "RotationXAxisLineTextEdit", "RotationYAxisLineTextEdit", "RotationZAxisLineTextEdit") groups=["save_data"]]
 clip_contents = true
 custom_minimum_size = Vector2(100, 50)
 offset_right = 502.0
@@ -42,14 +42,14 @@ offset_bottom = 108.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 script = ExtResource("1_8mvjs")
-_camXRotationLineTextEdit = NodePath("MarginContainer/HBoxContainer/VBoxContainer/CamTransfNodeGroup/CamXRotationLineTextEdit")
+CamXRotationLineTextEdit = NodePath("MarginContainer/HBoxContainer/VBoxContainer/CamTransfNodeGroup/CamXRotationLineTextEdit")
 CamDistancelLineTextEdit = NodePath("MarginContainer/HBoxContainer/VBoxContainer/CamTransfNodeGroup/CamDistancelLineTextEdit")
-_posXAxisLineTextEdit = NodePath("MarginContainer/HBoxContainer/VBoxContainer/PositionTransfNodeGroup/PosiXAxisLineTextEdit")
-_posYAxisLineTextEdit = NodePath("MarginContainer/HBoxContainer/VBoxContainer/PositionTransfNodeGroup/PosYAxisLineTextEdit")
-_posZAxisLineTextEdit = NodePath("MarginContainer/HBoxContainer/VBoxContainer/PositionTransfNodeGroup/PosZAxisLineTextEdit")
-_rotationXAxisLineTextEdit = NodePath("MarginContainer/HBoxContainer/VBoxContainer/RotationTransfNodeGroup/RotationXAxisLineTextEdit")
-_rotationYAxisLineTextEdit = NodePath("MarginContainer/HBoxContainer/VBoxContainer/RotationTransfNodeGroup/RotationYAxisLineTextEdit")
-_rotationZAxisLineTextEdit = NodePath("MarginContainer/HBoxContainer/VBoxContainer/RotationTransfNodeGroup/RotationZAxisLineTextEdit")
+PosXAxisLineTextEdit = NodePath("MarginContainer/HBoxContainer/VBoxContainer/PositionTransfNodeGroup/PosiXAxisLineTextEdit")
+PosYAxisLineTextEdit = NodePath("MarginContainer/HBoxContainer/VBoxContainer/PositionTransfNodeGroup/PosYAxisLineTextEdit")
+PosZAxisLineTextEdit = NodePath("MarginContainer/HBoxContainer/VBoxContainer/PositionTransfNodeGroup/PosZAxisLineTextEdit")
+RotationXAxisLineTextEdit = NodePath("MarginContainer/HBoxContainer/VBoxContainer/RotationTransfNodeGroup/RotationXAxisLineTextEdit")
+RotationYAxisLineTextEdit = NodePath("MarginContainer/HBoxContainer/VBoxContainer/RotationTransfNodeGroup/RotationYAxisLineTextEdit")
+RotationZAxisLineTextEdit = NodePath("MarginContainer/HBoxContainer/VBoxContainer/RotationTransfNodeGroup/RotationZAxisLineTextEdit")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
