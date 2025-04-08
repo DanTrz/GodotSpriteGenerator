@@ -28,7 +28,7 @@ public partial class MainInterfaceUI : Node
         _spriteGenFolderPathLineEdit.TextChanged += (newDir) => GlobalUtil.OnFolderSelected(newDir, _spriteGenFolderPathLineEdit);
         _selectFolderPathBtn.Pressed += OnSelectFolderPathPressed;
         _openFolderPathBtn.Pressed += OnOpenFolderPathPressed;
-        _openSettingPanelBtn.Pressed += () => _settingsMainPanel.Visible = !_settingsMainPanel.Visible;
+        _openSettingPanelBtn.Pressed += OnOpenSettingsPanelBtnPressed;
         _settingsMainPanel.Visible = false;
         _spriteGenFolderPathLineEdit.Text = GlobalUtil.SaveFolderPath;
 
@@ -36,6 +36,13 @@ public partial class MainInterfaceUI : Node
         _spriteGenFolderPathLineEdit.Text = GlobalUtil.SaveFolderPath;
 
     }
+
+    private void OnOpenSettingsPanelBtnPressed()
+    {
+        _settingsMainPanel.Visible = !_settingsMainPanel.Visible;
+        _openSettingPanelBtn.Text = _settingsMainPanel.Visible ? "Close Settings" : "Main Settings";
+    }
+
 
     private async void OnLoadConfigBtnPressed()
     {
