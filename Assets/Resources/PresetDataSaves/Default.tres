@@ -1,6 +1,6 @@
-[gd_resource type="Resource" script_class="SaveGameData" load_steps=2 format=3]
+[gd_resource type="Resource" script_class="SaveGameData" load_steps=2 format=3 uid="uid://casa0df2uvmdu"]
 
-[ext_resource type="Script" path="res://Globals/SaveGameManager/SaveGameData.cs" id="1_7tswc"]
+[ext_resource type="Script" uid="uid://bgd3occamb4ig" path="res://Globals/SaveGameManager/SaveGameData.cs" id="1_7tswc"]
 
 [resource]
 script = ExtResource("1_7tswc")

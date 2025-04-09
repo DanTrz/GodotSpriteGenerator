@@ -5,7 +5,7 @@ public static class Const
     public const string MOUSE_RIGHT_CLICK = "MouseRightClick";
 
     public static readonly string RES_ROOT_FOLDER_PATH = ProjectSettings.GlobalizePath("res://");
-    public static readonly string RES_TEMPSAVE_FOLDER_PATH = ProjectSettings.GlobalizePath("res://SpriteSheets");
+    public static readonly string RES_TEMPSAVE_FOLDER_PATH = ProjectSettings.GlobalizePath("res://Assets/Resources/TempResources/");
     public static readonly string USER_ROOT_FOLDER_PATH = ProjectSettings.GlobalizePath("user://");
 
     // Mesh Data

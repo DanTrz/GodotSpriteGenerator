@@ -84,8 +84,11 @@ public partial class ImageEditorMainPanel : PanelContainer
         GlobalEvents.Instance.OnEffectsChangesStarted += OnEffectsChangesStarted;
         GlobalEvents.Instance.OnEffectsChangesEnded += OnEffectsChangesEnded;
         GlobalEvents.Instance.OnForcedPaletteSize += (value) => PaletteSizeMaxValueLbl.Text = value.ToString();
+        GlobalEvents.Instance.OnSpriteSheetCreated += async (image) => await LoadTextureFromImg(image);
+
         //UseExternalPaletteChkBtn.Toggled += OnUseExternalPaletteBtnToggled;
         _resetImgCorrectionBtn.Pressed += OnResetImgCorrectionBtnPressed;
+
 
 
         //PaletteLoaderPanel.Visible = false;
@@ -121,18 +124,23 @@ public partial class ImageEditorMainPanel : PanelContainer
         fileDialog.PopupCentered();
         await ToSignal(fileDialog, FileDialog.SignalName.FileSelected);
         string selectedFiled = fileDialog.CurrentDir + "/" + fileDialog.CurrentFile;
-        await LoadTextureFromImgFile(selectedFiled);
-
-        SetImgEditorValues();
-        UpdateUIElementsOnLoad();
-
+        await LoadTextureFromImg(selectedFiled);
     }
 
-    public async Task LoadTextureFromImgFile(string path)
+    public async Task LoadTextureFromImg(string path)
     {
-        //NEW CODE - TRYING TO SET HIGH QUALITY IMPORT TEXTURE AND IMG
         Image imgToLoad = Image.LoadFromFile(path);
+        await ProcessImageAndReloadViewPorts(imgToLoad);
+    }
 
+    public async Task LoadTextureFromImg(Image imageToLoad)
+    {
+        Image imgToLoad = imageToLoad;
+        await ProcessImageAndReloadViewPorts(imgToLoad);
+    }
+
+    private async Task ProcessImageAndReloadViewPorts(Image imgToLoad)
+    {
         if (imgToLoad.IsCompressed())
         {
             // Decompress if necessary (it shouldn't be compressed if it's a PNG/JPG/etc.,
@@ -153,7 +161,8 @@ public partial class ImageEditorMainPanel : PanelContainer
 
         // Create the ImageTexture and update ViewPorts
         UpdateViewPortTextures(imgToLoad);
-
+        SetImgEditorValues();
+        UpdateUIElementsOnLoad();
     }
 
     public void UpdateViewPortTextures(Image imageToLoad)

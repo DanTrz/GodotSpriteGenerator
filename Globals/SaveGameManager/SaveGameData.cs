@@ -8,6 +8,7 @@ public partial class SaveGameData : Resource
     //SPRITE GENERATOR VARIABLES AND CONFIG pixelShaderResolution //SpriteSize
     [Export] public string SaveFileName { get; set; }
 
+    [Export] public bool CreateSpriteSheet { get; set; }
     [Export] public int SpriteSize { get; set; }
     [Export] public int SpriteSizeOptionButtonSelected { get; set; }
     [Export] public int PixelResolution { get; set; }
@@ -64,6 +65,7 @@ public partial class SaveGameData : Resource
     //Used by SAVEGAMEMANAGER to Save Data for a new SaveGame file
     public void GetSaveGameDataFromNodes(SpriteGenerator SpriteGenParentNode, ImageEditorMainPanel ImgEditorParentNode)
     {
+        CreateSpriteSheet = SpriteGenParentNode.GenerateSpriteSheetCheckBtn.ButtonPressed;
         SpriteSize = SpriteGenParentNode.SpriteSize;
         SpriteSizeOptionButtonSelected = SpriteGenParentNode.SpriteSizeOptionButton.Selected;
         PixelResolution = SpriteGenParentNode.PixelResolution;
@@ -80,7 +82,7 @@ public partial class SaveGameData : Resource
         AnimationAngles = SpriteGenParentNode.AngleSelectionItemList.GetSelectedItems();
         FrameSkipStep = SpriteGenParentNode.FrameSkipStep;
 
-        //MoveSpriteSheet = SpriteGenParentNode.FrameSkipStep;
+        MoveSpriteSheet = SpriteGenParentNode.MoveSpriteSheetCheckButton.ButtonPressed;
         RGBLevels = (float)SpriteGenParentNode.MaxColorPaletteSpinBox.Value;
         DitheringValue = (float)SpriteGenParentNode.DitheringStrenghtSlider.Value;
         ShowGrid = SpriteGenParentNode.ShowGridCheckButton.ButtonPressed;
@@ -119,6 +121,9 @@ public partial class SaveGameData : Resource
     public void LoadSaveGameDataToNodes(SaveGameData saveGameDataToLoad, SpriteGenerator SpriteGenParentNode, ImageEditorMainPanel ImgEditorParentNode)
     {
         {
+
+            SpriteGenParentNode.GenerateSpriteSheetCheckBtn.ButtonPressed = saveGameDataToLoad.CreateSpriteSheet;
+            SpriteGenParentNode.GenerateSpriteSheetCheckBtn.Text = saveGameDataToLoad.CreateSpriteSheet.ToString();
             SpriteGenParentNode.SpriteSize = saveGameDataToLoad.SpriteSize;
             SpriteGenParentNode.PixelResolution = saveGameDataToLoad.PixelResolution;
             SpriteGenParentNode.SpriteSizeOptionButton.Selected = saveGameDataToLoad.SpriteSizeOptionButtonSelected;
@@ -135,12 +140,16 @@ public partial class SaveGameData : Resource
             SpriteGenParentNode.LoadAllAngles(saveGameDataToLoad.AnimationAngles);
 
             SpriteGenParentNode.FrameSkipStep = saveGameDataToLoad.FrameSkipStep;
+            SpriteGenParentNode.MoveSpriteSheetCheckButton.ButtonPressed = saveGameDataToLoad.MoveSpriteSheet;
+            SpriteGenParentNode.MoveSpriteSheetCheckButton.Text = saveGameDataToLoad.MoveSpriteSheet.ToString();
             SpriteGenParentNode.FrameStepTextEdit.Text = saveGameDataToLoad.FrameSkipStep.ToString();
 
             //MoveSpriteSheet = SpriteGenParentNode.FrameSkipStep;
             SpriteGenParentNode.MaxColorPaletteSpinBox.Value = saveGameDataToLoad.RGBLevels;
             SpriteGenParentNode.DitheringStrenghtSlider.Value = saveGameDataToLoad.DitheringValue;
             SpriteGenParentNode.ShowGridCheckButton.ButtonPressed = saveGameDataToLoad.ShowGrid;
+            SpriteGenParentNode.ShowGridCheckButton.Text = saveGameDataToLoad.ShowGrid.ToString();
+
             SpriteGenParentNode.AnimMethodOptionBtn.Selected = saveGameDataToLoad.AnimationMethodSelected;
 
             //MODEL POSITION MANAGER VARIABLES AND CONFIG

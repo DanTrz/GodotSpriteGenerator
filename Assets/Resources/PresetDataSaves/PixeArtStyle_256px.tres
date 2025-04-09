@@ -1,6 +1,6 @@
-[gd_resource type="Resource" script_class="SaveGameData" load_steps=2 format=3]
+[gd_resource type="Resource" script_class="SaveGameData" load_steps=2 format=3 uid="uid://cborud2s6s10u"]
 
-[ext_resource type="Script" path="res://Globals/SaveGameManager/SaveGameData.cs" id="1_bdstd"]
+[ext_resource type="Script" uid="uid://bgd3occamb4ig" path="res://Globals/SaveGameManager/SaveGameData.cs" id="1_bdstd"]
 
 [resource]
 script = ExtResource("1_bdstd")
@@ -19,7 +19,7 @@ DepthLineThresholdValue = 2.0
 DepthLine3DColor = Color(0, 0, 0, 1)
 AnimationAngles = PackedInt32Array()
 FrameSkipStep = 4
-MoveSpriteSheet = false
+MoveSpriteSheet = true
 RGBLevels = 20.0
 DitheringValue = 0.2
 ShowGrid = false

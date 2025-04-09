@@ -32,6 +32,7 @@ public partial class SpriteGenerator : Node
     //[Export] public MeshInstance3D MeshShaderPixel3D;
 
     [Export] public TextureRect PixelShaderTextRect;
+    [Export] public BoolCheckButton MoveSpriteSheetCheckButton;
     [Export] public int FrameSkipStep = 4; // Control how frequently frames are captured
     [Export] public bool ClearFolderBeforeGeneration = true;
     [Export(PropertyHint.Range, "1,4,1")] private float _animationPlaybackSpeed = 1.0f;
@@ -54,6 +55,7 @@ public partial class SpriteGenerator : Node
 
 
     [Export] public OptionButton ModelTypeOptionButton;
+    [Export] public Button LoadExternalModelBtn;
     [Export] public CheckButton EnableHairMeshCheckBtn;
 
     [Export] public SpinBox MaxColorPaletteSpinBox;
@@ -129,7 +131,8 @@ public partial class SpriteGenerator : Node
         HairMeshOptBtn.ItemSelected += OnHairMeshOptBtnItemSelected;
         WeaponItemMeshOptBtn.ItemSelected += OnWeaponItemMeshOptBtnItemSelected;
 
-        ModelTypeOptionButton.ItemSelected += OnModelSelectedReloadModel;
+        ModelTypeOptionButton.ItemSelected += OnModelTypeSelected;
+        LoadExternalModelBtn.Pressed += OnLoadExternalModelBtnPressed;
 
         //Set Default UI Control Values
         ClearFolderCheckBtn.ButtonPressed = ClearFolderBeforeGeneration;
@@ -151,6 +154,7 @@ public partial class SpriteGenerator : Node
         Outline3DValueSlider.Value = 0.0f;
         AnimMethodOptionBtn.Selected = 0;
         IsGenSpriteSheetOn = false;
+        LoadExternalModelBtn.Visible = false;
 
         MaxColorPaletteSpinBox.MaxValue = MaxRBGLevelsColorPalette;
         MaxColorPaletteSpinBox.Value = MaxRBGLevelsColorPalette;
@@ -463,6 +467,16 @@ public partial class SpriteGenerator : Node
         GD.Print("Sprite sheet saved: " + outputPath);
 
         PixelGridTextRect.Visible = true;
+
+        if (MoveSpriteSheetCheckButton.ButtonPressed == true)
+        {
+            MoveSpriteSheetToImgEditor(spriteSheet);
+        }
+    }
+
+    private void MoveSpriteSheetToImgEditor(Image imageToMove)
+    {
+        GlobalEvents.Instance.OnSpriteSheetCreated?.Invoke(imageToMove);
     }
 
     private async Task SaveFrameAsPngImg(string animPosition, string animName, int angle)
@@ -559,24 +573,72 @@ public partial class SpriteGenerator : Node
     }
 
 
-    private void OnModelSelectedReloadModel(long itemSelected)
+    private void OnModelTypeSelected(long itemSelected)
     {
         switch (itemSelected)
         {
             case 0: //Voxel LowPoly Model
                 LoadModel(Const.LOW_POLY_MODEL_SCENE_PATH);
+                LoadExternalModelBtn.Visible = false;
                 break;
             case 1: //Godot Plush (Example)
                 LoadModel(Const.GODOT_PLUSH_MODEL_SCENE_PATH);
+                LoadExternalModelBtn.Visible = false;
                 break;
             case 2: //Custom model //TODO: Not implemented yet Custom Model import
+                LoadExternalModelBtn.Visible = true;
                 break;
         }
     }
-    private void LoadModel(string modelScenePath)
+
+    private async void OnLoadExternalModelBtnPressed()
     {
-        PackedScene newModelScene = GD.Load<PackedScene>(modelScenePath);
-        var newModelInstance = newModelScene.Instantiate<Node3D>();
+        await SelectExternalGLTFModel();
+    }
+
+    private async Task SelectExternalGLTFModel()
+    {
+        var dialog = new FileDialog();
+
+        using Godot.FileDialog fileDialog = new Godot.FileDialog
+        {
+            FileMode = FileDialog.FileModeEnum.OpenFile,
+            Filters = new string[] { "*.gltf, *.glb ; GLTF File" },
+            Access = FileDialog.AccessEnum.Filesystem
+        };
+
+        AddChild(fileDialog);
+
+        fileDialog.CurrentDir = ProjectSettings.GlobalizePath(Const.USER_ROOT_FOLDER_PATH);
+
+        await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+
+        fileDialog.PopupCentered();
+
+        await ToSignal(fileDialog, FileDialog.SignalName.FileSelected);
+
+        string fullFilePath = fileDialog.CurrentDir + "/" + fileDialog.CurrentFile;
+
+        LoadModel(fullFilePath, true);
+
+        RemoveChild(fileDialog);
+
+
+
+        // dialog.Mode = FileDialog.ModeEnum.OpenFile;
+        // dialog.Access = FileDialog.AccessEnum.Filesystem;
+        // dialog.CurrentDir = GlobalUtil.SaveFolderPath; //Set this after adding Child to Scene
+        // dialog.CurrentFile = "";
+        // dialog.PopupCentered();
+        // dialog.Connect("file_selected", this, nameof(OnFileSelected));
+        // AddChild(dialog);
+
+    }
+
+    private void LoadModel(string modelScenePath, bool isExternalModel = false)
+    {
+
+        //first we remove the current loaded scene from the PivotParentNode
         var loadedModelScene = _modelPivotNode.GetChild(0);
 
         if (loadedModelScene != null)
@@ -585,7 +647,18 @@ public partial class SpriteGenerator : Node
             loadedModelScene.QueueFree();
         }
 
-        _modelPivotNode.AddChild(newModelInstance);
+        //Second: We load the new scene anad handle logic if External or BuiltInmodels
+        if (isExternalModel)
+        {
+            //The LoadExternalGLTF function will take care of Adding it as child, etc. 
+            GLTFLoader.LoadExternalGLTF(modelScenePath, _modelPivotNode);
+        }
+        else
+        {
+            PackedScene newModelScene = GD.Load<PackedScene>(modelScenePath);
+            Node3D newModelInstance = newModelScene.Instantiate<Node3D>();
+            _modelPivotNode.AddChild(newModelInstance);
+        }
 
         LoadAndPrepareModelNodes();
     }
