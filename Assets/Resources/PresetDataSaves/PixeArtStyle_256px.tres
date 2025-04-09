@@ -1,0 +1,45 @@
+[gd_resource type="Resource" script_class="SaveGameData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Globals/SaveGameManager/SaveGameData.cs" id="1_bdstd"]
+
+[resource]
+script = ExtResource("1_bdstd")
+SaveFileName = "C:/Users/danie/AppData/Roaming/Godot/app_userdata/Godot Sprite Generator/PixeArtStyle_256px.tres"
+SpriteSize = 256
+SpriteSizeOptionButtonSelected = 2
+PixelResolution = 256
+PixelResolutionButtonSelected = 3
+EffectOptionSelected = 1
+Outline3DValue = 2.0
+Outline3DBlendValue = 0.9
+Outline3DColor = Color(0, 0, 0, 1)
+DepthLine3DValue = 2.0
+DepthLine3DBlendValue = 0.75
+DepthLineThresholdValue = 2.0
+DepthLine3DColor = Color(0, 0, 0, 1)
+AnimationAngles = PackedInt32Array()
+FrameSkipStep = 4
+MoveSpriteSheet = false
+RGBLevels = 20.0
+DitheringValue = 0.2
+ShowGrid = false
+AnimationMethodSelected = 0
+CameraDistance = 7.5
+CameraRotation = -20.0
+ModelPositionXAxis = 0.0
+ModelPositionYAxis = -4.0
+ModelPositionZAxis = 0.0
+ModelRotationXAxis = 0.0
+ModelRotationYAxis = 0.0
+ModelRotationZAxis = 0.0
+SaturationValue = 1.15
+BrightnessValue = -0.05
+ContrastValue = 1.15
+Outline2DValue = 0.0
+Outline2DColor = Color(0, 0, 0, 1)
+Inline2DValue = 0.0
+Inline2DColor = Color(0, 0, 0, 1)
+ColorReductionIsOn = false
+ColorReducNumColors = 35.0
+UseExternalPalette = false
+ExternalPalette = Array[Color]([Color(0.730077, 0.414623, 0.262587, 1), Color(0.814711, 0.733887, 0.671308, 1), Color(0.278702, 0.502566, 0.733684, 1), Color(0.623305, 0.364652, 0.24707, 1), Color(0.384578, 0.211848, 0.152872, 1), Color(0.133314, 0.360774, 0.627683, 1), Color(0.858824, 0.835343, 0.815788, 1), Color(0.760794, 0.647202, 0.576406, 1), Color(0.580321, 0.160823, 0.035293, 1), Color(0.772474, 0.419547, 0.0862948, 1), Color(0.21173, 0.133319, 0.105865, 1), Color(0.533282, 0.243161, 0.141187, 1), Color(0.0509773, 0.0352971, 0.0313721, 1), Color(0.145106, 0.0784414, 0.0509788, 1), Color(0.705979, 0.737299, 0.745116, 1), Color(0.380374, 0.211757, 0.152952, 1), Color(0.803809, 0.788166, 0.772483, 1), Color(0.0627442, 0.21568, 0.439247, 1), Color(0.894144, 0.894144, 0.894144, 1), Color(0.607872, 0.639172, 0.647011, 1), Color(0.51763, 0.549057, 0.552966, 1), Color(0.705879, 0.568607, 0.482361, 1), Color(0.701922, 0.494135, 0.384302, 1), Color(0.317635, 0.435301, 0.454922, 1), Color(0.372556, 0.698017, 0.79608, 1), Color(0.705891, 0.564699, 0.482336, 1), Color(0.376466, 0.607818, 0.741192, 1), Color(0.498044, 0.333331, 0.243134, 1), Color(0.537248, 0.447062, 0.392152, 1), Color(0.156862, 0.317645, 0.372548, 1), Color(0.701964, 0.494113, 0.38039, 1), Color(0.152941, 0.188234, 0.231371, 1), Color(0.356861, 0.301961, 0.274511, 1), Color(0.341176, 0.129412, 0.0784313, 1), Color(0.811764, 0.596079, 0.341176, 1)])

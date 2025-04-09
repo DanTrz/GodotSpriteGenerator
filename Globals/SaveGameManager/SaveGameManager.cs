@@ -22,7 +22,7 @@ public partial class SaveGameManager : Node
 
 
         GD.Print("SaveGamedata started");
-        UpdateReferenceParentNodes();
+        if (!UpdatedParentNodesSucceeded()) return;
 
         SaveGameData newSaveGameData = new();
 
@@ -43,9 +43,9 @@ public partial class SaveGameManager : Node
 
     }
 
-    public async Task LoadGameData(string fullLoadFilePath)
+    public async Task LoadGameDataFromPath(string fullLoadFilePath)
     {
-        UpdateReferenceParentNodes();
+        if (!UpdatedParentNodesSucceeded()) return;
 
         GD.Print("LoadGamedata started");
         SaveGameData newLoadSaveGameData = new();
@@ -68,10 +68,9 @@ public partial class SaveGameManager : Node
         GD.PrintT("LoadGamedata Loaded: " + newLoadSaveGameData.SaveFileName);
     }
 
-    private void UpdateReferenceParentNodes()
+    private bool UpdatedParentNodesSucceeded()
     {
         var mainUI = GetTree().Root.GetNodeOrNull("MainInterfaceUI/MainUI");
-        var mainUI2 = GetTree().Root.GetNodeOrNull("%MainUI");
 
         SpriteGenParentNode = mainUI.GetNodeOrNull<SpriteGenerator>("%SpriteGenerator");
         ImgEditorParentNode = mainUI.GetNodeOrNull<ImageEditorMainPanel>("%ImageEditor");
@@ -79,8 +78,10 @@ public partial class SaveGameManager : Node
         if (ImgEditorParentNode == null || SpriteGenParentNode == null)
         {
             GD.PrintErr("SpriteGenParentNode or ImgEditorParentNode is null");
-            return;
+            return false;
         }
+
+        return true;
 
     }
 

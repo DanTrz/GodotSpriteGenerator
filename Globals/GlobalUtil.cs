@@ -292,7 +292,7 @@ public static class GlobalUtil
         return nodesFound;
     }
 
-    public static List<T> GetResourcesByType<T>(string resourceDirPath) where T : Resource
+    public static List<T> GetAndLoadResourcesByType<T>(string resourceDirPath) where T : Resource
     {
         var allResourceFiles = ResourceLoader.ListDirectory(resourceDirPath);
         List<T> resourceList = new List<T>();
@@ -312,6 +312,53 @@ public static class GlobalUtil
         }
 
         return resourceList;
+    }
+
+    public static List<T> GetResourceByNameFromList<T>(string itemResName, List<T> resourcceList) where T : Resource
+    {
+        var resourceItem = resourcceList.Where(item => item.ResourceName == itemResName).FirstOrDefault();
+
+        if (resourceItem != null)
+        {
+            return resourceItem as GodotObject as List<T>;
+        }
+
+        return null;
+    }
+
+    public static List<T> GetAllResourcesByTypeFromDisk<T>(string resourceDirPath, T resourceType) where T : Resource
+    {
+        var allResouces = ResourceLoader.ListDirectory(resourceDirPath);
+        List<T> filteredResouces = new List<T>();
+
+        foreach (string item in allResouces)
+        {
+            string itemFullPath = resourceDirPath + item;
+            if (itemFullPath.EndsWith(".res") || itemFullPath.EndsWith(".tres"))
+            {
+                var resourceItem = GD.Load<Resource>(itemFullPath);
+                if (resourceItem is T myResource)
+                {
+                    filteredResouces.Add(myResource);
+                }
+            }
+        }
+        return filteredResouces;
+    }
+
+    public static List<T> GetResourceByNameFromDisk<T>(string itemResName, string resourceDirPath) where T : Resource
+    {
+
+        var allResourceFiles = GetAllResourcesByTypeFromDisk<Resource>(resourceDirPath, default(T));
+        var resourceItem = allResourceFiles.Where(item => item.ResourceName == itemResName).FirstOrDefault();
+
+        if (resourceItem != null)
+
+        {
+            return resourceItem as GodotObject as List<T>;
+        }
+
+        return null;
     }
 
     public static void PrintActionTargetListeners<T>(Action<T> actionToCheck, string actionName)

@@ -1,6 +1,6 @@
 
 using System;
-using System.IO;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Godot;
@@ -8,23 +8,27 @@ using Godot;
 public partial class MainInterfaceUI : Node
 {
 
-    [Export] public Button _saveConfigBtn;
-    [Export] public OptionButton SavedConfigListOptBtn;
-    [Export] public Button _loadConfigBtn;
+    [Export] private Button _saveConfigBtn;
+    [Export] private OptionButton _presetListOptBtn;
+    [Export] private Button _loadConfigBtn;
 
     //Main Settings and Folder Path Variables
-    [Export] public Button _selectFolderPathBtn;
-    [Export] public Button _openFolderPathBtn;
-    [Export] public LineEdit _spriteGenFolderPathLineEdit;
-    [Export] public MarginContainer _settingsMainPanel;
-    [Export] public Button _openSettingPanelBtn;
+    [Export] private Button _selectFolderPathBtn;
+    [Export] private Button _openFolderPathBtn;
+    [Export] private LineEdit _spriteGenFolderPathLineEdit;
+    [Export] private MarginContainer _settingsMainPanel;
+    [Export] private Button _openSettingPanelBtn;
+    [Export] private Button _testConfigBtn;
+
 
     public override void _Ready()
     {
 
+        _testConfigBtn.Pressed += () => LoadPresetButtonItems();
         //Connect UI Signals
         _saveConfigBtn.Pressed += OnSaveConfigBtnPressed;
         _loadConfigBtn.Pressed += OnLoadConfigBtnPressed;
+        _presetListOptBtn.ItemSelected += async (long index) => await OnPresetSelected(index);
         _spriteGenFolderPathLineEdit.TextChanged += (newDir) => GlobalUtil.OnFolderSelected(newDir, _spriteGenFolderPathLineEdit);
         _selectFolderPathBtn.Pressed += OnSelectFolderPathPressed;
         _openFolderPathBtn.Pressed += OnOpenFolderPathPressed;
@@ -35,7 +39,62 @@ public partial class MainInterfaceUI : Node
         GlobalUtil.SaveFolderPath = ProjectSettings.GlobalizePath(Const.SAVE_GAME_PATH);
         _spriteGenFolderPathLineEdit.Text = GlobalUtil.SaveFolderPath;
 
+        LoadPresetButtonItems();
+
     }
+
+    private async Task OnPresetSelected(long index)
+    {
+        string selectedItemName = _presetListOptBtn.GetItemText((int)index);
+        if (selectedItemName == "None") return;
+
+        // SaveGameData saveGameData = GD.Load<SaveGameData>(Const.PRESET_SAVEDATA_FOLDER_PATH + selectedItemName);
+
+        if (!string.IsNullOrEmpty(selectedItemName))
+        {
+            GD.PrintT("Preset Selected: " + selectedItemName);
+
+            string fullLoadFilePath = Const.PRESET_SAVEDATA_FOLDER_PATH + selectedItemName;
+            await SaveGameManager.Instance.LoadGameDataFromPath(fullLoadFilePath);
+        }
+
+    }
+
+    private void LoadPresetButtonItems()
+    {
+        var files = DirAccess.GetFilesAt(Const.PRESET_SAVEDATA_FOLDER_PATH);
+        _presetListOptBtn.Clear();
+        _presetListOptBtn.AddItem(Const.PRESET_NONE_FILE_PATH.GetFile());
+
+        foreach (string file in files)
+        {
+            if (file.EndsWith(".res") || file.EndsWith(".tres"))
+            {
+                //Don't add the none file again as we are manully adding it to position 0 above.
+                if (file == Const.PRESET_NONE_FILE_PATH.GetFile()) continue;
+
+                SaveGameData presetSaveGameData = new();
+                try
+                {
+                    //Just a safety check to ensur eonly SaveGameData files are loaded to the button
+                    presetSaveGameData = GD.Load<SaveGameData>(Const.PRESET_SAVEDATA_FOLDER_PATH + file);
+                    if (presetSaveGameData != null)
+                    {
+                        _presetListOptBtn.AddItem(file);
+                    }
+
+                }
+                catch (System.Exception error)
+                {
+                    GD.PrintErr("Failed to load resource as SaveGameData: " + file + "  -> Error:" + error.Message);
+                }
+
+            }
+        }
+
+        _presetListOptBtn.Select(0);
+    }
+
 
     private void OnOpenSettingsPanelBtnPressed()
     {
@@ -70,7 +129,7 @@ public partial class MainInterfaceUI : Node
         string file = fileDialog.CurrentFile;
         string fullLoadFilePath = fileDialog.CurrentDir + "/" + file;
 
-        await SaveGameManager.Instance.LoadGameData(fullLoadFilePath);
+        await SaveGameManager.Instance.LoadGameDataFromPath(fullLoadFilePath);
 
     }
 

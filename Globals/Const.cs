@@ -22,6 +22,13 @@ public static class Const
 
     public const string GODOT_PLUSH_MODEL_SCENE_PATH = "res://Models/FullModels/godot_plush/godot_plush.tscn";
 
+    public const string PRESET_SAVEDATA_FOLDER_PATH = "res://Assets/Resources/PresetDataSaves/";
+
+    public const string PRESET_NONE = "None.tres";
+    public const string PRESET_NONE_FILE_PATH = "res://Assets/Resources/PresetDataSaves/Default.tres";
+
+
+
     //Transform Data
     public enum TransformType { CAMERA_ZOOM, SCALE, POSITION, ROTATION };
     public enum TransformAxis { X, Y, Z };

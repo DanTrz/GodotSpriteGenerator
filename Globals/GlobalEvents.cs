@@ -18,4 +18,5 @@ public partial class GlobalEvents : Node
 
     public Action<int> OnForcedPaletteSize { get; set; }
 
+
 }

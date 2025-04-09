@@ -25,7 +25,7 @@ public static class MeshReplacer
     private static void LoadAllMeshDataResouces()
     {
         //GetAllMeshItem data that are ArrayMeshDataObject type and load to a local list
-        arrayMeshDataObjects = GlobalUtil.GetResourcesByType<ArrayMeshDataObject>(Const.MESH_REPO_FOLDER_PATH);
+        arrayMeshDataObjects = GlobalUtil.GetAndLoadResourcesByType<ArrayMeshDataObject>(Const.MESH_REPO_FOLDER_PATH);
         arrayMeshDataObjects.Sort((a, b) => a.ItemOrder.CompareTo(b.ItemOrder));
     }
 

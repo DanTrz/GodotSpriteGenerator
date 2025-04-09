@@ -24,16 +24,17 @@ corner_radius_bottom_left = 5
 atlas = ExtResource("4_50c6x")
 region = Rect2(258, 112, 13, 16)
 
-[node name="MainInterfaceUI" type="CanvasLayer" node_paths=PackedStringArray("_saveConfigBtn", "SavedConfigListOptBtn", "_loadConfigBtn", "_selectFolderPathBtn", "_openFolderPathBtn", "_spriteGenFolderPathLineEdit", "_settingsMainPanel", "_openSettingPanelBtn") groups=["save_data"]]
+[node name="MainInterfaceUI" type="CanvasLayer" node_paths=PackedStringArray("_saveConfigBtn", "_presetListOptBtn", "_loadConfigBtn", "_selectFolderPathBtn", "_openFolderPathBtn", "_spriteGenFolderPathLineEdit", "_settingsMainPanel", "_openSettingPanelBtn", "_testConfigBtn") groups=["save_data"]]
 script = ExtResource("1_kfhly")
 _saveConfigBtn = NodePath("MainUI/SettingsMainPanel/PanelContainer/SettingsMarginOptionsPanel/PanelContainer/VBoxContainer/SpriteGenSettings/VBoxContainer/SaveConfigSettingsPanel/VboxContainer/SaveConfigBtn")
-SavedConfigListOptBtn = NodePath("MainUI/SettingsMainPanel/PanelContainer/SettingsMarginOptionsPanel/PanelContainer/VBoxContainer/SpriteGenSettings/VBoxContainer/SaveConfigSettingsPanel/VboxContainer/SavedConfigListOptBtn")
+_presetListOptBtn = NodePath("MainUI/SettingsMainPanel/PanelContainer/SettingsMarginOptionsPanel/PanelContainer/VBoxContainer/SpriteGenSettings/VBoxContainer/SaveConfigSettingsPanel/VboxContainer/PresetListOptBtn")
 _loadConfigBtn = NodePath("MainUI/SettingsMainPanel/PanelContainer/SettingsMarginOptionsPanel/PanelContainer/VBoxContainer/SpriteGenSettings/VBoxContainer/SaveConfigSettingsPanel/VboxContainer/LoadConfigBtn")
 _selectFolderPathBtn = NodePath("MainUI/SettingsMainPanel/PanelContainer/SettingsMarginOptionsPanel/PanelContainer/VBoxContainer/SpriteGenSettings/VBoxContainer/SaveFolderSettingsPanel/VboxContainer/SelectFolderPathBtn")
 _openFolderPathBtn = NodePath("MainUI/SettingsMainPanel/PanelContainer/SettingsMarginOptionsPanel/PanelContainer/VBoxContainer/SpriteGenSettings/VBoxContainer/SaveFolderSettingsPanel/VboxContainer/OpenFolderPathBtn")
 _spriteGenFolderPathLineEdit = NodePath("MainUI/SettingsMainPanel/PanelContainer/SettingsMarginOptionsPanel/PanelContainer/VBoxContainer/SpriteGenSettings/VBoxContainer/SaveFolderSettingsPanel/VboxContainer/SpriteGenFolderPathLineEdit")
 _settingsMainPanel = NodePath("MainUI/SettingsMainPanel")
 _openSettingPanelBtn = NodePath("MainUI/OpenSettingsPanel/MarginContainer/VboxContainer/OpenSettingPanelBtn")
+_testConfigBtn = NodePath("MainUI/SettingsMainPanel/PanelContainer/SettingsMarginOptionsPanel/PanelContainer/VBoxContainer/SpriteGenSettings/VBoxContainer/SaveConfigSettingsPanel/VboxContainer/TestConfig")
 
 [node name="MainUI" type="Control" parent="."]
 unique_name_in_owner = true
@@ -71,7 +72,6 @@ layout_mode = 2
 
 [node name="SettingsMainPanel" type="MarginContainer" parent="MainUI"]
 unique_name_in_owner = true
-visible = false
 texture_filter = 2
 layout_mode = 1
 anchors_preset = 1
@@ -122,16 +122,23 @@ theme_override_constants/separation = 4
 [node name="ConfigLabel" type="Label" parent="MainUI/SettingsMainPanel/PanelContainer/SettingsMarginOptionsPanel/PanelContainer/VBoxContainer/SpriteGenSettings/VBoxContainer/SaveConfigSettingsPanel/VboxContainer"]
 custom_minimum_size = Vector2(50, 20)
 layout_mode = 2
-text = "  Config :"
+text = "  Preset :"
 label_settings = ExtResource("3_kfhly")
 vertical_alignment = 1
 
-[node name="SavedConfigListOptBtn" type="OptionButton" parent="MainUI/SettingsMainPanel/PanelContainer/SettingsMarginOptionsPanel/PanelContainer/VBoxContainer/SpriteGenSettings/VBoxContainer/SaveConfigSettingsPanel/VboxContainer"]
+[node name="PresetListOptBtn" type="OptionButton" parent="MainUI/SettingsMainPanel/PanelContainer/SettingsMarginOptionsPanel/PanelContainer/VBoxContainer/SpriteGenSettings/VBoxContainer/SaveConfigSettingsPanel/VboxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(150, 32)
 layout_mode = 2
 clip_text = true
 fit_to_longest_item = false
+
+[node name="Label" type="Label" parent="MainUI/SettingsMainPanel/PanelContainer/SettingsMarginOptionsPanel/PanelContainer/VBoxContainer/SpriteGenSettings/VBoxContainer/SaveConfigSettingsPanel/VboxContainer"]
+custom_minimum_size = Vector2(50, 20)
+layout_mode = 2
+text = "  Save/ Load :"
+label_settings = ExtResource("3_kfhly")
+vertical_alignment = 1
 
 [node name="SaveConfigBtn" type="Button" parent="MainUI/SettingsMainPanel/PanelContainer/SettingsMarginOptionsPanel/PanelContainer/VBoxContainer/SpriteGenSettings/VBoxContainer/SaveConfigSettingsPanel/VboxContainer"]
 unique_name_in_owner = true
@@ -144,6 +151,13 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(80, 20)
 layout_mode = 2
 text = "Load Config"
+
+[node name="TestConfig" type="Button" parent="MainUI/SettingsMainPanel/PanelContainer/SettingsMarginOptionsPanel/PanelContainer/VBoxContainer/SpriteGenSettings/VBoxContainer/SaveConfigSettingsPanel/VboxContainer"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(80, 20)
+layout_mode = 2
+text = "Test Config"
 
 [node name="SaveFolderSettingsPanel" type="PanelContainer" parent="MainUI/SettingsMainPanel/PanelContainer/SettingsMarginOptionsPanel/PanelContainer/VBoxContainer/SpriteGenSettings/VBoxContainer"]
 layout_mode = 2
