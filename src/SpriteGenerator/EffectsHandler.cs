@@ -59,7 +59,7 @@ public static class EffectsHandler
 
     public static void SetEffect(this Node3D node, Const.EffectShadingType effectType)
     {
-        List<MeshInstance3D> allMesheInstanced3D = GlobalUtil.GetAllNodesByType<MeshInstance3D>(node);
+        List<MeshInstance3D> allMesheInstanced3D = GlobalUtil.GetAllChildNodesByType<MeshInstance3D>(node);
 
         foreach (var meshInstance3D in allMesheInstanced3D)
         {

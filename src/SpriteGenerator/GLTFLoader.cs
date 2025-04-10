@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Godot;
 
 
@@ -6,7 +7,7 @@ public partial class GLTFLoader : Node
 {
 
 
-    public static void LoadExternalGLTF(string filePath, Node parentNode)
+    public static async Task LoadExternalGLTF(string filePath, Node parentNode)
     {
         var gltfDocumentLoad = new GltfDocument();
         var gltfStateLoad = new GltfState();
@@ -16,7 +17,14 @@ public partial class GLTFLoader : Node
         if (error == Error.Ok)
         {
             var gltfSceneRootNode = gltfDocumentLoad.GenerateScene(gltfStateLoad);
+
+            await parentNode.ToSignal(parentNode.GetTree(), SceneTree.SignalName.ProcessFrame);
+
             parentNode.AddChild(gltfSceneRootNode);
+
+            await parentNode.ToSignal(parentNode.GetTree(), SceneTree.SignalName.ProcessFrame);
+
+            GD.PrintT($"External Model loaded from: {filePath}");
 
         }
         else

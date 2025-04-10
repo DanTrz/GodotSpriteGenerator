@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://wafjadmbwvmh"]
+[gd_scene load_steps=32 format=3 uid="uid://wafjadmbwvmh"]
 
 [ext_resource type="PackedScene" uid="uid://iuwovcd804os" path="res://src/ModelAndMeshes/ModelScene3D.tscn" id="1_m3qwr"]
 [ext_resource type="Script" uid="uid://dj2tgr0hxsbd3" path="res://src/SpriteGenerator/SpriteGenerator.cs" id="1_yym6v"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://dw57ccnr4wvji" path="res://src/ModelAndMeshes/ModelPositionManager.tscn" id="6_p81t8"]
 [ext_resource type="Shader" uid="uid://c0hrteashhp3d" path="res://Assets/Shaders/ColorReduc.gdshader" id="7_3bpm1"]
 [ext_resource type="LabelSettings" uid="uid://usv7beyw1bj8" path="res://Assets/UI/Theme/Label.tres" id="7_n1pvc"]
+[ext_resource type="Script" uid="uid://tt5dkax0yavf" path="res://src/SpriteGenerator/PixelSmoothEffectPanel.cs" id="7_v7vii"]
 [ext_resource type="Shader" uid="uid://bqe6x0jbw5lpm" path="res://Assets/Shaders/SmoothPixel.gdshader" id="8_axlb1"]
 [ext_resource type="PackedScene" uid="uid://de676sb25ueye" path="res://src/UIControls/ItemListCheckBox.tscn" id="9_u5ifw"]
 [ext_resource type="PackedScene" uid="uid://mjnysgbmwfbp" path="res://src/ModelAndMeshes/MeshReplacerOptButton.tscn" id="10_f1ima"]
@@ -323,6 +324,7 @@ metadata/_edit_use_anchors_ = true
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_3bpm1")
 
 [node name="BgRemoverViewportContainer" type="SubViewportContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/BGRemoverRenderPanel"]
@@ -330,6 +332,7 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+mouse_filter = 2
 
 [node name="BgRemoverSubViewport" type="SubViewport" parent="SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/BGRemoverRenderPanel/BgRemoverViewportContainer"]
 own_world_3d = true
@@ -346,6 +349,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 texture = SubResource("ViewportTexture_rimwo")
 stretch_mode = 3
 
@@ -353,12 +357,14 @@ stretch_mode = 3
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_0w5gm")
 
 [node name="ImgColorReductionViewportContainer" type="SubViewportContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/ColorReductionRenderPanel"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+mouse_filter = 2
 
 [node name="ImgColorReductionSubViewport" type="SubViewport" parent="SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/ColorReductionRenderPanel/ImgColorReductionViewportContainer"]
 own_world_3d = true
@@ -375,13 +381,16 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 texture = SubResource("ViewportTexture_v7vii")
 stretch_mode = 3
 
 [node name="PixelSmoothEffectPanel" type="PanelContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/ColorReductionRenderPanel"]
 texture_filter = 2
 layout_mode = 2
+mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_axlb1")
+script = ExtResource("7_v7vii")
 
 [node name="PixelSmoothEffectSprite2D" type="Sprite2D" parent="SpriteGenerationVBoxContainer/HSplitContainer/RenderImageVBoxCont/MainRenderPanel/ColorReductionRenderPanel/PixelSmoothEffectPanel"]
 material = SubResource("ShaderMaterial_axlb1")

@@ -1,8 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://iuwovcd804os"]
+[gd_scene load_steps=12 format=3 uid="uid://iuwovcd804os"]
 
+[ext_resource type="Script" uid="uid://cs6s20nhvreu1" path="res://src/ModelAndMeshes/ModelScene3d.cs" id="1_666by"]
 [ext_resource type="Script" uid="uid://dasxiorjhfw8t" path="res://src/ModelAndMeshes/Model3DMainPivotControl.cs" id="1_pb3o0"]
 [ext_resource type="PackedScene" uid="uid://bvvxjc2oqng0j" path="res://Models/FullModels/BaseModel/LowPoly/BaseModel_LowPolyScene.tscn" id="2_hkp8x"]
 [ext_resource type="Shader" uid="uid://cair4uoxj5lif" path="res://Assets/Shaders/Outline3D.gdshader" id="3_cykfy"]
+[ext_resource type="Script" uid="uid://cfrh8paxjwbmr" path="res://src/Gizmo3DSharp/Gizmo3D.cs" id="5_666by"]
 [ext_resource type="Shader" uid="uid://im2pcdmdj31a" path="res://Assets/Shaders/DepthInLineWithNormals.gdshader" id="5_cykfy"]
 
 [sub_resource type="Environment" id="Environment_e1sc8"]
@@ -43,25 +45,28 @@ material = SubResource("ShaderMaterial_hchht")
 flip_faces = true
 size = Vector2(100, 100)
 
-[node name="MainModelScene3D" type="Node3D"]
+[node name="ModelScene3D" type="Node3D" node_paths=PackedStringArray("Gizmo")]
+script = ExtResource("1_666by")
+Gizmo = NodePath("Gizmo3D")
 
 [node name="MainCamera" type="Camera3D" parent="."]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 10)
 keep_aspect = 0
 projection = 1
-size = 7.0
+size = 8.0
 
-[node name="Model3DPivot_AddYourModelHere" type="Node3D" parent="."]
+[node name="Model3DPivotControl" type="Node3D" parent="."]
 unique_name_in_owner = true
 script = ExtResource("1_pb3o0")
 
-[node name="BaseModel_LowPoly" parent="Model3DPivot_AddYourModelHere" instance=ExtResource("2_hkp8x")]
+[node name="BaseModel_LowPoly" parent="Model3DPivotControl" instance=ExtResource("2_hkp8x")]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.866025, -0.433013, 0.25, 0.473725, -0.870539, 0.133215, 0.159951, 0.233799, 0.959038, 0.537403, 1.13269, 5.59787)
-light_energy = 0.1
+transform = Transform3D(1, 0, 0, 0, 0.825212, 0.564823, 0, -0.564823, 0.825212, 0.246984, 4.85926, 5.85207)
+light_energy = 2.0
 shadow_enabled = true
+sky_mode = 1
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_e1sc8")
@@ -81,3 +86,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05866, 0)
 extra_cull_margin = 16384.0
 mesh = SubResource("QuadMesh_uhsoa")
 skeleton = NodePath("../..")
+
+[node name="Gizmo3D" type="Node3D" parent="."]
+script = ExtResource("5_666by")

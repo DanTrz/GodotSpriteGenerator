@@ -20,6 +20,16 @@ public partial class MainInterfaceUI : Node
     [Export] private Button _openSettingPanelBtn;
     [Export] private Button _testConfigBtn;
 
+    // public override void _UnhandledInput(InputEvent @event)
+    // {
+    //     GD.Print("_UnhandledInput Detected: " + @event + "From: " + this.Name);
+    // }
+
+    // public override void _Input(InputEvent @event)
+    // {
+    //     GD.Print("_Input Detected: " + @event + "From: " + this.Name);
+    // }
+
 
     public override void _Ready()
     {

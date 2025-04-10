@@ -177,7 +177,7 @@ public partial class SpriteGenerator : Node
         if (MainModelScene3D != null)
         {
             //Get Reference to Our Object3D within MainScene and Load it's key nodes
-            _modelPivotNode = MainModelScene3D.GetNodeOrNull<Node3D>("%Model3DPivot_AddYourModelHere");
+            _modelPivotNode = MainModelScene3D.GetNodeOrNull<Node3D>("%Model3DPivotControl");
             _camera = MainModelScene3D.GetNodeOrNull<Camera3D>("%MainCamera");
             _characterModelObject = _modelPivotNode.GetChildOrNull<Node3D>(0);
             _animationPlayer = _characterModelObject.GetNodeOrNull<AnimationPlayer>("AnimationPlayer");
@@ -573,16 +573,16 @@ public partial class SpriteGenerator : Node
     }
 
 
-    private void OnModelTypeSelected(long itemSelected)
+    private async void OnModelTypeSelected(long itemSelected)
     {
         switch (itemSelected)
         {
             case 0: //Voxel LowPoly Model
-                LoadModel(Const.LOW_POLY_MODEL_SCENE_PATH);
+                await LoadModel(Const.LOW_POLY_MODEL_SCENE_PATH);
                 LoadExternalModelBtn.Visible = false;
                 break;
             case 1: //Godot Plush (Example)
-                LoadModel(Const.GODOT_PLUSH_MODEL_SCENE_PATH);
+                await LoadModel(Const.GODOT_PLUSH_MODEL_SCENE_PATH);
                 LoadExternalModelBtn.Visible = false;
                 break;
             case 2: //Custom model //TODO: Not implemented yet Custom Model import
@@ -619,7 +619,7 @@ public partial class SpriteGenerator : Node
 
         string fullFilePath = fileDialog.CurrentDir + "/" + fileDialog.CurrentFile;
 
-        LoadModel(fullFilePath, true);
+        await LoadModel(fullFilePath, true);
 
         RemoveChild(fileDialog);
 
@@ -635,7 +635,7 @@ public partial class SpriteGenerator : Node
 
     }
 
-    private void LoadModel(string modelScenePath, bool isExternalModel = false)
+    private async Task LoadModel(string modelScenePath, bool isExternalModel = false)
     {
 
         //first we remove the current loaded scene from the PivotParentNode
@@ -651,7 +651,7 @@ public partial class SpriteGenerator : Node
         if (isExternalModel)
         {
             //The LoadExternalGLTF function will take care of Adding it as child, etc. 
-            GLTFLoader.LoadExternalGLTF(modelScenePath, _modelPivotNode);
+            await GLTFLoader.LoadExternalGLTF(modelScenePath, _modelPivotNode);
         }
         else
         {
@@ -929,8 +929,8 @@ public partial class SpriteGenerator : Node
     private void LoadAllMeshReplacerButtons()
     {
 
-        var allMeshReplacerOptButtons = GlobalUtil.GetAllNodesByType<MeshReplacerOptButton>(MeshReplacerPanelParentNode);
-        GD.PrintT("Found " + allMeshReplacerOptButtons.Count + " MeshReplacerOptButton");
+        var allMeshReplacerOptButtons = GlobalUtil.GetAllChildNodesByType<MeshReplacerOptButton>(MeshReplacerPanelParentNode);
+        GD.PrintT("Trying to load " + allMeshReplacerOptButtons.Count + " MeshReplacerOptButtons");
 
         foreach (var meshReplacerOptButton in allMeshReplacerOptButtons)
         {
@@ -951,7 +951,7 @@ public partial class SpriteGenerator : Node
 
     private void ClearAllMeshReplacerButtons()
     {
-        var allMeshReplacerOptButtons = GlobalUtil.GetAllNodesByType<MeshReplacerOptButton>(MeshReplacerPanelParentNode);
+        var allMeshReplacerOptButtons = GlobalUtil.GetAllChildNodesByType<MeshReplacerOptButton>(MeshReplacerPanelParentNode);
         GD.PrintT("Found " + allMeshReplacerOptButtons.Count + " MeshReplacerOptButton");
 
         foreach (var meshReplacerOptButton in allMeshReplacerOptButtons)
@@ -971,7 +971,7 @@ public partial class SpriteGenerator : Node
         string itemSelectedName = meshReplacerOptButton.GetItemText((int)itemIndex);
         GD.PrintT("Mesh Item Selected: " + itemSelectedName + " + FromButton: " + meshReplacerOptButton.Name);
 
-        var _targetMeshInstance = GlobalUtil.GetAllNodesByType<BodyPartMeshInstance3D>(_characterModelObject).
+        var _targetMeshInstance = GlobalUtil.GetAllChildNodesByType<BodyPartMeshInstance3D>(_characterModelObject).
             Where(bodyPartMesh => bodyPartMesh.BodyPartType == meshReplacerOptButton.BodyPartType).FirstOrDefault();
 
         if (_targetMeshInstance == null)
@@ -1001,7 +1001,7 @@ public partial class SpriteGenerator : Node
     private bool ModelHasReplacebleParts()
     {
         //Check if the model has at least one replaceable part
-        if (GlobalUtil.GetAllNodesByType<BodyPartMeshInstance3D>(_characterModelObject).FirstOrDefault() != null)
+        if (GlobalUtil.GetAllChildNodesByType<BodyPartMeshInstance3D>(_characterModelObject).FirstOrDefault() != null)
         {
             return true;
         }

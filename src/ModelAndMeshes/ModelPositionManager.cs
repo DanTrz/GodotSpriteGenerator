@@ -83,7 +83,7 @@ public partial class ModelPositionManager : Node
         //    transformlineEdit.TextChanged += (newValue) => OnTransformUIChanged(newValue, _zoomTransfNodeGroup, transformlineEdit);
         //});
 
-        foreach (var node in GlobalUtil.GetAllNodesByType<LineEdit>(this))
+        foreach (var node in GlobalUtil.GetAllChildNodesByType<LineEdit>(this))
         {
             if (node is LineEdit transformlineEdit)
             {

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -273,7 +274,7 @@ public static class GlobalUtil
     /// Returns all Nodes as a List that matches the type T. Recursive search from the Parent Node "fromParentNode"
     /// Returns all children, grandchildren, etc.
     /// </summary>
-    public static List<T> GetAllNodesByType<T>(Node fromParentNode) where T : Node
+    public static List<T> GetAllChildNodesByType<T>(Node fromParentNode) where T : Node
     {
         List<T> nodesFound = new List<T>();
 
@@ -286,10 +287,43 @@ public static class GlobalUtil
         // Recursively check all children
         foreach (Node child in fromParentNode.GetChildren())
         {
-            nodesFound.AddRange(GetAllNodesByType<T>(child));
+            nodesFound.AddRange(GetAllChildNodesByType<T>(child));
         }
 
         return nodesFound;
+    }
+
+    /// <summary>
+    /// Returns all Nodes as a List that matches the type T. Recursive search from the Parent Node "fromParentNode"
+    /// Returns all children, grandchildren, etc.
+    /// </summary>
+    public static T GetFirstParentNodeByType<T>(Node startFromNode, int levelsToSearch) where T : Node
+    {
+        //List<T> nodesFound = new List<T>();
+
+        // Check the current node
+        if (startFromNode is T)
+        {
+            //nodesFound.Add(typedNode);
+            return startFromNode as T;
+        }
+
+        // Recursively check all parents
+        for (int i = 0; i < levelsToSearch; i++)
+        {
+            Node currentParent = startFromNode.GetParent();
+            while (currentParent != null)
+            {
+                if (currentParent is T)
+                {
+                    return currentParent as T;
+                }
+                currentParent = currentParent.GetParent();
+            }
+
+        }
+
+        return null;
     }
 
     public static List<T> GetAndLoadResourcesByType<T>(string resourceDirPath) where T : Resource
