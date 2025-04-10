@@ -20,7 +20,8 @@ public partial class GlobalEvents : Node
 
     public Action<Image> OnSpriteSheetCreated { get; set; }
 
-    public Action<InputEventMouseButton> OnSpriteGeneratorMouseClick { get; set; }
+    public Action<int, Vector3> OnModelPivotGizmoChanged { get; set; }
+
 
 
 }

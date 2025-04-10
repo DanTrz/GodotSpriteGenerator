@@ -188,7 +188,7 @@ public partial class SpriteGenerator : Node
             }
 
             //Pass the Model to te PositionManager 
-            ModelPositionManager.ModelNode = _modelPivotNode;
+            ModelPositionManager.ModelPivotNode = _modelPivotNode;
             ModelPositionManager.CameraNode = _camera;
             ModelPositionManager.SetTransformValueToModel(true);
 

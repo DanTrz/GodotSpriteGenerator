@@ -38,7 +38,7 @@ public partial class ModelPositionManager : Node
     [Export] public LineEdit RotationYAxisLineTextEdit;
     [Export] public LineEdit RotationZAxisLineTextEdit;
 
-    public Node3D ModelNode;
+    public Node3D ModelPivotNode;
     public Camera3D CameraNode;
     private bool _isModeLeftBtnHeld = false;
 
@@ -50,7 +50,7 @@ public partial class ModelPositionManager : Node
         GD.Print("LoadTransformValueToUI being called");
         this.CallDeferred(MethodName.LoadTransformValueToUI);
         this.CallDeferred(MethodName.ConnectTransformUINodeSignals);
-
+        GlobalEvents.Instance.OnModelPivotGizmoChanged += OnModelPivotGizmoChanged;
         //_moveLeftBtn.Pressed += MoveModelLeft;
         //_moveRightBtn.Pressed += MoveModelRight;
         //_moveUpBtn.Pressed += MoveModeUp;
@@ -70,7 +70,7 @@ public partial class ModelPositionManager : Node
 
     public void CheckIfModelLoaded()
     {
-        if (ModelNode == null || CameraNode == null)
+        if (ModelPivotNode == null || CameraNode == null)
         {
             GD.PrintErr("Model or Camera in ModelPositionManager is null");
         }
@@ -108,16 +108,16 @@ public partial class ModelPositionManager : Node
     {
         if (firstLoad)
         {
-            ModelNode.Position = new Vector3(PositionXValue, PositionYValue, PositionZValue);
-            ModelNode.Rotation = new Vector3(RotationXValue, RotationYValue, RotationZValue);
+            ModelPivotNode.Position = new Vector3(PositionXValue, PositionYValue, PositionZValue);
+            ModelPivotNode.Rotation = new Vector3(RotationXValue, RotationYValue, RotationZValue);
             CameraNode.Size = Math.Max(CameDistance, 1.00f);
             CameraNode.RotationDegrees = new Vector3(CamRotationXValue, 0, 0);
             LoadTransformValueToUI();
         }
         else
         {
-            ModelNode.Position = new Vector3(float.Parse(PosXAxisLineTextEdit.Text), float.Parse(PosYAxisLineTextEdit.Text), float.Parse(PosZAxisLineTextEdit.Text));
-            ModelNode.Rotation = new Vector3(float.Parse(RotationXAxisLineTextEdit.Text), float.Parse(RotationYAxisLineTextEdit.Text), float.Parse(RotationZAxisLineTextEdit.Text));
+            ModelPivotNode.Position = new Vector3(float.Parse(PosXAxisLineTextEdit.Text), float.Parse(PosYAxisLineTextEdit.Text), float.Parse(PosZAxisLineTextEdit.Text));
+            ModelPivotNode.Rotation = new Vector3(float.Parse(RotationXAxisLineTextEdit.Text), float.Parse(RotationYAxisLineTextEdit.Text), float.Parse(RotationZAxisLineTextEdit.Text));
             CameraNode.Size = Math.Max(float.Parse(CamDistancelLineTextEdit.Text), 1.00f);
             CameraNode.RotationDegrees = new Vector3(float.Parse(CamXRotationLineTextEdit.Text), 0, 0);
         }
@@ -129,16 +129,16 @@ public partial class ModelPositionManager : Node
     {
         if (PosXAxisLineTextEdit == null || CamDistancelLineTextEdit == null) return;
 
-        PosXAxisLineTextEdit.Text = ModelNode.Position.X.ToString("0.0");
-        PosYAxisLineTextEdit.Text = ModelNode.Position.Y.ToString("0.0");
-        PosZAxisLineTextEdit.Text = ModelNode.Position.Z.ToString("0.0");
+        PosXAxisLineTextEdit.Text = ModelPivotNode.Position.X.ToString("0.0");
+        PosYAxisLineTextEdit.Text = ModelPivotNode.Position.Y.ToString("0.0");
+        PosZAxisLineTextEdit.Text = ModelPivotNode.Position.Z.ToString("0.0");
 
         CamDistancelLineTextEdit.Text = Math.Max(CameraNode.Size, 1.00f).ToString("0.0"); //CameraNode.Size.ToString("0.0");
         CamXRotationLineTextEdit.Text = CameraNode.RotationDegrees.X.ToString("0.0");
 
-        RotationXAxisLineTextEdit.Text = ModelNode.Rotation.X.ToString("0.0");
-        RotationYAxisLineTextEdit.Text = ModelNode.Rotation.Y.ToString("0.0");
-        RotationZAxisLineTextEdit.Text = ModelNode.Rotation.Z.ToString("0.0");
+        RotationXAxisLineTextEdit.Text = ModelPivotNode.Rotation.X.ToString("0.0");
+        RotationYAxisLineTextEdit.Text = ModelPivotNode.Rotation.Y.ToString("0.0");
+        RotationZAxisLineTextEdit.Text = ModelPivotNode.Rotation.Z.ToString("0.0");
     }
 
     public void OnSaveData(SaveGameData newSaveGameData)
@@ -180,6 +180,13 @@ public partial class ModelPositionManager : Node
         RotationZAxisLineTextEdit.Text = newLoadData.ModelRotationZAxis.ToString();
         SetTransformValueToModel();
     }
+
+    private void OnModelPivotGizmoChanged(int mode, Vector3 vector)
+    {
+        //GD.Print("OnModelPivot Gizmo TransformChanged");
+        LoadTransformValueToUI();
+    }
+
 
 
 
