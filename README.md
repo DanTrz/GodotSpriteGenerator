@@ -29,11 +29,11 @@ Feel free to contribute, use or tweak it. This is very much under heavy developm
 
 ## Future Roadmap and ToDos
 This is not a finished project, but there are some things that I would like to add in the future.
-- [ ] Allow to save configuration and load presets (Current Save Functionality is broken)
-- [ ] Allow for custom SpriteSheet filename saves
+- [X] Allow to save configuration and load presets (Current Save Functionality is broken)
+- [X] Allow for custom SpriteSheet filename saves
 - [ ] Documentation is missing. I will add proper comments in the Code and add a Docs page to make it easier if anyone wants to reuse or contribute
-- [ ] Allow import of external models (Simplify the process via an Importer Button)
-- [ ] Copy sprites and sprite sheets from Sprite Generator to Image Editor
+- [X] Allow import of external models (Simplify the process via an Importer Button)
+- [X] Copy sprites and sprite sheets from Sprite Generator to Image Editor
 - [ ] Tweak the logic for Color Reduction 
 - [ ] Performance Improvements
 - [ ] Add additional models I have (I plan to do this in the future, adding about 5 built-in models)
