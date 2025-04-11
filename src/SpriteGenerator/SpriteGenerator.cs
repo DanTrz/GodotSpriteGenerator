@@ -56,6 +56,8 @@ public partial class SpriteGenerator : Node
 
     [Export] public OptionButton ModelTypeOptionButton;
     [Export] public Button LoadExternalModelBtn;
+
+    [Export] public BoolCheckButton AutoScaleModelCheckButton;
     [Export] public CheckButton EnableHairMeshCheckBtn;
 
     [Export] public SpinBox MaxColorPaletteSpinBox;
@@ -82,9 +84,7 @@ public partial class SpriteGenerator : Node
 
     public int SpriteSize = 256;
     public int PixelResolution = 256;
-
     public int[] SelectedAngles;
-
     private readonly int MaxRBGLevelsColorPalette = 24;
     private readonly int[] allAngles = { 0, 45, 90, 135, 180, 225, 270, 315 };
     private int renderAngle = 0;
@@ -98,6 +98,8 @@ public partial class SpriteGenerator : Node
     private bool IsAnimMethod = true;
     private bool IsGenSpriteSheetOn = true;
 
+    private bool AutoScaleModel = true;
+
 
     public override void _Ready()
     {
@@ -109,6 +111,8 @@ public partial class SpriteGenerator : Node
         Outline3DValueSlider.ValueChanged += OnOutlineValuesChanged;
         Outline3DBlendFactorSlider.ValueChanged += OnOutlineValuesChanged;
         Outline3DColorPicker.ColorChanged += OnOutline3DColorChanged;
+        AutoScaleModelCheckButton.ButtonPressed = AutoScaleModel;
+        AutoScaleModelCheckButton.Pressed += () => AutoScaleModel = AutoScaleModelCheckButton.ButtonPressed;
 
         DepthlineThicknessSlider.ValueChanged += OnDepthlineValuesChanged;
         DepthBlendValueSlider.ValueChanged += OnDepthlineValuesChanged;
@@ -171,6 +175,12 @@ public partial class SpriteGenerator : Node
     }
 
 
+    /*************  ✨ Windsurf Command ⭐  *************/
+    /// <summary>
+    /// Loads and prepares the Model key nodes and required references like the PivotNode, Camera, AnimationPlayer, etc.
+    /// Also loads the replaceable parts (Hair and Weapon meshes) and sets them up in the UI with default values.
+    /// </summary>
+    /*******  c48ce56c-f2c8-4884-ad57-9cf569e180e5  *******/
     private void LoadAndPrepareModelNodes()
     {
         //LOAD MODEL KEY NODES and RQEUIRED REFERENCES
@@ -187,10 +197,14 @@ public partial class SpriteGenerator : Node
                 _animationPlayer = _characterModelObject.GetNodeOrNull<AnimationPlayer>("%AnimationPlayer");
             }
 
+
+
             //Pass the Model to te PositionManager 
             ModelPositionManager.ModelPivotNode = _modelPivotNode;
             ModelPositionManager.CameraNode = _camera;
-            ModelPositionManager.SetTransformValueToModel(true);
+
+            var modelXAxisSize = MeshReplacer.GetModelMergedAABBMeshes(_modelPivotNode).Size.Y;
+            ModelPositionManager.SetTransformValueToModel(AutoScaleModel, modelXAxisSize);
 
             Outline3DShaderMesh = MainModelScene3D.GetNodeOrNull<MeshInstance3D>("%Outline3DShaderMesh");
             Depthline3DShaderMesh = MainModelScene3D.GetNodeOrNull<MeshInstance3D>("%Depthline3DShaderMesh");
@@ -220,7 +234,7 @@ public partial class SpriteGenerator : Node
         else
         {
             ClearAllMeshReplacerButtons();
-            GD.PrintT("Mode has no replaceable parts or is null");
+            //GD.PrintT("Mode has no replaceable parts or is null");
         }
     }
 
@@ -246,7 +260,7 @@ public partial class SpriteGenerator : Node
             Directory.CreateDirectory(ProjectSettings.GlobalizePath(saveFolder));
 
 
-        GD.PrintT("Start Generation");
+        //GD.PrintT("Start Generation");
 
         if (ClearFolderBeforeGeneration)
             ClearFolder(saveFolder);
@@ -317,18 +331,11 @@ public partial class SpriteGenerator : Node
                 float frameCount = (int)Math.Round((animationResource.Length / animationResource.Step), MidpointRounding.AwayFromZero); // Number of frames in the animation
                 int framesToRender = (int)Math.Round((frameCount / FrameSkipStep), MidpointRounding.AwayFromZero);
 
-                //(int)Math.Round(value, MidpointRounding.AwayFromZero);
+                //GD.PrintT($"FrameBASEDv2 FLOAT = animFrames: {(animationResource.Length / animationResource.Step):0.00}, will render: {(frameCount / FrameSkipStep):0.00} frames");
 
-                GD.PrintT($"FrameBASEDv2 FLOAT = animFrames: {(animationResource.Length / animationResource.Step):0.00}, will render: {(frameCount / FrameSkipStep):0.00} frames");
-
-                GD.PrintT($"FrameBASEDv2 INT = animFrames: {frameCount:0.00}, will render: {framesToRender:0.00} frames");
-
-                //(int)Math.Ceiling(value);
-
-                //float frameInterval = animationResource.Step * _animationPlaybackSpeed;
                 float frameInterval = animationResource.Step;
 
-                GD.PrintT($"FrameBASEDv2 = frameInterval {frameInterval:0.000}");
+                // GD.PrintT($"FrameBASEDv2 = frameInterval {frameInterval:0.000}");
                 float currentTime = 0f;
                 int currentFrame = 0;
 
@@ -386,12 +393,11 @@ public partial class SpriteGenerator : Node
             _modelPivotNode.RotationDegrees = new Vector3(0, angle, 0);
             ModelPositionManager.RotationYAxisLineTextEdit.Text = _modelPivotNode.RotationDegrees.Y.ToString("0.0");
 
-            //await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
             await ToSignal(RenderingServer.Singleton, RenderingServer.SignalName.FramePostDraw); //Testin
 
             await SaveFrameAsPngImg("", _characterModelObject.Name, angle);
 
-            GD.PrintT($"Y.Axis Sprite Generate: {_characterModelObject.Name}, angle: {angle} frames");
+            //GD.PrintT($"Y.Axis Sprite Generate: {_characterModelObject.Name}, angle: {angle} frames");
         }
 
 
@@ -487,7 +493,7 @@ public partial class SpriteGenerator : Node
         string path = $"{saveFolder}/{animName}_{"angle_" + angle}_{spriteCount}.png";
         string globalSavePath = ProjectSettings.GlobalizePath(path);
 
-        GD.PrintT("Saving PNG :", spriteCount + "  - FileName: " + Path.GetFileNameWithoutExtension(globalSavePath) + "  / FullPath: " + path);
+        //GD.PrintT("Saving PNG :", spriteCount + "  - FileName: " + Path.GetFileNameWithoutExtension(globalSavePath) + "  / FullPath: " + path);
 
         UpdateColorReductionShader();
 
@@ -506,7 +512,7 @@ public partial class SpriteGenerator : Node
     private void OnGenerateSpriteSheetCheckBtnPressed()
     {
         IsGenSpriteSheetOn = GenerateSpriteSheetCheckBtn.ButtonPressed;
-        GD.PrintT("Generate Sprite Sheet: " + IsGenSpriteSheetOn);
+        //GD.PrintT("Generate Sprite Sheet: " + IsGenSpriteSheetOn);
     }
 
     private void UpdateColorReductionShader()
@@ -567,8 +573,7 @@ public partial class SpriteGenerator : Node
                 //     break;
 
         }
-        GD.PrintT("Sprite Size/Res: " + SpriteSize);
-
+        //GD.PrintT("Sprite Size/Res: " + SpriteSize);
         UpdateViewPorts();
     }
 
@@ -637,6 +642,12 @@ public partial class SpriteGenerator : Node
 
     private async Task LoadModel(string modelScenePath, bool isExternalModel = false)
     {
+        //Prepare and Reset Positions for New Model
+        ModelPositionManager.CameDistance = 100.0f;
+        ModelPositionManager.CamDistancelLineTextEdit.Text = "100.0";
+        ModelPositionManager.ModelPosition = new Vector3(0.0f, 0.0f, 0.0f);
+        ModelPositionManager.ModelRotation = new Vector3(0.0f, 0.0f, 0.0f);
+        ModelPositionManager.SetTransformValueToModel(false);
 
         //first we remove the current loaded scene from the PivotParentNode
         var loadedModelScene = _modelPivotNode.GetChild(0);
@@ -651,7 +662,10 @@ public partial class SpriteGenerator : Node
         if (isExternalModel)
         {
             //The LoadExternalGLTF function will take care of Adding it as child, etc. 
-            await GLTFLoader.LoadExternalGLTF(modelScenePath, _modelPivotNode);
+            // await GLTFLoader.LoadExternalGLTF(modelScenePath, _modelPivotNode);
+            Node3D newModelInstance = (Node3D)await GLTFLoader.LoadExternalGLTF(modelScenePath, _modelPivotNode);
+            _modelPivotNode.AddChild(newModelInstance);
+
         }
         else
         {
@@ -678,7 +692,7 @@ public partial class SpriteGenerator : Node
     private void OnEffectsChoiceItemSelected(long itemSelectedIndex)
     {
 
-        GD.PrintT("Effect Selected: " + itemSelectedIndex);
+        //GD.PrintT("Effect Selected: " + itemSelectedIndex);
         switch (itemSelectedIndex)
         {
             //TODO: Apply different effects. Create an EffetHandler? Change the materials for the settings
@@ -735,12 +749,7 @@ public partial class SpriteGenerator : Node
 
         }
 
-        GD.PrintT("Effect Pixel Resolution: " + SpriteSize);
-
-        // if (MeshShaderPixel3D.Mesh.SurfaceGetMaterial(0) is ShaderMaterial shaderMaterial)
-        // {
-        //     shaderMaterial.SetShaderParameter("target_resolution", pixelShaderResolution);
-        // }
+        //GD.PrintT("Effect Pixel Resolution: " + SpriteSize);
 
 
         if (PixelShaderTextRect.Material is ShaderMaterial shaderMaterial)
@@ -843,7 +852,7 @@ public partial class SpriteGenerator : Node
         if (string.IsNullOrEmpty(newText)) return;
 
         _animationPlaybackSpeed = Convert.ToInt32(newText);
-        GD.PrintT("PlaybackSpeed: " + _animationPlaybackSpeed);
+        //GD.PrintT("PlaybackSpeed: " + _animationPlaybackSpeed);
 
     }
 
@@ -870,7 +879,7 @@ public partial class SpriteGenerator : Node
     private void OnClearFolderPressed()
     {
         ClearFolderBeforeGeneration = ClearFolderCheckBtn.ButtonPressed;
-        GD.PrintT("Clear Folder: " + ClearFolderBeforeGeneration);
+        //GD.PrintT("Clear Folder: " + ClearFolderBeforeGeneration);
     }
 
 
@@ -879,7 +888,7 @@ public partial class SpriteGenerator : Node
         if (string.IsNullOrEmpty(newText)) return;
 
         FrameSkipStep = Convert.ToInt32(newText);
-        GD.PrintT("Frame Step: " + FrameSkipStep);
+        //GD.PrintT("Frame Step: " + FrameSkipStep);
     }
 
     private void OnShowGridCheckButtonPressed()
@@ -930,7 +939,7 @@ public partial class SpriteGenerator : Node
     {
 
         var allMeshReplacerOptButtons = GlobalUtil.GetAllChildNodesByType<MeshReplacerOptButton>(MeshReplacerPanelParentNode);
-        GD.PrintT("Trying to load " + allMeshReplacerOptButtons.Count + " MeshReplacerOptButtons");
+        //GD.PrintT("Trying to load " + allMeshReplacerOptButtons.Count + " MeshReplacerOptButtons");
 
         foreach (var meshReplacerOptButton in allMeshReplacerOptButtons)
         {
@@ -952,7 +961,7 @@ public partial class SpriteGenerator : Node
     private void ClearAllMeshReplacerButtons()
     {
         var allMeshReplacerOptButtons = GlobalUtil.GetAllChildNodesByType<MeshReplacerOptButton>(MeshReplacerPanelParentNode);
-        GD.PrintT("Found " + allMeshReplacerOptButtons.Count + " MeshReplacerOptButton");
+        //GD.PrintT("Found " + allMeshReplacerOptButtons.Count + " MeshReplacerOptButton");
 
         foreach (var meshReplacerOptButton in allMeshReplacerOptButtons)
         {
@@ -969,7 +978,7 @@ public partial class SpriteGenerator : Node
     {
 
         string itemSelectedName = meshReplacerOptButton.GetItemText((int)itemIndex);
-        GD.PrintT("Mesh Item Selected: " + itemSelectedName + " + FromButton: " + meshReplacerOptButton.Name);
+        //GD.PrintT("Mesh Item Selected: " + itemSelectedName + " + FromButton: " + meshReplacerOptButton.Name);
 
         var _targetMeshInstance = GlobalUtil.GetAllChildNodesByType<BodyPartMeshInstance3D>(_characterModelObject).
             Where(bodyPartMesh => bodyPartMesh.BodyPartType == meshReplacerOptButton.BodyPartType).FirstOrDefault();
@@ -1031,20 +1040,12 @@ public partial class SpriteGenerator : Node
 
     public void OnSaveData(SaveGameData newSaveGameData)
     {
-        GD.PrintT("Started OnSaveData from:", this.Name);
-        //nodeSaveData.Add(_spriteResolution);
-        // newSaveGameData.SpriteSize = SpriteSize;
-        // newSaveGameData.EffectOptionSelected = SpriteSizeOptionButton.Selected;
-        // newSaveGameData.FrameSkipStep = frameSkipStep;
-        // //newSaveGameData.ShowPixelEffect = _pixelEffectCheckBtn.ButtonPressed;
-        // newSaveGameData.PixelResolution = PixelationLevelOptionBtn.Selected;
-        // newSaveGameData.PlaybackSpeed = _animationPlaybackSpeed;
-        // newSaveGameData.ShowGrid = _showGridCheckButton.ButtonPressed;
+        //GD.PrintT("Started OnSaveData from:", this.Name);
     }
 
     public void OnLoadData(SaveGameData newLoadData)
     {
-        GD.PrintT("Started OnLoadData from:", this.Name);
+        //GD.PrintT("Started OnLoadData from:", this.Name);
 
 
         UpdateViewPorts();

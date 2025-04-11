@@ -16,14 +16,17 @@ public partial class ModelPositionManager : Node
     //     _rotationYAxisLineTextEdit.Text = ModelNode.Rotation.Y.ToString("0.0");
     //     _rotationZAxisLineTextEdit.Text = ModelNode.Rotation.Z.ToString("0.0");
 
-    [Export] public float PositionXValue = 0.0f;
-    [Export] public float PositionYValue = -4.0f;
-    [Export] public float PositionZValue = 0.0f;
-    [Export] public float RotationXValue = 0.0f;
-    [Export] public float RotationYValue = 0.0f;
-    [Export] public float RotationZValue = 0.0f;
 
-    [Export] public float CameDistance = 7.5f;
+    [Export] public Vector3 ModelPosition = new Vector3(0.0f, -0.0f, 0.0f);
+    // [Export] public float PositionXValue = 0.0f;
+    // [Export] public float PositionYValue = -4.0f;
+    // [Export] public float PositionZValue = 0.0f;
+
+    [Export] public Vector3 ModelRotation = new Vector3(0.0f, -0.0f, 0.0f);
+
+    [Export] public float CameDistance = 100.0f;
+    [Export] public float ZoomMultiplier = 1.0f;
+    [Export] public float YPosMultiplier = -1.5f;
     [Export] public float CamRotationXValue = -20.0f;
 
     [Export] public LineEdit CamXRotationLineTextEdit;
@@ -51,21 +54,6 @@ public partial class ModelPositionManager : Node
         this.CallDeferred(MethodName.LoadTransformValueToUI);
         this.CallDeferred(MethodName.ConnectTransformUINodeSignals);
         GlobalEvents.Instance.OnModelPivotGizmoChanged += OnModelPivotGizmoChanged;
-        //_moveLeftBtn.Pressed += MoveModelLeft;
-        //_moveRightBtn.Pressed += MoveModelRight;
-        //_moveUpBtn.Pressed += MoveModeUp;
-        //_moveDownBtn.Pressed += MoveModeDown;
-
-        //_rotateXAxisBtn.Pressed += RotateModeXAxis;
-        //_rotateYAxisBtn.Pressed += RotateModeYAxis;
-
-        //_zoomInBtn.Pressed += ZoomModelIn;
-        //_zoomOutBtn.Pressed += ZoomModelOut;
-
-
-        //Test for future code to track button being held down
-        // _moveLeftBtn.ButtonDown += () => { _isModeLeftBtnHeld = true; };
-        // _moveLeftBtn.ButtonUp += () => { _isModeLeftBtnHeld = false; };
     }
 
     public void CheckIfModelLoaded()
@@ -78,11 +66,6 @@ public partial class ModelPositionManager : Node
 
     private void ConnectTransformUINodeSignals()
     {
-        //GlobalUtil.GetAllNodesByType<LineEdit>(this).ForEach((transformlineEdit) =>
-        //{
-        //    transformlineEdit.TextChanged += (newValue) => OnTransformUIChanged(newValue, _zoomTransfNodeGroup, transformlineEdit);
-        //});
-
         foreach (var node in GlobalUtil.GetAllChildNodesByType<LineEdit>(this))
         {
             if (node is LineEdit transformlineEdit)
@@ -98,18 +81,21 @@ public partial class ModelPositionManager : Node
     {
         if (!String.IsNullOrEmpty(newValue) && !String.IsNullOrWhiteSpace(newValue) && float.TryParse(newValue, out float out_))
         {
-            GD.PrintT("Valid Input: " + newValue);
+            //GD.PrintT("Valid Input: " + newValue);
             SetTransformValueToModel();
             //LoadTransformValueToUI();
         }
     }
 
-    public void SetTransformValueToModel(bool firstLoad = false)
+    public void SetTransformValueToModel(bool autoScale = false, float modelXAxisSize = 0.0f)
     {
-        if (firstLoad)
+        if (autoScale)
         {
-            ModelPivotNode.Position = new Vector3(PositionXValue, PositionYValue, PositionZValue);
-            ModelPivotNode.Rotation = new Vector3(RotationXValue, RotationYValue, RotationZValue);
+            ModelPosition.Y = GetYPositionAutoScaleValue(modelXAxisSize, YPosMultiplier);
+            CameDistance = GetCameraAutoScaleValue(modelXAxisSize, ZoomMultiplier);
+
+            ModelPivotNode.Position = new Vector3(ModelPosition.X, ModelPosition.Y, ModelPosition.Z); //new Vector3(PositionXValue, PositionYValue, PositionZValue);
+            ModelPivotNode.Rotation = new Vector3(ModelRotation.X, ModelRotation.Y, ModelRotation.Z); //new Vector3(RotationXValue, RotationYValue, RotationZValue);
             CameraNode.Size = Math.Max(CameDistance, 1.00f);
             CameraNode.RotationDegrees = new Vector3(CamRotationXValue, 0, 0);
             LoadTransformValueToUI();
@@ -124,6 +110,31 @@ public partial class ModelPositionManager : Node
 
     }
 
+    private float GetYPositionAutoScaleValue(float modelXAxisSize, float scaleValue)
+    {
+        float yPos = 0.0f;
+        if (modelXAxisSize > 0)
+        {
+            yPos = modelXAxisSize / scaleValue;
+            double roundedValue = Math.Floor(yPos * 1) / 1; //Ensures we round-down with 1 decimal place
+            return (float)roundedValue;
+
+        }
+        return 0.0f;
+    }
+
+    private float GetCameraAutoScaleValue(float modelXAxisSize, float scaleValue)
+    {
+        float camZoomValue = 0.0f;
+        if (modelXAxisSize > 0)
+        {
+            // camZoomValue = float.Round((modelXAxisSize * scaleValue));
+            camZoomValue = modelXAxisSize * scaleValue;
+            double roundedValue = Math.Ceiling(camZoomValue * 1) / 1; //Ensures we round-up with with 1 decimal place
+            return (float)roundedValue;
+        }
+        return 0.0f;
+    }
 
     private void LoadTransformValueToUI()
     {
@@ -143,7 +154,7 @@ public partial class ModelPositionManager : Node
 
     public void OnSaveData(SaveGameData newSaveGameData)
     {
-        GD.PrintT("Started OnSaveData from:", this.Name);
+        //GD.PrintT("Started OnSaveData from:", this.Name);
         newSaveGameData.CameraDistance = float.Parse(CamDistancelLineTextEdit.Text);
         newSaveGameData.CameraRotation = float.Parse(CamXRotationLineTextEdit.Text);
         newSaveGameData.ModelPositionXAxis = float.Parse(PosXAxisLineTextEdit.Text);
@@ -153,23 +164,11 @@ public partial class ModelPositionManager : Node
         newSaveGameData.ModelRotationYAxis = float.Parse(RotationYAxisLineTextEdit.Text);
         newSaveGameData.ModelRotationZAxis = float.Parse(RotationZAxisLineTextEdit.Text);
 
-
-
-        //nodeSaveData.Add(_spriteResolution);
-
-        // Godot.Collections.Dictionary localNodeData = new();
-
-        // localNodeData["CameraDistance"] = float.Parse(CamDistancelLineTextEdit.Text);
-        // //localNodeData[CamDistancelLineTextEdit.Name] = float.Parse(CamDistancelLineTextEdit.Text);
-        // localNodeData[nameof(CamDistancelLineTextEdit)] = float.Parse(CamDistancelLineTextEdit.Text);
-
-        // nodeSaveData2[this.Name] = localNodeData;
-
     }
 
     public void OnLoadData(SaveGameData newLoadData)
     {
-        GD.PrintT("Started OnLoadData from:", this.Name);
+        // GD.PrintT("Started OnLoadData from:", this.Name);
         CamDistancelLineTextEdit.Text = newLoadData.CameraDistance.ToString();
         CamXRotationLineTextEdit.Text = newLoadData.CameraRotation.ToString();
         PosXAxisLineTextEdit.Text = newLoadData.ModelPositionXAxis.ToString();

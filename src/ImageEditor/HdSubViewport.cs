@@ -17,9 +17,9 @@ public partial class HdSubViewport : SubViewport
         Vector2I textureRectImageSize = HDTextureRect.Texture.GetImage().GetSize();
         if (this.Size != textureRectImageSize)
         {
-            GD.PrintT("Texture Changed on HDTextureRect");
+            //GD.PrintT("Texture Changed on HDTextureRect");
             this.Size = textureRectImageSize;
-            GD.PrintT("HDSubViewPort Sized Changed to: " + this.Size);
+            //GD.PrintT("HDSubViewPort Sized Changed to: " + this.Size);
 
         }
 

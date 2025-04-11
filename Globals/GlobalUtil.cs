@@ -54,7 +54,7 @@ public static class GlobalUtil
 
     public static void OnFolderSelected(string dir, LineEdit spriteGenFolderPathLineEdit = null)
     {
-        GD.PrintT("OnFolderSelected: " + dir);
+        //GD.PrintT("OnFolderSelected: " + dir);
         SaveFolderPath = dir;
         spriteGenFolderPathLineEdit.Text = GlobalUtil.SaveFolderPath;
     }

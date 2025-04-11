@@ -187,7 +187,7 @@ corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
-[node name="SpriteGeneratorTabUI" type="PanelContainer" node_paths=PackedStringArray("AnimMethodOptionBtn", "GenerateSpriteSheetCheckBtn", "SpriteSheetNameTextEdit", "ShowMeshPanelCheckBtn", "MeshOptionsMarginCont", "StartGenerationBtn", "MainModelScene3D", "RawViewport", "_rawViewportContainer", "BgRemoverViewport", "ImgColorReductionSubViewport", "ImgColorReductionSubViewportContainer", "PixelSmoothEffectSprite2D", "ImgColorReductionTextRect", "BgRemoverViewportContainer", "PixelShaderTextRect", "MoveSpriteSheetCheckButton", "SpriteSizeOptionButton", "EffectsChoicesOptionBtn", "PixelationLevelOptionBtn", "Outline3DValueSlider", "Outline3DBlendFactorSlider", "Outline3DColorPicker", "Depthline3DColorPicker", "DepthlineThicknessSlider", "DepthBlendValueSlider", "DepthThresholdSlider", "DitheringStrenghtSlider", "FrameStepTextEdit", "ModelTypeOptionButton", "LoadExternalModelBtn", "EnableHairMeshCheckBtn", "MaxColorPaletteSpinBox", "PlayBackSpeedLineEdit", "ClearFolderCheckBtn", "_pixelShaderTextRect", "ModelPositionManager", "LoadAllAnimationsBtn", "AnimSelectionItemList", "AngleSelectionItemList", "PixelGridTextRect", "ShowGridCheckButton", "MeshReplacerPanelParentNode", "HairMeshOptBtn", "WeaponItemMeshOptBtn", "HairColorBtn") groups=["save_data"]]
+[node name="SpriteGeneratorTabUI" type="PanelContainer" node_paths=PackedStringArray("AnimMethodOptionBtn", "GenerateSpriteSheetCheckBtn", "SpriteSheetNameTextEdit", "ShowMeshPanelCheckBtn", "MeshOptionsMarginCont", "StartGenerationBtn", "MainModelScene3D", "RawViewport", "_rawViewportContainer", "BgRemoverViewport", "ImgColorReductionSubViewport", "ImgColorReductionSubViewportContainer", "PixelSmoothEffectSprite2D", "ImgColorReductionTextRect", "BgRemoverViewportContainer", "PixelShaderTextRect", "MoveSpriteSheetCheckButton", "SpriteSizeOptionButton", "EffectsChoicesOptionBtn", "PixelationLevelOptionBtn", "Outline3DValueSlider", "Outline3DBlendFactorSlider", "Outline3DColorPicker", "Depthline3DColorPicker", "DepthlineThicknessSlider", "DepthBlendValueSlider", "DepthThresholdSlider", "DitheringStrenghtSlider", "FrameStepTextEdit", "ModelTypeOptionButton", "LoadExternalModelBtn", "AutoScaleModelCheckButton", "EnableHairMeshCheckBtn", "MaxColorPaletteSpinBox", "PlayBackSpeedLineEdit", "ClearFolderCheckBtn", "_pixelShaderTextRect", "ModelPositionManager", "LoadAllAnimationsBtn", "AnimSelectionItemList", "AngleSelectionItemList", "PixelGridTextRect", "ShowGridCheckButton", "MeshReplacerPanelParentNode", "HairMeshOptBtn", "WeaponItemMeshOptBtn", "HairColorBtn") groups=["save_data"]]
 texture_filter = 2
 clip_contents = true
 anchors_preset = 15
@@ -227,6 +227,7 @@ DitheringStrenghtSlider = NodePath("SpriteGenerationVBoxContainer/HSplitContaine
 FrameStepTextEdit = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/FrameSkipHBoxCont/FrameStepTextEdit")
 ModelTypeOptionButton = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/ModelTypeMarginCon/ModelTypePanelCont/HBoxContainer/ModelTypeVBox/ModelTypeOptionButton")
 LoadExternalModelBtn = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/ModelTypeMarginCon/ModelTypePanelCont/HBoxContainer/ModelTypeVBox/LoadExternalModelBtn")
+AutoScaleModelCheckButton = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/ModelTypeMarginCon/ModelTypePanelCont/HBoxContainer/ModelTypeVBox/MarginContainer/AutoScaleModelCheckButton")
 EnableHairMeshCheckBtn = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/HBoxContainer/MeshReplacerVboxOpt1/HairMeshHBoxCont/MarginContainer2/EnableHairMeshCheckBtn")
 MaxColorPaletteSpinBox = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/MaxColorPaletteHBox/MaxColorPaletteSpinBox")
 PlayBackSpeedLineEdit = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/MainSpriteOptionsMarginCont/PanelContainer/VBoxContainer/SpriteOptionsVBox/OptionsGroup1VBoxCont2/PlaybackSpeedHBoxCont/PlayBackSpeedLineEdit")
@@ -941,16 +942,37 @@ size_flags_horizontal = 0
 size_flags_vertical = 4
 text = "Load Model"
 
+[node name="Label2" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/ModelTypeMarginCon/ModelTypePanelCont/HBoxContainer/ModelTypeVBox"]
+custom_minimum_size = Vector2(80, 32)
+layout_mode = 2
+text = "AutoScale"
+label_settings = ExtResource("7_n1pvc")
+horizontal_alignment = 2
+vertical_alignment = 1
+autowrap_mode = 2
+clip_text = true
+
+[node name="MarginContainer" type="MarginContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/ModelTypeMarginCon/ModelTypePanelCont/HBoxContainer/ModelTypeVBox"]
+layout_mode = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 4
+
+[node name="AutoScaleModelCheckButton" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/ModelTypeMarginCon/ModelTypePanelCont/HBoxContainer/ModelTypeVBox/MarginContainer" instance=ExtResource("14_v7vii")]
+layout_mode = 2
+
 [node name="ShowMeshPanelHBoxCont" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/ModelTypeMarginCon/ModelTypePanelCont/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 alignment = 2
 
 [node name="Label" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/OptionsPanelCont/ScrollContainer/VBoxContainer/ModelTypeMarginCon/ModelTypePanelCont/HBoxContainer/ShowMeshPanelHBoxCont"]
-custom_minimum_size = Vector2(120, 32)
+custom_minimum_size = Vector2(115, 32)
 layout_mode = 2
 text = "Hide Mesh Panel"
 label_settings = ExtResource("7_n1pvc")
+horizontal_alignment = 2
 vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true

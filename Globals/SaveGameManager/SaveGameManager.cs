@@ -65,7 +65,7 @@ public partial class SaveGameManager : Node
         GetTree().CallGroup("save_data", SpriteGenerator.MethodName.OnLoadData, newLoadSaveGameData);
 
 
-        GD.PrintT("LoadGamedata Loaded: " + newLoadSaveGameData.SaveFileName);
+        // GD.PrintT("LoadGamedata Loaded: " + newLoadSaveGameData.SaveFileName);
     }
 
     private bool UpdatedParentNodesSucceeded()

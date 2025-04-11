@@ -54,7 +54,7 @@ unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 10)
 keep_aspect = 0
 projection = 1
-size = 8.0
+size = 50.0
 
 [node name="Model3DPivotControl" type="Node3D" parent="."]
 unique_name_in_owner = true

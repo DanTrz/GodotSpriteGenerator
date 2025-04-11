@@ -126,7 +126,7 @@ public static class EffectsHandler
             }
         }
 
-        GD.PrintT("Mesh Effects Applied to " + surfaceCount + " Surfaces on: " + mesh.ResourceName);
+        //GD.PrintT("Mesh Effects Applied to " + surfaceCount + " Surfaces on: " + mesh.ResourceName);
 
     }
 }

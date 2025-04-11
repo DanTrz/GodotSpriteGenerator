@@ -103,11 +103,11 @@ public partial class ImageEditor : PanelContainer
 
         if (NumColorsShaderValue != (numColorsToCheck + PersistColorCount))
         {
-            GD.PrintT("## -- Shader Color need updating");
+            //GD.PrintT("## -- Shader Color need updating");
             return true;
         }
 
-        GD.PrintT("## -- Shader Color doesn't need updating");
+        //GD.PrintT("## -- Shader Color doesn't need updating");
         return false;
 
     }

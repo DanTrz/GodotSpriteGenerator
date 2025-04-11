@@ -54,16 +54,6 @@ public partial class ModelScene3d : Node3D
         }
     }
 
-
-    private void OnGizmoTargetTransformChanged(int mode, Vector3 value)
-    {
-        //Mode 1 = Rotation // Mode 2 = Position // Mode 3 = Scale
-        GD.PrintT($"GismoTransform ended value: {value} and mode: {mode}");
-
-        //TODO: Update the Node ModelManagerNode to sync the ModelPosition and ModelRotation
-    }
-
-
     private void AddChildrenStaticBodyCollisionShape()
     {
         //find the pivot node (Model3DMainPivotControl)

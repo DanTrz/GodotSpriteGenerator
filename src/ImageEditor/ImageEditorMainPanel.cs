@@ -185,7 +185,7 @@ public partial class ImageEditorMainPanel : PanelContainer
             var originalColorsList = ImgEditorCore.GetColorFrequencies(imageToLoad);
             int colorsCount = originalColorsList.Count;
 
-            GD.PrintT("## Loaded IMG -> Original Colors Count = " + colorsCount);
+            //GD.PrintT("## Loaded IMG -> Original Colors Count = " + colorsCount);
 
             List<Color> originalColorsListSorted = originalColorsList.OrderByDescending(pair => pair.Value).Select(pair => pair.Key).ToList();
 
@@ -298,11 +298,9 @@ public partial class ImageEditorMainPanel : PanelContainer
         ImgEditorCore.UpdateShaderParameters();
         PaletteLoader.UpdatePaletteListGrid(_currentPaletteColors);
 
-
-
-        GD.PrintT("SetImgEditorValues -> Total colors = " + ImgEditorCore.ShaderPalette?.Count
-        + " Persist Colors = " + PaletteLoader.PersistPaletteColors?.Count
-         + " Current Img Colors = " + _currentPaletteColors?.Count);
+        // GD.PrintT("SetImgEditorValues -> Total colors = " + ImgEditorCore.ShaderPalette?.Count
+        // + " Persist Colors = " + PaletteLoader.PersistPaletteColors?.Count
+        //  + " Current Img Colors = " + _currentPaletteColors?.Count);
 
         GlobalEvents.Instance.OnEffectsChangesEnded?.Invoke(this.Name, _currentPaletteColors);
     }
@@ -342,14 +340,14 @@ public partial class ImageEditorMainPanel : PanelContainer
 
     private void OnEffectsChangesStarted(string fromNode)
     {
-        GD.PrintT("Run: OnEffectsChangesStarted");
+        //GD.PrintT("Run: OnEffectsChangesStarted");
         _effectStatusLabel.Text = "Processing Image updates....";
         _effectStatusMainPanel.Visible = true;
     }
 
     private void OnEffectsChangesEnded(string fromNode, Godot.Collections.Array<Color> list)
     {
-        GD.PrintT("Run: OnEffectsChangesEnded");
+        //GD.PrintT("Run: OnEffectsChangesEnded");
         _effectStatusLabel.Text = "Effects Applied !!! ";
         _effectStatusMainPanel.Visible = false;
         PaletteLoader.UpdatePaletteListGrid(list);
@@ -472,13 +470,13 @@ public partial class ImageEditorMainPanel : PanelContainer
     public void OnSaveData(SaveGameData newSaveGameData)
     {
 
-        GD.PrintT("Started OnSaveData from:", this.Name);
+        //GD.PrintT("Started OnSaveData from:", this.Name);
     }
 
     public void OnLoadData(SaveGameData newLoadData)
     {
 
-        GD.PrintT("Started OnLoadData from:", this.Name);
+        //GD.PrintT("Started OnLoadData from:", this.Name);
         //UpdateUIElementsOnLoad();
         UpdateTexture(_originalImage);
         SetImgEditorValues();

@@ -1,5 +1,5 @@
-using Godot;
 using System;
+using Godot;
 
 public partial class ItemListCheckBox : ItemList
 {
@@ -42,7 +42,7 @@ public partial class ItemListCheckBox : ItemList
 
     private void OnSelectionChangedOrUpdated(long index, bool selected)
     {
-        GD.PrintT("ItemClicked: " + this.GetItemText((int)index) + " + index: " + index + " selected: " + selected);
+        //GD.PrintT("ItemClicked: " + this.GetItemText((int)index) + " + index: " + index + " selected: " + selected);
         UpdateSingleItemIcon((int)index, selected);
 
 

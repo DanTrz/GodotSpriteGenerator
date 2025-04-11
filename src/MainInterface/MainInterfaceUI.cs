@@ -20,15 +20,6 @@ public partial class MainInterfaceUI : Node
     [Export] private Button _openSettingPanelBtn;
     [Export] private Button _testConfigBtn;
 
-    // public override void _UnhandledInput(InputEvent @event)
-    // {
-    //     GD.Print("_UnhandledInput Detected: " + @event + "From: " + this.Name);
-    // }
-
-    // public override void _Input(InputEvent @event)
-    // {
-    //     GD.Print("_Input Detected: " + @event + "From: " + this.Name);
-    // }
 
 
     public override void _Ready()
@@ -62,7 +53,7 @@ public partial class MainInterfaceUI : Node
 
         if (!string.IsNullOrEmpty(selectedItemName))
         {
-            GD.PrintT("Preset Selected: " + selectedItemName);
+            // GD.PrintT("Preset Selected: " + selectedItemName);
 
             string fullLoadFilePath = Const.PRESET_SAVEDATA_FOLDER_PATH + selectedItemName;
             await SaveGameManager.Instance.LoadGameDataFromPath(fullLoadFilePath);
@@ -125,10 +116,6 @@ public partial class MainInterfaceUI : Node
         AddChild(fileDialog);
 
         fileDialog.CurrentDir = ProjectSettings.GlobalizePath(Const.SAVE_GAME_PATH); //Set this after adding Child to Scene
-
-        //fileDialog.DirSelected += (newDir) => GlobalUtil.OnFolderSelected(newDir, _spriteGenFolderPathLineEdit);
-
-        //fileDialog.FileSelected += async (path) => await SaveGameManager.Instance.LoadGameData(path);
 
         await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
 
