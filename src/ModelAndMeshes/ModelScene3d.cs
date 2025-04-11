@@ -11,7 +11,7 @@ public partial class ModelScene3d : Node3D
 
     public override void _Ready()
     {
-        Gizmo.TransformChanged += (sender, args) => GlobalEvents.Instance.OnModelPivotGizmoChanged?.Invoke(1, new Vector3(0, 0, 0));
+        Gizmo.TransformChanged += (sender, args) => GlobalEvents.Instance.OnModelTransformChanged?.Invoke(1, new Vector3(0, 0, 0));
     }
 
     public override void _UnhandledInput(InputEvent @event)
@@ -22,18 +22,34 @@ public partial class ModelScene3d : Node3D
         //Detect mouse click and handle selection
         if (@event is InputEventMouseButton mouseButton && mouseButton.ButtonIndex == MouseButton.Left && mouseButton.Pressed)
         {
-            GD.Print("Mouse Click _UnHandledINput Detected: " + @event + "From: " + this.Name);
+            //GD.Print("Mouse Click _UnHandledINput Detected: " + @event + "From: " + this.Name);
             HandleGizmoSelection(Gizmo, mouseButton);
+        }
+
+        //Detect mouse WheelMovement (Zoom) and handle it
+        if (@event is InputEventMouseButton mouseEvent)
+        {
+            if (mouseEvent.ButtonIndex == MouseButton.WheelUp && mouseEvent.Pressed)
+            {
+                //Zoom Out ////bool True = Zoom In, False = Zoom Out
+                GlobalEvents.Instance.OnCameraZoomChanged?.Invoke(false);
+
+            }
+            else if (mouseEvent.ButtonIndex == MouseButton.WheelDown && mouseEvent.Pressed)
+            {
+                GlobalEvents.Instance.OnCameraZoomChanged?.Invoke(true);
+                //Zoom In ////bool True = Zoom In, False = Zoom Out
+            }
         }
     }
 
     private void HandleGizmoSelection(Gizmo3D gizmo, InputEventMouseButton button)
     {
 
-        GD.Print("### Gizmo Logic => Click detected : " + this.Name);
+        //GD.Print("### Gizmo Logic => Click detected : " + this.Name);
         var targetNode = GlobalUtil.GetAllChildNodesByType<Model3DMainPivotControl>(this).FirstOrDefault();
         if (targetNode == null) return;
-        GD.Print("### Gizmo Logic => TargetNode : " + targetNode.Name);
+        //GD.Print("### Gizmo Logic => TargetNode : " + targetNode.Name);
 
         if (hasNodeSelected)
         {

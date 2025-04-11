@@ -163,7 +163,7 @@ public partial class ImageEditor : PanelContainer
     /// <returns>Returns the Colors that are more frequently present in the image, sorted by most frequent to least frequent..</returns>
     public async Task<List<Color>> UpdatedKMeansClusteringAsync(Image image, int colorsK)
     {
-        GD.Print("KMeansClustering Async: Max Colors to check = " + colorsK);
+        //GD.Print("KMeansClustering Async: Max Colors to check = " + colorsK);
 
         if (colorsK > MAX_PALETTE_SIZE)
         {
@@ -262,7 +262,7 @@ public partial class ImageEditor : PanelContainer
 
         });
 
-        GD.Print("KMeansClusteringAsync Completed with colors = " + ImgkMeansClusterList.Count);
+        //GD.Print("KMeansClusteringAsync Completed with colors = " + ImgkMeansClusterList.Count);
         //GlobalEvents.Instance.OnEffectsChangesEnded.Invoke(this.Name, ColorListToGodotArray(ImgkMeansClusterList));
 
         return ImgkMeansClusterList;
@@ -270,10 +270,8 @@ public partial class ImageEditor : PanelContainer
 
     public void UpdatedKMeansClusteringSyncronous(Image image, int colorsK)
     {
-        GD.Print("KMeansClustering Syncronous: Max Colors to check = " + colorsK);
+        //GD.Print("KMeansClustering Syncronous: Max Colors to check = " + colorsK);
 
-        // await Task.Run(() =>
-        // {
         if (image == null || image.GetWidth() == 0 || image.GetHeight() == 0)
         {
             ImgkMeansClusterList = Enumerable.Repeat(Colors.Black, colorsK).ToList();
@@ -347,12 +345,9 @@ public partial class ImageEditor : PanelContainer
             }
         }
 
-        GD.Print("KMeansClustering Completed with colors = " + ImgkMeansClusterList.Count);
+        //GD.Print("KMeansClustering Completed with colors = " + ImgkMeansClusterList.Count);
         ImgkMeansClusterList = centroids;
 
-        // });
-
-        //GlobalEvents.Instance.OnEffectsChangesEnded.Invoke(this.Name, ColorListToGodotArray(ImgkMeansClusterList));
     }
 
     //public async IAsyncEnumerable<Color> GetColorFrequencies(Image image)
@@ -379,7 +374,7 @@ public partial class ImageEditor : PanelContainer
                 }
             }
         }
-        GD.Print("GetUniqueColorsCount => Result of unique colors = " + colorFrequencies.Count);
+        //GD.Print("GetUniqueColorsCount => Result of unique colors = " + colorFrequencies.Count);
         return colorFrequencies;
     }
 

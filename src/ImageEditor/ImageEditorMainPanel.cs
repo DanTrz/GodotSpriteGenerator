@@ -307,25 +307,15 @@ public partial class ImageEditorMainPanel : PanelContainer
 
     private void OnPaletteChangedInImageEditor(Godot.Collections.Array<Color> list)
     {
-        GD.Print("Palette changed to # : " + list.Count);
-        //int colorCount = list.Count;
-
+        //GD.Print("Palette changed to # : " + list.Count);
         ImgEditorCore.MaxNumColors = list.Count;
         ImgEditorCore.NumColorsLocal = list.Count;
-
-        //_colorCountSpinBox.MaxValue = list.Count;
-        //_colorCountSpinBox.Value = _ImgEditor.NumColors;
-
         _currentPaletteColors = list;
 
         SetImgEditorValues();
     }
 
-    // private void OnUseExternalPaletteBtnToggled(bool toggledOn)
-    // {
-    //     UseExternalPaletteChkBtn.Text = UseExternalPaletteChkBtn.ButtonPressed.ToString();
-    //     SetImgEditorValues();
-    // }
+
 
     private void OnColorReductionSpinBoxChanged(double value)
     {
@@ -418,7 +408,7 @@ public partial class ImageEditorMainPanel : PanelContainer
         await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
         Texture2D texture = (Texture2D)ImgEditorCore.HDSubviewPort.GetTexture();
         Image modifiedImage = (Image)texture.GetImage();
-        GD.Print("Image prepared size:" + modifiedImage.GetSize());
+        //GD.Print("Image prepared size:" + modifiedImage.GetSize());
         await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
 
         //OPEN DIALOG TO SAVE TO A PATH
@@ -436,7 +426,7 @@ public partial class ImageEditorMainPanel : PanelContainer
 
         if (!GlobalUtil.HasDirectory(globalizedPath, this).Result)
         {
-            GD.Print("Directory does NOT exist: " + folderCurrentDir);
+            //GD.Print("Directory does NOT exist: " + folderCurrentDir);
             globalizedPath = "res://"; // Fallback to a safe default
         }
         fileDialog.CurrentDir = globalizedPath; //Set Current Directory at the end after adding Child to Scene otherwise it was not working
@@ -446,7 +436,7 @@ public partial class ImageEditorMainPanel : PanelContainer
 
     private void OnFileSelected(string path)
     {
-        GD.Print("Selected file path: " + path); //handle file selection
+        //GD.Print("Selected file path: " + path); //handle file selection
     }
 
     private void SaveImageToFile(Image image, string filePath)

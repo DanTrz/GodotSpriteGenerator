@@ -20,7 +20,9 @@ public partial class GlobalEvents : Node
 
     public Action<Image> OnSpriteSheetCreated { get; set; }
 
-    public Action<int, Vector3> OnModelPivotGizmoChanged { get; set; }
+    public Action<int, Vector3> OnModelTransformChanged { get; set; }
+
+    public Action<bool> OnCameraZoomChanged { get; set; } //bool True = Zoom In, False = Zoom Out
 
 
 

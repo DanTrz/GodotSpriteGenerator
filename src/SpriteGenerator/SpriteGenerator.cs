@@ -113,6 +113,7 @@ public partial class SpriteGenerator : Node
         Outline3DColorPicker.ColorChanged += OnOutline3DColorChanged;
         AutoScaleModelCheckButton.ButtonPressed = AutoScaleModel;
         AutoScaleModelCheckButton.Pressed += () => AutoScaleModel = AutoScaleModelCheckButton.ButtonPressed;
+        AutoScaleModelCheckButton.Text = AutoScaleModelCheckButton.ButtonPressed.ToString();
 
         DepthlineThicknessSlider.ValueChanged += OnDepthlineValuesChanged;
         DepthBlendValueSlider.ValueChanged += OnDepthlineValuesChanged;
@@ -196,8 +197,6 @@ public partial class SpriteGenerator : Node
             {
                 _animationPlayer = _characterModelObject.GetNodeOrNull<AnimationPlayer>("%AnimationPlayer");
             }
-
-
 
             //Pass the Model to te PositionManager 
             ModelPositionManager.ModelPivotNode = _modelPivotNode;
@@ -629,22 +628,13 @@ public partial class SpriteGenerator : Node
         RemoveChild(fileDialog);
 
 
-
-        // dialog.Mode = FileDialog.ModeEnum.OpenFile;
-        // dialog.Access = FileDialog.AccessEnum.Filesystem;
-        // dialog.CurrentDir = GlobalUtil.SaveFolderPath; //Set this after adding Child to Scene
-        // dialog.CurrentFile = "";
-        // dialog.PopupCentered();
-        // dialog.Connect("file_selected", this, nameof(OnFileSelected));
-        // AddChild(dialog);
-
     }
 
     private async Task LoadModel(string modelScenePath, bool isExternalModel = false)
     {
         //Prepare and Reset Positions for New Model
-        ModelPositionManager.CameDistance = 100.0f;
-        ModelPositionManager.CamDistancelLineTextEdit.Text = "100.0";
+        ModelPositionManager.CameDistance = 80.0f;
+        ModelPositionManager.CamDistancelLineTextEdit.Text = "80.0";
         ModelPositionManager.ModelPosition = new Vector3(0.0f, 0.0f, 0.0f);
         ModelPositionManager.ModelRotation = new Vector3(0.0f, 0.0f, 0.0f);
         ModelPositionManager.SetTransformValueToModel(false);

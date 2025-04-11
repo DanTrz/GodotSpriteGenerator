@@ -8,13 +8,6 @@ public static class MeshReplacer
     private static int _iconSize = 32;
     public static List<ArrayMeshDataObject> arrayMeshDataObjects;
 
-    // public override void _Ready()
-    // {
-    //     LoadAllMeshDataResouces();
-    //     GlobalEvents.Instance.OnMeshItemColorChanged += UpdateMeshItemColor;
-    // }
-
-    //static MeshReplacer() method is a static constructor, which is a special method that's called automatically when the class is first loaded.
     static MeshReplacer()
     {
         LoadAllMeshDataResouces();
@@ -197,9 +190,9 @@ public static class MeshReplacer
         foreach (MeshInstance3D meshInstance in allMeshInstances)
         {
             //TODO : //BUG = Not properly working the Scaling logic
-            GD.Print($"Transform for {meshInstance.Name}: Scale={meshInstance.Scale} " +
-                $"Parent={meshInstance.GetParent<Node3D>().Name} ParentScale={meshInstance.GetParent<Node3D>().Scale}" +
-                $"Grand Parent={meshInstance.GetParent().GetParent<Node3D>().Name} GrandPar Scale={meshInstance.GetParent().GetParent<Node3D>().Scale}");
+            // GD.Print($"Transform for {meshInstance.Name}: Scale={meshInstance.Scale} " +
+            //     $"Parent={meshInstance.GetParent<Node3D>().Name} ParentScale={meshInstance.GetParent<Node3D>().Scale}" +
+            //     $"Grand Parent={meshInstance.GetParent().GetParent<Node3D>().Name} GrandPar Scale={meshInstance.GetParent().GetParent<Node3D>().Scale}");
 
             // Get local AABB (relative to node origin, includes node scale)
             Aabb localAabb = meshInstance.GetAabb();
@@ -265,8 +258,26 @@ public static class MeshReplacer
             return new Aabb(Vector3.Zero, Vector3.Zero);
         }
 
-        GD.Print($"Merged AABB for '{parentNode.GetChild(0).Name}': Pos={finalMergedAabb.Position}, Size={finalMergedAabb.Size}");
+        //Apply some foreced corrections if the model is too small or has weird scale (not 1.0 Scale)
+        if (finalMergedAabb.Size.X < 0.5f || finalMergedAabb.Size.Y < 0.5f || finalMergedAabb.Size.Z < 0.5f)
+        {
+            if (finalMergedAabb.Size.X > 0.1f || finalMergedAabb.Size.Y > 0.1f || finalMergedAabb.Size.Z > 0.1f)
+            {
+                {
+                    finalMergedAabb = new Aabb(finalMergedAabb.Position,
+                                    new Vector3(finalMergedAabb.Size.X * 10, finalMergedAabb.Size.Y * 10, finalMergedAabb.Size.Z * 10));
 
+                }
+            }
+            else
+            {
+                finalMergedAabb = new Aabb(finalMergedAabb.Position,
+                                   new Vector3(finalMergedAabb.Size.X * 50000, finalMergedAabb.Size.Y * 50000, finalMergedAabb.Size.Z * 50000));
+
+            }
+        }
+
+        GD.PrintT($"Merged AABB for '{parentNode.GetChild(0).Name}': Pos={finalMergedAabb.Position}, Size={finalMergedAabb.Size}");
         return finalMergedAabb;
     }
 
@@ -282,7 +293,7 @@ public static class MeshReplacer
 
                 if (originalScale != Vector3.One)
                 {
-                    GD.Print($"Correcting scale for {myNode3D.Name} from {originalScale} to Vector3.One");
+                    //GD.Print($"Correcting scale for {myNode3D.Name} from {originalScale} to Vector3.One");
                     myNode3D.Scale = Vector3.One;
                 }
             }

@@ -3,30 +3,16 @@ using Godot;
 
 public partial class ModelPositionManager : Node
 {
-
-
-    // _posXAxisLineTextEdit.Text = ModelNode.Position.X.ToString("0.0");
-    //     _posYAxisLineTextEdit.Text = ModelNode.Position.Y.ToString("0.0");
-    //     _posZAxisLineTextEdit.Text = ModelNode.Position.Z.ToString("0.0");
-
-    //     CamDistancelLineTextEdit.Text = Math.Max(CameraNode.Size, 1.00f).ToString("0.0"); //CameraNode.Size.ToString("0.0");
-    // _camXRotationLineTextEdit.Text = CameraNode.RotationDegrees.X.ToString("0.0");
-
-    //     _rotationXAxisLineTextEdit.Text = ModelNode.Rotation.X.ToString("0.0");
-    //     _rotationYAxisLineTextEdit.Text = ModelNode.Rotation.Y.ToString("0.0");
-    //     _rotationZAxisLineTextEdit.Text = ModelNode.Rotation.Z.ToString("0.0");
-
-
     [Export] public Vector3 ModelPosition = new Vector3(0.0f, -0.0f, 0.0f);
-    // [Export] public float PositionXValue = 0.0f;
-    // [Export] public float PositionYValue = -4.0f;
-    // [Export] public float PositionZValue = 0.0f;
 
     [Export] public Vector3 ModelRotation = new Vector3(0.0f, -0.0f, 0.0f);
 
-    [Export] public float CameDistance = 100.0f;
-    [Export] public float ZoomMultiplier = 1.0f;
-    [Export] public float YPosMultiplier = -1.5f;
+    [Export]
+    public float CameDistance = 80.0f;
+
+    [Export] public float ZoomValue = 0.5f;
+    [Export] public float ZoomScaleFactor = 1.8f;
+    [Export] public float YPosScaleFactor = -1.6f;
     [Export] public float CamRotationXValue = -20.0f;
 
     [Export] public LineEdit CamXRotationLineTextEdit;
@@ -50,10 +36,11 @@ public partial class ModelPositionManager : Node
         //Check if the ModelNode is not null
         this.CallDeferred(MethodName.CheckIfModelLoaded);
 
-        GD.Print("LoadTransformValueToUI being called");
+        //("LoadTransformValueToUI being called");
         this.CallDeferred(MethodName.LoadTransformValueToUI);
         this.CallDeferred(MethodName.ConnectTransformUINodeSignals);
-        GlobalEvents.Instance.OnModelPivotGizmoChanged += OnModelPivotGizmoChanged;
+        GlobalEvents.Instance.OnModelTransformChanged += OnModelTransformChanged;
+        GlobalEvents.Instance.OnCameraZoomChanged += OnCameraZoomChanged;
     }
 
     public void CheckIfModelLoaded()
@@ -91,8 +78,8 @@ public partial class ModelPositionManager : Node
     {
         if (autoScale)
         {
-            ModelPosition.Y = GetYPositionAutoScaleValue(modelXAxisSize, YPosMultiplier);
-            CameDistance = GetCameraAutoScaleValue(modelXAxisSize, ZoomMultiplier);
+            ModelPosition.Y = GetYPositionAutoScaleValue(modelXAxisSize, YPosScaleFactor);
+            CameDistance = GetCameraAutoScaleValue(modelXAxisSize, ZoomScaleFactor);
 
             ModelPivotNode.Position = new Vector3(ModelPosition.X, ModelPosition.Y, ModelPosition.Z); //new Vector3(PositionXValue, PositionYValue, PositionZValue);
             ModelPivotNode.Rotation = new Vector3(ModelRotation.X, ModelRotation.Y, ModelRotation.Z); //new Vector3(RotationXValue, RotationYValue, RotationZValue);
@@ -180,11 +167,30 @@ public partial class ModelPositionManager : Node
         SetTransformValueToModel();
     }
 
-    private void OnModelPivotGizmoChanged(int mode, Vector3 vector)
+    private void OnModelTransformChanged(int mode, Vector3 vector)
     {
         //GD.Print("OnModelPivot Gizmo TransformChanged");
         LoadTransformValueToUI();
     }
+
+    private void OnCameraZoomChanged(bool zoomIn)
+    {
+        if (zoomIn)
+        {
+            CameDistance -= ZoomValue;
+            CameraNode.Size = Math.Max(CameDistance, 1.00f);
+
+        }
+        else
+        {
+            CameDistance += ZoomValue;
+            CameraNode.Size = Math.Max(CameDistance, 1.00f);
+        }
+
+        LoadTransformValueToUI();
+
+    }
+
 
 
 

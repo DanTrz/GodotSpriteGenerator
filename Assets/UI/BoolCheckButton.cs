@@ -7,6 +7,7 @@ public partial class BoolCheckButton : CheckButton
     {
         UpdateButtonText();
         this.Pressed += UpdateButtonText;
+
     }
 
     private void UpdateButtonText()

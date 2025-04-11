@@ -146,7 +146,7 @@ public partial class MainInterfaceUI : Node
 
         if (!GlobalUtil.HasDirectory(globalizedSavePath, this).Result)
         {
-            GD.Print("Directory does NOT exist: " + globalizedSavePath);
+            //GD.Print("Directory does NOT exist: " + globalizedSavePath);
             globalizedSavePath = "user://"; // Fallback to a safe default
         }
 
