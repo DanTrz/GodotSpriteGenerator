@@ -7,9 +7,6 @@ using Godot;
 
 public partial class SpriteGenerator : Node
 {
-    // [Export] public Button Pixel2DTest;
-    // [Export] public PanelContainer Pixel2DShaderPanel;
-
     [Export] public OptionButton AnimMethodOptionBtn;
     [Export] public CheckButton GenerateSpriteSheetCheckBtn;
     [Export] public LineEdit SpriteSheetNameTextEdit;
@@ -40,7 +37,8 @@ public partial class SpriteGenerator : Node
     [Export] public int FrameSkipStep = 4; // Control how frequently frames are captured
     [Export] public bool ClearFolderBeforeGeneration = true;
     [Export(PropertyHint.Range, "1,4,1")] private float _animationPlaybackSpeed = 1.0f;
-    [Export] public OptionButton SpriteSizeOptionButton;
+    //[Export] public OptionButton? SpriteSizeOptionButton;
+    public OptionButton SpriteSizeOptionButton => field ??= GetNodeOrNull<OptionButton>("%SpriteSizeOptionButton");
     [Export] public OptionButton EffectsChoicesOptionBtn;
     [Export] public OptionButton PixelationLevelOptionBtn;
     [Export] public SliderValueBox Outline3DValueSlider;
@@ -840,7 +838,7 @@ public partial class SpriteGenerator : Node
 
     private void OnDitheringStrenghtChanged(double value)
     {
-        if (ImgColorReductionTextRect.Material is ShaderMaterial shaderMaterial)
+        if (ImgColorReductionTextRect?.Material is ShaderMaterial shaderMaterial)
         {
             shaderMaterial.SetShaderParameter("dither_strength", value);
         }
@@ -902,12 +900,12 @@ public partial class SpriteGenerator : Node
 
     private void OnLoadAllAnimationsPressed()
     {
-        AnimSelectionItemList.Clear();
+        AnimSelectionItemList?.Clear();
 
         foreach (var animationItem in _animationPlayer.GetAnimationList())
         {
             if (animationItem == "RESET" || animationItem == "TPose") continue;
-            AnimSelectionItemList.AddItem(animationItem, AnimSelectionItemList.ICON_UNSELECTED, true);
+            AnimSelectionItemList?.AddItem(animationItem, AnimSelectionItemList.ICON_UNSELECTED, true);
 
         }
     }

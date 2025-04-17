@@ -27,19 +27,25 @@ public partial class ShowHideButton : Button
 
     private void TogglePanel()
     {
-        foreach (var controlNode in TargetControlNodes)
+        if (TargetControlNodes != null)
         {
-            controlNode.Visible = !controlNode.Visible;
-            UpdateLabelText(controlNode);
+            foreach (var controlNode in TargetControlNodes)
+            {
+                controlNode.Visible = !controlNode.Visible;
+                UpdateLabelText(controlNode);
+            }
         }
     }
 
     private void TogglePanel(bool startOpen)
     {
-        foreach (var controlNode in TargetControlNodes)
+        if (TargetControlNodes != null)
         {
-            controlNode.Visible = startOpen;
-            UpdateLabelText(controlNode);
+            foreach (var controlNode in TargetControlNodes)
+            {
+                controlNode.Visible = startOpen;
+                UpdateLabelText(controlNode);
+            }
         }
     }
 

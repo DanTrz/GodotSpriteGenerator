@@ -60,13 +60,13 @@ public partial class PaletteLoader : MarginContainer
 
     private void OnClearPersistColorsBtnPressed()
     {
-        PersistColorListGridContainer.ClearGridList();
+        PersistColorListGridContainer?.ClearGridList();
         PersistPaletteColors.Clear();
         CombinedPaletteColors.Clear();
 
         CombinedPaletteColors = ExternalPaletteColors;
 
-        Callable.From(() => GlobalEvents.Instance.OnPaletteChanged?.Invoke(CombinedPaletteColors)).CallDeferred();
+        Callable.From(() => GlobalEvents.Instance?.OnPaletteChanged?.Invoke(CombinedPaletteColors)).CallDeferred();
 
         //GlobalEvents.Instance.OnPaletteChanged.Invoke(CombinedPaletteColors);
     }
@@ -98,7 +98,7 @@ public partial class PaletteLoader : MarginContainer
         ExternalPaletteColors.Clear();
         CombinedPaletteColors.Clear();
 
-        ExtPaletteListGridContainer.ClearGridList();
+        ExtPaletteListGridContainer?.ClearGridList();
 
         await LoadTextFromHexFile(); // We load the result from this into currentHextFileText;
         ExternalPaletteColors = GetHexFileColors(currentHextFileText);
@@ -106,8 +106,8 @@ public partial class PaletteLoader : MarginContainer
         var godotPersistPalette = GlobalUtil.GetGodotArrayFromColorList(PersistPaletteColors);
         CombinedPaletteColors = ExternalPaletteColors + godotPersistPalette;
 
-        GlobalUtil.PrintActionTargetListeners(GlobalEvents.Instance.OnPaletteChanged, "Global OnPaletteChanged");
-        GlobalEvents.Instance.OnPaletteChanged?.Invoke(CombinedPaletteColors);
+        //GlobalUtil.PrintActionTargetListeners(GlobalEvents.Instance?.OnPaletteChanged, "Global OnPaletteChanged");
+        GlobalEvents.Instance?.OnPaletteChanged?.Invoke(CombinedPaletteColors);
 
         UpdatePaletteListGrid(ExternalPaletteColors, ExtPaletteListGridContainer);
 
@@ -126,11 +126,11 @@ public partial class PaletteLoader : MarginContainer
             ExternalPaletteColors = paletteColors;
         }
 
-        paletteListGrid.ClearGridList();
+        paletteListGrid?.ClearGridList();
 
         foreach (var color in paletteColors)
         {
-            paletteListGrid.AddGridItem(color);
+            paletteListGrid?.AddGridItem(color);
         }
     }
 

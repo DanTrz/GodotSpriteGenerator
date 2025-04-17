@@ -5,12 +5,19 @@
     <EnableDynamicLoading>true</EnableDynamicLoading>
     <Deterministic>false</Deterministic>
 
-    <!-- AOT Options and SmallerBuild -->
-    <UseNativeAot>true</UseNativeAot>
+    <!-- AOT -->
     <PublishAot>true</PublishAot>
+    <!-- <Nullable>enable</Nullable> -->
+
+    <!-- AOT Reduce Size options - Remove it not working-->
     <InvariantGlobalization>true</InvariantGlobalization> <!-- Optional: smaller binary -->
     <IlcOptimizationPreference>Size</IlcOptimizationPreference> <!-- Optional - Optimze for Size or Speed -->
     <StripSymbols>true</StripSymbols>  <!-- Optional: smaller binary -->
 
   </PropertyGroup>
 </Project>
+
+  
+
+
+
