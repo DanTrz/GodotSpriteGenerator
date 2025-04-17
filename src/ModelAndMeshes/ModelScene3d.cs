@@ -32,14 +32,14 @@ public partial class ModelScene3d : Node3D
         {
             if (mouseEvent.ButtonIndex == MouseButton.WheelUp && mouseEvent.Pressed)
             {
-                Log.Debug("WheelUp Detected " + this.Name);
+                //Log.Debug("WheelUp Detected " + this.Name);
                 //Zoom Out ////bool True = Zoom In, False = Zoom Out
                 GlobalEvents.Instance.OnCameraZoomChanged?.Invoke(false);
 
             }
             else if (mouseEvent.ButtonIndex == MouseButton.WheelDown && mouseEvent.Pressed)
             {
-                Log.Debug("WheelDown Detected " + this.Name);
+                //Log.Debug("WheelDown Detected " + this.Name);
                 GlobalEvents.Instance.OnCameraZoomChanged?.Invoke(true);
                 //Zoom In ////bool True = Zoom In, False = Zoom Out
             }
@@ -49,7 +49,7 @@ public partial class ModelScene3d : Node3D
         else if (@event is InputEventMouseMotion motionEvent && _isPanning)
         {
 
-            Log.Debug("Scroll Requested = " + motionEvent.Relative + "  From: " + this.Name);
+            //Log.Debug("Scroll Requested = " + motionEvent.Relative + "  From: " + this.Name);
             GlobalEvents.Instance.OnPaningScroll?.Invoke(motionEvent);
             GetViewport().SetInputAsHandled();
         }
@@ -84,11 +84,7 @@ public partial class ModelScene3d : Node3D
 
     private void AddChildrenStaticBodyCollisionShape()
     {
-        //find the pivot node (Model3DMainPivotControl)
         var pivotNode = GlobalUtil.GetAllChildNodesByType<Model3DMainPivotControl>(this).FirstOrDefault();
-        //var pivotNode = GetChildren().FirstOrDefault(c => c.GetType() == typeof(Model3DMainPivotControl));
-        // var pivotNode = GetNodeOrNull<Model3DMainPivotControl>("%Model3DPivotControl");
-
         var allChildMesheInstance3D = GlobalUtil.GetAllChildNodesByType<MeshInstance3D>(pivotNode);
         foreach (var meshInstance3dObj in allChildMesheInstance3D)
         {
@@ -101,62 +97,5 @@ public partial class ModelScene3d : Node3D
 
         }
     }
-
-
-    // private void HandleGizmoSelectionLegacy(Gizmo3D gizmo, InputEventMouseButton button)
-    // {
-    //     // Raycast from the camera
-    //     Camera3D camera = GetViewport().GetCamera3D();
-    //     Vector3 dir = camera.ProjectRayNormal(button.Position);
-    //     Vector3 from = camera.ProjectRayOrigin(button.Position);
-    //     var result = GetWorld3D().DirectSpaceState.IntersectRay(new PhysicsRayQueryParameters3D()
-    //     {
-    //         From = from,
-    //         To = from + dir * 1000.0f
-    //     });
-    //     if (result.Count == 0)
-    //     {
-    //         gizmo.ClearSelection();
-    //         return;
-    //     }
-
-    //     Log.Debug("### Gizmo Logic => Model Click detected from : " + this.Name);
-
-    //     Node collider = (Node)result["collider"];
-    //     Log.Debug("### Gizmo Logic => colliderNode Clicked : " + collider.Name);
-    //     //Node3D targetNode = collider.GetParent<Node3D>().GetParent<Node3D>();
-
-
-    //     Model3DMainPivotControl targetNode = GlobalUtil.GetFirstParentNodeByType<Model3DMainPivotControl>(collider, 4);//TODO TO a recursive search on all paarents until you get to Model3DMainPivotControl
-
-    //     if (targetNode == null || targetNode.Name == "ShaderMeshes") return;
-
-    //     Log.Debug("### Gizmo Logic => TargetNode : " + targetNode.Name);
-
-    //     if (hasNodeSelected)
-    //     {
-
-    //         if (gizmo.IsSelected(targetNode))
-    //         {
-    //             gizmo.Deselect(targetNode);
-    //             return;
-    //         }
-
-    //         gizmo.ClearSelection();
-    //         gizmo.Select(targetNode);
-    //         return;
-    //     }
-    //     else
-    //     {
-    //         gizmo.Select(targetNode);
-    //         return;
-    //     }
-    //     // if (!Gizmo.Deselect(node))
-    //     // 	Gizmo.Select(node);
-    // }
-
-
-
-
 
 }

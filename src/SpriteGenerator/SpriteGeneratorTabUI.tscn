@@ -276,7 +276,7 @@ mouse_filter = 0
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-size_flags_stretch_ratio = 2.5
+size_flags_stretch_ratio = 3.0
 mouse_filter = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_1g3je")
 GridSize = 256
@@ -293,7 +293,7 @@ mouse_target = true
 transparent_bg = true
 handle_input_locally = false
 physics_object_picking = true
-size = Vector2i(576, 718)
+size = Vector2i(634, 718)
 render_target_update_mode = 4
 script = ExtResource("4_41tmx")
 
@@ -510,6 +510,7 @@ alignment = 2
 icon_alignment = 0
 OpenedText = "Hide SpriteGeneration Options"
 ClosedText = "Show SpriteGeneration Options"
+StartOpen = true
 TargetControlNodes = [NodePath("../../../MainSpriteOptionsMarginCont")]
 UpdateTextToLabel = true
 TargetLabel = NodePath("../MainSpritePanelLabel")
@@ -534,6 +535,7 @@ layout_mode = 2
 [node name="GenSpriteSheetOptGrid" type="GridContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MainSpriteOptionsMarginCont/MainSpriteOptionsPanelCont/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+columns = 3
 script = ExtResource("17_l7hkw")
 _useSingleRowView = true
 _maxColCount = 99
@@ -1139,7 +1141,7 @@ layout_mode = 2
 [node name="ModelTypeOptGrid" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont" instance=ExtResource("22_l1mor")]
 layout_mode = 2
 theme_override_constants/h_separation = 40
-columns = 3
+columns = 2
 _maxColCount = 99
 
 [node name="ModelTypeHBoxCont" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/ModelTypeOptGrid"]

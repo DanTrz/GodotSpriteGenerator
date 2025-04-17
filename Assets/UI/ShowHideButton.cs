@@ -6,6 +6,7 @@ public partial class ShowHideButton : Button
 {
     [Export] string OpenedText = "Open";
     [Export] string ClosedText = "Close";
+    [Export] bool StartOpen = false;
     [Export] Godot.Collections.Array<Control> TargetControlNodes;
 
     [Export] bool UpdateTextToLabel = false;
@@ -19,7 +20,7 @@ public partial class ShowHideButton : Button
 #if TOOLS
         if (!Engine.IsEditorHint())
         {
-            TogglePanel();
+            TogglePanel(StartOpen);
         }
 #endif
     }
@@ -29,17 +30,31 @@ public partial class ShowHideButton : Button
         foreach (var controlNode in TargetControlNodes)
         {
             controlNode.Visible = !controlNode.Visible;
-            if (UpdateTextToLabel)
+            UpdateLabelText(controlNode);
+        }
+    }
+
+    private void TogglePanel(bool startOpen)
+    {
+        foreach (var controlNode in TargetControlNodes)
+        {
+            controlNode.Visible = startOpen;
+            UpdateLabelText(controlNode);
+        }
+    }
+
+    private void UpdateLabelText(Control controlNode)
+    {
+        if (UpdateTextToLabel)
+        {
+            if (TargetLabel != null)
             {
-                if (TargetLabel != null)
-                {
-                    TargetLabel.Text = controlNode.Visible ? OpenedText : ClosedText;
-                }
+                TargetLabel.Text = controlNode.Visible ? OpenedText : ClosedText;
             }
-            else
-            {
-                this.Text = controlNode.Visible ? OpenedText : ClosedText;
-            }
+        }
+        else
+        {
+            this.Text = controlNode.Visible ? OpenedText : ClosedText;
         }
     }
 }
