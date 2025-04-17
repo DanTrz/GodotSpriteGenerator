@@ -17,7 +17,7 @@ public partial class MainInterfaceUI : Node
     [Export] private Button _openFolderPathBtn;
     [Export] private LineEdit _spriteGenFolderPathLineEdit;
     [Export] private MarginContainer _settingsMainPanel;
-    [Export] private Button _openSettingPanelBtn;
+    //[Export] private Button _openSettingPanelBtn;
     [Export] private Button _testConfigBtn;
 
 
@@ -33,8 +33,8 @@ public partial class MainInterfaceUI : Node
         _spriteGenFolderPathLineEdit.TextChanged += (newDir) => GlobalUtil.OnFolderSelected(newDir, _spriteGenFolderPathLineEdit);
         _selectFolderPathBtn.Pressed += OnSelectFolderPathPressed;
         _openFolderPathBtn.Pressed += OnOpenFolderPathPressed;
-        _openSettingPanelBtn.Pressed += OnOpenSettingsPanelBtnPressed;
-        _settingsMainPanel.Visible = false;
+        //_openSettingPanelBtn.Pressed += OnOpenSettingsPanelBtnPressed;
+        //_settingsMainPanel.Visible = false;
         _spriteGenFolderPathLineEdit.Text = GlobalUtil.SaveFolderPath;
 
         GlobalUtil.SaveFolderPath = ProjectSettings.GlobalizePath(Const.SAVE_GAME_PATH);
@@ -53,7 +53,7 @@ public partial class MainInterfaceUI : Node
 
         if (!string.IsNullOrEmpty(selectedItemName))
         {
-            // GD.PrintT("Preset Selected: " + selectedItemName);
+            // Log.Debug("Preset Selected: " + selectedItemName);
 
             string fullLoadFilePath = Const.PRESET_SAVEDATA_FOLDER_PATH + selectedItemName;
             await SaveGameManager.Instance.LoadGameDataFromPath(fullLoadFilePath);
@@ -87,7 +87,7 @@ public partial class MainInterfaceUI : Node
                 }
                 catch (System.Exception error)
                 {
-                    GD.PrintErr("Failed to load resource as SaveGameData: " + file + "  -> Error:" + error.Message);
+                    Log.Error("Failed to load resource as SaveGameData: " + file + "  -> Error:" + error.Message);
                 }
 
             }
@@ -97,11 +97,11 @@ public partial class MainInterfaceUI : Node
     }
 
 
-    private void OnOpenSettingsPanelBtnPressed()
-    {
-        _settingsMainPanel.Visible = !_settingsMainPanel.Visible;
-        _openSettingPanelBtn.Text = _settingsMainPanel.Visible ? "Close Settings" : "Main Settings";
-    }
+    // private void OnOpenSettingsPanelBtnPressed()
+    // {
+    //     _settingsMainPanel.Visible = !_settingsMainPanel.Visible;
+    //     _openSettingPanelBtn.Text = _settingsMainPanel.Visible ? "Close Settings" : "Main Settings";
+    // }
 
 
     private async void OnLoadConfigBtnPressed()
@@ -146,7 +146,7 @@ public partial class MainInterfaceUI : Node
 
         if (!GlobalUtil.HasDirectory(globalizedSavePath, this).Result)
         {
-            //GD.Print("Directory does NOT exist: " + globalizedSavePath);
+            //Log.Debug("Directory does NOT exist: " + globalizedSavePath);
             globalizedSavePath = "user://"; // Fallback to a safe default
         }
 
@@ -171,7 +171,7 @@ public partial class MainInterfaceUI : Node
         }
         else
         {
-            GD.PrintErr("Directory does not exist: " + directory);
+            Log.Error("Directory does not exist: " + directory);
 
             using Godot.AcceptDialog acceptDialog = new Godot.AcceptDialog
             {

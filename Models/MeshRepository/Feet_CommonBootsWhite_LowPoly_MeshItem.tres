@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ArrayMeshDataObject" load_steps=3 format=3 uid="uid://jrivel5usubj"]
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://jrivel5usubj"]
 
 [ext_resource type="ArrayMesh" uid="uid://bmu5mx35q76pc" path="res://Models/FullModels/BaseModel/LowPoly/WhiteCommonParts/WhiteCommonBoots_CommonBoots.res" id="1_xleak"]
 [ext_resource type="Script" uid="uid://cmuqvgdb2248c" path="res://src/ModelAndMeshes/ArrayMeshDataObject.cs" id="2_8e616"]

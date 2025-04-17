@@ -24,7 +24,7 @@ public partial class ImageEditorMainPanel : PanelContainer
     [Export] private MarginContainer _effectStatusMainPanel;
 
     //[Export] public CheckButton UseExternalPaletteChkBtn;
-    [Export] public PaletteLoader PaletteLoader;
+    [Export] public PaletteLoaderFlowUi PaletteLoaderFlow;
 
     [Export] public Button LoadExternalImg;
 
@@ -185,7 +185,7 @@ public partial class ImageEditorMainPanel : PanelContainer
             var originalColorsList = ImgEditorCore.GetColorFrequencies(imageToLoad);
             int colorsCount = originalColorsList.Count;
 
-            //GD.PrintT("## Loaded IMG -> Original Colors Count = " + colorsCount);
+            //Log.Debug("## Loaded IMG -> Original Colors Count = " + colorsCount);
 
             List<Color> originalColorsListSorted = originalColorsList.OrderByDescending(pair => pair.Value).Select(pair => pair.Key).ToList();
 
@@ -207,7 +207,7 @@ public partial class ImageEditorMainPanel : PanelContainer
         }
         else
         {
-            GD.PrintErr("_ImgEditor or _ImgEditor.ImgTextRect is null!");  // Debugging: Check initialization
+            Log.Error("_ImgEditor or _ImgEditor.ImgTextRect is null!");  // Debugging: Check initialization
         }
 
     }
@@ -249,7 +249,7 @@ public partial class ImageEditorMainPanel : PanelContainer
 
         //GET UI VALUES AND SET TO THE IMAGE EDITOR
         ImgEditorCore.EnableColorReduction = ColorReductionCheckbox?.ButtonPressed ?? false;
-        _useExternalPalette = PaletteLoader.UseExternalPaletteCheckBtn?.ButtonPressed ?? false;
+        _useExternalPalette = PaletteLoaderFlow.UseExternalPaletteCheckBtn?.ButtonPressed ?? false;
         ImgEditorCore._useExternalPalette = _useExternalPalette;
         ImgEditorCore.SaturationValue = (float)(SaturationSlider?.Value ?? 1.0f);
         ImgEditorCore.BrightnessValue = (float)(BrightnessSlider?.Value ?? 0.0f);
@@ -271,7 +271,7 @@ public partial class ImageEditorMainPanel : PanelContainer
         else
         {
             //If WE DO HAVE color reduction, we also count the Persistent Colors + whatever is the user input in the spinbox
-            totalColors = (PaletteLoader.PersistPaletteColors?.Count ?? 0) + (int)(ColorCountSpinBox?.Value ?? 0);
+            totalColors = (PaletteLoaderFlow.PersistPaletteColors?.Count ?? 0) + (int)(ColorCountSpinBox?.Value ?? 0);
         }
         //_colorCountSpinBox.MaxValue = totalColors;
         //_colorCountSpinBox.Value = totalColors;
@@ -281,7 +281,7 @@ public partial class ImageEditorMainPanel : PanelContainer
         //FOR NON_EXTERNAL PALETTE -> APPLY LOGIC TO GET THE PALETTE COLORS FROM ORIGINAL IMAGE + PERSISTENT COLORS
         if (!_useExternalPalette)
         {
-            int persistentColorsCount = PaletteLoader.PersistPaletteColors?.Count ?? 0;
+            int persistentColorsCount = PaletteLoaderFlow.PersistPaletteColors?.Count ?? 0;
 
             int paletteSize = ImgEditorCore.NumColorsLocal - persistentColorsCount;
             if (paletteSize <= 0) paletteSize = ImgEditorCore.NumColorsLocal;//Safety net code line to not have it as Zero. 
@@ -294,11 +294,11 @@ public partial class ImageEditorMainPanel : PanelContainer
         //FOR EXTERNAL PALETTE WE ARE SETTING THIS IN THE PALETTE LOADER PANEL - SEE METHOD OnPaletteChanged();
 
         //FINAL UPDATE OF THE UI ELEMENTS + SET THE SHADER PARAMETERS and SHADER PALETTE
-        ImgEditorCore.ShaderPalette = GlobalUtil.GetGodotArrayFromColorList(PaletteLoader.PersistPaletteColors ?? new List<Color>()) + _currentPaletteColors;
+        ImgEditorCore.ShaderPalette = GlobalUtil.GetGodotArrayFromColorList(PaletteLoaderFlow.PersistPaletteColors ?? new List<Color>()) + _currentPaletteColors;
         ImgEditorCore.UpdateShaderParameters();
-        PaletteLoader.UpdatePaletteListGrid(_currentPaletteColors);
+        PaletteLoaderFlow.UpdatePaletteFlowList(_currentPaletteColors);
 
-        // GD.PrintT("SetImgEditorValues -> Total colors = " + ImgEditorCore.ShaderPalette?.Count
+        // Log.Debug("SetImgEditorValues -> Total colors = " + ImgEditorCore.ShaderPalette?.Count
         // + " Persist Colors = " + PaletteLoader.PersistPaletteColors?.Count
         //  + " Current Img Colors = " + _currentPaletteColors?.Count);
 
@@ -307,7 +307,7 @@ public partial class ImageEditorMainPanel : PanelContainer
 
     private void OnPaletteChangedInImageEditor(Godot.Collections.Array<Color> list)
     {
-        //GD.Print("Palette changed to # : " + list.Count);
+        //Log.Debug("Palette changed to # : " + list.Count);
         ImgEditorCore.MaxNumColors = list.Count;
         ImgEditorCore.NumColorsLocal = list.Count;
         _currentPaletteColors = list;
@@ -330,17 +330,17 @@ public partial class ImageEditorMainPanel : PanelContainer
 
     private void OnEffectsChangesStarted(string fromNode)
     {
-        //GD.PrintT("Run: OnEffectsChangesStarted");
+        //Log.Debug("Run: OnEffectsChangesStarted");
         _effectStatusLabel.Text = "Processing Image updates....";
         _effectStatusMainPanel.Visible = true;
     }
 
     private void OnEffectsChangesEnded(string fromNode, Godot.Collections.Array<Color> list)
     {
-        //GD.PrintT("Run: OnEffectsChangesEnded");
+        //Log.Debug("Run: OnEffectsChangesEnded");
         _effectStatusLabel.Text = "Effects Applied !!! ";
         _effectStatusMainPanel.Visible = false;
-        PaletteLoader.UpdatePaletteListGrid(list);
+        PaletteLoaderFlow.UpdatePaletteFlowList(list);
     }
 
     // private async Task ApplyEffectsAsync(bool doColorReduction, int colorCount, bool doOutline,
@@ -408,7 +408,7 @@ public partial class ImageEditorMainPanel : PanelContainer
         await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
         Texture2D texture = (Texture2D)ImgEditorCore.HDSubviewPort.GetTexture();
         Image modifiedImage = (Image)texture.GetImage();
-        //GD.Print("Image prepared size:" + modifiedImage.GetSize());
+        //Log.Debug("Image prepared size:" + modifiedImage.GetSize());
         await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
 
         //OPEN DIALOG TO SAVE TO A PATH
@@ -426,7 +426,7 @@ public partial class ImageEditorMainPanel : PanelContainer
 
         if (!GlobalUtil.HasDirectory(globalizedPath, this).Result)
         {
-            //GD.Print("Directory does NOT exist: " + folderCurrentDir);
+            //Log.Debug("Directory does NOT exist: " + folderCurrentDir);
             globalizedPath = "res://"; // Fallback to a safe default
         }
         fileDialog.CurrentDir = globalizedPath; //Set Current Directory at the end after adding Child to Scene otherwise it was not working
@@ -436,13 +436,13 @@ public partial class ImageEditorMainPanel : PanelContainer
 
     private void OnFileSelected(string path)
     {
-        //GD.Print("Selected file path: " + path); //handle file selection
+        //Log.Debug("Selected file path: " + path); //handle file selection
     }
 
     private void SaveImageToFile(Image image, string filePath)
     {
         Error err = image.SavePng(filePath);
-        if (err != Error.Ok) GD.PrintErr("Error saving image: " + err);
+        if (err != Error.Ok) Log.Error("Error saving image: " + err);
     }
 
     //Method used to update the TextureRect with the modified image
@@ -460,13 +460,13 @@ public partial class ImageEditorMainPanel : PanelContainer
     public void OnSaveData(SaveGameData newSaveGameData)
     {
 
-        //GD.PrintT("Started OnSaveData from:", this.Name);
+        //Log.Debug("Started OnSaveData from:", this.Name);
     }
 
     public void OnLoadData(SaveGameData newLoadData)
     {
 
-        //GD.PrintT("Started OnLoadData from:", this.Name);
+        //Log.Debug("Started OnLoadData from:", this.Name);
         //UpdateUIElementsOnLoad();
         UpdateTexture(_originalImage);
         SetImgEditorValues();

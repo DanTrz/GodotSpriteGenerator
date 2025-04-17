@@ -66,5 +66,6 @@ bones/2/scale = Vector3(1, 1, 1)
 [node name="HairMesh" type="MeshInstance3D" parent="HairNode/Skeleton3D"]
 unique_name_in_owner = true
 transform = Transform3D(0.950429, -0.12172, -0.286128, 0.12172, 0.992404, -0.0178563, 0.286128, -0.0178563, 0.958025, 0, 0, 0)
+cast_shadow = 0
 mesh = SubResource("ArrayMesh_34hpu")
 skin = SubResource("Skin_of2ei")

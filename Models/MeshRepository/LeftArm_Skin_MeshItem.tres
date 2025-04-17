@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ArrayMeshDataObject" load_steps=3 format=3 uid="uid://dtaxr0nf0geq1"]
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://dtaxr0nf0geq1"]
 
 [ext_resource type="ArrayMesh" uid="uid://dbktgjgo66ygb" path="res://Models/FullModels/BaseModel/LowPoly/BaseModel_LowPolyVersion02_LowPoly_LEFT_ARM.res" id="1_88i10"]
 [ext_resource type="Script" uid="uid://cmuqvgdb2248c" path="res://src/ModelAndMeshes/ArrayMeshDataObject.cs" id="3_ai1sv"]

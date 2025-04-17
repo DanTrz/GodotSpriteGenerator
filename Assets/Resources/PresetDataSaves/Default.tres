@@ -1,10 +1,11 @@
-[gd_resource type="Resource" script_class="SaveGameData" load_steps=2 format=3 uid="uid://casa0df2uvmdu"]
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://casa0df2uvmdu"]
 
 [ext_resource type="Script" uid="uid://bgd3occamb4ig" path="res://Globals/SaveGameManager/SaveGameData.cs" id="1_7tswc"]
 
 [resource]
 script = ExtResource("1_7tswc")
 SaveFileName = "C:/Users/danie/AppData/Roaming/Godot/app_userdata/Godot Sprite Generator/OriginalLoadSettings.tres"
+CreateSpriteSheet = false
 SpriteSize = 512
 SpriteSizeOptionButtonSelected = 4
 PixelResolution = 512

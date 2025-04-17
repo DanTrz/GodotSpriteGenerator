@@ -30,7 +30,7 @@ public partial class Model3DMainPivotControl : Node3D
     //     private void OnGizmoTargetTransformChanged(int mode, Vector3 value)
     //     {
     //         //Mode 1 = Rotation // Mode 2 = Position // Mode 3 = Scale
-    //         GD.PrintT($"GismoTransform ended value: {value} and mode: {mode}");
+    //         Log.Debug($"GismoTransform ended value: {value} and mode: {mode}");
     //         //TODO: Update the Node ModelManager to sync the ModelPosition and ModelRotation
     //     }
 
@@ -49,7 +49,7 @@ public partial class Model3DMainPivotControl : Node3D
     //             if (allCollisionShapes.Count == 0)
     //             {
     //                 meshInstance3dObj.CreateConvexCollision();
-    //                 GD.PrintT($"Adding ConvexCollisionto: {meshInstance3dObj.Name}");
+    //                 Log.Debug($"Adding ConvexCollisionto: {meshInstance3dObj.Name}");
     //             }
 
     //         }
@@ -61,7 +61,7 @@ public partial class Model3DMainPivotControl : Node3D
     //     // {
     //     //     if (@event is InputEventMouseButton mouseButton && mouseButton.ButtonIndex == MouseButton.Left && mouseButton.Pressed)
     //     //     {
-    //     //         GD.Print("Mouse Click _Input Detected: " + @event + "From: " + this.Name);
+    //     //         Log.Debug("Mouse Click _Input Detected: " + @event + "From: " + this.Name);
     //     //         //HandleGizmoSelection(Gizmo, mouseButton);
     //     //     }
     //     // }
@@ -69,7 +69,7 @@ public partial class Model3DMainPivotControl : Node3D
 
     //     public override void _UnhandledInput(InputEvent @event)
     //     {
-    //         //GD.Print("_UnhandledInput Detected: " + @event + "From: " + this.Name);
+    //         //Log.Debug("_UnhandledInput Detected: " + @event + "From: " + this.Name);
     //         // Swap gizmo with custom gizmo or vice versa
     //         // if (@event.IsActionPressed(customGizmo))
     //         // {
@@ -101,7 +101,7 @@ public partial class Model3DMainPivotControl : Node3D
     //         //Detect mouse click and handle selection
     //         if (@event is InputEventMouseButton mouseButton && mouseButton.ButtonIndex == MouseButton.Left && mouseButton.Pressed)
     //         {
-    //             GD.Print("Mouse Click _UnHandledINput Detected: " + @event + "From: " + this.Name);
+    //             Log.Debug("Mouse Click _UnHandledINput Detected: " + @event + "From: " + this.Name);
     //             HandleGizmoSelection(Gizmo, mouseButton);
     //         }
     //     }
@@ -123,13 +123,13 @@ public partial class Model3DMainPivotControl : Node3D
     //             return;
     //         }
 
-    //         GD.Print("### Gizmo Logic => Model Click detected from : " + this.Name);
+    //         Log.Debug("### Gizmo Logic => Model Click detected from : " + this.Name);
 
     //         Node collider = (Node)result["collider"];
     //         //Node3D targetNode = collider.GetParent<Node3D>().GetParent<Node3D>();
     //         Node3D targetNode = collider.GetParent<Node3D>().GetParent<Node3D>();//TODO TO a recursive search on all paarents until you get to Model3DMainPivotControl
 
-    //         GD.Print("### Gizmo Logic => TargetNode : " + targetNode.Name);
+    //         Log.Debug("### Gizmo Logic => TargetNode : " + targetNode.Name);
 
     //         if (hasNodeSelected)
     //         {

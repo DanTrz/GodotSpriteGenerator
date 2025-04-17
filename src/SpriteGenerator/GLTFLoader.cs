@@ -20,7 +20,7 @@ public partial class GLTFLoader : Node
 
             await parentNode.ToSignal(parentNode.GetTree(), SceneTree.SignalName.ProcessFrame);
 
-            GD.PrintT($"External Model loaded from: {filePath}");
+            Log.Debug($"External Model loaded from: {filePath}");
 
             return gltfSceneRootNode;
 
@@ -28,7 +28,7 @@ public partial class GLTFLoader : Node
         }
         else
         {
-            GD.PrintErr($"Couldn't load glTF scene (error code: {error}).");
+            Log.Error($"Couldn't load glTF scene (error code: {error}).");
         }
 
 

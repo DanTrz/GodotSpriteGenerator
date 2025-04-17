@@ -1,7 +1,6 @@
-[gd_scene load_steps=16 format=3 uid="uid://bgkmxyw21pc1m"]
+[gd_scene load_steps=15 format=3 uid="uid://bgkmxyw21pc1m"]
 
 [ext_resource type="Script" uid="uid://de2sqbhiahmo6" path="res://Models/FullModels/godot_plush/components/player/player.gd" id="1_ms4x1"]
-[ext_resource type="PackedScene" uid="uid://dmyrflud401tg" path="res://Models/FullModels/godot_plush/components/godot_plush/godot_plush_skin.tscn" id="2_mtsks"]
 [ext_resource type="PackedScene" uid="uid://c0b71d2b1hdp6" path="res://Models/FullModels/godot_plush/components/orbit_control/orbit_view.tscn" id="3_hcr6r"]
 [ext_resource type="Material" uid="uid://fkuklawrv3wp" path="res://Models/FullModels/godot_plush/components/player/vfx/dust_mat.tres" id="4_j7qt1"]
 
@@ -65,7 +64,7 @@ jump_height = 3.0
 [node name="VisualRoot" type="Node3D" parent="."]
 unique_name_in_owner = true
 
-[node name="GodotPlushSkin" parent="VisualRoot" instance=ExtResource("2_mtsks")]
+[node name="GodotPlushSkin" parent="VisualRoot"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 unique_name_in_owner = true

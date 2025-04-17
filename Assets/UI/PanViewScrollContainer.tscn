@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bmqpc4ysvtrkq"]
+
+[ext_resource type="Script" uid="uid://dpr7qdbdfmkmq" path="res://Assets/UI/PanViewScrollContainer.cs" id="1_mvue8"]
+
+[node name="PanViewScrollContainer" type="ScrollContainer"]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_mvue8")

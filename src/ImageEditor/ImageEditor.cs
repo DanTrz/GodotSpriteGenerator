@@ -63,7 +63,7 @@ public partial class ImageEditor : PanelContainer
 
         if (ImgTextRect.Material is not ShaderMaterial shaderMaterial)
         {
-            GD.PrintErr("Material is not a ShaderMaterial.");
+            Log.Error("Material is not a ShaderMaterial.");
             return;
         }
 
@@ -94,7 +94,7 @@ public partial class ImageEditor : PanelContainer
 
         if (ImgTextRect.Material is not ShaderMaterial shaderMaterial)
         {
-            GD.PrintErr("Material is not a ShaderMaterial. Cannot get Shader value");
+            Log.Error("Material is not a ShaderMaterial. Cannot get Shader value");
             return false;
         }
         var ShaderPaletteLocal = (Godot.Collections.Array<Color>)shaderMaterial.GetShaderParameter("palette");
@@ -103,11 +103,11 @@ public partial class ImageEditor : PanelContainer
 
         if (NumColorsShaderValue != (numColorsToCheck + PersistColorCount))
         {
-            //GD.PrintT("## -- Shader Color need updating");
+            //Log.Debug("## -- Shader Color need updating");
             return true;
         }
 
-        //GD.PrintT("## -- Shader Color doesn't need updating");
+        //Log.Debug("## -- Shader Color doesn't need updating");
         return false;
 
     }
@@ -134,7 +134,7 @@ public partial class ImageEditor : PanelContainer
 
             if (image.GetSize() == Vector2.Zero)
             {
-                GD.PrintErr("Texture has zero size, dynamic palette generation will not work.");
+                Log.Error("Texture has zero size, dynamic palette generation will not work.");
                 return new Godot.Collections.Array<Color> { Colors.Black };
             }
             else
@@ -148,7 +148,7 @@ public partial class ImageEditor : PanelContainer
 
             }
         }
-        GD.PrintErr("Cannot get original texture palette. Texture is null or not a Texture2D.");
+        Log.Error("Cannot get original texture palette. Texture is null or not a Texture2D.");
         return new Godot.Collections.Array<Color> { Colors.Black };
 
     }
@@ -163,11 +163,11 @@ public partial class ImageEditor : PanelContainer
     /// <returns>Returns the Colors that are more frequently present in the image, sorted by most frequent to least frequent..</returns>
     public async Task<List<Color>> UpdatedKMeansClusteringAsync(Image image, int colorsK)
     {
-        //GD.Print("KMeansClustering Async: Max Colors to check = " + colorsK);
+        //Log.Debug("KMeansClustering Async: Max Colors to check = " + colorsK);
 
         if (colorsK > MAX_PALETTE_SIZE)
         {
-            GD.PrintErr("Image has more than supported palette size. Max palette size is " + MAX_PALETTE_SIZE);
+            Log.Error("Image has more than supported palette size. Max palette size is " + MAX_PALETTE_SIZE);
             colorsK = MAX_PALETTE_SIZE;
 
             // GlobalUtil.ShowErrorDialog("Error: Max Palette Size",
@@ -190,7 +190,7 @@ public partial class ImageEditor : PanelContainer
             {
                 colorFrequencies = colorFrequencies.OrderByDescending(pair => pair.Value).Take(Math.Min(colorsK, colorFrequencies.Count)).ToDictionary(pair => pair.Key, pair => pair.Value);
 
-                GD.PrintT("GetUniqueColorsCount => Forced palette limit to =" + colorsK);
+                Log.Debug("GetUniqueColorsCount => Forced palette limit to =" + colorsK);
             }
 
             // 2. Handle cases where the number of unique colors is less than k.
@@ -262,7 +262,7 @@ public partial class ImageEditor : PanelContainer
 
         });
 
-        //GD.Print("KMeansClusteringAsync Completed with colors = " + ImgkMeansClusterList.Count);
+        //Log.Debug("KMeansClusteringAsync Completed with colors = " + ImgkMeansClusterList.Count);
         //GlobalEvents.Instance.OnEffectsChangesEnded.Invoke(this.Name, ColorListToGodotArray(ImgkMeansClusterList));
 
         return ImgkMeansClusterList;
@@ -270,7 +270,7 @@ public partial class ImageEditor : PanelContainer
 
     public void UpdatedKMeansClusteringSyncronous(Image image, int colorsK)
     {
-        //GD.Print("KMeansClustering Syncronous: Max Colors to check = " + colorsK);
+        //Log.Debug("KMeansClustering Syncronous: Max Colors to check = " + colorsK);
 
         if (image == null || image.GetWidth() == 0 || image.GetHeight() == 0)
         {
@@ -345,7 +345,7 @@ public partial class ImageEditor : PanelContainer
             }
         }
 
-        //GD.Print("KMeansClustering Completed with colors = " + ImgkMeansClusterList.Count);
+        //Log.Debug("KMeansClustering Completed with colors = " + ImgkMeansClusterList.Count);
         ImgkMeansClusterList = centroids;
 
     }
@@ -374,7 +374,7 @@ public partial class ImageEditor : PanelContainer
                 }
             }
         }
-        //GD.Print("GetUniqueColorsCount => Result of unique colors = " + colorFrequencies.Count);
+        //Log.Debug("GetUniqueColorsCount => Result of unique colors = " + colorFrequencies.Count);
         return colorFrequencies;
     }
 

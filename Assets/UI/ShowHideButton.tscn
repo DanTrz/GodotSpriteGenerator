@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://dtpxpvmwfluav"]
+
+[ext_resource type="Texture2D" uid="uid://cr55nbf56ybvc" path="res://Assets/UI/Basic UI spritesheet.png" id="1_ov38g"]
+[ext_resource type="Script" uid="uid://bd7dx601ulltk" path="res://Assets/UI/ShowHideButton.cs" id="2_lps0u"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0w5gm"]
+atlas = ExtResource("1_ov38g")
+region = Rect2(258, 112, 13, 16)
+
+[node name="ShowHideButton" type="Button" node_paths=PackedStringArray("TargetControlNodes")]
+custom_minimum_size = Vector2(24, 20)
+icon = SubResource("AtlasTexture_0w5gm")
+icon_alignment = 2
+script = ExtResource("2_lps0u")
+TargetControlNodes = []

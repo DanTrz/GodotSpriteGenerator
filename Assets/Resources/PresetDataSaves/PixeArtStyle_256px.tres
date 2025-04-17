@@ -1,10 +1,11 @@
-[gd_resource type="Resource" script_class="SaveGameData" load_steps=2 format=3 uid="uid://cborud2s6s10u"]
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://cborud2s6s10u"]
 
 [ext_resource type="Script" uid="uid://bgd3occamb4ig" path="res://Globals/SaveGameManager/SaveGameData.cs" id="1_bdstd"]
 
 [resource]
 script = ExtResource("1_bdstd")
 SaveFileName = "C:/Users/danie/AppData/Roaming/Godot/app_userdata/Godot Sprite Generator/PixeArtStyle_256px.tres"
+CreateSpriteSheet = false
 SpriteSize = 256
 SpriteSizeOptionButtonSelected = 2
 PixelResolution = 256

@@ -63,7 +63,7 @@ script = ExtResource("1_pb3o0")
 [node name="BaseModel_LowPoly" parent="Model3DPivotControl" instance=ExtResource("2_hkp8x")]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.825212, 0.564823, 0, -0.564823, 0.825212, 0.246984, 4.85926, 5.85207)
+transform = Transform3D(1, 0, 0, 0, 0.825212, 0.564823, 0, -0.564823, 0.825212, 0.246984, 4.85926, 12.8521)
 light_energy = 2.0
 shadow_enabled = true
 sky_mode = 1
@@ -89,3 +89,4 @@ skeleton = NodePath("../..")
 
 [node name="Gizmo3D" type="Node3D" parent="."]
 script = ExtResource("5_666by")
+Mode = 3

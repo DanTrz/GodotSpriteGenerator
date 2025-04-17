@@ -1,10 +1,13 @@
-[gd_scene load_steps=12 format=3 uid="uid://bn1rbewiias3g"]
+[gd_scene load_steps=15 format=3 uid="uid://bs23gsk0tf6t8"]
 
-[ext_resource type="Script" uid="uid://cacdskl17dkmj" path="res://src/ImageEditor/ImageEditorMainPanel.cs" id="1_xk0rj"]
-[ext_resource type="PackedScene" uid="uid://cnhj6mgja4h5a" path="res://src/ImageEditor/ImageEditorCore.tscn" id="2_s1l55"]
-[ext_resource type="LabelSettings" uid="uid://usv7beyw1bj8" path="res://Assets/UI/Theme/Label.tres" id="3_so0ax"]
-[ext_resource type="PackedScene" uid="uid://dbast2ob2q2mv" path="res://Assets/UI/SliderValueBox.tscn" id="4_v6qpd"]
-[ext_resource type="PackedScene" uid="uid://244h3jjjyk25" path="res://src/ImageEditor/PaletteImporter/PaletteLoaderUI.tscn" id="5_so0ax"]
+[ext_resource type="Script" uid="uid://cacdskl17dkmj" path="res://src/ImageEditor/ImageEditorMainPanel.cs" id="1_uf40i"]
+[ext_resource type="PackedScene" uid="uid://cnhj6mgja4h5a" path="res://src/ImageEditor/ImageEditorCore.tscn" id="2_utl03"]
+[ext_resource type="PackedScene" uid="uid://co8dnwob82fad" path="res://Assets/UI/OptionsScrollContainer.tscn" id="3_8d028"]
+[ext_resource type="LabelSettings" uid="uid://usv7beyw1bj8" path="res://Assets/UI/Theme/Label.tres" id="4_raixf"]
+[ext_resource type="PackedScene" uid="uid://dp5y7gfvawnwo" path="res://Assets/UI/GridPanelContainer.tscn" id="5_wc2p1"]
+[ext_resource type="PackedScene" uid="uid://dbast2ob2q2mv" path="res://Assets/UI/SliderValueBox.tscn" id="6_81lh3"]
+[ext_resource type="LabelSettings" uid="uid://bmse4oftt3as3" path="res://Assets/UI/Theme/Label_HD.tres" id="7_v47i1"]
+[ext_resource type="PackedScene" uid="uid://b7rncm6rrf4tu" path="res://src/ImageEditor/PaletteImporter/PaletteLoaderFlowUI.tscn" id="8_bku8x"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pyu7k"]
 
@@ -34,7 +37,7 @@ font_size = 18
 outline_size = 2
 outline_color = Color(0, 0, 0, 1)
 
-[node name="ImageEditorTabUI" type="PanelContainer" node_paths=PackedStringArray("ImgEditorCore", "SaturationSlider", "BrightnessSlider", "ContrastSlider", "_resetImgCorrectionBtn", "Outline2DSlider", "Outline2DColorPicker", "Inline2DSlider", "Inline2DColorPicker", "ColorReductionCheckbox", "ColorCountSpinBox", "_saveButton", "_effectStatusLabel", "_effectStatusMainPanel", "PaletteLoader", "LoadExternalImg", "PaletteSizeMaxValueLbl") groups=["save_data"]]
+[node name="ImageEditorTab" type="PanelContainer" node_paths=PackedStringArray("ImgEditorCore", "SaturationSlider", "BrightnessSlider", "ContrastSlider", "_resetImgCorrectionBtn", "Outline2DSlider", "Outline2DColorPicker", "Inline2DSlider", "Inline2DColorPicker", "ColorReductionCheckbox", "ColorCountSpinBox", "_saveButton", "_effectStatusLabel", "_effectStatusMainPanel", "PaletteLoaderFlow", "LoadExternalImg", "PaletteSizeMaxValueLbl") groups=["save_data"]]
 texture_filter = 2
 anchors_preset = 15
 anchor_right = 1.0
@@ -42,47 +45,46 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_pyu7k")
-script = ExtResource("1_xk0rj")
-ImgEditorCore = NodePath("HBoxContainer/ImageEditorCore")
-SaturationSlider = NodePath("HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/SaturationHBox/SaturationSliderBox")
-BrightnessSlider = NodePath("HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/BrightnessHBox/BrightnessSliderBox")
-ContrastSlider = NodePath("HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/ContrastHBox/ContrastSliderBox")
-_resetImgCorrectionBtn = NodePath("HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/LoadSpriteSheetPanel/PanelContainer/MarginContainer/HboxContainer/ResetImgCorrectionBtn")
-Outline2DSlider = NodePath("HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/2dOutlineHBox/Outline2DSliderBox")
-Outline2DColorPicker = NodePath("HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/2dOutlineHBox/MarginContainer2/PanelContainer/OutlineColorPickerBtn")
-Inline2DSlider = NodePath("HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/2dInlineHBox/Inline2DSliderBox")
-Inline2DColorPicker = NodePath("HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/2dInlineHBox/MarginContainer2/PanelContainer/InlineColorPickerBtn")
-ColorReductionCheckbox = NodePath("HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ColorReductionOptions/PanelContainer/MarginContainer/VBoxContainer/ColorReductionHBox/ColorReductionCheckBox")
-ColorCountSpinBox = NodePath("HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ColorReductionOptions/PanelContainer/MarginContainer/VBoxContainer/ColorReductionHBox/ColorReducSpinBox")
-_saveButton = NodePath("HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/SaveButtonPanel/PanelContainer/MarginContainer/SavingHBox/SaveSpriteSheetBtn")
-_effectStatusLabel = NodePath("HBoxContainer/OptionsContainer/EffectStatusMarginPanel/EffectStatusMainPanel/MarginContainer/EffectStatusLabel")
-_effectStatusMainPanel = NodePath("HBoxContainer/OptionsContainer/EffectStatusMarginPanel")
-PaletteLoader = NodePath("HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ColorReductionOptions/PanelContainer/MarginContainer/VBoxContainer/PaletteLoader")
-LoadExternalImg = NodePath("HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/LoadSpriteSheetPanel/PanelContainer/MarginContainer/HboxContainer/LoadExternalImg")
-PaletteSizeMaxValueLbl = NodePath("HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ColorReductionOptions/PanelContainer/MarginContainer/VBoxContainer/ColorReductionHBox/PaletteSizeMaxValueLbl")
+script = ExtResource("1_uf40i")
+ImgEditorCore = NodePath("SplitContainer/ImageEditorCore")
+SaturationSlider = NodePath("SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/ImgOptGridPanelContainer/SaturationHBox/SaturationSliderBox")
+BrightnessSlider = NodePath("SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/ImgOptGridPanelContainer/BrightnessHBox/BrightnessSliderBox")
+ContrastSlider = NodePath("SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/ImgOptGridPanelContainer/ContrastHBox/ContrastSliderBox")
+_resetImgCorrectionBtn = NodePath("SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/LoadSpriteSheetPanel/PanelContainer/MarginContainer/HboxContainer/ResetImgCorrectionBtn")
+Outline2DSlider = NodePath("SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/ImgOptGridPanelContainer/2dOutlineHBox/Outline2DSliderBox")
+Outline2DColorPicker = NodePath("SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/ImgOptGridPanelContainer/2dOutlineHBox/MarginContainer2/PanelContainer/OutlineColorPickerBtn")
+Inline2DSlider = NodePath("SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/ImgOptGridPanelContainer/2dInlineHBox/Inline2DSliderBox")
+Inline2DColorPicker = NodePath("SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/ImgOptGridPanelContainer/2dInlineHBox/MarginContainer2/PanelContainer/InlineColorPickerBtn")
+ColorReductionCheckbox = NodePath("SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ColorReductionOptions/PanelContainer/MarginContainer/VBoxContainer/ColorReductionHBox/ColorReductionCheckBox")
+ColorCountSpinBox = NodePath("SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ColorReductionOptions/PanelContainer/MarginContainer/VBoxContainer/ColorReductionHBox/ColorReducSpinBox")
+_saveButton = NodePath("SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/SaveButtonPanel/PanelContainer/MarginContainer/SavingHBox/SaveSpriteSheetBtn")
+_effectStatusLabel = NodePath("SplitContainer/OptionsContainer/EffectStatusMarginPanel/EffectStatusMainPanel/MarginContainer/EffectStatusLabel")
+_effectStatusMainPanel = NodePath("SplitContainer/OptionsContainer/EffectStatusMarginPanel")
+PaletteLoaderFlow = NodePath("SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ColorReductionOptions/PanelContainer/MarginContainer/VBoxContainer/PaletteLoaderFlowUI")
+LoadExternalImg = NodePath("SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/LoadSpriteSheetPanel/PanelContainer/MarginContainer/HboxContainer/LoadExternalImg")
+PaletteSizeMaxValueLbl = NodePath("SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ColorReductionOptions/PanelContainer/MarginContainer/VBoxContainer/ColorReductionHBox/PaletteSizeMaxValueLbl")
 metadata/_tab_index = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="SplitContainer" type="SplitContainer" parent="."]
 layout_mode = 2
 
-[node name="ImageEditorCore" parent="HBoxContainer" instance=ExtResource("2_s1l55")]
+[node name="ImageEditorCore" parent="SplitContainer" instance=ExtResource("2_utl03")]
 clip_contents = true
+custom_minimum_size = Vector2(0, 0)
 layout_mode = 2
 size_flags_stretch_ratio = 5.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_8pcxw")
 
-[node name="OptionsContainer" type="PanelContainer" parent="HBoxContainer"]
+[node name="OptionsContainer" type="PanelContainer" parent="SplitContainer"]
 texture_filter = 2
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_stretch_ratio = 2.0
+size_flags_stretch_ratio = 2.2
 
-[node name="SpriteSheetScrollContainer" type="ScrollContainer" parent="HBoxContainer/OptionsContainer"]
+[node name="ImgOptScrollContainer" parent="SplitContainer/OptionsContainer" instance=ExtResource("3_8d028")]
 layout_mode = 2
-follow_focus = true
-draw_focus_border = true
 
-[node name="SpriteSheetMarginPanel" type="MarginContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetScrollContainer"]
+[node name="SpriteSheetMarginPanel" type="MarginContainer" parent="SplitContainer/OptionsContainer/ImgOptScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -91,10 +93,10 @@ theme_override_constants/margin_top = 1
 theme_override_constants/margin_right = 1
 theme_override_constants/margin_bottom = 1
 
-[node name="SpriteSheetVBoxCont" type="VBoxContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel"]
+[node name="SpriteSheetVBoxCont" type="VBoxContainer" parent="SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel"]
 layout_mode = 2
 
-[node name="LoadSpriteSheetPanel" type="MarginContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont"]
+[node name="LoadSpriteSheetPanel" type="MarginContainer" parent="SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 theme_override_constants/margin_left = 1
@@ -102,11 +104,11 @@ theme_override_constants/margin_top = 1
 theme_override_constants/margin_right = 1
 theme_override_constants/margin_bottom = 1
 
-[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/LoadSpriteSheetPanel"]
+[node name="PanelContainer" type="PanelContainer" parent="SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/LoadSpriteSheetPanel"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/LoadSpriteSheetPanel/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/LoadSpriteSheetPanel/PanelContainer"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 theme_override_constants/margin_left = 2
@@ -114,33 +116,33 @@ theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = 2
 
-[node name="HboxContainer" type="HBoxContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/LoadSpriteSheetPanel/PanelContainer/MarginContainer"]
+[node name="HboxContainer" type="HBoxContainer" parent="SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/LoadSpriteSheetPanel/PanelContainer/MarginContainer"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 theme_override_constants/separation = 4
 
-[node name="Label" type="Label" parent="HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/LoadSpriteSheetPanel/PanelContainer/MarginContainer/HboxContainer"]
+[node name="Label" type="Label" parent="SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/LoadSpriteSheetPanel/PanelContainer/MarginContainer/HboxContainer"]
 custom_minimum_size = Vector2(120, 20)
 layout_mode = 2
 text = "Load Spritesheet"
-label_settings = ExtResource("3_so0ax")
+label_settings = ExtResource("4_raixf")
 vertical_alignment = 1
 
-[node name="LoadExternalImg" type="Button" parent="HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/LoadSpriteSheetPanel/PanelContainer/MarginContainer/HboxContainer"]
+[node name="LoadExternalImg" type="Button" parent="SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/LoadSpriteSheetPanel/PanelContainer/MarginContainer/HboxContainer"]
 custom_minimum_size = Vector2(100, 32)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "Load File"
 
-[node name="ResetImgCorrectionBtn" type="Button" parent="HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/LoadSpriteSheetPanel/PanelContainer/MarginContainer/HboxContainer"]
+[node name="ResetImgCorrectionBtn" type="Button" parent="SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/LoadSpriteSheetPanel/PanelContainer/MarginContainer/HboxContainer"]
 custom_minimum_size = Vector2(100, 32)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 text = " Reset values "
 
-[node name="ImageCorrectionOptions" type="MarginContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont"]
+[node name="ImageCorrectionOptions" type="MarginContainer" parent="SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 theme_override_constants/margin_left = 1
@@ -148,11 +150,11 @@ theme_override_constants/margin_top = 1
 theme_override_constants/margin_right = 1
 theme_override_constants/margin_bottom = 1
 
-[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions"]
+[node name="PanelContainer" type="PanelContainer" parent="SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 theme_override_constants/margin_left = 2
@@ -160,158 +162,212 @@ theme_override_constants/margin_top = 3
 theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 text = "Image Correction Options"
-label_settings = ExtResource("3_so0ax")
+label_settings = ExtResource("4_raixf")
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="SaturationHBox" type="HBoxContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="ImgOptGridPanelContainer" parent="SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer" instance=ExtResource("5_wc2p1")]
+layout_mode = 2
+
+[node name="SaturationHBox" type="HBoxContainer" parent="SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/ImgOptGridPanelContainer"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/SaturationHBox"]
+[node name="Label" type="Label" parent="SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/ImgOptGridPanelContainer/SaturationHBox"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 text = "Saturation level"
-label_settings = ExtResource("3_so0ax")
+label_settings = ExtResource("4_raixf")
 vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="SaturationSliderBox" parent="HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/SaturationHBox" instance=ExtResource("4_v6qpd")]
+[node name="SaturationSliderBox" parent="SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/ImgOptGridPanelContainer/SaturationHBox" node_paths=PackedStringArray("valueLabel") instance=ExtResource("6_81lh3")]
 layout_mode = 2
 min_value = -1.0
 max_value = 3.0
 step = 0.01
 value = 1.0
+valueLabel = NodePath("../SaturationLabelValue")
 
-[node name="BrightnessHBox" type="HBoxContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 32)
+[node name="SaturationLabelValue" type="Label" parent="SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/ImgOptGridPanelContainer/SaturationHBox"]
+custom_minimum_size = Vector2(20, 32)
 layout_mode = 2
-
-[node name="Label" type="Label" parent="HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/BrightnessHBox"]
-custom_minimum_size = Vector2(120, 32)
-layout_mode = 2
-text = "Brightness level"
-label_settings = ExtResource("3_so0ax")
+text = "00"
+label_settings = ExtResource("7_v47i1")
 vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="BrightnessSliderBox" parent="HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/BrightnessHBox" instance=ExtResource("4_v6qpd")]
+[node name="BrightnessHBox" type="HBoxContainer" parent="SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/ImgOptGridPanelContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/ImgOptGridPanelContainer/BrightnessHBox"]
+custom_minimum_size = Vector2(120, 32)
+layout_mode = 2
+text = "Brightness level"
+label_settings = ExtResource("4_raixf")
+vertical_alignment = 1
+autowrap_mode = 2
+clip_text = true
+
+[node name="BrightnessSliderBox" parent="SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/ImgOptGridPanelContainer/BrightnessHBox" node_paths=PackedStringArray("valueLabel") instance=ExtResource("6_81lh3")]
 layout_mode = 2
 min_value = -1.0
 max_value = 1.0
 step = 0.01
+valueLabel = NodePath("../BrightNessLabelValue")
 
-[node name="ContrastHBox" type="HBoxContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 32)
+[node name="BrightNessLabelValue" type="Label" parent="SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/ImgOptGridPanelContainer/BrightnessHBox"]
+custom_minimum_size = Vector2(20, 32)
 layout_mode = 2
-
-[node name="Label" type="Label" parent="HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/ContrastHBox"]
-custom_minimum_size = Vector2(120, 32)
-layout_mode = 2
-text = "Contrast level"
-label_settings = ExtResource("3_so0ax")
+text = "00"
+label_settings = ExtResource("7_v47i1")
 vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="ContrastSliderBox" parent="HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/ContrastHBox" instance=ExtResource("4_v6qpd")]
+[node name="ContrastHBox" type="HBoxContainer" parent="SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/ImgOptGridPanelContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/ImgOptGridPanelContainer/ContrastHBox"]
+custom_minimum_size = Vector2(120, 32)
+layout_mode = 2
+text = "Contrast level"
+label_settings = ExtResource("4_raixf")
+vertical_alignment = 1
+autowrap_mode = 2
+clip_text = true
+
+[node name="ContrastSliderBox" parent="SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/ImgOptGridPanelContainer/ContrastHBox" node_paths=PackedStringArray("valueLabel") instance=ExtResource("6_81lh3")]
 layout_mode = 2
 min_value = -1.0
 max_value = 3.0
 step = 0.01
 value = 1.0
+valueLabel = NodePath("../ContrastLabelValue")
 
-[node name="2dOutlineHBox" type="HBoxContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="ContrastLabelValue" type="Label" parent="SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/ImgOptGridPanelContainer/ContrastHBox"]
+custom_minimum_size = Vector2(20, 32)
+layout_mode = 2
+text = "00"
+label_settings = ExtResource("7_v47i1")
+vertical_alignment = 1
+autowrap_mode = 2
+clip_text = true
+
+[node name="2dOutlineHBox" type="HBoxContainer" parent="SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/ImgOptGridPanelContainer"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/2dOutlineHBox"]
+[node name="Label" type="Label" parent="SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/ImgOptGridPanelContainer/2dOutlineHBox"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 text = "2D Outline Level"
-label_settings = ExtResource("3_so0ax")
+label_settings = ExtResource("4_raixf")
 vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="Outline2DSliderBox" parent="HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/2dOutlineHBox" instance=ExtResource("4_v6qpd")]
+[node name="Outline2DSliderBox" parent="SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/ImgOptGridPanelContainer/2dOutlineHBox" node_paths=PackedStringArray("valueLabel") instance=ExtResource("6_81lh3")]
 layout_mode = 2
 max_value = 10.0
 step = 0.25
+valueLabel = NodePath("../Outline2DLabelValue")
 
-[node name="MarginContainer2" type="MarginContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/2dOutlineHBox"]
+[node name="Outline2DLabelValue" type="Label" parent="SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/ImgOptGridPanelContainer/2dOutlineHBox"]
+custom_minimum_size = Vector2(20, 32)
 layout_mode = 2
-theme_override_constants/margin_left = 30
+text = "00"
+label_settings = ExtResource("7_v47i1")
+vertical_alignment = 1
+autowrap_mode = 2
+clip_text = true
+
+[node name="MarginContainer2" type="MarginContainer" parent="SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/ImgOptGridPanelContainer/2dOutlineHBox"]
+layout_mode = 2
+theme_override_constants/margin_left = 2
 theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/2dOutlineHBox/MarginContainer2"]
+[node name="PanelContainer" type="PanelContainer" parent="SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/ImgOptGridPanelContainer/2dOutlineHBox/MarginContainer2"]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_v6qpd")
 
-[node name="OutlineColorPickerBtn" type="ColorPickerButton" parent="HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/2dOutlineHBox/MarginContainer2/PanelContainer"]
+[node name="OutlineColorPickerBtn" type="ColorPickerButton" parent="SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/ImgOptGridPanelContainer/2dOutlineHBox/MarginContainer2/PanelContainer"]
 custom_minimum_size = Vector2(28, 24)
 layout_mode = 2
 
-[node name="2dInlineHBox" type="HBoxContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="2dInlineHBox" type="HBoxContainer" parent="SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/ImgOptGridPanelContainer"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/2dInlineHBox"]
+[node name="Label" type="Label" parent="SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/ImgOptGridPanelContainer/2dInlineHBox"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 text = "2D Inline Level"
-label_settings = ExtResource("3_so0ax")
+label_settings = ExtResource("4_raixf")
 vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="Inline2DSliderBox" parent="HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/2dInlineHBox" instance=ExtResource("4_v6qpd")]
+[node name="Inline2DSliderBox" parent="SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/ImgOptGridPanelContainer/2dInlineHBox" node_paths=PackedStringArray("valueLabel") instance=ExtResource("6_81lh3")]
 layout_mode = 2
 max_value = 10.0
 step = 0.25
+valueLabel = NodePath("../Inline2DLabelValue")
 
-[node name="MarginContainer2" type="MarginContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/2dInlineHBox"]
+[node name="Inline2DLabelValue" type="Label" parent="SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/ImgOptGridPanelContainer/2dInlineHBox"]
+custom_minimum_size = Vector2(20, 32)
 layout_mode = 2
-theme_override_constants/margin_left = 30
+text = "00"
+label_settings = ExtResource("7_v47i1")
+vertical_alignment = 1
+autowrap_mode = 2
+clip_text = true
+
+[node name="MarginContainer2" type="MarginContainer" parent="SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/ImgOptGridPanelContainer/2dInlineHBox"]
+layout_mode = 2
+theme_override_constants/margin_left = 2
 theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/2dInlineHBox/MarginContainer2"]
+[node name="PanelContainer" type="PanelContainer" parent="SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/ImgOptGridPanelContainer/2dInlineHBox/MarginContainer2"]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_v6qpd")
 
-[node name="InlineColorPickerBtn" type="ColorPickerButton" parent="HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/2dInlineHBox/MarginContainer2/PanelContainer"]
+[node name="InlineColorPickerBtn" type="ColorPickerButton" parent="SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ImageCorrectionOptions/PanelContainer/MarginContainer/VBoxContainer/ImgOptGridPanelContainer/2dInlineHBox/MarginContainer2/PanelContainer"]
 custom_minimum_size = Vector2(28, 24)
 layout_mode = 2
 
-[node name="ColorReductionOptions" type="MarginContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont"]
+[node name="ColorReductionOptions" type="MarginContainer" parent="SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
+size_flags_vertical = 3
 theme_override_constants/margin_left = 1
 theme_override_constants/margin_top = 1
 theme_override_constants/margin_right = 1
 theme_override_constants/margin_bottom = 1
 
-[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ColorReductionOptions"]
+[node name="PanelContainer" type="PanelContainer" parent="SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ColorReductionOptions"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ColorReductionOptions/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ColorReductionOptions/PanelContainer"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 theme_override_constants/margin_left = 2
@@ -319,39 +375,39 @@ theme_override_constants/margin_top = 3
 theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ColorReductionOptions/PanelContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ColorReductionOptions/PanelContainer/MarginContainer"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ColorReductionOptions/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ColorReductionOptions/PanelContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 text = "Color Reduction Options"
-label_settings = ExtResource("3_so0ax")
+label_settings = ExtResource("4_raixf")
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="ColorReductionHBox" type="HBoxContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ColorReductionOptions/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="ColorReductionHBox" type="HBoxContainer" parent="SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ColorReductionOptions/PanelContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 size_flags_horizontal = 0
 
-[node name="ColorReductionCheckBox" type="CheckBox" parent="HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ColorReductionOptions/PanelContainer/MarginContainer/VBoxContainer/ColorReductionHBox"]
+[node name="ColorReductionCheckBox" type="CheckBox" parent="SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ColorReductionOptions/PanelContainer/MarginContainer/VBoxContainer/ColorReductionHBox"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Reduce Color
 "
 
-[node name="ColorReducSpinBox" type="SpinBox" parent="HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ColorReductionOptions/PanelContainer/MarginContainer/VBoxContainer/ColorReductionHBox"]
+[node name="ColorReducSpinBox" type="SpinBox" parent="SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ColorReductionOptions/PanelContainer/MarginContainer/VBoxContainer/ColorReductionHBox"]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 size_flags_horizontal = 4
 max_value = 2048.0
 
-[node name="Label" type="Label" parent="HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ColorReductionOptions/PanelContainer/MarginContainer/VBoxContainer/ColorReductionHBox"]
+[node name="Label" type="Label" parent="SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ColorReductionOptions/PanelContainer/MarginContainer/VBoxContainer/ColorReductionHBox"]
 custom_minimum_size = Vector2(60, 32)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -362,7 +418,7 @@ vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="PaletteSizeMaxValueLbl" type="Label" parent="HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ColorReductionOptions/PanelContainer/MarginContainer/VBoxContainer/ColorReductionHBox"]
+[node name="PaletteSizeMaxValueLbl" type="Label" parent="SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ColorReductionOptions/PanelContainer/MarginContainer/VBoxContainer/ColorReductionHBox"]
 custom_minimum_size = Vector2(60, 32)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -372,10 +428,10 @@ vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="PaletteLoader" parent="HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ColorReductionOptions/PanelContainer/MarginContainer/VBoxContainer" instance=ExtResource("5_so0ax")]
+[node name="PaletteLoaderFlowUI" parent="SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/ColorReductionOptions/PanelContainer/MarginContainer/VBoxContainer" instance=ExtResource("8_bku8x")]
 layout_mode = 2
 
-[node name="SaveButtonPanel" type="MarginContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont"]
+[node name="SaveButtonPanel" type="MarginContainer" parent="SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 theme_override_constants/margin_left = 1
@@ -383,11 +439,11 @@ theme_override_constants/margin_top = 1
 theme_override_constants/margin_right = 1
 theme_override_constants/margin_bottom = 1
 
-[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/SaveButtonPanel"]
+[node name="PanelContainer" type="PanelContainer" parent="SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/SaveButtonPanel"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/SaveButtonPanel/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/SaveButtonPanel/PanelContainer"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 theme_override_constants/margin_left = 2
@@ -395,11 +451,11 @@ theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = 2
 
-[node name="SavingHBox" type="HBoxContainer" parent="HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/SaveButtonPanel/PanelContainer/MarginContainer"]
+[node name="SavingHBox" type="HBoxContainer" parent="SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/SaveButtonPanel/PanelContainer/MarginContainer"]
 custom_minimum_size = Vector2(350, 32)
 layout_mode = 2
 
-[node name="SaveSpriteSheetBtn" type="Button" parent="HBoxContainer/OptionsContainer/SpriteSheetScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/SaveButtonPanel/PanelContainer/MarginContainer/SavingHBox"]
+[node name="SaveSpriteSheetBtn" type="Button" parent="SplitContainer/OptionsContainer/ImgOptScrollContainer/SpriteSheetMarginPanel/SpriteSheetVBoxCont/SaveButtonPanel/PanelContainer/MarginContainer/SavingHBox"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
@@ -408,7 +464,7 @@ size_flags_vertical = 4
 text = "Save SpriteSheet
 "
 
-[node name="EffectStatusMarginPanel" type="MarginContainer" parent="HBoxContainer/OptionsContainer"]
+[node name="EffectStatusMarginPanel" type="MarginContainer" parent="SplitContainer/OptionsContainer"]
 visible = false
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
@@ -419,16 +475,16 @@ theme_override_constants/margin_top = 1
 theme_override_constants/margin_right = 1
 theme_override_constants/margin_bottom = 1
 
-[node name="EffectStatusMainPanel" type="PanelContainer" parent="HBoxContainer/OptionsContainer/EffectStatusMarginPanel"]
+[node name="EffectStatusMainPanel" type="PanelContainer" parent="SplitContainer/OptionsContainer/EffectStatusMarginPanel"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_so0ax")
 
-[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/OptionsContainer/EffectStatusMarginPanel/EffectStatusMainPanel"]
+[node name="MarginContainer" type="MarginContainer" parent="SplitContainer/OptionsContainer/EffectStatusMarginPanel/EffectStatusMainPanel"]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 
-[node name="EffectStatusLabel" type="Label" parent="HBoxContainer/OptionsContainer/EffectStatusMarginPanel/EffectStatusMainPanel/MarginContainer"]
+[node name="EffectStatusLabel" type="Label" parent="SplitContainer/OptionsContainer/EffectStatusMarginPanel/EffectStatusMainPanel/MarginContainer"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 text = "EffectStatusLabel progress...."

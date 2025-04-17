@@ -8,6 +8,7 @@ public partial class ModelScene3d : Node3D
 
     [Export] public Gizmo3D Gizmo { get; private set; }
     bool hasNodeSelected => Gizmo.Selections.Count > 0;
+    private bool _isPanning = false;
 
     public override void _Ready()
     {
@@ -22,7 +23,7 @@ public partial class ModelScene3d : Node3D
         //Detect mouse click and handle selection
         if (@event is InputEventMouseButton mouseButton && mouseButton.ButtonIndex == MouseButton.Left && mouseButton.Pressed)
         {
-            //GD.Print("Mouse Click _UnHandledINput Detected: " + @event + "From: " + this.Name);
+            //Log.Debug("Mouse Click _UnHandledINput Detected: " + @event + "From: " + this.Name);
             HandleGizmoSelection(Gizmo, mouseButton);
         }
 
@@ -31,25 +32,36 @@ public partial class ModelScene3d : Node3D
         {
             if (mouseEvent.ButtonIndex == MouseButton.WheelUp && mouseEvent.Pressed)
             {
+                Log.Debug("WheelUp Detected " + this.Name);
                 //Zoom Out ////bool True = Zoom In, False = Zoom Out
                 GlobalEvents.Instance.OnCameraZoomChanged?.Invoke(false);
 
             }
             else if (mouseEvent.ButtonIndex == MouseButton.WheelDown && mouseEvent.Pressed)
             {
+                Log.Debug("WheelDown Detected " + this.Name);
                 GlobalEvents.Instance.OnCameraZoomChanged?.Invoke(true);
                 //Zoom In ////bool True = Zoom In, False = Zoom Out
             }
+
+
+        }
+        else if (@event is InputEventMouseMotion motionEvent && _isPanning)
+        {
+
+            Log.Debug("Scroll Requested = " + motionEvent.Relative + "  From: " + this.Name);
+            GlobalEvents.Instance.OnPaningScroll?.Invoke(motionEvent);
+            GetViewport().SetInputAsHandled();
         }
     }
 
     private void HandleGizmoSelection(Gizmo3D gizmo, InputEventMouseButton button)
     {
 
-        //GD.Print("### Gizmo Logic => Click detected : " + this.Name);
+        //Log.Debug("### Gizmo Logic => Click detected : " + this.Name);
         var targetNode = GlobalUtil.GetAllChildNodesByType<Model3DMainPivotControl>(this).FirstOrDefault();
         if (targetNode == null) return;
-        //GD.Print("### Gizmo Logic => TargetNode : " + targetNode.Name);
+        //Log.Debug("### Gizmo Logic => TargetNode : " + targetNode.Name);
 
         if (hasNodeSelected)
         {
@@ -84,7 +96,7 @@ public partial class ModelScene3d : Node3D
             if (allCollisionShapes.Count == 0)
             {
                 meshInstance3dObj.CreateConvexCollision();
-                GD.PrintT($"Adding ConvexCollisionto: {meshInstance3dObj.Name}");
+                Log.Debug($"Adding ConvexCollisionto: {meshInstance3dObj.Name}");
             }
 
         }
@@ -108,10 +120,10 @@ public partial class ModelScene3d : Node3D
     //         return;
     //     }
 
-    //     GD.Print("### Gizmo Logic => Model Click detected from : " + this.Name);
+    //     Log.Debug("### Gizmo Logic => Model Click detected from : " + this.Name);
 
     //     Node collider = (Node)result["collider"];
-    //     GD.Print("### Gizmo Logic => colliderNode Clicked : " + collider.Name);
+    //     Log.Debug("### Gizmo Logic => colliderNode Clicked : " + collider.Name);
     //     //Node3D targetNode = collider.GetParent<Node3D>().GetParent<Node3D>();
 
 
@@ -119,7 +131,7 @@ public partial class ModelScene3d : Node3D
 
     //     if (targetNode == null || targetNode.Name == "ShaderMeshes") return;
 
-    //     GD.Print("### Gizmo Logic => TargetNode : " + targetNode.Name);
+    //     Log.Debug("### Gizmo Logic => TargetNode : " + targetNode.Name);
 
     //     if (hasNodeSelected)
     //     {

@@ -24,6 +24,10 @@ public partial class GlobalEvents : Node
 
     public Action<bool> OnCameraZoomChanged { get; set; } //bool True = Zoom In, False = Zoom Out
 
+    public Action<InputEventMouseMotion> OnPaningScroll { get; set; }
+    public Action OnCamResetChanges { get; set; }
+
+    public Action<float> OnSpriteSizeChanged { get; set; }
 
 
 }

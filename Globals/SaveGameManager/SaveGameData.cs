@@ -112,9 +112,9 @@ public partial class SaveGameData : Resource
         ColorReducNumColors = (float)ImgEditorParentNode.ColorCountSpinBox.Value;
 
         //PALETTE AND PERSIST COLORS
-        PersistColors = ImgEditorParentNode.PaletteLoader.PersistPaletteColors;
-        UseExternalPalette = ImgEditorParentNode.PaletteLoader.UseExternalPaletteCheckBtn.ButtonPressed;
-        ExternalPalette = ImgEditorParentNode.PaletteLoader.ExternalPaletteColors;
+        PersistColors = ImgEditorParentNode.PaletteLoaderFlow.PersistPaletteColors;
+        UseExternalPalette = ImgEditorParentNode.PaletteLoaderFlow.UseExternalPaletteCheckBtn.ButtonPressed;
+        ExternalPalette = ImgEditorParentNode.PaletteLoaderFlow.ExternalPaletteColors;
     }
 
     //Used by SAVEGAMEMANAGER to LOAD Data from a SaveGame file to the Game, Nodes, Scenes. 
@@ -176,9 +176,9 @@ public partial class SaveGameData : Resource
             ImgEditorParentNode.ColorCountSpinBox.Value = saveGameDataToLoad.ColorReducNumColors;
 
             //PALETTE AND PERSIST COLORS
-            ImgEditorParentNode.PaletteLoader.PersistPaletteColors = saveGameDataToLoad.PersistColors;
-            ImgEditorParentNode.PaletteLoader.UseExternalPaletteCheckBtn.ButtonPressed = saveGameDataToLoad.UseExternalPalette;
-            ImgEditorParentNode.PaletteLoader.ExternalPaletteColors = saveGameDataToLoad.ExternalPalette;
+            ImgEditorParentNode.PaletteLoaderFlow.PersistPaletteColors = saveGameDataToLoad.PersistColors;
+            ImgEditorParentNode.PaletteLoaderFlow.UseExternalPaletteCheckBtn.ButtonPressed = saveGameDataToLoad.UseExternalPalette;
+            ImgEditorParentNode.PaletteLoaderFlow.ExternalPaletteColors = saveGameDataToLoad.ExternalPalette;
         }
     }
 }

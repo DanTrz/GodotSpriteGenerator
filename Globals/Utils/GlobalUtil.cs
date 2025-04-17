@@ -27,7 +27,7 @@ public static class GlobalUtil
         }
         else
         {
-            GD.PrintErr("Directory does not exist: " + path);
+            Log.Error("Directory does not exist: " + path);
 
             await Task.Run(() =>
             {
@@ -54,7 +54,7 @@ public static class GlobalUtil
 
     public static void OnFolderSelected(string dir, LineEdit spriteGenFolderPathLineEdit = null)
     {
-        //GD.PrintT("OnFolderSelected: " + dir);
+        //Log.Debug("OnFolderSelected: " + dir);
         SaveFolderPath = dir;
         spriteGenFolderPathLineEdit.Text = GlobalUtil.SaveFolderPath;
     }
@@ -400,21 +400,21 @@ public static class GlobalUtil
         var targetList = actionToCheck.GetInvocationList().ToList().Where(action => action.Target != null).Select(action => action.Target).ToList();
         // string actionName = actionToCheck.Method.Name;
         // string actionName2 = nameof(actionToCheck);
-        GD.PrintT("## PRINT Action: " + actionName + " => Method connected: " + actionToCheck.Method.Name);
+        Log.Debug("## PRINT Action: " + actionName + " => Method connected: " + actionToCheck.Method.Name);
 
         foreach (var target in targetList)
         {
-            GD.PrintT("## PRINT Action: " + actionName + " => Listener Target: " + target.ToString());
+            Log.Debug("## PRINT Action: " + actionName + " => Listener Target: " + target.ToString());
 
             if (target is GodotObject godotTarget)
             {
                 var type = godotTarget.GetType();
-                GD.PrintT("## PRINT Action: " + actionName + " => Listener Godot Type: " + type);
+                Log.Debug("## PRINT Action: " + actionName + " => Listener Godot Type: " + type);
 
                 if (target is Node nodeTarget) // Check if it's a Node or whateverElse
                 {
-                    GD.PrintT("## PRINT Action: " + actionName + " => Listener Node Name: " + nodeTarget.Name);
-                    GD.PrintT("## PRINT Action: " + actionName + " => Listener Node Path: " + nodeTarget.GetPath());
+                    Log.Debug("## PRINT Action: " + actionName + " => Listener Node Name: " + nodeTarget.Name);
+                    Log.Debug("## PRINT Action: " + actionName + " => Listener Node Path: " + nodeTarget.GetPath());
                 }
             }
         }

@@ -17,7 +17,7 @@ public static class EffectsHandler
 
     private static void PreparStandardVariables()
     {
-        //GD.PrintT("Prepare Standard Effect ShadedVariables");
+        //Log.Debug("Prepare Standard Effect ShadedVariables");
         _shadingMode = BaseMaterial3D.ShadingModeEnum.PerPixel;
         _textureFilter = BaseMaterial3D.TextureFilterEnum.Linear;
         _diffuseMode = BaseMaterial3D.DiffuseModeEnum.Burley;
@@ -25,15 +25,15 @@ public static class EffectsHandler
         _transparency = BaseMaterial3D.TransparencyEnum.Disabled;
         _receiveShadows = true;
         __emissionEnabled = false;
-        _roughnessValue = 0.0f; //BaseMaterial3D.TextureParam.Roughness; ////0 to 1 float
+        _roughnessValue = 1.0f; //BaseMaterial3D.TextureParam.Roughness; ////0 to 1 float
         _rimValue = 0.0f; //BaseMaterial3D.TextureParam.Rim;////0 to 1 float
     }
     private static void PrepareUnshadedVariables()
     {
 
-        //GD.PrintT("Prepare UnShaded Effect ShadedVariables");
+        //Log.Debug("Prepare UnShaded Effect ShadedVariables");
         _shadingMode = BaseMaterial3D.ShadingModeEnum.Unshaded;
-        _textureFilter = BaseMaterial3D.TextureFilterEnum.Nearest;
+        _textureFilter = BaseMaterial3D.TextureFilterEnum.Linear;
         _diffuseMode = BaseMaterial3D.DiffuseModeEnum.Toon;
         _specularMode = BaseMaterial3D.SpecularModeEnum.Toon;
         _transparency = BaseMaterial3D.TransparencyEnum.Disabled;
@@ -45,7 +45,7 @@ public static class EffectsHandler
 
     private static void PrepareToonShadedVariables()
     {
-        //GD.PrintT("Prepare Toon Effect ShadedVariables");
+        //Log.Debug("Prepare Toon Effect ShadedVariables");
         _shadingMode = BaseMaterial3D.ShadingModeEnum.PerPixel;
         _textureFilter = BaseMaterial3D.TextureFilterEnum.Nearest;
         _diffuseMode = BaseMaterial3D.DiffuseModeEnum.Toon;
@@ -122,11 +122,11 @@ public static class EffectsHandler
                 myMaterial3D.Rim = _rimValue;
 
                 arrayMesh.SurfaceSetMaterial(surfaceIndex, myMaterial3D);
-                //GD.PrintT("Mesh Effects Applied to: " + mesh.ResourceName);
+                //Log.Debug("Mesh Effects Applied to: " + mesh.ResourceName);
             }
         }
 
-        //GD.PrintT("Mesh Effects Applied to " + surfaceCount + " Surfaces on: " + mesh.ResourceName);
+        //Log.Debug("Mesh Effects Applied to " + surfaceCount + " Surfaces on: " + mesh.ResourceName);
 
     }
 }

@@ -10,8 +10,11 @@ gradient = SubResource("Gradient_n2jqb")
 [resource]
 resource_name = "Hair_AniimeStyle"
 cull_mode = 2
+disable_fog = true
 albedo_texture = SubResource("GradientTexture2D_l4uhl")
-roughness = 0.2
+emission = Color(0.521141, 0.521141, 0.521141, 1)
+emission_energy_multiplier = 13.24
 rim_enabled = true
 rim = 0.05
-texture_filter = 0
+texture_filter = 1
+disable_receive_shadows = true

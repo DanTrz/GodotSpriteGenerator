@@ -40,14 +40,14 @@ public partial class ModelPositionManager : Node
         this.CallDeferred(MethodName.LoadTransformValueToUI);
         this.CallDeferred(MethodName.ConnectTransformUINodeSignals);
         GlobalEvents.Instance.OnModelTransformChanged += OnModelTransformChanged;
-        GlobalEvents.Instance.OnCameraZoomChanged += OnCameraZoomChanged;
+        //GlobalEvents.Instance.OnCameraZoomChanged += OnCameraZoomChanged;
     }
 
     public void CheckIfModelLoaded()
     {
         if (ModelPivotNode == null || CameraNode == null)
         {
-            GD.PrintErr("Model or Camera in ModelPositionManager is null");
+            Log.Error("Model or Camera in ModelPositionManager is null");
         }
     }
 
@@ -68,7 +68,7 @@ public partial class ModelPositionManager : Node
     {
         if (!String.IsNullOrEmpty(newValue) && !String.IsNullOrWhiteSpace(newValue) && float.TryParse(newValue, out float out_))
         {
-            //GD.PrintT("Valid Input: " + newValue);
+            //Log.Debug("Valid Input: " + newValue);
             SetTransformValueToModel();
             //LoadTransformValueToUI();
         }
@@ -141,7 +141,7 @@ public partial class ModelPositionManager : Node
 
     public void OnSaveData(SaveGameData newSaveGameData)
     {
-        //GD.PrintT("Started OnSaveData from:", this.Name);
+        //Log.Debug("Started OnSaveData from:", this.Name);
         newSaveGameData.CameraDistance = float.Parse(CamDistancelLineTextEdit.Text);
         newSaveGameData.CameraRotation = float.Parse(CamXRotationLineTextEdit.Text);
         newSaveGameData.ModelPositionXAxis = float.Parse(PosXAxisLineTextEdit.Text);
@@ -155,7 +155,7 @@ public partial class ModelPositionManager : Node
 
     public void OnLoadData(SaveGameData newLoadData)
     {
-        // GD.PrintT("Started OnLoadData from:", this.Name);
+        // Log.Debug("Started OnLoadData from:", this.Name);
         CamDistancelLineTextEdit.Text = newLoadData.CameraDistance.ToString();
         CamXRotationLineTextEdit.Text = newLoadData.CameraRotation.ToString();
         PosXAxisLineTextEdit.Text = newLoadData.ModelPositionXAxis.ToString();
@@ -169,7 +169,7 @@ public partial class ModelPositionManager : Node
 
     private void OnModelTransformChanged(int mode, Vector3 vector)
     {
-        //GD.Print("OnModelPivot Gizmo TransformChanged");
+        //Log.Debug("OnModelPivot Gizmo TransformChanged");
         LoadTransformValueToUI();
     }
 

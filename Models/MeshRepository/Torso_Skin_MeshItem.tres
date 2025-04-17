@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ArrayMeshDataObject" load_steps=4 format=3 uid="uid://w68fjwo3utks"]
+[gd_resource type="Resource" load_steps=4 format=3 uid="uid://w68fjwo3utks"]
 
 [ext_resource type="Texture2D" uid="uid://pvt412ll4014" path="res://Models/MeshRepository/MeshIcons/1_Skin_Icon.png" id="1_tgwgv"]
 [ext_resource type="ArrayMesh" uid="uid://bawo38n3tk7fw" path="res://Models/FullModels/BaseModel/LowPoly/BaseModel_LowPolyVersion02_LowPoly_TORSO.res" id="2_tgwgv"]

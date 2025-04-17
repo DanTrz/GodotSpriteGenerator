@@ -156,7 +156,7 @@ public partial class PaletteLoader : MarginContainer
 
         if (selectedFiled.EndsWith(".hex") == false)
         {
-            GD.PrintErr("File is not a HEX File: " + selectedFiled);
+            Log.Error("File is not a HEX File: " + selectedFiled);
         }
 
         string fileGlobalPath = ProjectSettings.GlobalizePath(selectedFiled);
@@ -178,7 +178,7 @@ public partial class PaletteLoader : MarginContainer
 
         if (colorCount > MAX_PALETTE_SIZE)
         {
-            GD.PrintErr("Hex file cannot have more than " + MAX_PALETTE_SIZE + " colors. Hex File color count =  " + colorCount);
+            Log.Error("Hex file cannot have more than " + MAX_PALETTE_SIZE + " colors. Hex File color count =  " + colorCount);
         }
 
         foreach (var hexColorText in lines)

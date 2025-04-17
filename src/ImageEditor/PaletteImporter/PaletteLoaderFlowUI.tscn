@@ -1,0 +1,210 @@
+[gd_scene load_steps=6 format=3 uid="uid://b7rncm6rrf4tu"]
+
+[ext_resource type="Script" uid="uid://d0xqdcorc7y2b" path="res://src/ImageEditor/PaletteImporter/PaletteLoaderFlowUi.cs" id="1_wgtil"]
+[ext_resource type="LabelSettings" uid="uid://usv7beyw1bj8" path="res://Assets/UI/Theme/Label.tres" id="2_vbucp"]
+[ext_resource type="PackedScene" uid="uid://db76flu5stvpw" path="res://Assets/UI/BoolCheckButton.tscn" id="5_6iiyc"]
+[ext_resource type="PackedScene" uid="uid://c4piy84xo5t2w" path="res://src/ImageEditor/PaletteImporter/PaletteListFlowGrid.tscn" id="6_vbucp"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jkvfd"]
+bg_color = Color(0.192556, 0.192556, 0.192556, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.71825, 0.51007, 0.946664, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="PaletteLoaderFlowUI" type="MarginContainer" node_paths=PackedStringArray("LoadExtPaletteBtn", "AddPersistColorsBtn", "ClearPersistColorsBtn", "PersistColorPickerBtn", "ExtPaletteListFlowGrid", "PersistColorListFlowGrid", "UseExternalPaletteCheckBtn")]
+custom_minimum_size = Vector2(0, 32)
+offset_right = 473.0
+offset_bottom = 234.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 1
+script = ExtResource("1_wgtil")
+LoadExtPaletteBtn = NodePath("PanelContainer/VBoxContainer/LoadExtPaletteContainer/PaletteOptionsHbOx/PaletteHbOx/LoadExtPaletteBtn")
+AddPersistColorsBtn = NodePath("PanelContainer/VBoxContainer/PersistColorsContainer/PersistentColors/HBoxContainer/AddPersistColorsBtn")
+ClearPersistColorsBtn = NodePath("PanelContainer/VBoxContainer/PersistColorsContainer/PersistentColors/HBoxContainer/ClearPersistColorsBtn")
+PersistColorPickerBtn = NodePath("PanelContainer/VBoxContainer/PersistColorsContainer/PersistentColors/HBoxContainer/MarginContainer/PanelContainer2/PersistColorPickerBtn")
+ExtPaletteListFlowGrid = NodePath("PanelContainer/VBoxContainer/LoadExtPaletteContainer/PaletteOptionsHbOx/PaletteListPanel/MarginContainer/ScrollContainer/MarginContainer/ExtPaletteFlowListGrid")
+PersistColorListFlowGrid = NodePath("PanelContainer/VBoxContainer/PersistColorsContainer/PersistentColors/PaletteListPanel/MarginContainer/ScrollContainer/MarginContainer/PersistColorsFlowListGrid")
+UseExternalPaletteCheckBtn = NodePath("PanelContainer/VBoxContainer/LoadExtPaletteContainer/PaletteOptionsHbOx/PaletteHbOx/MarginContainer/UseExternalPaletteCheckBtn")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(120, 32)
+layout_mode = 2
+text = "Palette Options"
+label_settings = ExtResource("2_vbucp")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+clip_text = true
+
+[node name="PersistColorsContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="PersistentColors" type="VBoxContainer" parent="PanelContainer/VBoxContainer/PersistColorsContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer/PersistColorsContainer/PersistentColors"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="PanelContainer/VBoxContainer/PersistColorsContainer/PersistentColors/HBoxContainer"]
+custom_minimum_size = Vector2(100, 32)
+layout_mode = 2
+text = "Persist Colors"
+label_settings = ExtResource("2_vbucp")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+clip_text = true
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer/PersistColorsContainer/PersistentColors/HBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 6
+
+[node name="PanelContainer2" type="PanelContainer" parent="PanelContainer/VBoxContainer/PersistColorsContainer/PersistentColors/HBoxContainer/MarginContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_jkvfd")
+
+[node name="PersistColorPickerBtn" type="ColorPickerButton" parent="PanelContainer/VBoxContainer/PersistColorsContainer/PersistentColors/HBoxContainer/MarginContainer/PanelContainer2"]
+custom_minimum_size = Vector2(28, 24)
+layout_mode = 2
+
+[node name="AddPersistColorsBtn" type="Button" parent="PanelContainer/VBoxContainer/PersistColorsContainer/PersistentColors/HBoxContainer"]
+texture_filter = 2
+custom_minimum_size = Vector2(100, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Add"
+
+[node name="ClearPersistColorsBtn" type="Button" parent="PanelContainer/VBoxContainer/PersistColorsContainer/PersistentColors/HBoxContainer"]
+texture_filter = 2
+custom_minimum_size = Vector2(100, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Clear"
+
+[node name="PaletteListPanel" type="PanelContainer" parent="PanelContainer/VBoxContainer/PersistColorsContainer/PersistentColors"]
+custom_minimum_size = Vector2(0, 55)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer/PersistColorsContainer/PersistentColors/PaletteListPanel"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/VBoxContainer/PersistColorsContainer/PersistentColors/PaletteListPanel/MarginContainer"]
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer/PersistColorsContainer/PersistentColors/PaletteListPanel/MarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="PersistColorsFlowListGrid" parent="PanelContainer/VBoxContainer/PersistColorsContainer/PersistentColors/PaletteListPanel/MarginContainer/ScrollContainer/MarginContainer" instance=ExtResource("6_vbucp")]
+layout_mode = 2
+
+[node name="LoadExtPaletteContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="PaletteOptionsHbOx" type="VBoxContainer" parent="PanelContainer/VBoxContainer/LoadExtPaletteContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[node name="PaletteHbOx" type="HBoxContainer" parent="PanelContainer/VBoxContainer/LoadExtPaletteContainer/PaletteOptionsHbOx"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[node name="EffectsLabel" type="Label" parent="PanelContainer/VBoxContainer/LoadExtPaletteContainer/PaletteOptionsHbOx/PaletteHbOx"]
+custom_minimum_size = Vector2(100, 32)
+layout_mode = 2
+text = "External Palette"
+label_settings = ExtResource("2_vbucp")
+vertical_alignment = 1
+autowrap_mode = 2
+clip_text = true
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer/LoadExtPaletteContainer/PaletteOptionsHbOx/PaletteHbOx"]
+layout_mode = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 4
+
+[node name="UseExternalPaletteCheckBtn" parent="PanelContainer/VBoxContainer/LoadExtPaletteContainer/PaletteOptionsHbOx/PaletteHbOx/MarginContainer" instance=ExtResource("5_6iiyc")]
+layout_mode = 2
+
+[node name="LoadExtPaletteBtn" type="Button" parent="PanelContainer/VBoxContainer/LoadExtPaletteContainer/PaletteOptionsHbOx/PaletteHbOx"]
+texture_filter = 2
+custom_minimum_size = Vector2(100, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Load Ext."
+
+[node name="PaletteListPanel" type="PanelContainer" parent="PanelContainer/VBoxContainer/LoadExtPaletteContainer/PaletteOptionsHbOx"]
+custom_minimum_size = Vector2(0, 110)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer/LoadExtPaletteContainer/PaletteOptionsHbOx/PaletteListPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/VBoxContainer/LoadExtPaletteContainer/PaletteOptionsHbOx/PaletteListPanel/MarginContainer"]
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer/LoadExtPaletteContainer/PaletteOptionsHbOx/PaletteListPanel/MarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="ExtPaletteFlowListGrid" parent="PanelContainer/VBoxContainer/LoadExtPaletteContainer/PaletteOptionsHbOx/PaletteListPanel/MarginContainer/ScrollContainer/MarginContainer" instance=ExtResource("6_vbucp")]
+layout_mode = 2

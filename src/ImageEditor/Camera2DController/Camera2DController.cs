@@ -44,10 +44,6 @@ public partial class Camera2DController : Camera2D
             }
             else if (mouseEvent.ButtonIndex == MouseButton.Right && mouseEvent.Pressed)
             {
-                //Input.SetDefaultCursorShape(Input.CursorShape.PointingHand);
-                //parentControlNode.MouseDefaultCursorShape = Control.CursorShape.PointingHand;
-                //GetViewport().UpdateMouseCursorState();
-
                 _isPanning = true;
                 _previousMousePosition = GetGlobalMousePosition(); // Store initial position
                                                                    // Change cursor to grab hand
@@ -56,9 +52,6 @@ public partial class Camera2DController : Camera2D
             //else if (mouseEvent.ButtonIndex == MouseButton.Right && !mouseEvent.Pressed)
             else
             {
-                //Input.SetDefaultCursorShape(Input.CursorShape.Arrow);
-                //parentControlNode.MouseDefaultCursorShape = Control.CursorShape.Arrow;
-                //GetViewport().UpdateMouseCursorState();
 
                 _isPanning = false;
                 // Restore cursor
@@ -69,16 +62,11 @@ public partial class Camera2DController : Camera2D
         {
             // Use the *relative* mouse movement from the event
             Position -= motionEvent.Relative / Zoom;  // Divide by Zoom for correct scaling
+            Log.Debug($" New CamPosition {Position} PanMouse= " + motionEvent.Relative + "  From: " + this.GetOwner().Name);
             GetViewport().SetInputAsHandled();
         }
 
     }
-
-    //No longer needed
-    //public override void _Process(double delta)
-    //{
-    //
-    //}
 
     public void ResetCamera()
     {

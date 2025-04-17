@@ -49,7 +49,7 @@ public partial class ItemListCheckBox : ItemList
     /*******  94644bb0-d4f9-4e88-9cec-81988bbf770d  *******/
     private void OnSelectionChangedOrUpdated(long index, bool selected)
     {
-        //GD.PrintT("ItemClicked: " + this.GetItemText((int)index) + " + index: " + index + " selected: " + selected);
+        //Log.Debug("ItemClicked: " + this.GetItemText((int)index) + " + index: " + index + " selected: " + selected);
         UpdateSingleItemIcon((int)index, selected);
 
 

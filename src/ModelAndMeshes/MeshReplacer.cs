@@ -75,7 +75,7 @@ public static class MeshReplacer
 
         if (meshTargetToReplace == null || meshTargetToReplace.Mesh == null)
         {
-            GD.PrintErr(meshTargetToReplace.Name + " has no mesh or is null");
+            Log.Error(meshTargetToReplace.Name + " has no mesh or is null");
         }
 
         meshTargetToReplace.Mesh = GetMeshItemByNameFromList(resourceItemName, bodyPartType, arrayMeshDataObjects);
@@ -160,7 +160,7 @@ public static class MeshReplacer
     //         Aabb meshAABBounds = mesh.GetAabb();
     //         mergedAABB.Merge(with: meshAABBounds);
     //     }
-    //     GD.PrintT("Merged AABB: " + mergedAABB.Size);
+    //     Log.Debug("Merged AABB: " + mergedAABB.Size);
 
     //     return mergedAABB;
     // }
@@ -180,7 +180,7 @@ public static class MeshReplacer
 
         if (allMeshInstances.Count == 0)
         {
-            // GD.PrintT($"No MeshInstance3D nodes found under {parentNode.Name}");
+            // Log.Debug($"No MeshInstance3D nodes found under {parentNode.Name}");
             return new Aabb(Vector3.Zero, Vector3.Zero);
         }
 
@@ -190,7 +190,7 @@ public static class MeshReplacer
         foreach (MeshInstance3D meshInstance in allMeshInstances)
         {
             //TODO : //BUG = Not properly working the Scaling logic
-            // GD.Print($"Transform for {meshInstance.Name}: Scale={meshInstance.Scale} " +
+            // Log.Debug($"Transform for {meshInstance.Name}: Scale={meshInstance.Scale} " +
             //     $"Parent={meshInstance.GetParent<Node3D>().Name} ParentScale={meshInstance.GetParent<Node3D>().Scale}" +
             //     $"Grand Parent={meshInstance.GetParent().GetParent<Node3D>().Name} GrandPar Scale={meshInstance.GetParent().GetParent<Node3D>().Scale}");
 
@@ -236,7 +236,7 @@ public static class MeshReplacer
             }
             catch (Exception ex)
             {
-                GD.PrintErr($"Error transforming AABB corners for node '{meshInstance.Name}': {ex.Message}");
+                Log.Error($"Error transforming AABB corners for node '{meshInstance.Name}': {ex.Message}");
                 continue; // Skip this instance if transformation fails
             }
 
@@ -254,7 +254,7 @@ public static class MeshReplacer
 
         if (!firstAabbFound)
         {
-            //GD.PrintT($"No MeshInstance3D nodes with valid AABBs found under {parentNode.Name}");
+            //Log.Debug($"No MeshInstance3D nodes with valid AABBs found under {parentNode.Name}");
             return new Aabb(Vector3.Zero, Vector3.Zero);
         }
 
@@ -277,7 +277,7 @@ public static class MeshReplacer
             }
         }
 
-        GD.PrintT($"Merged AABB for '{parentNode.GetChild(0).Name}': Pos={finalMergedAabb.Position}, Size={finalMergedAabb.Size}");
+        Log.Debug($"Merged AABB for '{parentNode.GetChild(0).Name}': Pos={finalMergedAabb.Position}, Size={finalMergedAabb.Size}");
         return finalMergedAabb;
     }
 
@@ -293,7 +293,7 @@ public static class MeshReplacer
 
                 if (originalScale != Vector3.One)
                 {
-                    //GD.Print($"Correcting scale for {myNode3D.Name} from {originalScale} to Vector3.One");
+                    //Log.Debug($"Correcting scale for {myNode3D.Name} from {originalScale} to Vector3.One");
                     myNode3D.Scale = Vector3.One;
                 }
             }

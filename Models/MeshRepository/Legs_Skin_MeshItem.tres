@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ArrayMeshDataObject" load_steps=4 format=3 uid="uid://ngri10yx5sws"]
+[gd_resource type="Resource" load_steps=4 format=3 uid="uid://ngri10yx5sws"]
 
 [ext_resource type="Texture2D" uid="uid://c2muxf2ef5p2s" path="res://Models/MeshRepository/MeshIcons/1_LegSkin_Icon.png" id="1_k2hcj"]
 [ext_resource type="ArrayMesh" uid="uid://cmstsf0af0ayq" path="res://Models/FullModels/BaseModel/LowPoly/BaseModel_LowPolyVersion02_LowPoly_LEGS.res" id="2_k2hcj"]

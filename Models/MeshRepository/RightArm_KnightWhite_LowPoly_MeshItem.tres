@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ArrayMeshDataObject" load_steps=3 format=3 uid="uid://dp7qpv601jgb7"]
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://dp7qpv601jgb7"]
 
 [ext_resource type="ArrayMesh" uid="uid://c4q88rkvylsmd" path="res://Models/FullModels/BaseModel/LowPoly/KnightWhiteParts/KnightRightArm.tres" id="1_y63ed"]
 [ext_resource type="Script" uid="uid://cmuqvgdb2248c" path="res://src/ModelAndMeshes/ArrayMeshDataObject.cs" id="2_hhbfj"]

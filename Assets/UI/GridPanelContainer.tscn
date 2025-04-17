@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://dp5y7gfvawnwo"]
+
+[ext_resource type="Script" uid="uid://n1d7ocadeeye" path="res://Assets/UI/GridPanelContainer.cs" id="1_n55c2"]
+
+[node name="GridPanelContainer" type="GridContainer"]
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 8
+script = ExtResource("1_n55c2")

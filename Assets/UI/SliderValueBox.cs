@@ -5,18 +5,22 @@ using Godot;
 public partial class SliderValueBox : HSlider
 {
 
-    private Label valueLabel;
+
+    [Export] private Label valueLabel;
 
     public override void _Ready()
     {
-        valueLabel = GetNode<Label>("%ValueLabel");
         this.ValueChanged += UpdateValueLabel;
-        valueLabel.Text = Value.ToString("0.00");
+        UpdateValueLabel(Value);
+
     }
 
     private void UpdateValueLabel(double newValue)
     {
-        valueLabel.Text = newValue.ToString("0.00");
+        if (valueLabel != null)
+        {
+            valueLabel.Text = newValue.ToString("0.00");
+        }
     }
 
 }
