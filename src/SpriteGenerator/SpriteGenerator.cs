@@ -12,7 +12,7 @@ public partial class SpriteGenerator : Node
 
     [Export] public OptionButton AnimMethodOptionBtn;
     [Export] public CheckButton GenerateSpriteSheetCheckBtn;
-    [Export] public TextEdit SpriteSheetNameTextEdit;
+    [Export] public LineEdit SpriteSheetNameTextEdit;
     [Export] public CheckButton ShowMeshPanelCheckBtn;
     [Export] public MarginContainer MeshOptionsMarginCont;
     // [Export] public Button _startGenerationBtn;

@@ -1,55 +1,25 @@
-[gd_scene load_steps=12 format=3 uid="uid://dw57ccnr4wvji"]
+[gd_scene load_steps=4 format=3 uid="uid://dw57ccnr4wvji"]
 
 [ext_resource type="Script" uid="uid://b78ehve5xa1ia" path="res://src/ModelAndMeshes/ModelPositionManager.cs" id="1_8mvjs"]
-[ext_resource type="LabelSettings" uid="uid://usv7beyw1bj8" path="res://Assets/UI/Theme/Label.tres" id="2_8mvjs"]
-[ext_resource type="Texture2D" uid="uid://cr55nbf56ybvc" path="res://Assets/UI/Basic UI spritesheet.png" id="4_o4iia"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_j32we"]
-atlas = ExtResource("4_o4iia")
-region = Rect2(610, 226, 12, 12)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_pyu7k"]
-atlas = ExtResource("4_o4iia")
-region = Rect2(626, 230, 12, 4)
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_o31co"]
-load_path = "res://.godot/imported/Basic UI spritesheet.png-87ee5eabcb55cdff2aca9bd2f618217d.ctex"
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_fx5pg"]
-atlas = SubResource("CompressedTexture2D_o31co")
-region = Rect2(244, 18, 7, 12)
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_mumiu"]
-load_path = "res://.godot/imported/Basic UI spritesheet.png-87ee5eabcb55cdff2aca9bd2f618217d.ctex"
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_4hdfw"]
-atlas = SubResource("CompressedTexture2D_mumiu")
-region = Rect2(245, 2, 7, 12)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_o31co"]
-atlas = SubResource("CompressedTexture2D_o31co")
-region = Rect2(243, 36, 10, 9)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_mumiu"]
-atlas = SubResource("CompressedTexture2D_mumiu")
-region = Rect2(243, 52, 10, 9)
+[ext_resource type="Script" uid="uid://n1d7ocadeeye" path="res://Assets/UI/GridPanelContainer.cs" id="2_f6ui3"]
+[ext_resource type="LabelSettings" uid="uid://bmse4oftt3as3" path="res://Assets/UI/Theme/Label_HD.tres" id="5_kfu78"]
 
 [node name="ModelPositionManager" type="PanelContainer" node_paths=PackedStringArray("CamXRotationLineTextEdit", "CamDistancelLineTextEdit", "PosXAxisLineTextEdit", "PosYAxisLineTextEdit", "PosZAxisLineTextEdit", "RotationXAxisLineTextEdit", "RotationYAxisLineTextEdit", "RotationZAxisLineTextEdit") groups=["save_data"]]
 clip_contents = true
 custom_minimum_size = Vector2(100, 50)
-offset_right = 502.0
-offset_bottom = 108.0
-size_flags_horizontal = 4
-size_flags_vertical = 4
+offset_right = 434.0
+offset_bottom = 226.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 script = ExtResource("1_8mvjs")
-CamXRotationLineTextEdit = NodePath("MarginContainer/HBoxContainer/VBoxContainer/CamTransfNodeGroup/CamXRotationLineTextEdit")
-CamDistancelLineTextEdit = NodePath("MarginContainer/HBoxContainer/VBoxContainer/CamTransfNodeGroup/CamDistancelLineTextEdit")
-PosXAxisLineTextEdit = NodePath("MarginContainer/HBoxContainer/VBoxContainer/PositionTransfNodeGroup/PosiXAxisLineTextEdit")
-PosYAxisLineTextEdit = NodePath("MarginContainer/HBoxContainer/VBoxContainer/PositionTransfNodeGroup/PosYAxisLineTextEdit")
-PosZAxisLineTextEdit = NodePath("MarginContainer/HBoxContainer/VBoxContainer/PositionTransfNodeGroup/PosZAxisLineTextEdit")
-RotationXAxisLineTextEdit = NodePath("MarginContainer/HBoxContainer/VBoxContainer/RotationTransfNodeGroup/RotationXAxisLineTextEdit")
-RotationYAxisLineTextEdit = NodePath("MarginContainer/HBoxContainer/VBoxContainer/RotationTransfNodeGroup/RotationYAxisLineTextEdit")
-RotationZAxisLineTextEdit = NodePath("MarginContainer/HBoxContainer/VBoxContainer/RotationTransfNodeGroup/RotationZAxisLineTextEdit")
+CamXRotationLineTextEdit = NodePath("MarginContainer/ModelManagerPanelGrid/CameraRotation/CamXRotationLineTextEdit")
+CamDistancelLineTextEdit = NodePath("MarginContainer/ModelManagerPanelGrid/CameraDistance/CamDistancelLineTextEdit")
+PosXAxisLineTextEdit = NodePath("MarginContainer/ModelManagerPanelGrid/PositionX/PosiXAxisLineTextEdit")
+PosYAxisLineTextEdit = NodePath("MarginContainer/ModelManagerPanelGrid/PositionY/PosYAxisLineTextEdit")
+PosZAxisLineTextEdit = NodePath("MarginContainer/ModelManagerPanelGrid/PositionZ/PosZAxisLineTextEdit")
+RotationXAxisLineTextEdit = NodePath("MarginContainer/ModelManagerPanelGrid/RotationX/RotationXAxisLineTextEdit")
+RotationYAxisLineTextEdit = NodePath("MarginContainer/ModelManagerPanelGrid/RotationY/RotationYAxisLineTextEdit")
+RotationZAxisLineTextEdit = NodePath("MarginContainer/ModelManagerPanelGrid/RotationZ/RotationZAxisLineTextEdit")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
@@ -58,242 +28,205 @@ theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+[node name="ModelManagerPanelGrid" type="GridContainer" parent="MarginContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 10
+columns = 2
+script = ExtResource("2_f6ui3")
+_minColCount = 2
+_maxColCount = 99
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
-layout_mode = 2
-theme_override_constants/separation = 6
-
-[node name="ModelPositionButtons" type="HBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/separation = 5
-
-[node name="CamTransfNodeGroup" type="HBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="CameraDistance" type="HBoxContainer" parent="MarginContainer/ModelManagerPanelGrid"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 24)
+custom_minimum_size = Vector2(100, 24)
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
+size_flags_horizontal = 2
+size_flags_vertical = 3
 theme_override_constants/separation = 10
 
-[node name="CamLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/CamTransfNodeGroup"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(105, 24)
+[node name="Label" type="Label" parent="MarginContainer/ModelManagerPanelGrid/CameraDistance"]
+custom_minimum_size = Vector2(125, 24)
 layout_mode = 2
-text = " Cam Distance"
-label_settings = ExtResource("2_8mvjs")
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "CamDistance"
+label_settings = ExtResource("5_kfu78")
 vertical_alignment = 1
-autowrap_mode = 2
 clip_text = true
 
-[node name="CamDistancelLineTextEdit" type="LineEdit" parent="MarginContainer/HBoxContainer/VBoxContainer/CamTransfNodeGroup"]
+[node name="CamDistancelLineTextEdit" type="LineEdit" parent="MarginContainer/ModelManagerPanelGrid/CameraDistance"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(25, 24)
 layout_mode = 2
+size_flags_horizontal = 2
 virtual_keyboard_enabled = false
 
-[node name="CamRotationLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/CamTransfNodeGroup"]
+[node name="CameraRotation" type="HBoxContainer" parent="MarginContainer/ModelManagerPanelGrid"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(115, 24)
+custom_minimum_size = Vector2(100, 24)
 layout_mode = 2
-text = " Cam Rotation (X)"
-label_settings = ExtResource("2_8mvjs")
-vertical_alignment = 1
-autowrap_mode = 2
-clip_text = true
-
-[node name="CamXRotationLineTextEdit" type="LineEdit" parent="MarginContainer/HBoxContainer/VBoxContainer/CamTransfNodeGroup"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(25, 24)
-layout_mode = 2
-
-[node name="ZoomInBtn" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer/CamTransfNodeGroup"]
-unique_name_in_owner = true
-visible = false
-custom_minimum_size = Vector2(50, 32)
-layout_mode = 2
-text = "(+)
-"
-icon = SubResource("AtlasTexture_j32we")
-
-[node name="ZoomOutBtn" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer/CamTransfNodeGroup"]
-unique_name_in_owner = true
-visible = false
-custom_minimum_size = Vector2(50, 32)
-layout_mode = 2
-text = "(-)"
-icon = SubResource("AtlasTexture_pyu7k")
-
-[node name="PositionTransfNodeGroup" type="HBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 24)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
+size_flags_horizontal = 2
+size_flags_vertical = 3
 theme_override_constants/separation = 10
 
-[node name="PosLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/PositionTransfNodeGroup"]
-custom_minimum_size = Vector2(80, 24)
+[node name="Label" type="Label" parent="MarginContainer/ModelManagerPanelGrid/CameraRotation"]
+custom_minimum_size = Vector2(125, 24)
 layout_mode = 2
-text = " Position"
-label_settings = ExtResource("2_8mvjs")
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Cam.X Rotation"
+label_settings = ExtResource("5_kfu78")
 vertical_alignment = 1
-autowrap_mode = 2
 clip_text = true
 
-[node name="PosXAxisLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/PositionTransfNodeGroup"]
-custom_minimum_size = Vector2(16, 24)
-layout_mode = 2
-text = "X"
-label_settings = ExtResource("2_8mvjs")
-horizontal_alignment = 2
-vertical_alignment = 1
-autowrap_mode = 2
-clip_text = true
-
-[node name="PosiXAxisLineTextEdit" type="LineEdit" parent="MarginContainer/HBoxContainer/VBoxContainer/PositionTransfNodeGroup"]
+[node name="CamXRotationLineTextEdit" type="LineEdit" parent="MarginContainer/ModelManagerPanelGrid/CameraRotation"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(25, 24)
 layout_mode = 2
+size_flags_horizontal = 2
 
-[node name="PosYAxisLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/PositionTransfNodeGroup"]
-custom_minimum_size = Vector2(16, 24)
-layout_mode = 2
-text = "Y"
-label_settings = ExtResource("2_8mvjs")
-horizontal_alignment = 2
-vertical_alignment = 1
-autowrap_mode = 2
-clip_text = true
-
-[node name="PosYAxisLineTextEdit" type="LineEdit" parent="MarginContainer/HBoxContainer/VBoxContainer/PositionTransfNodeGroup"]
+[node name="PositionX" type="HBoxContainer" parent="MarginContainer/ModelManagerPanelGrid"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(25, 24)
+custom_minimum_size = Vector2(100, 24)
 layout_mode = 2
-
-[node name="PosZAxisLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/PositionTransfNodeGroup"]
-custom_minimum_size = Vector2(16, 24)
-layout_mode = 2
-text = "Z"
-label_settings = ExtResource("2_8mvjs")
-horizontal_alignment = 2
-vertical_alignment = 1
-autowrap_mode = 2
-clip_text = true
-
-[node name="PosZAxisLineTextEdit" type="LineEdit" parent="MarginContainer/HBoxContainer/VBoxContainer/PositionTransfNodeGroup"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(25, 24)
-layout_mode = 2
-
-[node name="MoveLeftBtn" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer/PositionTransfNodeGroup"]
-unique_name_in_owner = true
-visible = false
-custom_minimum_size = Vector2(50, 32)
-layout_mode = 2
-text = "Left"
-icon = SubResource("AtlasTexture_fx5pg")
-
-[node name="MoveRightBtn" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer/PositionTransfNodeGroup"]
-unique_name_in_owner = true
-visible = false
-custom_minimum_size = Vector2(50, 32)
-layout_mode = 2
-text = "Right"
-icon = SubResource("AtlasTexture_4hdfw")
-
-[node name="MoveUpBtn" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer/PositionTransfNodeGroup"]
-unique_name_in_owner = true
-visible = false
-custom_minimum_size = Vector2(50, 32)
-layout_mode = 2
-text = "Up"
-icon = SubResource("AtlasTexture_o31co")
-
-[node name="MoveDownBtn" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer/PositionTransfNodeGroup"]
-unique_name_in_owner = true
-visible = false
-custom_minimum_size = Vector2(50, 32)
-layout_mode = 2
-text = "Down"
-icon = SubResource("AtlasTexture_mumiu")
-
-[node name="RotationTransfNodeGroup" type="HBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 24)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
+size_flags_horizontal = 2
+size_flags_vertical = 3
 theme_override_constants/separation = 10
 
-[node name="RotationLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/RotationTransfNodeGroup"]
-custom_minimum_size = Vector2(80, 24)
+[node name="Label" type="Label" parent="MarginContainer/ModelManagerPanelGrid/PositionX"]
+custom_minimum_size = Vector2(125, 24)
 layout_mode = 2
-text = " Rotation"
-label_settings = ExtResource("2_8mvjs")
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Position X"
+label_settings = ExtResource("5_kfu78")
 vertical_alignment = 1
-autowrap_mode = 2
 clip_text = true
 
-[node name="RotationXAxisLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/RotationTransfNodeGroup"]
-custom_minimum_size = Vector2(16, 24)
-layout_mode = 2
-text = "X"
-label_settings = ExtResource("2_8mvjs")
-horizontal_alignment = 2
-vertical_alignment = 1
-autowrap_mode = 2
-clip_text = true
-
-[node name="RotationXAxisLineTextEdit" type="LineEdit" parent="MarginContainer/HBoxContainer/VBoxContainer/RotationTransfNodeGroup"]
+[node name="PosiXAxisLineTextEdit" type="LineEdit" parent="MarginContainer/ModelManagerPanelGrid/PositionX"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(25, 24)
 layout_mode = 2
+size_flags_horizontal = 2
 
-[node name="RotationYAxisLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/RotationTransfNodeGroup"]
-custom_minimum_size = Vector2(16, 24)
+[node name="PositionY" type="HBoxContainer" parent="MarginContainer/ModelManagerPanelGrid"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 24)
 layout_mode = 2
-text = "Y"
-label_settings = ExtResource("2_8mvjs")
-horizontal_alignment = 2
+size_flags_horizontal = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="MarginContainer/ModelManagerPanelGrid/PositionY"]
+custom_minimum_size = Vector2(125, 24)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Position Y"
+label_settings = ExtResource("5_kfu78")
 vertical_alignment = 1
-autowrap_mode = 2
 clip_text = true
 
-[node name="RotationYAxisLineTextEdit" type="LineEdit" parent="MarginContainer/HBoxContainer/VBoxContainer/RotationTransfNodeGroup"]
+[node name="PosYAxisLineTextEdit" type="LineEdit" parent="MarginContainer/ModelManagerPanelGrid/PositionY"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(25, 24)
 layout_mode = 2
+size_flags_horizontal = 2
 
-[node name="RotationZAxisLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/RotationTransfNodeGroup"]
-custom_minimum_size = Vector2(16, 24)
+[node name="PositionZ" type="HBoxContainer" parent="MarginContainer/ModelManagerPanelGrid"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 24)
 layout_mode = 2
-text = "Z"
-label_settings = ExtResource("2_8mvjs")
-horizontal_alignment = 2
+size_flags_horizontal = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="MarginContainer/ModelManagerPanelGrid/PositionZ"]
+custom_minimum_size = Vector2(125, 24)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Position Z"
+label_settings = ExtResource("5_kfu78")
 vertical_alignment = 1
-autowrap_mode = 2
 clip_text = true
 
-[node name="RotationZAxisLineTextEdit" type="LineEdit" parent="MarginContainer/HBoxContainer/VBoxContainer/RotationTransfNodeGroup"]
+[node name="PosZAxisLineTextEdit" type="LineEdit" parent="MarginContainer/ModelManagerPanelGrid/PositionZ"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(25, 24)
 layout_mode = 2
+size_flags_horizontal = 2
 
-[node name="RotateXAxisBtn" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer/RotationTransfNodeGroup"]
+[node name="RotationX" type="HBoxContainer" parent="MarginContainer/ModelManagerPanelGrid"]
 unique_name_in_owner = true
-visible = false
-custom_minimum_size = Vector2(50, 32)
+custom_minimum_size = Vector2(100, 24)
 layout_mode = 2
-text = "R.x
-"
-icon = SubResource("AtlasTexture_j32we")
+size_flags_horizontal = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 10
 
-[node name="RotateYAxisBtn" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer/RotationTransfNodeGroup"]
-unique_name_in_owner = true
-visible = false
-custom_minimum_size = Vector2(50, 32)
+[node name="Label" type="Label" parent="MarginContainer/ModelManagerPanelGrid/RotationX"]
+custom_minimum_size = Vector2(125, 24)
 layout_mode = 2
-text = "R.y"
-icon = SubResource("AtlasTexture_pyu7k")
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Rotation X"
+label_settings = ExtResource("5_kfu78")
+vertical_alignment = 1
+clip_text = true
+
+[node name="RotationXAxisLineTextEdit" type="LineEdit" parent="MarginContainer/ModelManagerPanelGrid/RotationX"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(25, 24)
+layout_mode = 2
+size_flags_horizontal = 2
+
+[node name="RotationY" type="HBoxContainer" parent="MarginContainer/ModelManagerPanelGrid"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 24)
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="MarginContainer/ModelManagerPanelGrid/RotationY"]
+custom_minimum_size = Vector2(125, 24)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Rotation Y"
+label_settings = ExtResource("5_kfu78")
+vertical_alignment = 1
+clip_text = true
+
+[node name="RotationYAxisLineTextEdit" type="LineEdit" parent="MarginContainer/ModelManagerPanelGrid/RotationY"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(25, 24)
+layout_mode = 2
+size_flags_horizontal = 2
+
+[node name="RotationZ" type="HBoxContainer" parent="MarginContainer/ModelManagerPanelGrid"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 24)
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="MarginContainer/ModelManagerPanelGrid/RotationZ"]
+custom_minimum_size = Vector2(125, 24)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Rotation Z"
+label_settings = ExtResource("5_kfu78")
+vertical_alignment = 1
+clip_text = true
+
+[node name="RotationZAxisLineTextEdit" type="LineEdit" parent="MarginContainer/ModelManagerPanelGrid/RotationZ"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(25, 24)
+layout_mode = 2
+size_flags_horizontal = 2
