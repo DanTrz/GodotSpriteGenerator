@@ -27,12 +27,6 @@ public partial class CamSpriteGenController : Camera2D
     public override void _UnhandledInput(InputEvent @event)
     {
 
-        //TEST //BUG - first if is test and can delete
-        if (Input.IsActionPressed(Const.MOUSE_RIGHT_CLICK))
-        {
-            Log.Debug($"MouseRightClick from {this.Name}");
-        }
-
         if (@event is InputEventMouseButton mouseEvent)
         {
             if (mouseEvent.ButtonIndex == MouseButton.Right && mouseEvent.Pressed)

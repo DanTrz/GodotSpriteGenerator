@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Godot;
 using Godot.Collections;
@@ -19,14 +20,12 @@ public partial class SaveGameManager : Node
 
     public async Task SaveGameData(string fullSaveFilePath)
     {
-
-
         Log.Debug("SaveGamedata started");
         if (!UpdatedParentNodesSucceeded()) return;
 
         SaveGameData newSaveGameData = new();
 
-        //TODO: Change so we can Save different files names etc...
+        //TODO: Add option to Save different with choosen files names etc...
         newSaveGameData.SaveFileName = fullSaveFilePath;
         newSaveGameData.GetSaveGameDataFromNodes(SpriteGenParentNode, ImgEditorParentNode);
 
@@ -72,8 +71,10 @@ public partial class SaveGameManager : Node
     {
         var mainUI = GetTree().Root.GetNodeOrNull("MainInterfaceUI/MainUI");
 
-        SpriteGenParentNode = mainUI.GetNodeOrNull<SpriteGenerator>("%SpriteGenerator");
-        ImgEditorParentNode = mainUI.GetNodeOrNull<ImageEditorMainPanel>("%ImageEditor");
+        //SpriteGenParentNode = mainUI.GetNodeOrNull<SpriteGenerator>("%SpriteGenerator");
+        //ImgEditorParentNode = mainUI.GetNodeOrNull<ImageEditorMainPanel>("%ImageEditor");
+        SpriteGenParentNode = GlobalUtil.GetAllChildNodesByType<SpriteGenerator>(mainUI).ToList().FirstOrDefault();
+        ImgEditorParentNode = GlobalUtil.GetAllChildNodesByType<ImageEditorMainPanel>(mainUI).ToList().FirstOrDefault();
 
         if (ImgEditorParentNode == null || SpriteGenParentNode == null)
         {

@@ -16,7 +16,7 @@ public partial class PaletteListGrid : GridContainer
 
     public void ChangeGridColumnSize(int panelColumns)
     {
-        //TODO: //BUG - Change this numbers to higher col count. Max should be 60
+
         int newColSize = _minColumnsSize;
         switch (panelColumns)
         {
