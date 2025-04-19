@@ -3,18 +3,18 @@
     <TargetFramework>net9.0</TargetFramework>
      <LangVersion>preview</LangVersion><!-- Optional: Required for new Field Keyword -->
     <EnableDynamicLoading>true</EnableDynamicLoading>
-    <Deterministic>false</Deterministic>
-
-    <!-- AOT -->
+    
+    
+    <!--Enable NativeAOT-->
     <PublishAot>true</PublishAot>
-    <!-- <Nullable>enable</Nullable> -->
-
-    <!-- AOT Reduce Size options - Remove it not working-->
-    <InvariantGlobalization>true</InvariantGlobalization> <!-- Optional: smaller binary -->
-    <IlcOptimizationPreference>Size</IlcOptimizationPreference> <!-- Optional - Optimze for Size or Speed -->
-    <StripSymbols>true</StripSymbols>  <!-- Optional: smaller binary -->
 
   </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Root the assemblies to avoid trimming. -->
+    <TrimmerRootAssembly Include="GodotSharp" />
+    <TrimmerRootAssembly Include="$(TargetName)" />
+  </ItemGroup>
 </Project>
 
   

@@ -6,7 +6,7 @@ using Godot;
 public partial class GLTFLoader : Node
 {
 
-
+    //TODO: Exprimental //BUG Leak of memory 
     public static async Task<Node> LoadExternalGLTF(string filePath, Node parentNode)
     {
         var gltfDocumentLoad = new GltfDocument();

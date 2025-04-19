@@ -1,0 +1,8 @@
+    <!-- AOT -->
+    <PublishAot>true</PublishAot>
+    <!-- <Nullable>enable</Nullable> -->
+
+        <!-- AOT Reduce Size options - Remove it not working-->
+    <InvariantGlobalization>true</InvariantGlobalization> <!-- Optional: smaller binary -->
+    <IlcOptimizationPreference>Size</IlcOptimizationPreference> <!-- Optional - Optimze for Size or Speed -->
+    <StripSymbols>true</StripSymbols>  <!-- Optional: smaller binary -->

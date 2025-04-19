@@ -1,0 +1,36 @@
+[gd_resource type="ShaderMaterial" load_steps=5 format=3 uid="uid://070w4mt4i1r2"]
+
+[ext_resource type="Shader" uid="uid://dn6156u2j1knc" path="res://Assets/Shaders/flexible_toon_shader/flexible_toon_v2.gdshader" id="1_06nih"]
+[ext_resource type="Texture2D" uid="uid://c1qr37s0a6gq0" path="res://Assets/Shaders/flexible_toon_shader/ModelTestingDELETE/BarbarianTexture.tres" id="2_yd154"]
+[ext_resource type="Gradient" uid="uid://cul0xese4g3dd" path="res://Assets/Shaders/flexible_toon_shader/GradientBaseColors.tres" id="3_yd154"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_yd154"]
+gradient = ExtResource("3_yd154")
+width = 256
+height = 256
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_06nih")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/albedo_texture = ExtResource("2_yd154")
+shader_parameter/albedo_uv_scale = Vector2(1, 1)
+shader_parameter/albedo_uv_offset = Vector2(0, 0)
+shader_parameter/clamp_diffuse_to_max = true
+shader_parameter/cuts = 3
+shader_parameter/wrap = 0.4
+shader_parameter/steepness = 1.0
+shader_parameter/use_attenuation = true
+shader_parameter/use_specular = true
+shader_parameter/specular_strength = 0.02
+shader_parameter/specular_shininess = 1.5
+shader_parameter/use_rim = true
+shader_parameter/rim_width = 16.0
+shader_parameter/rim_color = Color(1, 1, 1, 1)
+shader_parameter/use_ramp = false
+shader_parameter/ramp = SubResource("GradientTexture2D_yd154")
+shader_parameter/use_borders = false
+shader_parameter/border_width = 0.002
+shader_parameter/normal_rotation_pitch = 0.0
+shader_parameter/normal_rotation_yaw = 0.0
+shader_parameter/normal_rotation_roll = 0.0
