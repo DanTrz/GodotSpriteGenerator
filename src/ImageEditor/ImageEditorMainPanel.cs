@@ -24,7 +24,7 @@ public partial class ImageEditorMainPanel : PanelContainer
     [Export] private MarginContainer _effectStatusMainPanel;
 
     //[Export] public CheckButton UseExternalPaletteChkBtn;
-    [Export] public PaletteLoaderFlowUi PaletteLoaderFlow;
+    [Export] public PaletteLoader PaletteLoaderFlow;
 
     [Export] public Button LoadExternalImg;
 
@@ -309,6 +309,10 @@ public partial class ImageEditorMainPanel : PanelContainer
     {
         //Log.Debug("Palette changed to # : " + list.Count);
         ImgEditorCore.MaxNumColors = list.Count;
+        ColorCountSpinBox.MaxValue = list.Count;
+        ColorCountSpinBox.Value = list.Count;
+        PaletteSizeMaxValueLbl.Text = list.Count.ToString();
+        ImgEditorCore.NumColorsShaderValue = list.Count;
         ImgEditorCore.NumColorsLocal = list.Count;
         _currentPaletteColors = list;
 
