@@ -490,7 +490,6 @@ theme_override_constants/margin_bottom = 0
 [node name="ModelManagerHeader" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/ShowHideModelManager"]
 layout_mode = 2
 
-
 [node name="ShowHideModelManagerBtn" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/ShowHideModelManager/ModelManagerHeader" node_paths=PackedStringArray("TargetControlNode", "TargetLabel") instance=ExtResource("10_v7vii")]
 layout_mode = 2
 alignment = 2
@@ -498,9 +497,7 @@ icon_alignment = 0
 OpenedText = "Show Model Transform"
 ClosedText = "Open Model Transform"
 StartOpen = true
-
 TargetControlNode = NodePath("../../../ModelPositionManagerMarginCont")
-
 UpdateTextToLabel = true
 TargetLabel = NodePath("../ModelManagerPanelLabel")
 
@@ -531,7 +528,6 @@ theme_override_constants/margin_bottom = 0
 
 [node name="ShowHideSpriteOptionHeader" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/ShowHideSpriteGenerationOpt"]
 layout_mode = 2
-
 
 [node name="ShowHideMainSpriteButton" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/ShowHideSpriteGenerationOpt/ShowHideSpriteOptionHeader" node_paths=PackedStringArray("TargetControlNode", "TargetLabel") instance=ExtResource("10_v7vii")]
 unique_name_in_owner = true
@@ -1073,7 +1069,6 @@ theme_override_constants/margin_bottom = 0
 [node name="ShowHideModelMeshHeader" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/ShowHideModelMeshOpt"]
 layout_mode = 2
 
-
 [node name="ShowHideModelMeshButton" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/ShowHideModelMeshOpt/ShowHideModelMeshHeader" node_paths=PackedStringArray("TargetControlNode", "TargetLabel") instance=ExtResource("10_v7vii")]
 layout_mode = 2
 alignment = 2
@@ -1081,7 +1076,6 @@ icon_alignment = 0
 OpenedText = "Hide Model Mesh Options"
 ClosedText = "Show Model Mesh Options"
 TargetControlNode = NodePath("../../../MeshOptionsMarginCont")
-
 UpdateTextToLabel = true
 TargetLabel = NodePath("../ShowHideModelMeshLabel")
 
@@ -1370,7 +1364,6 @@ icon_alignment = 0
 OpenedText = "Hide Animation Panel"
 ClosedText = "Show Animation Panel"
 TargetControlNode = NodePath("../../../LoadAnimMarginCont")
-
 UpdateTextToLabel = true
 TargetLabel = NodePath("../AnimLoadHeaderLabel")
 
@@ -1444,6 +1437,12 @@ visible = false
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 text = "SelectAll"
+
+[node name="PlaySelectedAnimationsBtn" type="Button" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/LoadAnimMarginCont/AnimSelectPanelCont/MarginContainer/VBoxContainer/LoadAnimGrid"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+text = "Play Animations"
 
 [node name="animSelectionItemList" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/LoadAnimMarginCont/AnimSelectPanelCont/MarginContainer/VBoxContainer" instance=ExtResource("9_u5ifw")]
 unique_name_in_owner = true

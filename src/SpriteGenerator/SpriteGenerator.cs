@@ -78,6 +78,7 @@ public partial class SpriteGenerator : Node
     [Export] public OptionButton WeaponItemMeshOptBtn;
     [Export] public ColorPickerButton HairColorBtn;
 
+    private Button PlaySelectedAnimationsBtn => field ??= GetNodeOrNull<Button>("%PlaySelectedAnimationsBtn");
 
     private Node3D _modelPivotNode;
     private Node3D _characterModelObject;
@@ -117,6 +118,7 @@ public partial class SpriteGenerator : Node
         AutoScaleModelCheckButton.ButtonPressed = AutoScaleModel;
         AutoScaleModelCheckButton.Pressed += () => AutoScaleModel = AutoScaleModelCheckButton.ButtonPressed;
         AutoScaleModelCheckButton.Text = AutoScaleModelCheckButton.ButtonPressed.ToString();
+        PlaySelectedAnimationsBtn.Pressed += OnPlaySelectedAnimationsPressed;
 
         DepthlineThicknessSlider.ValueChanged += OnDepthlineValuesChanged;
         DepthBlendValueSlider.ValueChanged += OnDepthlineValuesChanged;
@@ -178,13 +180,13 @@ public partial class SpriteGenerator : Node
         UpdateViewPorts();
     }
 
-
     /*************  ✨ Windsurf Command ⭐  *************/
     /// <summary>
     /// Loads and prepares the Model key nodes and required references like the PivotNode, Camera, AnimationPlayer, etc.
     /// Also loads the replaceable parts (Hair and Weapon meshes) and sets them up in the UI with default values.
     /// </summary>
     /*******  c48ce56c-f2c8-4884-ad57-9cf569e180e5  *******/
+
     private void LoadAndPrepareModelNodes()
     {
         //LOAD MODEL KEY NODES and RQEUIRED REFERENCES
@@ -289,7 +291,15 @@ public partial class SpriteGenerator : Node
         }
     }
 
-    private async void GenerateSpritesAnimPlayerBased(int[] selectedAngles)
+    private void OnPlaySelectedAnimationsPressed()
+    {
+        SelectedAngles = AngleSelectionItemList.GetSelectedItems().Select(x => Convert.ToInt32(AngleSelectionItemList.
+        GetItemText(x))).ToArray();
+
+        GenerateSpritesAnimPlayerBased(SelectedAngles, false);
+    }
+
+    private async void GenerateSpritesAnimPlayerBased(int[] selectedAngles, bool saveSprites = true)
     {
         int[] selectedAnimations = AnimSelectionItemList.GetSelectedItems();
 
@@ -346,36 +356,30 @@ public partial class SpriteGenerator : Node
                 {
 
                     await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
-                    //await ToSignal(GetTree().CreateTimer(0.0001f), Timer.SignalName.Timeout);
-
                     _animationPlayer.Seek(currentTime, true); // Seek to the exact time
-
-                    //Log.Debug("AnimSeek to: " + currentTime);
 
                     //Only capture frames where frameIndex is a multiple of frameStep
                     if (currentFrame % FrameSkipStep == 0)
                     {
-                        //OLDCODE
-                        //await SaveFrameAsImgPNG(angle);
-                        //Replace with Method to add to a Queue
-                        await SaveFrameAsPngImg((
-                            (float)_animationPlayer.CurrentAnimationPosition).ToString("0.000"),
-                            currentAnimationName,
-                            angle);
+                        if (saveSprites)
+                        {
+                            await SaveFrameAsPngImg((
+                                    (float)_animationPlayer.CurrentAnimationPosition).ToString("0.000"),
+                                    currentAnimationName,
+                                    angle);
+                        }
+
                     }
-
                     currentTime += frameInterval;
-
                     currentFrame++;
                 }
             }
-
             _modelPivotNode.RotationDegrees = new Vector3(0, 0, 0);
         }
 
         await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
 
-        if (IsGenSpriteSheetOn)
+        if (IsGenSpriteSheetOn && saveSprites)
         {
             GenerateSpriteSheet(saveFolder, currentAnimationName + "_spriteSheet", spriteSheetCollumnCount);
         }
