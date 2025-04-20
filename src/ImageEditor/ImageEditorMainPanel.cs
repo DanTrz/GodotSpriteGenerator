@@ -232,11 +232,19 @@ public partial class ImageEditorMainPanel : PanelContainer
         Inline2DColorPicker.Color = Colors.Black;
         ColorReductionCheckbox.ButtonPressed = false;
 
+
         if (isReset)
         {
             ColorCountSpinBox.MaxValue = ImgEditorCore.OriginalNumColors;
             ColorCountSpinBox.Value = ImgEditorCore.OriginalNumColors;
             ImgEditorCore.NumColorsLocal = ImgEditorCore.OriginalNumColors;
+            _currentPaletteColors = ImgEditorCore.OriginalImgPalette;
+
+            ImgEditorCore.ShaderPalette = ImgEditorCore.OriginalImgPalette;
+            PaletteLoaderFlow.UseExternalPaletteCheckBtn.ButtonPressed = false;
+            ImgEditorCore.UseExternalPalette = false;
+            ImgEditorCore.UpdateShaderParameters();
+            PaletteLoaderFlow.UpdatePaletteFlowList(ImgEditorCore.OriginalImgPalette);
         }
 
     }
@@ -248,9 +256,9 @@ public partial class ImageEditorMainPanel : PanelContainer
         GlobalEvents.Instance.OnEffectsChangesStarted?.Invoke(this.Name);
 
         //GET UI VALUES AND SET TO THE IMAGE EDITOR
-        ImgEditorCore.EnableColorReduction = ColorReductionCheckbox?.ButtonPressed ?? false;
+        ImgEditorCore.UseColorReduction = ColorReductionCheckbox?.ButtonPressed ?? false;
         _useExternalPalette = PaletteLoaderFlow.UseExternalPaletteCheckBtn?.ButtonPressed ?? false;
-        ImgEditorCore._useExternalPalette = _useExternalPalette;
+        ImgEditorCore.UseExternalPalette = _useExternalPalette;
         ImgEditorCore.SaturationValue = (float)(SaturationSlider?.Value ?? 1.0f);
         ImgEditorCore.BrightnessValue = (float)(BrightnessSlider?.Value ?? 0.0f);
         ImgEditorCore.ConstrastValue = (float)(ContrastSlider?.Value ?? 1.0f);
@@ -260,10 +268,12 @@ public partial class ImageEditorMainPanel : PanelContainer
         ImgEditorCore.InlineColor = Inline2DColorPicker?.Color ?? Colors.Black;
 
 
+        //TODO this rest of this function needs a refactor - prone to ?//BUG
+        // Issues may ocur as it's not clear when using ExternalPalette vs OriginalImgColor and both these with or without ColorReduction.  
         //SET THE COLOR COUNT FOR IMG EDITOR AND COLOR REDUCTION SPINBOX
         int totalColors = 0;
 
-        if (ImgEditorCore.EnableColorReduction == false)
+        if (ImgEditorCore.UseColorReduction == false && !_useExternalPalette)
         {
             //If no color reduction, reset image count values to it's original.
             totalColors = ImgEditorCore.OriginalNumColors;
@@ -273,10 +283,8 @@ public partial class ImageEditorMainPanel : PanelContainer
             //If WE DO HAVE color reduction, we also count the Persistent Colors + whatever is the user input in the spinbox
             totalColors = (PaletteLoaderFlow.PersistPaletteColors?.Count ?? 0) + (int)(ColorCountSpinBox?.Value ?? 0);
         }
-        //_colorCountSpinBox.MaxValue = totalColors;
-        //_colorCountSpinBox.Value = totalColors;
-        ImgEditorCore.NumColorsLocal = totalColors;
 
+        ImgEditorCore.NumColorsLocal = totalColors;
 
         //FOR NON_EXTERNAL PALETTE -> APPLY LOGIC TO GET THE PALETTE COLORS FROM ORIGINAL IMAGE + PERSISTENT COLORS
         if (!_useExternalPalette)
@@ -287,7 +295,7 @@ public partial class ImageEditorMainPanel : PanelContainer
             if (paletteSize <= 0) paletteSize = ImgEditorCore.NumColorsLocal;//Safety net code line to not have it as Zero. 
             ImgEditorCore.PersistColorCount = persistentColorsCount;
 
-            var tempPalette = await ImgEditorCore.GetNewColorPalette(paletteSize);
+            var tempPalette = await ImgEditorCore.GetNewColorPaletteKMeansClustering(paletteSize);
             if (tempPalette != null)
                 _currentPaletteColors = tempPalette;
         }
@@ -305,16 +313,16 @@ public partial class ImageEditorMainPanel : PanelContainer
         GlobalEvents.Instance.OnEffectsChangesEnded?.Invoke(this.Name, _currentPaletteColors);
     }
 
-    private void OnPaletteChangedInImageEditor(Godot.Collections.Array<Color> list)
+    private void OnPaletteChangedInImageEditor(Godot.Collections.Array<Color> externalPalette)
     {
         //Log.Debug("Palette changed to # : " + list.Count);
-        ImgEditorCore.MaxNumColors = list.Count;
-        ColorCountSpinBox.MaxValue = list.Count;
-        ColorCountSpinBox.Value = list.Count;
-        PaletteSizeMaxValueLbl.Text = list.Count.ToString();
-        ImgEditorCore.NumColorsShaderValue = list.Count;
-        ImgEditorCore.NumColorsLocal = list.Count;
-        _currentPaletteColors = list;
+        ImgEditorCore.MaxNumColors = externalPalette.Count;
+        ColorCountSpinBox.MaxValue = externalPalette.Count;
+        ColorCountSpinBox.Value = externalPalette.Count;
+        PaletteSizeMaxValueLbl.Text = externalPalette.Count.ToString();
+        ImgEditorCore.NumColorsShaderValue = externalPalette.Count;
+        ImgEditorCore.NumColorsLocal = externalPalette.Count;
+        _currentPaletteColors = externalPalette;
 
         SetImgEditorValues();
     }

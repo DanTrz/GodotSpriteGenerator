@@ -8,6 +8,7 @@ uniform float saturation : hint_range(-5.0, 5.0, 0.01) = 1.0;
 
 // Color Reduction Controls (HSL Method)
 uniform bool enable_color_reduction = true;
+uniform bool enable_external_palette = false;
 uniform int num_colors : hint_range(2, 512) = 16;
 uniform int new_num_colors : hint_range(2, 512) = 16;
 uniform vec4 palette[256];
@@ -61,7 +62,7 @@ void fragment() {
     vec4 color = image_color;
 
     // Apply color reduction FIRST (HSL Method)
-    if (enable_color_reduction) {
+    if (enable_color_reduction || enable_external_palette) {
         vec3 best_match = palette[0].rgb;
         float min_distance = color_distance(color.rgb, best_match);
 
