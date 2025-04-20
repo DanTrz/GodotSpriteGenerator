@@ -12,7 +12,7 @@ public partial class ImageEditor : PanelContainer
     private Texture2D currentTexture;
     [Export] public bool EnableColorReduction = false;
     [Export] public int NumColorsLocal = 16; //Value of the colors to compare against the NumColorsShaderValue and we will check if Shader needs updating or not
-    [Export] private int NumColorsShaderValue = 16; //Value of the colors applied by the Shader. Usually what's in the SpinBox Color Reduc
+    [Export] public int NumColorsShaderValue = 16; //Value of the colors applied by the Shader. Usually what's in the SpinBox Color Reduc
     [Export] public int MaxNumColors = 256; // Dynamic max palette size. This value might change if we add Persistent Colors. 
 
     public int OriginalNumColors = 0; //StaticValue that should NEVER change after loading an image

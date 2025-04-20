@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://b7rncm6rrf4tu"]
 
-[ext_resource type="Script" uid="uid://d0xqdcorc7y2b" path="res://src/ImageEditor/PaletteImporter/PaletteLoaderFlowUi.cs" id="1_wgtil"]
+[ext_resource type="Script" uid="uid://d0xqdcorc7y2b" path="res://src/ImageEditor/PaletteImporter/PaletteLoader.cs" id="1_wgtil"]
 [ext_resource type="LabelSettings" uid="uid://bmse4oftt3as3" path="res://Assets/UI/Theme/Label_HD.tres" id="2_aa8vp"]
 [ext_resource type="PackedScene" uid="uid://db76flu5stvpw" path="res://Assets/UI/BoolCheckButton.tscn" id="5_6iiyc"]
 [ext_resource type="PackedScene" uid="uid://c4piy84xo5t2w" path="res://src/ImageEditor/PaletteImporter/PaletteListFlowGrid.tscn" id="6_vbucp"]
