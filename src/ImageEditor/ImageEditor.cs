@@ -10,9 +10,9 @@ public partial class ImageEditor : PanelContainer
     //[ExportToolButton("UpdateShader")] public Callable ClickMeButton => Callable.From(UpdateShaderParameters);
     [Export] public TextureRect ImgTextRect;
     private Texture2D currentTexture;
-    [Export] public bool EnableColorReduction = false;
+    [Export] public bool UseColorReduction = false;
     [Export] public int NumColorsLocal = 16; //Value of the colors to compare against the NumColorsShaderValue and we will check if Shader needs updating or not
-    [Export] private int NumColorsShaderValue = 16; //Value of the colors applied by the Shader. Usually what's in the SpinBox Color Reduc
+    [Export] public int NumColorsShaderValue = 16; //Value of the colors applied by the Shader. Usually what's in the SpinBox Color Reduc
     [Export] public int MaxNumColors = 256; // Dynamic max palette size. This value might change if we add Persistent Colors. 
 
     public int OriginalNumColors = 0; //StaticValue that should NEVER change after loading an image
@@ -41,7 +41,7 @@ public partial class ImageEditor : PanelContainer
     [Export] public TextureRect HDTextureRect;
     [Export] public TextureRect HDTempBGTextureRect;
 
-    public bool _useExternalPalette = false;
+    public bool UseExternalPalette = false;
 
     public int PersistColorCount = 0;
 
@@ -76,10 +76,12 @@ public partial class ImageEditor : PanelContainer
         shaderMaterial.SetShaderParameter("inline_color", InlineColor);
 
 
-        shaderMaterial.SetShaderParameter("enable_color_reduction", EnableColorReduction);
+        shaderMaterial.SetShaderParameter("enable_color_reduction", UseColorReduction);
+        shaderMaterial.SetShaderParameter("enable_external_palette", UseExternalPalette);
         shaderMaterial.SetShaderParameter("num_colors", NumColorsLocal);
 
-        if (EnableColorReduction)
+        //TODO this if is preventing External Palettes to apply, it;s only applying when EnabledColorReduction
+        if (UseColorReduction || UseExternalPalette)
         {
             shaderMaterial.SetShaderParameter("palette", ShaderPalette);
         }
@@ -121,7 +123,7 @@ public partial class ImageEditor : PanelContainer
     /// <param name="colorsToGet">The max number of colors to get.</param>
     /// <param name="additionalColors">Add new colors if they don't exist</param>
     /// <returns>Returns a new Godot Array with the colors.</returns>
-    public async Task<Godot.Collections.Array<Color>> GetNewColorPalette(int colorsToGet)
+    public async Task<Godot.Collections.Array<Color>> GetNewColorPaletteKMeansClustering(int colorsToGet)
     {
         if (!ShaderColorsNeedsUpdating(colorsToGet)) return null; //TODO: BUG this is not working and should really do a Palette Color Comparions instead of comparing an Int (Numbers of colors)
 
