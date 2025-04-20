@@ -36,27 +36,49 @@ public static class Log
         string callingMethod = "";
         string declaringClass = "";
 
-        if (ShowTimeStamp)
+        try
         {
-            var dateTime = DateTime.Now;
-            timeStamp = $"[{dateTime:yy-MM-dd HH:mm:ss}]";
-        }
-
-        if (ShowDeclaringClass)
-        {
-            var className = new System.Diagnostics.StackTrace().GetFrame(2).GetMethod().DeclaringType.Name.ToString();
-            declaringClass = $"[{className}]";
-
-            if (callerNode != null)
+            if (ShowTimeStamp)
             {
-                declaringClass = $"[{declaringClass}(Node:{callerNode.Name})]";
+                var dateTime = DateTime.Now;
+                timeStamp = $"[{dateTime:yy-MM-dd HH:mm:ss}]";
             }
-        }
 
-        if (ShowCallingMethod)
+            if (ShowDeclaringClass)
+            {
+                var className = new System.Diagnostics.StackTrace().GetFrame(2).GetMethod().DeclaringType.Name.ToString();
+
+                if (className == null || className == "")
+                {
+                    className = "ClassNameUnknown";
+                }
+
+                declaringClass = $"[{className}]";
+
+                if (callerNode != null)
+                {
+                    declaringClass = $"[{declaringClass}(Node:{callerNode.Name})]";
+                }
+
+
+            }
+
+            if (ShowCallingMethod)
+            {
+                var method = new System.Diagnostics.StackTrace().GetFrame(2).GetMethod().Name.ToString();
+
+                if (method == null || method == "")
+                {
+                    method = "MethodUnknown";
+                }
+
+                callingMethod = $"[{method}]";
+            }
+
+        }
+        catch (System.Exception error)
         {
-            var method = new System.Diagnostics.StackTrace().GetFrame(2).GetMethod().Name.ToString();
-            callingMethod = $"[{method}]";
+            GD.PrintErr($"Error in Logger {error.Message}");
         }
 
         string logMessage = $"{timeStamp}[{level}]{declaringClass}{callingMethod} ";
@@ -82,7 +104,6 @@ public static class Log
 
         GD.PrintRich([$"[color={color}]{logMessage}[/color]", .. message]);
     }
-
 
     public static void Debug(params object[] message)
     {
