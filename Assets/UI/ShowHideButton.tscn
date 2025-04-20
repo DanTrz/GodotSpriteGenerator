@@ -7,9 +7,8 @@
 atlas = ExtResource("1_ov38g")
 region = Rect2(258, 112, 13, 16)
 
-[node name="ShowHideButton" type="Button" node_paths=PackedStringArray("TargetControlNodes")]
+[node name="ShowHideButton" type="Button"]
 custom_minimum_size = Vector2(24, 20)
 icon = SubResource("AtlasTexture_0w5gm")
 icon_alignment = 2
 script = ExtResource("2_lps0u")
-TargetControlNodes = []

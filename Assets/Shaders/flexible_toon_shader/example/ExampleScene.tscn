@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=3 uid="uid://da74txwrsqa5p"]
+
+[ext_resource type="Material" uid="uid://konhnqnbl47a" path="res://Assets/Shaders/flexible_toon_shader/example/CupMaterial.tres" id="2_3wc78"]
+[ext_resource type="ArrayMesh" uid="uid://bjpv3nbwx3l0g" path="res://Assets/Shaders/flexible_toon_shader/example/cup.obj" id="3"]
+[ext_resource type="Material" uid="uid://dgkqgl3vfek6v" path="res://Assets/Shaders/flexible_toon_shader/example/CupMaterialHatch.tres" id="3_l7y6w"]
+
+[sub_resource type="Environment" id="1"]
+background_mode = 1
+background_color = Color(1, 0.992157, 0.529412, 1)
+background_energy_multiplier = 0.95
+ambient_light_color = Color(1, 0.992157, 0.529412, 1)
+ambient_light_sky_contribution = 0.0
+ambient_light_energy = 0.63
+adjustment_enabled = true
+adjustment_brightness = 0.92
+adjustment_contrast = 1.08
+
+[node name="ExampleScene" type="Node3D"]
+
+[node name="DirectionalLight" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.835222, -0.303173, 0.458792, 0, 0.8343, 0.551311, -0.549912, -0.460467, 0.696826, -5.39992, 2.47023, 0)
+light_energy = 0.838
+light_indirect_energy = 0.0
+light_volumetric_fog_energy = 0.0
+shadow_enabled = true
+shadow_normal_bias = 1.798
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("1")
+
+[node name="CupToon" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.414137, 0, -0.910214, 0, 1, 0, 0.910215, 0, 0.414137, 0, -1, -1.5)
+mesh = ExtResource("3")
+surface_material_override/0 = ExtResource("2_3wc78")
+
+[node name="CupHatch" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.414137, 0, -0.910214, 0, 1, 0, 0.910215, 0, 0.414137, 0, -1, 1.5)
+mesh = ExtResource("3")
+surface_material_override/0 = ExtResource("3_l7y6w")

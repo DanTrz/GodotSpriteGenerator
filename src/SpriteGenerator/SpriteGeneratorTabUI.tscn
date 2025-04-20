@@ -240,10 +240,10 @@ DepthBlendValueSlider = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/
 DepthThresholdSlider = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MainSpriteOptionsMarginCont/MainSpriteOptionsPanelCont/VBoxContainer/SliderItemsOptGrid/DepthLineThresholdHBox/DepthLineThresholdSliderBox")
 DitheringStrenghtSlider = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MainSpriteOptionsMarginCont/MainSpriteOptionsPanelCont/VBoxContainer/SliderItemsOptGrid/DitheringHBox/DitheringHSlider")
 FrameStepTextEdit = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MainSpriteOptionsMarginCont/MainSpriteOptionsPanelCont/VBoxContainer/GeneralOptGrid/FrameSkipHBoxCont/FrameStepTextEdit")
-ModelTypeOptionButton = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/ModelTypeMarginCon/ModelTypePanelCont/ModelTypeOptGrid/ModelTypeOptionButton")
-LoadExternalModelBtn = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/ModelTypeMarginCon/ModelTypePanelCont/ModelTypeOptGrid/LoadExternalModelBtn")
-AutoScaleModelCheckButton = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/ModelTypeMarginCon/ModelTypePanelCont/ModelTypeOptGrid/AutoScaleHBox/MarginContainer/AutoScaleModelCheckButton")
-EnableHairMeshCheckBtn = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/ModelTypeOptGrid/HairMeshHBoxCont/MarginContainer2/EnableHairMeshCheckBtn")
+ModelTypeOptionButton = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/VBoxContainer/ModelTypeOptGrid2/ModelTypeOptionButton")
+LoadExternalModelBtn = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/VBoxContainer/ModelTypeOptGrid2/LoadExternalModelBtn")
+AutoScaleModelCheckButton = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/VBoxContainer/ModelTypeOptGrid2/AutoScaleHBox/MarginContainer/AutoScaleModelCheckButton")
+EnableHairMeshCheckBtn = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/VBoxContainer/ModelTypeOptGrid/HairMeshHBoxCont/MarginContainer2/EnableHairMeshCheckBtn")
 MaxColorPaletteSpinBox = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MainSpriteOptionsMarginCont/MainSpriteOptionsPanelCont/VBoxContainer/GeneralOptGrid/MaxColorPaletteHBox/MaxColorPaletteSpinBox")
 PlayBackSpeedLineEdit = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MainSpriteOptionsMarginCont/MainSpriteOptionsPanelCont/VBoxContainer/GeneralOptGrid/PlaybackSpeedHBoxCont/PlayBackSpeedLineEdit")
 ClearFolderCheckBtn = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MainSpriteOptionsMarginCont/MainSpriteOptionsPanelCont/VBoxContainer/OptionBoxesOpGrid/ClearFolderHBoxCont/ClearFolderCheckBtn")
@@ -255,9 +255,9 @@ AngleSelectionItemList = NodePath("SpriteGenerationVBoxContainer/HSplitContainer
 PixelGridTextRect = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/PanViewScrollContainer/DisplayViewportContainer/DisplaySubViewport/RenderImageVBoxCont/MainRenderPanel/ColorReductionRenderPanel/PixelSmoothEffectPanel/Pixel32GridTextRect")
 ShowGridCheckButton = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MainSpriteOptionsMarginCont/MainSpriteOptionsPanelCont/VBoxContainer/GeneralOptGrid/ShowGridHBoxCont/MarginContainer/ShowGridCheckButton")
 MeshReplacerPanelParentNode = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont")
-HairMeshOptBtn = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/ModelTypeOptGrid/HairMeshHBoxCont/HairMeshOptBtn")
-WeaponItemMeshOptBtn = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/ModelTypeOptGrid/WeaponItemMeshHBoxCont2/WeaponItemMeshOptBtn")
-HairColorBtn = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/ModelTypeOptGrid/HairMeshHBoxCont/MarginContainer/PanelContainer/HairColorBtn")
+HairMeshOptBtn = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/VBoxContainer/ModelTypeOptGrid/HairMeshHBoxCont/HairMeshOptBtn")
+WeaponItemMeshOptBtn = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/VBoxContainer/ModelTypeOptGrid/WeaponItemMeshHBoxCont2/WeaponItemMeshOptBtn")
+HairColorBtn = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/VBoxContainer/ModelTypeOptGrid/HairMeshHBoxCont/MarginContainer/PanelContainer/HairColorBtn")
 metadata/_tab_index = 0
 
 [node name="SpriteGenerationVBoxContainer" type="VBoxContainer" parent="."]
@@ -490,14 +490,17 @@ theme_override_constants/margin_bottom = 0
 [node name="ModelManagerHeader" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/ShowHideModelManager"]
 layout_mode = 2
 
-[node name="ShowHideModelManagerBtn" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/ShowHideModelManager/ModelManagerHeader" node_paths=PackedStringArray("TargetControlNodes", "TargetLabel") instance=ExtResource("10_v7vii")]
+
+[node name="ShowHideModelManagerBtn" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/ShowHideModelManager/ModelManagerHeader" node_paths=PackedStringArray("TargetControlNode", "TargetLabel") instance=ExtResource("10_v7vii")]
 layout_mode = 2
 alignment = 2
 icon_alignment = 0
-OpenedText = "Hide SpriteGeneration Options"
-ClosedText = "Show SpriteGeneration Options"
+OpenedText = "Show Model Transform"
+ClosedText = "Open Model Transform"
 StartOpen = true
-TargetControlNodes = [NodePath("../../../ModelPositionManagerMarginCont")]
+
+TargetControlNode = NodePath("../../../ModelPositionManagerMarginCont")
+
 UpdateTextToLabel = true
 TargetLabel = NodePath("../ModelManagerPanelLabel")
 
@@ -529,7 +532,8 @@ theme_override_constants/margin_bottom = 0
 [node name="ShowHideSpriteOptionHeader" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/ShowHideSpriteGenerationOpt"]
 layout_mode = 2
 
-[node name="ShowHideMainSpriteButton" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/ShowHideSpriteGenerationOpt/ShowHideSpriteOptionHeader" node_paths=PackedStringArray("TargetControlNodes", "TargetLabel") instance=ExtResource("10_v7vii")]
+
+[node name="ShowHideMainSpriteButton" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/ShowHideSpriteGenerationOpt/ShowHideSpriteOptionHeader" node_paths=PackedStringArray("TargetControlNode", "TargetLabel") instance=ExtResource("10_v7vii")]
 unique_name_in_owner = true
 layout_mode = 2
 alignment = 2
@@ -537,7 +541,7 @@ icon_alignment = 0
 OpenedText = "Hide SpriteGeneration Options"
 ClosedText = "Show SpriteGeneration Options"
 StartOpen = true
-TargetControlNodes = [NodePath("../../../MainSpriteOptionsMarginCont")]
+TargetControlNode = NodePath("../../../MainSpriteOptionsMarginCont")
 UpdateTextToLabel = true
 TargetLabel = NodePath("../MainSpritePanelLabel")
 
@@ -1069,91 +1073,21 @@ theme_override_constants/margin_bottom = 0
 [node name="ShowHideModelMeshHeader" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/ShowHideModelMeshOpt"]
 layout_mode = 2
 
-[node name="ShowHideModelMeshButton" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/ShowHideModelMeshOpt/ShowHideModelMeshHeader" node_paths=PackedStringArray("TargetControlNodes", "TargetLabel") instance=ExtResource("10_v7vii")]
+
+[node name="ShowHideModelMeshButton" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/ShowHideModelMeshOpt/ShowHideModelMeshHeader" node_paths=PackedStringArray("TargetControlNode", "TargetLabel") instance=ExtResource("10_v7vii")]
 layout_mode = 2
 alignment = 2
 icon_alignment = 0
-OpenedText = "Hide Model Replacer Options"
-ClosedText = "Show Model Replacer Options"
-TargetControlNodes = [NodePath("../../../ModelTypeMarginCon"), NodePath("../../../MeshOptionsMarginCont")]
+OpenedText = "Hide Model Mesh Options"
+ClosedText = "Show Model Mesh Options"
+TargetControlNode = NodePath("../../../MeshOptionsMarginCont")
+
 UpdateTextToLabel = true
 TargetLabel = NodePath("../ShowHideModelMeshLabel")
 
 [node name="ShowHideModelMeshLabel" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/ShowHideModelMeshOpt/ShowHideModelMeshHeader"]
 layout_mode = 2
 text = "Show/Hide Model Mesh Options"
-
-[node name="ModelTypeMarginCon" type="MarginContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 1
-theme_override_constants/margin_right = 1
-theme_override_constants/margin_bottom = 1
-
-[node name="ModelTypePanelCont" type="PanelContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/ModelTypeMarginCon"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="ModelTypeOptGrid" type="GridContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/ModelTypeMarginCon/ModelTypePanelCont"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/h_separation = 10
-theme_override_constants/v_separation = 8
-columns = 5
-script = ExtResource("17_l7hkw")
-_useSingleRowView = true
-
-[node name="Label" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/ModelTypeMarginCon/ModelTypePanelCont/ModelTypeOptGrid"]
-custom_minimum_size = Vector2(120, 32)
-layout_mode = 2
-text = "Model Type"
-label_settings = ExtResource("14_proug")
-vertical_alignment = 1
-clip_text = true
-
-[node name="ModelTypeOptionButton" type="OptionButton" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/ModelTypeMarginCon/ModelTypePanelCont/ModelTypeOptGrid"]
-custom_minimum_size = Vector2(150, 32)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 4
-clip_text = true
-item_count = 3
-popup/item_0/text = "Voxel LowPoly Model"
-popup/item_0/id = 0
-popup/item_1/text = "Godot Plush (Example)"
-popup/item_1/id = 1
-popup/item_2/text = "Custom Model (Not implemeted)"
-popup/item_2/id = 2
-
-[node name="LoadExternalModelBtn" type="Button" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/ModelTypeMarginCon/ModelTypePanelCont/ModelTypeOptGrid"]
-custom_minimum_size = Vector2(20, 32)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 4
-text = "Load Model"
-
-[node name="AutoScaleHBox" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/ModelTypeMarginCon/ModelTypePanelCont/ModelTypeOptGrid"]
-layout_mode = 2
-
-[node name="Label2" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/ModelTypeMarginCon/ModelTypePanelCont/ModelTypeOptGrid/AutoScaleHBox"]
-custom_minimum_size = Vector2(70, 32)
-layout_mode = 2
-text = "AutoScale"
-label_settings = ExtResource("14_proug")
-horizontal_alignment = 2
-vertical_alignment = 1
-autowrap_mode = 2
-clip_text = true
-
-[node name="MarginContainer" type="MarginContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/ModelTypeMarginCon/ModelTypePanelCont/ModelTypeOptGrid/AutoScaleHBox"]
-layout_mode = 2
-theme_override_constants/margin_left = 0
-theme_override_constants/margin_top = 4
-theme_override_constants/margin_right = 0
-theme_override_constants/margin_bottom = 4
-
-[node name="AutoScaleModelCheckButton" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/ModelTypeMarginCon/ModelTypePanelCont/ModelTypeOptGrid/AutoScaleHBox/MarginContainer" instance=ExtResource("14_v7vii")]
-layout_mode = 2
 
 [node name="MeshOptionsMarginCont" type="MarginContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer"]
 layout_mode = 2
@@ -1166,18 +1100,84 @@ theme_override_constants/margin_bottom = 1
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="ModelTypeOptGrid" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont" instance=ExtResource("22_l1mor")]
+[node name="VBoxContainer" type="VBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont"]
+layout_mode = 2
+
+[node name="ModelTypeOptGrid2" type="GridContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 8
+columns = 5
+script = ExtResource("17_l7hkw")
+_useSingleRowView = true
+
+[node name="Label" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/VBoxContainer/ModelTypeOptGrid2"]
+custom_minimum_size = Vector2(120, 32)
+layout_mode = 2
+text = "Model Type"
+label_settings = ExtResource("14_proug")
+vertical_alignment = 1
+clip_text = true
+
+[node name="ModelTypeOptionButton" type="OptionButton" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/VBoxContainer/ModelTypeOptGrid2"]
+custom_minimum_size = Vector2(150, 32)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+clip_text = true
+item_count = 4
+popup/item_0/text = "Voxel LowPoly Model"
+popup/item_0/id = 0
+popup/item_1/text = "Godot Plush (Example)"
+popup/item_1/id = 1
+popup/item_2/text = "Barbarian"
+popup/item_2/id = 2
+popup/item_3/text = "Custom Model (Beta)"
+popup/item_3/id = 3
+
+[node name="LoadExternalModelBtn" type="Button" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/VBoxContainer/ModelTypeOptGrid2"]
+custom_minimum_size = Vector2(20, 32)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+text = "Load Model"
+
+[node name="AutoScaleHBox" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/VBoxContainer/ModelTypeOptGrid2"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/VBoxContainer/ModelTypeOptGrid2/AutoScaleHBox"]
+custom_minimum_size = Vector2(70, 32)
+layout_mode = 2
+text = "AutoScale"
+label_settings = ExtResource("14_proug")
+horizontal_alignment = 2
+vertical_alignment = 1
+autowrap_mode = 2
+clip_text = true
+
+[node name="MarginContainer" type="MarginContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/VBoxContainer/ModelTypeOptGrid2/AutoScaleHBox"]
+layout_mode = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 4
+
+[node name="AutoScaleModelCheckButton" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/VBoxContainer/ModelTypeOptGrid2/AutoScaleHBox/MarginContainer" instance=ExtResource("14_v7vii")]
+layout_mode = 2
+
+[node name="ModelTypeOptGrid" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/VBoxContainer" instance=ExtResource("22_l1mor")]
 layout_mode = 2
 theme_override_constants/h_separation = 45
 columns = 2
 _maxColCount = 99
 
-[node name="ModelTypeHBoxCont" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/ModelTypeOptGrid"]
+[node name="ModelTypeHBoxCont" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/VBoxContainer/ModelTypeOptGrid"]
 visible = false
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="ModelTypeLabel" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/ModelTypeOptGrid/ModelTypeHBoxCont"]
+[node name="ModelTypeLabel" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/VBoxContainer/ModelTypeOptGrid/ModelTypeHBoxCont"]
 custom_minimum_size = Vector2(200, 32)
 layout_mode = 2
 text = "Model Type Options"
@@ -1186,11 +1186,11 @@ vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="HeadItemMeshHBoxCont" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/ModelTypeOptGrid"]
+[node name="HeadItemMeshHBoxCont" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/VBoxContainer/ModelTypeOptGrid"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="HeadItemMeshLabel" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/ModelTypeOptGrid/HeadItemMeshHBoxCont"]
+[node name="HeadItemMeshLabel" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/VBoxContainer/ModelTypeOptGrid/HeadItemMeshHBoxCont"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 text = " Head"
@@ -1199,14 +1199,14 @@ vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="HeadItemMeshOptBtn" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/ModelTypeOptGrid/HeadItemMeshHBoxCont" instance=ExtResource("10_f1ima")]
+[node name="HeadItemMeshOptBtn" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/VBoxContainer/ModelTypeOptGrid/HeadItemMeshHBoxCont" instance=ExtResource("10_f1ima")]
 layout_mode = 2
 
-[node name="HairMeshHBoxCont" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/ModelTypeOptGrid"]
+[node name="HairMeshHBoxCont" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/VBoxContainer/ModelTypeOptGrid"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="HairMeshLabel" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/ModelTypeOptGrid/HairMeshHBoxCont"]
+[node name="HairMeshLabel" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/VBoxContainer/ModelTypeOptGrid/HairMeshHBoxCont"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 text = " Hair"
@@ -1215,43 +1215,43 @@ vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="HairMeshOptBtn" type="OptionButton" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/ModelTypeOptGrid/HairMeshHBoxCont"]
+[node name="HairMeshOptBtn" type="OptionButton" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/VBoxContainer/ModelTypeOptGrid/HairMeshHBoxCont"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(150, 32)
 layout_mode = 2
 clip_text = true
 fit_to_longest_item = false
 
-[node name="MarginContainer" type="MarginContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/ModelTypeOptGrid/HairMeshHBoxCont"]
+[node name="MarginContainer" type="MarginContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/VBoxContainer/ModelTypeOptGrid/HairMeshHBoxCont"]
 layout_mode = 2
 theme_override_constants/margin_left = 2
 theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/ModelTypeOptGrid/HairMeshHBoxCont/MarginContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/VBoxContainer/ModelTypeOptGrid/HairMeshHBoxCont/MarginContainer"]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_v7vii")
 
-[node name="HairColorBtn" type="ColorPickerButton" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/ModelTypeOptGrid/HairMeshHBoxCont/MarginContainer/PanelContainer"]
+[node name="HairColorBtn" type="ColorPickerButton" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/VBoxContainer/ModelTypeOptGrid/HairMeshHBoxCont/MarginContainer/PanelContainer"]
 custom_minimum_size = Vector2(24, 24)
 layout_mode = 2
 
-[node name="MarginContainer2" type="MarginContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/ModelTypeOptGrid/HairMeshHBoxCont"]
+[node name="MarginContainer2" type="MarginContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/VBoxContainer/ModelTypeOptGrid/HairMeshHBoxCont"]
 layout_mode = 2
 theme_override_constants/margin_left = 0
 theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 0
 theme_override_constants/margin_bottom = 4
 
-[node name="EnableHairMeshCheckBtn" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/ModelTypeOptGrid/HairMeshHBoxCont/MarginContainer2" instance=ExtResource("14_v7vii")]
+[node name="EnableHairMeshCheckBtn" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/VBoxContainer/ModelTypeOptGrid/HairMeshHBoxCont/MarginContainer2" instance=ExtResource("14_v7vii")]
 layout_mode = 2
 
-[node name="TorsoItemMeshHBoxCont" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/ModelTypeOptGrid"]
+[node name="TorsoItemMeshHBoxCont" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/VBoxContainer/ModelTypeOptGrid"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="TorsoItemMeshLabel" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/ModelTypeOptGrid/TorsoItemMeshHBoxCont"]
+[node name="TorsoItemMeshLabel" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/VBoxContainer/ModelTypeOptGrid/TorsoItemMeshHBoxCont"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 text = " Torso"
@@ -1260,16 +1260,16 @@ vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="TorsoItemMeshOptBtn" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/ModelTypeOptGrid/TorsoItemMeshHBoxCont" instance=ExtResource("10_f1ima")]
+[node name="TorsoItemMeshOptBtn" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/VBoxContainer/ModelTypeOptGrid/TorsoItemMeshHBoxCont" instance=ExtResource("10_f1ima")]
 unique_name_in_owner = true
 layout_mode = 2
 BodyPartType = 1
 
-[node name="FeetItemMeshHBoxCont" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/ModelTypeOptGrid"]
+[node name="FeetItemMeshHBoxCont" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/VBoxContainer/ModelTypeOptGrid"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="FeetItemMeshLabel" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/ModelTypeOptGrid/FeetItemMeshHBoxCont"]
+[node name="FeetItemMeshLabel" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/VBoxContainer/ModelTypeOptGrid/FeetItemMeshHBoxCont"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 text = " Feet"
@@ -1278,15 +1278,15 @@ vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="FeettemMeshOptBtn" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/ModelTypeOptGrid/FeetItemMeshHBoxCont" instance=ExtResource("10_f1ima")]
+[node name="FeettemMeshOptBtn" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/VBoxContainer/ModelTypeOptGrid/FeetItemMeshHBoxCont" instance=ExtResource("10_f1ima")]
 layout_mode = 2
 BodyPartType = 4
 
-[node name="LegsItemMeshHBoxCont" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/ModelTypeOptGrid"]
+[node name="LegsItemMeshHBoxCont" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/VBoxContainer/ModelTypeOptGrid"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="LegItemMeshLabel" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/ModelTypeOptGrid/LegsItemMeshHBoxCont"]
+[node name="LegItemMeshLabel" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/VBoxContainer/ModelTypeOptGrid/LegsItemMeshHBoxCont"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 text = " Legs"
@@ -1295,15 +1295,15 @@ vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="LegItemMeshOptBtn" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/ModelTypeOptGrid/LegsItemMeshHBoxCont" instance=ExtResource("10_f1ima")]
+[node name="LegItemMeshOptBtn" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/VBoxContainer/ModelTypeOptGrid/LegsItemMeshHBoxCont" instance=ExtResource("10_f1ima")]
 layout_mode = 2
 BodyPartType = 3
 
-[node name="RightArmMeshHBoxCont" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/ModelTypeOptGrid"]
+[node name="RightArmMeshHBoxCont" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/VBoxContainer/ModelTypeOptGrid"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="RightArmMeshLabel" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/ModelTypeOptGrid/RightArmMeshHBoxCont"]
+[node name="RightArmMeshLabel" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/VBoxContainer/ModelTypeOptGrid/RightArmMeshHBoxCont"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 text = " Right Arm"
@@ -1312,15 +1312,15 @@ vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="RightArmMeshMeshOptBtn" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/ModelTypeOptGrid/RightArmMeshHBoxCont" instance=ExtResource("10_f1ima")]
+[node name="RightArmMeshMeshOptBtn" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/VBoxContainer/ModelTypeOptGrid/RightArmMeshHBoxCont" instance=ExtResource("10_f1ima")]
 layout_mode = 2
 BodyPartType = 6
 
-[node name="LeftArmMeshHBoxCont3" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/ModelTypeOptGrid"]
+[node name="LeftArmMeshHBoxCont3" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/VBoxContainer/ModelTypeOptGrid"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="LeftArmMeshLabel" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/ModelTypeOptGrid/LeftArmMeshHBoxCont3"]
+[node name="LeftArmMeshLabel" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/VBoxContainer/ModelTypeOptGrid/LeftArmMeshHBoxCont3"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 text = " Left Arm
@@ -1330,15 +1330,15 @@ vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="LeftArmMeshOptBtn" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/ModelTypeOptGrid/LeftArmMeshHBoxCont3" instance=ExtResource("10_f1ima")]
+[node name="LeftArmMeshOptBtn" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/VBoxContainer/ModelTypeOptGrid/LeftArmMeshHBoxCont3" instance=ExtResource("10_f1ima")]
 layout_mode = 2
 BodyPartType = 5
 
-[node name="WeaponItemMeshHBoxCont2" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/ModelTypeOptGrid"]
+[node name="WeaponItemMeshHBoxCont2" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/VBoxContainer/ModelTypeOptGrid"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="WeaponItemMeshLabel" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/ModelTypeOptGrid/WeaponItemMeshHBoxCont2"]
+[node name="WeaponItemMeshLabel" type="Label" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/VBoxContainer/ModelTypeOptGrid/WeaponItemMeshHBoxCont2"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 text = " Weapon"
@@ -1347,7 +1347,7 @@ vertical_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="WeaponItemMeshOptBtn" type="OptionButton" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/ModelTypeOptGrid/WeaponItemMeshHBoxCont2"]
+[node name="WeaponItemMeshOptBtn" type="OptionButton" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/VBoxContainer/ModelTypeOptGrid/WeaponItemMeshHBoxCont2"]
 custom_minimum_size = Vector2(150, 32)
 layout_mode = 2
 clip_text = true
@@ -1363,13 +1363,14 @@ theme_override_constants/margin_bottom = 0
 [node name="ShowHideModelAnimLoadHeader" type="HBoxContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/ShowHideLoadAnimOpt"]
 layout_mode = 2
 
-[node name="ShowHideAnimLoadBtn" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/ShowHideLoadAnimOpt/ShowHideModelAnimLoadHeader" node_paths=PackedStringArray("TargetControlNodes", "TargetLabel") instance=ExtResource("10_v7vii")]
+[node name="ShowHideAnimLoadBtn" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/ShowHideLoadAnimOpt/ShowHideModelAnimLoadHeader" node_paths=PackedStringArray("TargetControlNode", "TargetLabel") instance=ExtResource("10_v7vii")]
 layout_mode = 2
 alignment = 2
 icon_alignment = 0
-OpenedText = "Hide Anim Loader Options"
-ClosedText = "Show Anim Loader Options"
-TargetControlNodes = [NodePath("../../../LoadAnimMarginCont")]
+OpenedText = "Hide Animation Panel"
+ClosedText = "Show Animation Panel"
+TargetControlNode = NodePath("../../../LoadAnimMarginCont")
+
 UpdateTextToLabel = true
 TargetLabel = NodePath("../AnimLoadHeaderLabel")
 

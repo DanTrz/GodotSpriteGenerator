@@ -590,14 +590,18 @@ public partial class SpriteGenerator : Node
         switch (itemSelected)
         {
             case 0: //Voxel LowPoly Model
-                await LoadModel(Const.LOW_POLY_MODEL_SCENE_PATH);
+                await LoadModel(Const.Models.LOW_POLY);
                 LoadExternalModelBtn.Visible = false;
                 break;
             case 1: //Godot Plush (Example)
-                await LoadModel(Const.GODOT_PLUSH_MODEL_SCENE_PATH);
+                await LoadModel(Const.Models.GODOT_PLUSH);
                 LoadExternalModelBtn.Visible = false;
                 break;
-            case 2: //Custom model //TODO: Not implemented yet Custom Model import
+            case 2:
+                await LoadModel(Const.Models.BARBARIAN);
+                LoadExternalModelBtn.Visible = false;
+                break;
+            case 3: //Custom model //TODO: Exprimental with Leak of memory
                 LoadExternalModelBtn.Visible = true;
                 break;
         }

@@ -1,7 +1,15 @@
+using System.Collections.Generic;
 using Godot;
 
 public static class Const
 {
+    public static class Models
+    {
+        public static readonly string BARBARIAN = "uid://buurhphmqc16s";
+        public static readonly string GODOT_PLUSH = "uid://c1c2k76x0pauf";
+        public static readonly string LOW_POLY = "uid://bvvxjc2oqng0j";
+    }
+
     public const string MOUSE_RIGHT_CLICK = "MouseRightClick";
 
     public static readonly string RES_ROOT_FOLDER_PATH = ProjectSettings.GlobalizePath("res://");
@@ -17,17 +25,9 @@ public static class Const
     public const string WEAPON_SCENES_FOLDER_PATH = "res://Models/MeshRepository/Weapons/";
     public const string MESH_REPO_FOLDER_PATH = "res://Models/MeshRepository/";
     public const string SPRITESHEET_TEMP_FOLDER_PATH = "res://Assets/SpriteSheetTemp/";
-
-    public const string LOW_POLY_MODEL_SCENE_PATH = "res://Models/FullModels/BaseModel/LowPoly/BaseModel_LowPolyScene.tscn";
-
-    public const string GODOT_PLUSH_MODEL_SCENE_PATH = "res://Models/FullModels/godot_plush/godot_plush.tscn";
-
     public const string PRESET_SAVEDATA_FOLDER_PATH = "res://Assets/Resources/PresetDataSaves/";
-
     public const string PRESET_NONE = "None.tres";
     public const string PRESET_NONE_FILE_PATH = "res://Assets/Resources/PresetDataSaves/Default.tres";
-
-
 
     //Transform Data
     public enum TransformType { CAMERA_ZOOM, SCALE, POSITION, ROTATION };

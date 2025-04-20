@@ -1,15 +1,15 @@
-[gd_resource type="Resource" load_steps=2 format=3 uid="uid://casa0df2uvmdu"]
+[gd_resource type="Resource" script_class="SaveGameData" load_steps=2 format=3]
 
-[ext_resource type="Script" uid="uid://bgd3occamb4ig" path="res://Globals/SaveGameManager/SaveGameData.cs" id="1_7tswc"]
+[ext_resource type="Script" path="res://Globals/SaveGameManager/SaveGameData.cs" id="1_qhd2s"]
 
 [resource]
-script = ExtResource("1_7tswc")
-SaveFileName = "C:/Users/danie/AppData/Roaming/Godot/app_userdata/Godot Sprite Generator/OriginalLoadSettings.tres"
+script = ExtResource("1_qhd2s")
+SaveFileName = "C:/Users/danie/AppData/Roaming/Godot/app_userdata/Godot Sprite Generator/SaveGameData.tres"
 CreateSpriteSheet = false
-SpriteSize = 512
-SpriteSizeOptionButtonSelected = 4
+SpriteSize = 768
+SpriteSizeOptionButtonSelected = 5
 PixelResolution = 512
-PixelResolutionButtonSelected = 5
+PixelResolutionButtonSelected = 6
 EffectOptionSelected = 0
 Outline3DValue = 0.0
 Outline3DBlendValue = 0.75
@@ -25,10 +25,10 @@ RGBLevels = 24.0
 DitheringValue = 0.0
 ShowGrid = false
 AnimationMethodSelected = 0
-CameraDistance = 7.5
+CameraDistance = 46.0
 CameraRotation = -20.0
 ModelPositionXAxis = 0.0
-ModelPositionYAxis = -4.0
+ModelPositionYAxis = -16.0
 ModelPositionZAxis = 0.0
 ModelRotationXAxis = 0.0
 ModelRotationYAxis = 0.0

@@ -1,13 +1,12 @@
 using System;
 using Godot;
 
-[Tool]
 public partial class ShowHideButton : Button
 {
-    [Export] string OpenedText = "Open";
-    [Export] string ClosedText = "Close";
+    [Export] string OpenedText = "Close";
+    [Export] string ClosedText = "Open";
     [Export] bool StartOpen = false;
-    [Export] Godot.Collections.Array<Control> TargetControlNodes;
+    [Export] public Control TargetControlNode;
 
     [Export] bool UpdateTextToLabel = false;
     [Export] Label TargetLabel;
@@ -17,36 +16,22 @@ public partial class ShowHideButton : Button
     {
         this.Pressed += TogglePanel;
 
-#if TOOLS
         if (!Engine.IsEditorHint())
         {
             TogglePanel(StartOpen);
         }
-#endif
     }
 
     private void TogglePanel()
     {
-        if (TargetControlNodes != null)
-        {
-            foreach (var controlNode in TargetControlNodes)
-            {
-                controlNode.Visible = !controlNode.Visible;
-                UpdateLabelText(controlNode);
-            }
-        }
+        TargetControlNode.Visible = !TargetControlNode.Visible;
+        UpdateLabelText(TargetControlNode);
     }
 
     private void TogglePanel(bool startOpen)
     {
-        if (TargetControlNodes != null)
-        {
-            foreach (var controlNode in TargetControlNodes)
-            {
-                controlNode.Visible = startOpen;
-                UpdateLabelText(controlNode);
-            }
-        }
+        TargetControlNode.Visible = startOpen;
+        UpdateLabelText(TargetControlNode);
     }
 
     private void UpdateLabelText(Control controlNode)

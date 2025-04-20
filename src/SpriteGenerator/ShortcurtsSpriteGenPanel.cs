@@ -9,9 +9,4 @@ public partial class ShortcurtsSpriteGenPanel : PanelContainer
     {
         ResetCamButton.Pressed += () => GlobalEvents.Instance.OnCamResetChanges?.Invoke();
     }
-
-    private void OnResetCamButtonPressed()
-    {
-
-    }
 }
