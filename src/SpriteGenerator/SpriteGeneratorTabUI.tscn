@@ -1,9 +1,10 @@
-[gd_scene load_steps=45 format=3 uid="uid://ba6xmtnqg6cwa"]
+[gd_scene load_steps=46 format=3 uid="uid://ba6xmtnqg6cwa"]
 
 [ext_resource type="Theme" uid="uid://ccecns3yj5lc3" path="res://Assets/UI/Theme/MainTheme_HD.tres" id="1_4psbj"]
 [ext_resource type="PackedScene" uid="uid://iuwovcd804os" path="res://src/ModelAndMeshes/ModelScene3D.tscn" id="1_m3qwr"]
 [ext_resource type="Script" uid="uid://dj2tgr0hxsbd3" path="res://src/SpriteGenerator/SpriteGenerator.cs" id="1_yym6v"]
 [ext_resource type="PackedScene" uid="uid://bmqpc4ysvtrkq" path="res://Assets/UI/PanViewScrollContainer.tscn" id="3_gcoia"]
+[ext_resource type="Script" uid="uid://58v1lk80osii" path="res://src/SpriteGenerator/DisplayViewportContainer.cs" id="4_0apvr"]
 [ext_resource type="Script" uid="uid://cnunscda8oa3h" path="res://src/SpriteGenerator/DisplaySubViewport.cs" id="4_41tmx"]
 [ext_resource type="Shader" uid="uid://cwbfwv0g6if3e" path="res://Assets/Shaders/TextRecPixelEffect.gdshader" id="4_axlb1"]
 [ext_resource type="PackedScene" uid="uid://ffrwo5xcxd0r" path="res://src/ImageEditor/Camera2DController/Camera2DController.tscn" id="5_0apvr"]
@@ -200,7 +201,7 @@ corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
-[node name="SpriteGeneratorTabUI" type="PanelContainer" node_paths=PackedStringArray("AnimMethodOptionBtn", "GenerateSpriteSheetCheckBtn", "SpriteSheetNameTextEdit", "MeshOptionsMarginCont", "StartGenerationBtn", "MainRenderPanel", "MainModelScene3D", "DisplaySubViewPort", "RawViewport", "_rawViewportContainer", "BgRemoverViewport", "ImgColorReductionSubViewport", "ImgColorReductionSubViewportContainer", "PixelSmoothEffectSprite2D", "ImgColorReductionTextRect", "BgRemoverViewportContainer", "PixelShaderTextRect", "MoveSpriteSheetCheckButton", "EffectsChoicesOptionBtn", "PixelationLevelOptionBtn", "Outline3DValueSlider", "Outline3DBlendFactorSlider", "Outline3DColorPicker", "Depthline3DColorPicker", "DepthlineThicknessSlider", "DepthBlendValueSlider", "DepthThresholdSlider", "DitheringStrenghtSlider", "FrameStepTextEdit", "ModelTypeOptionButton", "LoadExternalModelBtn", "AutoScaleModelCheckButton", "EnableHairMeshCheckBtn", "MaxColorPaletteSpinBox", "PlayBackSpeedLineEdit", "ClearFolderCheckBtn", "_pixelShaderTextRect", "ModelPositionManager", "LoadAllAnimationsBtn", "AnimSelectionItemList", "AngleSelectionItemList", "PixelGridTextRect", "ShowGridCheckButton", "MeshReplacerPanelParentNode", "HairMeshOptBtn", "WeaponItemMeshOptBtn", "HairColorBtn") groups=["save_data"]]
+[node name="SpriteGeneratorTabUI" type="PanelContainer" node_paths=PackedStringArray("AnimMethodOptionBtn", "GenerateSpriteSheetCheckBtn", "SpriteSheetNameTextEdit", "MeshOptionsMarginCont", "StartGenerationBtn", "MainRenderPanel", "MainModelScene", "DisplaySubViewPort", "RawViewport", "_rawViewportContainer", "BgRemoverViewport", "ImgColorReductionSubViewport", "ImgColorReductionSubViewportContainer", "PixelSmoothEffectSprite2D", "ImgColorReductionTextRect", "BgRemoverViewportContainer", "PixelShaderTextRect", "MoveSpriteSheetCheckButton", "EffectsChoicesOptionBtn", "PixelationLevelOptionBtn", "Outline3DValueSlider", "Outline3DBlendFactorSlider", "Outline3DColorPicker", "Depthline3DColorPicker", "DepthlineThicknessSlider", "DepthBlendValueSlider", "DepthThresholdSlider", "DitheringStrenghtSlider", "FrameStepTextEdit", "ModelTypeOptionButton", "LoadExternalModelBtn", "AutoScaleModelCheckButton", "EnableHairMeshCheckBtn", "MaxColorPaletteSpinBox", "PlayBackSpeedLineEdit", "ClearFolderCheckBtn", "_pixelShaderTextRect", "ModelPositionManager", "LoadAllAnimationsBtn", "AnimSelectionItemList", "AngleSelectionItemList", "PixelGridTextRect", "ShowGridCheckButton", "MeshReplacerPanelParentNode", "HairMeshOptBtn", "WeaponItemMeshOptBtn", "HairColorBtn") groups=["save_data"]]
 texture_filter = 2
 anchors_preset = 15
 anchor_right = 1.0
@@ -217,7 +218,7 @@ SpriteSheetNameTextEdit = NodePath("SpriteGenerationVBoxContainer/HSplitContaine
 MeshOptionsMarginCont = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont")
 StartGenerationBtn = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/StartGenMarginContainer/PanelContainer/FinalGenerationButton/StartGenerationBtn")
 MainRenderPanel = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/PanViewScrollContainer/DisplayViewportContainer/DisplaySubViewport/RenderImageVBoxCont/MainRenderPanel")
-MainModelScene3D = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/PanViewScrollContainer/DisplayViewportContainer/DisplaySubViewport/RenderImageVBoxCont/MainRenderPanel/RawRenderPanel/RawViewportContainer/RawSubViewport/Model/ModelScene3D")
+MainModelScene = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/PanViewScrollContainer/DisplayViewportContainer/DisplaySubViewport/RenderImageVBoxCont/MainRenderPanel/RawRenderPanel/RawViewportContainer/RawSubViewport/Model/ModelScene3D")
 DisplaySubViewPort = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/PanViewScrollContainer/DisplayViewportContainer/DisplaySubViewport")
 RawViewport = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/PanViewScrollContainer/DisplayViewportContainer/DisplaySubViewport/RenderImageVBoxCont/MainRenderPanel/RawRenderPanel/RawViewportContainer/RawSubViewport")
 _rawViewportContainer = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/PanViewScrollContainer/DisplayViewportContainer/DisplaySubViewport/RenderImageVBoxCont/MainRenderPanel/RawRenderPanel/RawViewportContainer")
@@ -280,13 +281,16 @@ mouse_filter = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_1g3je")
 GridSize = 256
 
-[node name="DisplayViewportContainer" type="SubViewportContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/PanViewScrollContainer"]
+[node name="DisplayViewportContainer" type="SubViewportContainer" parent="SpriteGenerationVBoxContainer/HSplitContainer/PanViewScrollContainer" node_paths=PackedStringArray("camera2D", "MainModelScene")]
 clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 stretch = true
 mouse_target = true
+script = ExtResource("4_0apvr")
+camera2D = NodePath("DisplaySubViewport/CamSpriteGenController")
+MainModelScene = NodePath("DisplaySubViewport/RenderImageVBoxCont/MainRenderPanel/RawRenderPanel/RawViewportContainer/RawSubViewport/Model/ModelScene3D")
 
 [node name="DisplaySubViewport" type="SubViewport" parent="SpriteGenerationVBoxContainer/HSplitContainer/PanViewScrollContainer/DisplayViewportContainer"]
 transparent_bg = true

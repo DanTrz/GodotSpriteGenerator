@@ -26,38 +26,10 @@ public partial class ModelScene3d : Node3D
             //Log.Debug("Mouse Click _UnHandledINput Detected: " + @event + "From: " + this.Name);
             HandleGizmoSelection(Gizmo, mouseButton);
         }
-
-        //Detect mouse WheelMovement (Zoom) and handle it
-        if (@event is InputEventMouseButton mouseEvent)
-        {
-            if (mouseEvent.ButtonIndex == MouseButton.WheelUp && mouseEvent.Pressed)
-            {
-                //Log.Debug("WheelUp Detected " + this.Name);
-                //Zoom Out ////bool True = Zoom In, False = Zoom Out
-                GlobalEvents.Instance.OnCameraZoomChanged?.Invoke(false);
-
-            }
-            else if (mouseEvent.ButtonIndex == MouseButton.WheelDown && mouseEvent.Pressed)
-            {
-                //Log.Debug("WheelDown Detected " + this.Name);
-                GlobalEvents.Instance.OnCameraZoomChanged?.Invoke(true);
-                //Zoom In ////bool True = Zoom In, False = Zoom Out
-            }
-
-
-        }
-        else if (@event is InputEventMouseMotion motionEvent && _isPanning)
-        {
-
-            //Log.Debug("Scroll Requested = " + motionEvent.Relative + "  From: " + this.Name);
-            GlobalEvents.Instance.OnPaningScroll?.Invoke(motionEvent);
-            GetViewport().SetInputAsHandled();
-        }
     }
 
     private void HandleGizmoSelection(Gizmo3D gizmo, InputEventMouseButton button)
     {
-
         //Log.Debug("### Gizmo Logic => Click detected : " + this.Name);
         var targetNode = GlobalUtil.GetAllChildNodesByType<Model3DMainPivotControl>(this).FirstOrDefault();
         if (targetNode == null) return;

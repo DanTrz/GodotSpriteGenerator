@@ -40,7 +40,6 @@ public partial class ModelPositionManager : Node
         this.CallDeferred(MethodName.LoadTransformValueToUI);
         this.CallDeferred(MethodName.ConnectTransformUINodeSignals);
         GlobalEvents.Instance.OnModelTransformChanged += OnModelTransformChanged;
-        //GlobalEvents.Instance.OnCameraZoomChanged += OnCameraZoomChanged;
     }
 
     public void CheckIfModelLoaded()

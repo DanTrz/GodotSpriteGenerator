@@ -19,47 +19,15 @@ public partial class CamSpriteGenController : Camera2D
         _defaultPosition = Position;
         MakeCurrent();
         Zoom = DefaultZoom;
-        GlobalEvents.Instance.OnCameraZoomChanged += ZoomTowardsMouse; //Gets called from ModelScene3D when MouseClick is inside the Model
-        GlobalEvents.Instance.OnPaningScroll += PanViewToMousePos;
         GlobalEvents.Instance.OnCamResetChanges += ResetCamera;
-    }
-
-    public override void _UnhandledInput(InputEvent @event)
-    {
-
-        if (@event is InputEventMouseButton mouseEvent)
-        {
-            if (mouseEvent.ButtonIndex == MouseButton.Right && mouseEvent.Pressed)
-            {
-                _isPanning = true;
-                _previousMousePosition = GetGlobalMousePosition();
-                GetViewport().SetInputAsHandled();
-            }
-            else if ((mouseEvent.ButtonIndex == MouseButton.WheelUp || mouseEvent.ButtonIndex == MouseButton.WheelDown) && mouseEvent.Pressed)
-            {
-                ZoomTowardsMouse(!(mouseEvent.ButtonIndex == MouseButton.WheelUp));
-                GetViewport().SetInputAsHandled();
-            }
-            else
-            {
-                _isPanning = false;
-                GetViewport().SetInputAsHandled();
-            }
-        }
-        else if (@event is InputEventMouseMotion motionEvent && _isPanning)
-        {
-            PanViewToMousePos(motionEvent);
-        }
     }
 
     public void PanViewToMousePos(InputEventMouseMotion motionEvent)
     {
         Position -= motionEvent.Relative / Zoom;
-        GetViewport().SetInputAsHandled();
     }
 
-
-    private void ZoomTowardsMouse(bool zoomIn)
+    public void ZoomTowardsMouse(bool zoomIn)
     {
         //bool True = Zoom In, False = Zoom Out
         var zoomDir = (!zoomIn) ? -1 : 1;
@@ -85,6 +53,7 @@ public partial class CamSpriteGenController : Camera2D
 
             Zoom = newZoom;
         }
+
 
         // Callable.From(() => BgGrid.QueueRedraw()).CallDeferred();
 

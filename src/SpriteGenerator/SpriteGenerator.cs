@@ -16,8 +16,7 @@ public partial class SpriteGenerator : Node
     [Export] public Button StartGenerationBtn;
 
     [Export] public PanelContainer MainRenderPanel;
-    [Export] public Node3D MainModelScene3D;
-
+    [Export] public ModelScene3d MainModelScene;
     [Export] public SubViewport DisplaySubViewPort;
     [Export] public SubViewport RawViewport;
     [Export] public SubViewportContainer _rawViewportContainer;
@@ -81,7 +80,7 @@ public partial class SpriteGenerator : Node
     private Button PlaySelectedAnimationsBtn => field ??= GetNodeOrNull<Button>("%PlaySelectedAnimationsBtn");
 
     private Node3D _modelPivotNode;
-    private Node3D _characterModelObject;
+    private Node3D _modelObjectNode;
     private Camera3D _camera;
     private AnimationPlayer _animationPlayer;
 
@@ -190,17 +189,17 @@ public partial class SpriteGenerator : Node
     private void LoadAndPrepareModelNodes()
     {
         //LOAD MODEL KEY NODES and RQEUIRED REFERENCES
-        if (MainModelScene3D != null)
+        if (MainModelScene != null)
         {
             //Get Reference to Our Object3D within MainScene and Load it's key nodes
-            _modelPivotNode = MainModelScene3D.GetNodeOrNull<Node3D>("%Model3DPivotControl");
-            _camera = MainModelScene3D.GetNodeOrNull<Camera3D>("%MainCamera");
-            _characterModelObject = _modelPivotNode.GetChildOrNull<Node3D>(0);
-            _animationPlayer = _characterModelObject.GetNodeOrNull<AnimationPlayer>("AnimationPlayer");
+            _modelPivotNode = MainModelScene.GetNodeOrNull<Node3D>("%Model3DPivotControl");
+            _camera = MainModelScene.GetNodeOrNull<Camera3D>("%MainCamera");
+            _modelObjectNode = _modelPivotNode.GetChildOrNull<Node3D>(0);
+            _animationPlayer = _modelObjectNode.GetNodeOrNull<AnimationPlayer>("AnimationPlayer");
 
             if (_animationPlayer == null)
             {
-                _animationPlayer = _characterModelObject.GetNodeOrNull<AnimationPlayer>("%AnimationPlayer");
+                _animationPlayer = _modelObjectNode.GetNodeOrNull<AnimationPlayer>("%AnimationPlayer");
             }
 
             //Pass the Model to te PositionManager 
@@ -210,8 +209,8 @@ public partial class SpriteGenerator : Node
             var modelXAxisSize = MeshReplacer.GetModelMergedAABBMeshes(_modelPivotNode).Size.Y;
             ModelPositionManager.SetTransformValueToModel(AutoScaleModel, modelXAxisSize);
 
-            Outline3DShaderMesh = MainModelScene3D.GetNodeOrNull<MeshInstance3D>("%Outline3DShaderMesh");
-            Depthline3DShaderMesh = MainModelScene3D.GetNodeOrNull<MeshInstance3D>("%Depthline3DShaderMesh");
+            Outline3DShaderMesh = MainModelScene.GetNodeOrNull<MeshInstance3D>("%Outline3DShaderMesh");
+            Depthline3DShaderMesh = MainModelScene.GetNodeOrNull<MeshInstance3D>("%Depthline3DShaderMesh");
         }
         else
         {
@@ -258,7 +257,7 @@ public partial class SpriteGenerator : Node
         }
 
         spriteCount = 0;
-        saveFolder = ProjectSettings.GlobalizePath(GlobalUtil.SaveFolderPath + "/" + _characterModelObject.Name);
+        saveFolder = ProjectSettings.GlobalizePath(GlobalUtil.SaveFolderPath + "/" + _modelObjectNode.Name);
 
         if (!Directory.Exists(ProjectSettings.GlobalizePath(saveFolder)))
             Directory.CreateDirectory(ProjectSettings.GlobalizePath(saveFolder));
@@ -401,7 +400,7 @@ public partial class SpriteGenerator : Node
 
             await ToSignal(RenderingServer.Singleton, RenderingServer.SignalName.FramePostDraw); //Testin
 
-            await SaveFrameAsPngImg("", _characterModelObject.Name, angle);
+            await SaveFrameAsPngImg("", _modelObjectNode.Name, angle);
 
             //Log.Debug($"Y.Axis Sprite Generate: {_characterModelObject.Name}, angle: {angle} frames");
         }
@@ -411,7 +410,7 @@ public partial class SpriteGenerator : Node
 
         if (IsGenSpriteSheetOn)
         {
-            GenerateSpriteSheet(saveFolder, _characterModelObject.Name + "_spriteSheet", spriteSheetCollumnCount);
+            GenerateSpriteSheet(saveFolder, _modelObjectNode.Name + "_spriteSheet", spriteSheetCollumnCount);
         }
         else
         {
@@ -686,7 +685,7 @@ public partial class SpriteGenerator : Node
 
     private void OnEnableHairMeshCheckBtnPressed()
     {
-        var hairBoneNode = _characterModelObject.GetNodeOrNull<BoneAttachment3D>("%HairBoneAttach");
+        var hairBoneNode = _modelObjectNode.GetNodeOrNull<BoneAttachment3D>("%HairBoneAttach");
         if (hairBoneNode != null)
         {
 
@@ -707,18 +706,18 @@ public partial class SpriteGenerator : Node
             case 0:
                 //No Effect - Turn off PixaltionButton
                 OnPixelationLevelChanged(5);//Set the resolution to 512 pixels (Last option)
-                Callable.From(() => EffectsHandler.SetEffect(_characterModelObject, Const.EffectShadingType.STANDARD)).CallDeferred();
+                Callable.From(() => EffectsHandler.SetEffect(_modelObjectNode, Const.EffectShadingType.STANDARD)).CallDeferred();
                 //EffectsHandler.SetEffect(_characterModelObject, Const.EffectShadingType.STANDARD);//TODO: TESTING ONLY
                 break;
             case 1:
                 //Pixel Effect
                 OnPixelationLevelChanged(PixelationLevelOptionBtn.Selected);
-                EffectsHandler.SetEffect(_characterModelObject, Const.EffectShadingType.UNSHADED);//TODO: TESTING ONLY
+                EffectsHandler.SetEffect(_modelObjectNode, Const.EffectShadingType.UNSHADED);//TODO: TESTING ONLY
                 break;
             case 2:
                 //Toon Effect
                 OnPixelationLevelChanged(PixelationLevelOptionBtn.Selected);
-                EffectsHandler.SetEffect(_characterModelObject, Const.EffectShadingType.TOON);//TODO: TESTING ONLY
+                EffectsHandler.SetEffect(_modelObjectNode, Const.EffectShadingType.TOON);//TODO: TESTING ONLY
                 break;
         }
         UpdateViewPorts();
@@ -920,7 +919,7 @@ public partial class SpriteGenerator : Node
 
     private void OnHairColorChanged(Color newColor)
     {
-        MeshInstance3D _hairMeshObject = _characterModelObject.GetNode<BoneAttachment3D>("%HairBoneAttach").GetChild(0).GetNode<MeshInstance3D>("%HairMesh");
+        MeshInstance3D _hairMeshObject = _modelObjectNode.GetNode<BoneAttachment3D>("%HairBoneAttach").GetChild(0).GetNode<MeshInstance3D>("%HairMesh");
 
         if (_hairMeshObject != null && _hairMeshObject.GetActiveMaterial(0) is StandardMaterial3D material)
         {
@@ -930,7 +929,7 @@ public partial class SpriteGenerator : Node
 
     private void OnHairMeshOptBtnItemSelected(long index)
     {
-        BoneAttachment3D _hairBoneAttachNode = _characterModelObject.GetNode<BoneAttachment3D>("%HairBoneAttach");
+        BoneAttachment3D _hairBoneAttachNode = _modelObjectNode.GetNode<BoneAttachment3D>("%HairBoneAttach");
         string itemSelected = HairMeshOptBtn.GetItemText((int)index);
         MeshReplacer.UpdateMeshScene(_hairBoneAttachNode, Const.HAIR_SCENES_FOLDER_PATH + itemSelected + ".tscn");
     }
@@ -938,7 +937,7 @@ public partial class SpriteGenerator : Node
 
     private void OnWeaponItemMeshOptBtnItemSelected(long index)
     {
-        BoneAttachment3D weaponBoneAttachNode = _characterModelObject.GetNode<BoneAttachment3D>("%WeaponBoneAttach");
+        BoneAttachment3D weaponBoneAttachNode = _modelObjectNode.GetNode<BoneAttachment3D>("%WeaponBoneAttach");
         string itemSelected = WeaponItemMeshOptBtn.GetItemText((int)index);
         MeshReplacer.UpdateMeshScene(weaponBoneAttachNode, Const.WEAPON_SCENES_FOLDER_PATH + itemSelected + ".tscn");
     }
@@ -989,7 +988,7 @@ public partial class SpriteGenerator : Node
         string itemSelectedName = meshReplacerOptButton.GetItemText((int)itemIndex);
         //Log.Debug("Mesh Item Selected: " + itemSelectedName + " + FromButton: " + meshReplacerOptButton.Name);
 
-        var _targetMeshInstance = GlobalUtil.GetAllChildNodesByType<BodyPartMeshInstance3D>(_characterModelObject).
+        var _targetMeshInstance = GlobalUtil.GetAllChildNodesByType<BodyPartMeshInstance3D>(_modelObjectNode).
             Where(bodyPartMesh => bodyPartMesh.BodyPartType == meshReplacerOptButton.BodyPartType).FirstOrDefault();
 
         if (_targetMeshInstance == null)
@@ -1019,7 +1018,7 @@ public partial class SpriteGenerator : Node
     private bool ModelHasReplacebleParts()
     {
         //Check if the model has at least one replaceable part
-        if (GlobalUtil.GetAllChildNodesByType<BodyPartMeshInstance3D>(_characterModelObject).FirstOrDefault() != null)
+        if (GlobalUtil.GetAllChildNodesByType<BodyPartMeshInstance3D>(_modelObjectNode).FirstOrDefault() != null)
         {
             return true;
         }

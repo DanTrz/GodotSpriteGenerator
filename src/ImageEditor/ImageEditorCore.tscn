@@ -56,7 +56,7 @@ stretch = true
 transparent_bg = true
 handle_input_locally = false
 physics_object_picking = true
-size = Vector2i(2, 2)
+size = Vector2i(800, 512)
 render_target_update_mode = 4
 
 [node name="Camera2DController" parent="RawImgPanel/ViewportContainer/ImgEditorSubViewport" instance=ExtResource("1_nwf5k")]

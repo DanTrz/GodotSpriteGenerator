@@ -10,19 +10,6 @@ public partial class PanViewScrollContainer : ScrollContainer
 
     public override void _Ready()
     {
-        GlobalEvents.Instance.OnPaningScroll += OnPaningScrollActive;
-
-    }
-
-    private void OnPaningScrollActive(InputEventMouseMotion motion)
-    {
-        if (motion is InputEventMouseMotion motionEvent)
-        {
-            this.ScrollHorizontal += (int)motionEvent.Relative.X * -1;
-            this.ScrollVertical += (int)motionEvent.Relative.Y * -1;
-            Log.Debug("Scroll Processed To = " + motionEvent.Relative + "  From: " + this.Name);
-            GetViewport().SetInputAsHandled();
-        }
 
     }
 
