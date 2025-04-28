@@ -1,4 +1,3 @@
-using System;
 using Godot;
 
 public partial class ItemListCheckBox : ItemList
@@ -40,13 +39,10 @@ public partial class ItemListCheckBox : ItemList
     }
 
 
-    /*************  ✨ Windsurf Command ⭐  *************/
     /// <summary>
     /// Called when the selection changes or is updated.
     /// </summary>
     /// <param name="index">Index of the item that was selected or deselected.</param>
-
-    /*******  94644bb0-d4f9-4e88-9cec-81988bbf770d  *******/
     private void OnSelectionChangedOrUpdated(long index, bool selected)
     {
         //Log.Debug("ItemClicked: " + this.GetItemText((int)index) + " + index: " + index + " selected: " + selected);

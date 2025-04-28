@@ -177,12 +177,11 @@ public partial class SpriteGenerator : Node
         UpdateViewPorts();
     }
 
-    /*************  ✨ Windsurf Command ⭐  *************/
+
     /// <summary>
     /// Loads and prepares the Model key nodes and required references like the PivotNode, Camera, AnimationPlayer, etc.
     /// Also loads the replaceable parts (Hair and Weapon meshes) and sets them up in the UI with default values.
     /// </summary>
-    /*******  c48ce56c-f2c8-4884-ad57-9cf569e180e5  *******/
     private void LoadAndPrepareModelNodes()
     {
         //LOAD MODEL KEY NODES and RQEUIRED REFERENCES
