@@ -9,7 +9,6 @@ public partial class ShortcurtsSpriteGenPanel : PanelContainer
     public override void _Ready()
     {
         ResetViewButton.Pressed += () => GlobalEvents.Instance.OnCamResetChanges?.Invoke();
-        ResetViewButton.Pressed += TestDebugger;
     }
 }
 
