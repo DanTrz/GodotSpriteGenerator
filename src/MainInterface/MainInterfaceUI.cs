@@ -42,7 +42,11 @@ public partial class MainInterfaceUI : Node
 
         LoadPresetButtonItems();
 
+        //Closes the Logger when the game exits
+        GetTree().Root.TreeExiting += () => Log.Shutdown();
+
     }
+
 
     private async Task OnPresetSelected(long index)
     {

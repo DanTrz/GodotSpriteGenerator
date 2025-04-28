@@ -16,8 +16,8 @@ public partial class ShortcurtsSpriteGenPanel : PanelContainer
     {
         Log.Debug(this, "Logged as Log.DEBUG Visual Studio");
         Log.Info(this, "Logged as Log.INFO Visual Studio");
-        Log.Error(this, "Logged as Log.ERROR Visual Studio");
-        Log.Warning(this, "Logged as Log.WARNING Visual Studio");
+        Log.Error("No Node delcared-> Logged as Log.ERROR Visual Studio");
+        Log.Warning("No Node delcared-> Logged as Log.WARNING Visual Studio");
     }
 }
 

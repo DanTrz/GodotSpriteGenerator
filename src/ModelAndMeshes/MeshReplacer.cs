@@ -277,7 +277,7 @@ public static class MeshReplacer
             }
         }
 
-        Log.Debug($"Merged AABB for '{parentNode.GetChild(0).Name}': Pos={finalMergedAabb.Position}, Size={finalMergedAabb.Size}");
+        //Log.Debug($"Merged AABB for '{parentNode.GetChild(0).Name}': Pos={finalMergedAabb.Position}, Size={finalMergedAabb.Size}");
         return finalMergedAabb;
     }
 
