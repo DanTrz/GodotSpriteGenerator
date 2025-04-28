@@ -1,10 +1,10 @@
+
+using Godot;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Godot;
 
 //Rename this class to "GD" to make it active or rename to anything elese to disable
 public static class GD_Deactivated

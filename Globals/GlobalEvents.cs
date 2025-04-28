@@ -1,6 +1,5 @@
-using System;
-using System.Collections.Generic;
 using Godot;
+using System;
 
 public partial class GlobalEvents : Node
 {
@@ -23,7 +22,6 @@ public partial class GlobalEvents : Node
     public Action<int, Vector3> OnModelTransformChanged { get; set; }
 
     public Action OnCamResetChanges { get; set; }
-
     public Action<float> OnSpriteSizeChanged { get; set; }
 
 

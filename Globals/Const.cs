@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Godot;
 
 public static class Const
@@ -8,6 +7,9 @@ public static class Const
         public static readonly string BARBARIAN = "uid://buurhphmqc16s";
         public static readonly string GODOT_PLUSH = "uid://c1c2k76x0pauf";
         public static readonly string LOW_POLY = "uid://bvvxjc2oqng0j";
+
+        public static readonly string MEDIUM_POLY = "uid://cupe4j2fy060e";
+
     }
 
     public const string MOUSE_RIGHT_CLICK = "MouseRightClick";
@@ -17,6 +19,7 @@ public static class Const
     public static readonly string USER_ROOT_FOLDER_PATH = ProjectSettings.GlobalizePath("user://");
 
     // Mesh Data
+
     public enum BodyPartType { HEAD, TORSO, HAIR, LEGS, FEET, LEFT_ARM, RIGHT_ARM, WEAPON };
     public enum MeshType { LOW_POLY, HIGH_POLY };
 
