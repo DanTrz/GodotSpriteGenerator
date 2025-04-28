@@ -1,9 +1,10 @@
+
+using Godot;
 using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Godot;
 
 public partial class SpriteGenerator : Node
 {
@@ -102,10 +103,9 @@ public partial class SpriteGenerator : Node
 
     private bool AutoScaleModel = true;
 
-
     public override void _Ready()
     {
-        Log.Debug($"This mesasge from {this.Name}");
+
         //Pixel2DTest.Pressed += () => Pixel2DShaderPanel.Visible = !Pixel2DShaderPanel.Visible;
         StartGenerationBtn.Pressed += OnStartGeneration;
         SpriteSizeOptionButton.ItemSelected += OnSpriteSizeChanged;
@@ -143,7 +143,7 @@ public partial class SpriteGenerator : Node
         ModelTypeOptionButton.ItemSelected += OnModelTypeSelected;
         LoadExternalModelBtn.Pressed += OnLoadExternalModelBtnPressed;
 
-        //Set Default UI Control Values
+        //Set Default UI Control Valuesa
         ClearFolderCheckBtn.ButtonPressed = ClearFolderBeforeGeneration;
         FrameStepTextEdit.Text = FrameSkipStep.ToString();
         PlayBackSpeedLineEdit.Text = _animationPlaybackSpeed.ToString();
@@ -171,8 +171,6 @@ public partial class SpriteGenerator : Node
 
         GlobalUtil.SaveFolderPath = ProjectSettings.GlobalizePath(Const.SAVE_GAME_PATH);
 
-
-
         //Load the objects from MainScene3D to the SpriteGenerator script
         LoadAllAngles();
         LoadAndPrepareModelNodes();
@@ -185,7 +183,6 @@ public partial class SpriteGenerator : Node
     /// Also loads the replaceable parts (Hair and Weapon meshes) and sets them up in the UI with default values.
     /// </summary>
     /*******  c48ce56c-f2c8-4884-ad57-9cf569e180e5  *******/
-
     private void LoadAndPrepareModelNodes()
     {
         //LOAD MODEL KEY NODES and RQEUIRED REFERENCES
@@ -604,7 +601,11 @@ public partial class SpriteGenerator : Node
                 await LoadModel(Const.Models.BARBARIAN);
                 LoadExternalModelBtn.Visible = false;
                 break;
-            case 3: //Custom model //TODO: Exprimental with Leak of memory
+            case 3:
+                await LoadModel(Const.Models.MEDIUM_POLY);
+                LoadExternalModelBtn.Visible = false;
+                break;
+            case 4: //Custom model //TODO: Exprimental with Leak of memory
                 LoadExternalModelBtn.Visible = true;
                 break;
         }

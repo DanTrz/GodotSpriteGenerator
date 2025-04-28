@@ -1,7 +1,6 @@
-[gd_resource type="ShaderMaterial" load_steps=5 format=3 uid="uid://070w4mt4i1r2"]
+[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://070w4mt4i1r2"]
 
 [ext_resource type="Shader" uid="uid://dn6156u2j1knc" path="res://Assets/Shaders/flexible_toon_shader/flexible_toon_v2.gdshader" id="1_06nih"]
-[ext_resource type="Texture2D" uid="uid://c1qr37s0a6gq0" path="res://Assets/Shaders/flexible_toon_shader/ModelTestingDELETE/BarbarianTexture.tres" id="2_yd154"]
 [ext_resource type="Gradient" uid="uid://cul0xese4g3dd" path="res://Assets/Shaders/flexible_toon_shader/GradientBaseColors.tres" id="3_yd154"]
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_yd154"]
@@ -13,7 +12,6 @@ height = 256
 render_priority = 0
 shader = ExtResource("1_06nih")
 shader_parameter/albedo = Color(1, 1, 1, 1)
-shader_parameter/albedo_texture = ExtResource("2_yd154")
 shader_parameter/albedo_uv_scale = Vector2(1, 1)
 shader_parameter/albedo_uv_offset = Vector2(0, 0)
 shader_parameter/clamp_diffuse_to_max = true

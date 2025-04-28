@@ -262,6 +262,7 @@ HairColorBtn = NodePath("SpriteGenerationVBoxContainer/HSplitContainer/OptionsPa
 metadata/_tab_index = 0
 
 [node name="SpriteGenerationVBoxContainer" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -1124,15 +1125,17 @@ layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
 clip_text = true
-item_count = 4
+item_count = 5
 popup/item_0/text = "Voxel LowPoly Model"
 popup/item_0/id = 0
 popup/item_1/text = "Godot Plush (Example)"
 popup/item_1/id = 1
 popup/item_2/text = "Barbarian"
 popup/item_2/id = 2
-popup/item_3/text = "Custom Model (Beta)"
+popup/item_3/text = "MediumPoly"
 popup/item_3/id = 3
+popup/item_4/text = "Custom Model (Beta)"
+popup/item_4/id = 4
 
 [node name="LoadExternalModelBtn" type="Button" parent="SpriteGenerationVBoxContainer/HSplitContainer/OptionsPanelVBoxCont/MarginContainer/OptionsPanelCont/SpriteGenOptScrollContainer/OptionsListVBoxContainer/MeshOptionsMarginCont/MeshReplacerPanelCont/VBoxContainer/ModelTypeOptGrid2"]
 custom_minimum_size = Vector2(20, 32)

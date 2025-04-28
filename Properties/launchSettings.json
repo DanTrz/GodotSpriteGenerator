@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "DebugSpriteGenerator": {
+      "commandName": "Executable",
+      "executablePath": "C:\\Local Documents\\Development\\Godot\\Godot Versions\\Godot_v4.4.1-stable_mono_win64\\Godot_v4.4.1-stable_mono_win64.exe",
+      "commandLineArgs": "--path . --verbose",
+      "workingDirectory": "."
+    }
+  }
+}
