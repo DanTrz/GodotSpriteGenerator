@@ -1,6 +1,6 @@
+using Godot;
 using System;
 using System.Collections.Generic;
-using Godot;
 using static Godot.RenderingServer;
 
 namespace Gizmo3DPlugin;
@@ -305,25 +305,34 @@ public partial class Gizmo3D : Node3D
     private void UpdateGizmoSize(float spriteSize)
     {
         //20 to 80 are the optminal Gizmo Size range
-        float newGizmoSize = 20.0f;
-        switch (spriteSize)
+        float newGizmoSize = spriteSize switch
         {
+            >= 512 => 80.0f,
+            >= 256 => 40.0f,
+            >= 128 => 20.0f,
+            >= 32 => 10.0f,
+            _ => 0.0f
+        };
 
-            case >= 512:
-                newGizmoSize = 80.0f;
-                break;
-            case >= 256:
-                newGizmoSize = 40.0f;
-                break;
-            case >= 128:
-                newGizmoSize = 20.0f;
-                break;
-            case >= 32:
-                newGizmoSize = 10.0f;
-                break;
-            default:
-                break;
-        }
+        //float newGizmoSize = 20.0f;
+        //switch (spriteSize)
+        //{
+
+        //    case >= 512:
+        //        newGizmoSize = 80.0f;
+        //        break;
+        //    case >= 256:
+        //        newGizmoSize = 40.0f;
+        //        break;
+        //    case >= 128:
+        //        newGizmoSize = 20.0f;
+        //        break;
+        //    case >= 32:
+        //        newGizmoSize = 10.0f;
+        //        break;
+        //    default:
+        //        break;
+        //}
 
         this.Size = newGizmoSize;
 

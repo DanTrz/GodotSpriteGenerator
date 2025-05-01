@@ -39,6 +39,4 @@ public static class Const
     //SAVE Data
     public const string SAVE_GAME_PATH = "user://";
 
-
-
 }

@@ -1,5 +1,5 @@
-using System;
 using Godot;
+using System;
 
 public partial class PaletteListGrid : GridContainer
 {
@@ -17,28 +17,38 @@ public partial class PaletteListGrid : GridContainer
     public void ChangeGridColumnSize(int panelColumns)
     {
 
-        int newColSize = _minColumnsSize;
-        switch (panelColumns)
+        //int newColSize = _minColumnsSize;
+        int newColSize = panelColumns switch
         {
-            case >= 5:
-                newColSize = _maxColumnsSize;
-                break;
-            case >= 4:
-                newColSize = 54;
-                break;
-            case >= 3:
-                newColSize = 42;
-                break;
-            case >= 2:
-                newColSize = 30;
-                break;
-            case >= 1:
-                newColSize = 14;
-                break;
+            >= 5 => _maxColumnsSize,
+            >= 4 => 54,
+            >= 3 => 42,
+            >= 2 => 30,
+            >= 1 => 14,
+            _ => _minColumnsSize,
+        };
 
-            default:
-                break;
-        }
+        //switch (panelColumns)
+        //{
+        //    case >= 5:
+        //        newColSize = _maxColumnsSize;
+        //        break;
+        //    case >= 4:
+        //        newColSize = 54;
+        //        break;
+        //    case >= 3:
+        //        newColSize = 42;
+        //        break;
+        //    case >= 2:
+        //        newColSize = 30;
+        //        break;
+        //    case >= 1:
+        //        newColSize = 14;
+        //        break;
+
+        //    default:
+        //        break;
+        //}
 
 
         this.Columns = Math.Clamp(newColSize, _minColumnsSize, _maxColumnsSize);

@@ -151,9 +151,9 @@ public partial class SpriteGenerator : Node
         ShowGridCheckButton.ButtonPressed = false;
 
         //Set Default Resolution and Shader Strenght
-        SpriteSizeOptionButton.Selected = SpriteSizeOptionButton.ItemCount - 1; //Select the Last Option
+        SpriteSizeOptionButton.Selected = SpriteSizeOptionButton.ItemCount - 2; //Select the second to last Option
         OnSpriteSizeChanged(SpriteSizeOptionButton.Selected);
-        PixelationLevelOptionBtn.Selected = PixelationLevelOptionBtn.ItemCount - 1; //Last option 
+        PixelationLevelOptionBtn.Selected = PixelationLevelOptionBtn.ItemCount - 2; //Select the second to last Option
         OnPixelationLevelChanged(PixelationLevelOptionBtn.Selected);
         EffectsChoicesOptionBtn.Selected = 0;
         OnEffectsChoiceItemSelected(EffectsChoicesOptionBtn.Selected);
@@ -552,28 +552,40 @@ public partial class SpriteGenerator : Node
 
     private void OnSpriteSizeChanged(long itemSelectedIndex)
     {
-        switch (itemSelectedIndex)
-        {
-            case 0:
-                SpriteSize = 64;
-                break;
-            case 1:
-                SpriteSize = 128;
-                break;
-            case 2:
-                SpriteSize = 256;
-                break;
-            case 3:
-                SpriteSize = 384;
-                break;
-            case 4:
-                SpriteSize = 512;
-                break;
-            case 5:
-                SpriteSize = 768;
-                break;
 
-        }
+        SpriteSize = itemSelectedIndex switch
+        {
+            0 => 64,
+            1 => 128,
+            2 => 256,
+            3 => 384,
+            4 => 512,
+            5 => 768,
+            _ => SpriteSize
+        };
+
+        //switch (itemSelectedIndex)
+        //{
+        //    case 0:
+        //        SpriteSize = 64;
+        //        break;
+        //    case 1:
+        //        SpriteSize = 128;
+        //        break;
+        //    case 2:
+        //        SpriteSize = 256;
+        //        break;
+        //    case 3:
+        //        SpriteSize = 384;
+        //        break;
+        //    case 4:
+        //        SpriteSize = 512;
+        //        break;
+        //    case 5:
+        //        SpriteSize = 768;
+        //        break;
+
+        //}
         //Log.Debug("Sprite Size/Res: " + SpriteSize);
         UpdateViewPorts();
         GlobalEvents.Instance.OnCamResetChanges?.Invoke();
@@ -725,34 +737,41 @@ public partial class SpriteGenerator : Node
 
     private void OnPixelationLevelChanged(long itemSelectedIndex)
     {
-
-        switch (itemSelectedIndex)
+        PixelResolution = itemSelectedIndex switch
         {
-            case 0:
-                PixelResolution = 32;
-                break;
-            case 1:
-                PixelResolution = 64;
-                break;
-            case 2:
-                PixelResolution = 128;
-                break;
-            case 3:
-                PixelResolution = 256;
-                break;
-            case 4:
-                PixelResolution = 384;
-                break;
-            case 5:
-                PixelResolution = 512;
-                break;
-            case 6:
-                PixelResolution = 768;
-                break;
+            0 => 32,
+            1 => 64,
+            2 => 128,
+            3 => 256,
+            4 => 384,
+            5 => 512,
+            6 => 768,
+            _ => PixelResolution
+        };
 
-
-
-        }
+        //switch (itemSelectedIndex)
+        //{
+        //    case 0:
+        //        PixelResolution = 32;
+        //        break;
+        //    case 1:
+        //        PixelResolution = 64;
+        //        break;
+        //    case 2:
+        //        PixelResolution = 128;
+        //        break;
+        //    case 3:
+        //        PixelResolution = 256;
+        //        break;
+        //    case 4:
+        //        PixelResolution = 384;
+        //        break;
+        //    case 5:
+        //        PixelResolution = 512;
+        //        break;
+        //    case 6:
+        //        PixelResolution = 768;
+        //        break;
 
         //Log.Debug("Effect Pixel Resolution: " + SpriteSize);
 

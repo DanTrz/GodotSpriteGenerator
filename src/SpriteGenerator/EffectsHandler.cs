@@ -1,6 +1,5 @@
-using System;
-using System.Collections.Generic;
 using Godot;
+using System.Collections.Generic;
 
 public static class EffectsHandler
 {

@@ -1,4 +1,3 @@
-using System;
 using Godot;
 
 public partial class WindowsDebugger : PanelContainer
@@ -51,24 +50,33 @@ public partial class WindowsDebugger : PanelContainer
 
     private void OnWindowsReziseOptBtnItemSelected(long index)
     {
-        Vector2 minSize = new Vector2(1280, 720);
-        switch (index)
+        //Vector2 minSize = new Vector2(1280, 720);
+        Vector2 minSize = index switch
         {
-            case 0:
-                break;
-            case 1:
-                minSize = new Vector2(1280, 720);
-                break;
-            case 2:
-                minSize = new Vector2(1920, 1080);
-                break;
-            case 3:
-                minSize = new Vector2(2560, 1440);
-                break;
-            case 4:
-                minSize = new Vector2(3840, 2160);
-                break;
-        }
+            1 => new Vector2(1280, 720),
+            2 => new Vector2(1920, 1080),
+            3 => new Vector2(2560, 1440),
+            4 => new Vector2(3840, 2160),
+            _ => new Vector2(1280, 720)
+        };
+
+        //switch (index)
+        //{
+        //    case 0:
+        //        break;
+        //    case 1:
+        //        minSize = new Vector2(1280, 720);
+        //        break;
+        //    case 2:
+        //        minSize = new Vector2(1920, 1080);
+        //        break;
+        //    case 3:
+        //        minSize = new Vector2(2560, 1440);
+        //        break;
+        //    case 4:
+        //        minSize = new Vector2(3840, 2160);
+        //        break;
+        //}
 
         OptionsListVBoxContainer.CustomMinimumSize = new Vector2(minSize.X, minSize.Y);
     }

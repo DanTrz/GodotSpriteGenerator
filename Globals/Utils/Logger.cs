@@ -1,9 +1,9 @@
-using Godot;
 using System;
 using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Godot;
 
 public static class Log
 {
@@ -160,6 +160,7 @@ public static class Log
             callingMethod,
             message
         );
+
 
     }
 
