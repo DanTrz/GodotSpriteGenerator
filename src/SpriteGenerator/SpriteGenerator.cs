@@ -1,10 +1,10 @@
 
-using Godot;
 using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Godot;
 
 public partial class SpriteGenerator : Node
 {
@@ -68,6 +68,8 @@ public partial class SpriteGenerator : Node
     [Export] public CheckButton ClearFolderCheckBtn;
     [Export] public TextureRect _pixelShaderTextRect;
     [Export] public ModelPositionManager ModelPositionManager;
+
+
     [Export] public Button LoadAllAnimationsBtn;
     [Export] public ItemListCheckBox AnimSelectionItemList;
     [Export] public ItemListCheckBox AngleSelectionItemList;
@@ -80,9 +82,11 @@ public partial class SpriteGenerator : Node
 
     private Button PlaySelectedAnimationsBtn => field ??= GetNodeOrNull<Button>("%PlaySelectedAnimationsBtn");
 
-    private Node3D _modelPivotNode;
-    private Node3D _modelObjectNode;
-    private Camera3D _camera;
+    private static Node3D _modelPivotNode;
+    private static Node3D _modelObjectNode;
+    private static Camera3D _camera;
+
+
     private AnimationPlayer _animationPlayer;
 
     public int SpriteSize = 256;
@@ -198,9 +202,9 @@ public partial class SpriteGenerator : Node
                 _animationPlayer = _modelObjectNode.GetNodeOrNull<AnimationPlayer>("%AnimationPlayer");
             }
 
-            //Pass the Model to te PositionManager 
-            ModelPositionManager.ModelPivotNode = _modelPivotNode;
-            ModelPositionManager.CameraNode = _camera;
+            //Pass the Model to te PositionManager (simple "Dependency Injection" that needs refactoring)
+            ModelPositionManager.SetDependencies(_modelPivotNode, _camera);//Using SetterMethod
+
 
             var modelXAxisSize = MeshReplacer.GetModelMergedAABBMeshes(_modelPivotNode).Size.Y;
             ModelPositionManager.SetTransformValueToModel(AutoScaleModel, modelXAxisSize);

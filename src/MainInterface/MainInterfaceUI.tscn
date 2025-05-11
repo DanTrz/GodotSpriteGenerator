@@ -61,6 +61,9 @@ all_tabs_in_front = true
 
 [node name="SpriteGeneratorTabUI" parent="MainUI/MainTabContainer" instance=ExtResource("4_sdb27")]
 layout_mode = 2
+FrameSkipStep = 4
+ClearFolderBeforeGeneration = true
+_animationPlaybackSpeed = 1.0
 
 [node name="ImageEditorTabUI" parent="MainUI/MainTabContainer" instance=ExtResource("6_7f6q1")]
 visible = false

@@ -27,28 +27,38 @@ public partial class ModelPositionManager : Node
     [Export] public LineEdit RotationYAxisLineTextEdit;
     [Export] public LineEdit RotationZAxisLineTextEdit;
 
-    public Node3D ModelPivotNode;
-    public Camera3D CameraNode;
+    private Node3D _modelPivotNode;
+    private Camera3D _cameraNode;
     private bool _isModeLeftBtnHeld = false;
 
     public override void _Ready()
     {
-        //Check if the ModelNode is not null
-        this.CallDeferred(MethodName.CheckIfModelLoaded);
+        GlobalEvents.Instance.OnModelTransformChanged += OnModelTransformChanged;
+    }
+
+    public void SetDependencies(Node3D modelPivotNode, Camera3D cameraNode)
+    {
+        _modelPivotNode = modelPivotNode;
+        _cameraNode = cameraNode;
+
+        //Check if the ModelNode or Camera are not null
+        if (!CheckIfModelLoaded()) return;
 
         //("LoadTransformValueToUI being called");
         this.CallDeferred(MethodName.LoadTransformValueToUI);
         this.CallDeferred(MethodName.ConnectTransformUINodeSignals);
-        GlobalEvents.Instance.OnModelTransformChanged += OnModelTransformChanged;
     }
 
-    public void CheckIfModelLoaded()
+    public bool CheckIfModelLoaded()
     {
-        if (ModelPivotNode == null || CameraNode == null)
+        if (_modelPivotNode == null || _cameraNode == null)
         {
             Log.Error("Model or Camera in ModelPositionManager is null");
+            return false;
         }
+        return true;
     }
+
 
     private void ConnectTransformUINodeSignals()
     {
@@ -80,18 +90,18 @@ public partial class ModelPositionManager : Node
             ModelPosition.Y = GetYPositionAutoScaleValue(modelXAxisSize, YPosScaleFactor);
             CameDistance = GetCameraAutoScaleValue(modelXAxisSize, ZoomScaleFactor);
 
-            ModelPivotNode.Position = new Vector3(ModelPosition.X, ModelPosition.Y, ModelPosition.Z); //new Vector3(PositionXValue, PositionYValue, PositionZValue);
-            ModelPivotNode.Rotation = new Vector3(ModelRotation.X, ModelRotation.Y, ModelRotation.Z); //new Vector3(RotationXValue, RotationYValue, RotationZValue);
-            CameraNode.Size = Math.Max(CameDistance, 1.00f);
-            CameraNode.RotationDegrees = new Vector3(CamRotationXValue, 0, 0);
+            _modelPivotNode.Position = new Vector3(ModelPosition.X, ModelPosition.Y, ModelPosition.Z); //new Vector3(PositionXValue, PositionYValue, PositionZValue);
+            _modelPivotNode.Rotation = new Vector3(ModelRotation.X, ModelRotation.Y, ModelRotation.Z); //new Vector3(RotationXValue, RotationYValue, RotationZValue);
+            _cameraNode.Size = Math.Max(CameDistance, 1.00f);
+            _cameraNode.RotationDegrees = new Vector3(CamRotationXValue, 0, 0);
             LoadTransformValueToUI();
         }
         else
         {
-            ModelPivotNode.Position = new Vector3(float.Parse(PosXAxisLineTextEdit.Text), float.Parse(PosYAxisLineTextEdit.Text), float.Parse(PosZAxisLineTextEdit.Text));
-            ModelPivotNode.Rotation = new Vector3(float.Parse(RotationXAxisLineTextEdit.Text), float.Parse(RotationYAxisLineTextEdit.Text), float.Parse(RotationZAxisLineTextEdit.Text));
-            CameraNode.Size = Math.Max(float.Parse(CamDistancelLineTextEdit.Text), 1.00f);
-            CameraNode.RotationDegrees = new Vector3(float.Parse(CamXRotationLineTextEdit.Text), 0, 0);
+            _modelPivotNode.Position = new Vector3(float.Parse(PosXAxisLineTextEdit.Text), float.Parse(PosYAxisLineTextEdit.Text), float.Parse(PosZAxisLineTextEdit.Text));
+            _modelPivotNode.Rotation = new Vector3(float.Parse(RotationXAxisLineTextEdit.Text), float.Parse(RotationYAxisLineTextEdit.Text), float.Parse(RotationZAxisLineTextEdit.Text));
+            _cameraNode.Size = Math.Max(float.Parse(CamDistancelLineTextEdit.Text), 1.00f);
+            _cameraNode.RotationDegrees = new Vector3(float.Parse(CamXRotationLineTextEdit.Text), 0, 0);
         }
 
     }
@@ -126,16 +136,16 @@ public partial class ModelPositionManager : Node
     {
         if (PosXAxisLineTextEdit == null || CamDistancelLineTextEdit == null) return;
 
-        PosXAxisLineTextEdit.Text = ModelPivotNode.Position.X.ToString("0.0");
-        PosYAxisLineTextEdit.Text = ModelPivotNode.Position.Y.ToString("0.0");
-        PosZAxisLineTextEdit.Text = ModelPivotNode.Position.Z.ToString("0.0");
+        PosXAxisLineTextEdit.Text = _modelPivotNode.Position.X.ToString("0.0");
+        PosYAxisLineTextEdit.Text = _modelPivotNode.Position.Y.ToString("0.0");
+        PosZAxisLineTextEdit.Text = _modelPivotNode.Position.Z.ToString("0.0");
 
-        CamDistancelLineTextEdit.Text = Math.Max(CameraNode.Size, 1.00f).ToString("0.0"); //CameraNode.Size.ToString("0.0");
-        CamXRotationLineTextEdit.Text = CameraNode.RotationDegrees.X.ToString("0.0");
+        CamDistancelLineTextEdit.Text = Math.Max(_cameraNode.Size, 1.00f).ToString("0.0"); //CameraNode.Size.ToString("0.0");
+        CamXRotationLineTextEdit.Text = _cameraNode.RotationDegrees.X.ToString("0.0");
 
-        RotationXAxisLineTextEdit.Text = ModelPivotNode.Rotation.X.ToString("0.0");
-        RotationYAxisLineTextEdit.Text = ModelPivotNode.Rotation.Y.ToString("0.0");
-        RotationZAxisLineTextEdit.Text = ModelPivotNode.Rotation.Z.ToString("0.0");
+        RotationXAxisLineTextEdit.Text = _modelPivotNode.Rotation.X.ToString("0.0");
+        RotationYAxisLineTextEdit.Text = _modelPivotNode.Rotation.Y.ToString("0.0");
+        RotationZAxisLineTextEdit.Text = _modelPivotNode.Rotation.Z.ToString("0.0");
     }
 
     public void OnSaveData(SaveGameData newSaveGameData)
@@ -177,21 +187,16 @@ public partial class ModelPositionManager : Node
         if (zoomIn)
         {
             CameDistance -= ZoomValue;
-            CameraNode.Size = Math.Max(CameDistance, 1.00f);
+            _cameraNode.Size = Math.Max(CameDistance, 1.00f);
 
         }
         else
         {
             CameDistance += ZoomValue;
-            CameraNode.Size = Math.Max(CameDistance, 1.00f);
+            _cameraNode.Size = Math.Max(CameDistance, 1.00f);
         }
 
         LoadTransformValueToUI();
 
     }
-
-
-
-
-
 }
